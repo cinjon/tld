@@ -10,3 +10,5 @@
 //   created_at: date,
 //   updated_at: date
 // }
+
+// this might be useful => https://github.com/BeDifferential/inflectionizer
