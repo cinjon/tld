@@ -2,6 +2,7 @@
 // {
 //   name: string,
 //   homepage: url,
+//   feed: url,      // for RSS imports
 //   description: string,
 //   created_at: date,
 //   updated_at: date,

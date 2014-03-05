@@ -8,6 +8,8 @@
 //   source_note: string,
 //   storage_key: string,   // unique s3 key value
 //   show_id: string,
+//   host: array of hosts,   // should include person_id
+//   guest: array of guests, // should include person_id
 //   edited: boolean,
 //   postedited: boolean,
 //   editor_id: string,
