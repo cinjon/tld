@@ -1,0 +1,45 @@
+<template name="layout">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Timelined</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right" role="form">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>PLAYER PANE</h2>
+          <p>Title, Player, Hosts, Guests, Collapsable show notes.</p>
+        </div>
+        <div class="col-md-6">
+          <h2>HIGHLIGHTS/EDITOR PANE</h2>
+          <p>Displays highlights for regular user or editor UI for editors.</p>
+       </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Timelined 2014</p>
+      </footer>
+    </div> <!-- /container -->
+</template>
