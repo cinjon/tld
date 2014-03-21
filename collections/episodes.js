@@ -7,6 +7,7 @@
 //   source_url: url,
 //   source_note: string,
 //   storage_key: string,   // unique s3 key value
+//   show_slugh: string,
 //   show_id: string,
 //   host: array of hosts,   // should include person_id
 //   guest: array of guests, // should include person_id
@@ -18,3 +19,4 @@
 //   updated_at: date,
 //   published: boolean
 // }
+Episodes = new Meteor.Collection('episodes');

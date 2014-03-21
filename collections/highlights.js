@@ -11,3 +11,4 @@
 //   created_at: date,
 //   updated_at: date
 // }
+Highlights = new Meteor.Collection('highlights');

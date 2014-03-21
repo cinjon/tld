@@ -3,6 +3,7 @@
 //   first_name: string,
 //   last_name: string,
 //   twitter: string,
+//   img: url,
 //   homepage: url,
 //   host: array of show_ids,
 //   guest: array of episode_ids,
@@ -12,3 +13,4 @@
 // }
 
 // this might be useful => https://github.com/BeDifferential/inflectionizer
+People = new Meteor.Collection('people');

@@ -1,6 +1,7 @@
 // Shows
 // {
 //   name: string,
+//   slug: string,
 //   homepage: url,
 //   feed: url,      // for RSS imports
 //   description: string,
@@ -9,3 +10,4 @@
 //   artwork: url,  // still deciding
 //   route: string,  // name with spaces replaced by -, ex. Joe-Rogan-Experience
 // }
+Shows = new Meteor.Collection('shows');

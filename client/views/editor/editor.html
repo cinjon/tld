@@ -1,0 +1,67 @@
+<template name="editor">
+  <div class="row">
+    <div class="col-md-5" style="background-color:black">
+      <div class="row" id="show_title">
+        {{show_title}}
+      </div>
+      <div class="row" id="episode_title">
+        {{episode_title}}
+      </div>
+      <div class="row" id="episode_people">
+        {{#each hosts}}
+        {{> people_picture}}
+        {{/each}}
+        {{#each guest}}
+        {{> people_picture}}
+        {{/each}}
+      </div>
+      <div class="row">
+        {{> video_player}}
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="row">
+        Draft Mode
+      </div>
+      {{#each highlights}}
+      {{> editor_highlight}}
+      {{/each}}
+      <div class="row">
+        {{> editor_new_input}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="editor_highlight">
+  <div class="row">
+    <div class="col-md-1" style="background-color:black; color:grey">
+      {{format_seconds_to_clock start_time}}
+    </div>
+    <div class="col-md-11">
+      <div class="row">
+        <div class="col-md-1">
+          {{#if highlight_is_quote_type}}
+          {{> people_picture speaker}}
+          {{/if}}
+          {{#if highlight_is_link_type}}
+          <img>LLL</img>
+          {{/if}}
+        </div>
+        <div class="col-md-1">
+          {{type_title}}
+        </div>
+        <div class="col-md-10">
+          {{text}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="editor_new_input">
+</template>
+
+<template name="people_picture">
+  <img class="person" src="{{img}}">
+</template>
