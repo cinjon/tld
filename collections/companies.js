@@ -2,6 +2,8 @@
 // {
 //   name: string,
 //   homepage: url,
-//  created_at: date,
-//  updated_at: date
+//   twitter: url,
+//   sponsored_episodes: array of sponsored episodes (episode_ids),
+//   created_at: date,
+//   updated_at: date
 // }
