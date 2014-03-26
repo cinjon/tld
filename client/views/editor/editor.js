@@ -3,13 +3,13 @@ Template.editor.helpers({
     return this.episode.title;
   },
   guests: function() {
-    return People.find({_id:{$in:this.episode.guest}});
+    return People.find({_id:{$in:this.episode.guests}});
   },
   highlights: function() {
     return Highlights.find({episode_id:this.episode._id});
   },
   hosts: function() {
-    return People.find({_id:{$in:this.episode.host}});
+    return People.find({_id:{$in:this.episode.hosts}});
   },
 });
 
