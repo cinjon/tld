@@ -1,7 +1,6 @@
 // Shows
 // {
 //   name: string,
-//   slug: string,
 //   homepage: url,
 //   feed: url,      // for RSS imports
 //   description: string,

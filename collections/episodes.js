@@ -7,7 +7,7 @@
 //   source_url: url,
 //   source_note: string,
 //   storage_key: string,   // unique s3 key value
-//   show_slug: string,
+//   show_route: string,
 //   show_id: string,
 //   hosts: array of hosts,   // should include person_id
 //   guests: array of guests, // should include person_id
