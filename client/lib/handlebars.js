@@ -1,11 +1,3 @@
-var _format_time_part = function(time) {
-  if (time < 10) {
-    return "0" + time.toString();
-  } else {
-    return time.toString();
-  }
-};
-
 Handlebars.registerHelper("format_seconds_to_clock", function(seconds) {
   //assumes seconds >= 0, formats into 01:12:42 format
   var hours = Math.floor(seconds / 3600);
@@ -24,3 +16,11 @@ Handlebars.registerHelper("format_seconds_to_clock", function(seconds) {
 Handlebars.registerHelper("capitalize", function(str) {
   return capitalize(str);
 });
+
+var _format_time_part = function(time) {
+  if (time < 10) {
+    return "0" + time.toString();
+  } else {
+    return time.toString();
+  }
+};
