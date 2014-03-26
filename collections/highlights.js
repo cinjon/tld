@@ -5,7 +5,7 @@
 //   episode_id: string,
 //   start_time: number,
 //   text: string,         // the quotation, link text or note
-//   person_id: string,    // only if a quote
+//   person_id: string,
 //   company_id: string,   // only if a sponsor
 //   url: url,             // only if a link
 //   created_at: date,
