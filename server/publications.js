@@ -28,7 +28,9 @@ Meteor.publish('shows_with_unedited_episodes', function() {
     _id: {
       $in: Episodes.find(
         {edited: false}).map(
-          function(episode) {show_ids.push(episode.show_id)}
+          function(episode) {
+            return episode.show_id;
+          }
         )
     }
   });

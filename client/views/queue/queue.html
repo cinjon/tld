@@ -23,22 +23,22 @@
           <div class="col-md-2">
             <div class="row">
 
-              {{#if is_unclaimed}}
+              {{#if is_claimer_unclaimed claimer_id}}
               <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
               {{/if}}
 
-              {{#if is_claimed}}
+              {{#if is_claimed claimer_id}}
               <button class="btn btn-primary btn-xs right">Episode Claimed</button>
               {{/if}}
 
-              {{#if is_claimer}}
+              {{#if is_claimer_user claimer_id}}
               <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
               {{/if}}
 
             </div>
           </div>
           {{/each}}
-        </ul>
+        </div>
       </div>
     </div>
     {{/each}}

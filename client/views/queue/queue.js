@@ -17,16 +17,6 @@ Template.queue.helpers({
       show_id: this._id
     });
   },
-  is_claimed: function(e, tmpl) {
-    var claimer_id = this.claimer_id;
-    return !client_global_unclaimed(claimer_id) && !client_global_is_claimer(claimer_id);
-  },
-  is_claimer: function() {
-    return client_global_has_role(['admin', 'editor']) && client_global_is_claimer(this.claimer_id);
-  },
-  is_unclaimed: function(e, tmpl) {
-    return client_global_unclaimed(this.claimer_id);
-  },
   shows: function() {
     var show_ids = [];
     Episodes.find({
