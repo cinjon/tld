@@ -96,7 +96,7 @@ Meteor.startup( function() {
       editor_id: null,
       length_in_seconds: 4122,
       created_at: timestamp,
-      updated_at: timstamp,
+      updated_at: timestamp,
       published: false
     });
 
@@ -117,7 +117,7 @@ Meteor.startup( function() {
       editor_id: null,
       length_in_seconds: 4770,
       created_at: timestamp,
-      updated_at: timstamp,
+      updated_at: timestamp,
       published: false
     });
 
