@@ -22,7 +22,7 @@ Template.editor_highlight.helpers({
   },
   type_title: function() {
     if (this.type == "quote") {
-      return People.findOne({_id:this.person_id}).first_name
+      return People.findOne({_id:this.person_id}).first_name;
     } else if (this.type == "link") {
       return "Link";
     } else {
