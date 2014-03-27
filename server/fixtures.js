@@ -74,7 +74,7 @@ Meteor.startup( function() {
       editor_id: null,
       length_in_seconds: 5368,
       created_at: timestamp,
-      updated_at: timstamp,
+      updated_at: timestamp,
       published: false
     });
 
