@@ -3,16 +3,16 @@
   "dependencies": {
     "basePackages": {
       "iron-router": {
-        "git": "https://github.com/EventedMind/iron-router.git",
-        "branch": "blaze-integration"
+        "git": "git@github.com:EventedMind/iron-router.git",
+        "branch": "dev"
       },
       "bootstrap-3": {}
     },
     "packages": {
       "iron-router": {
-        "git": "https://github.com/EventedMind/iron-router.git",
-        "branch": "blaze-integration",
-        "commit": "947991731df164e56b53cfdae8ef23802d989142"
+        "git": "git@github.com:EventedMind/iron-router.git",
+        "branch": "dev",
+        "commit": "3cde469a5f454f2130d2fa8a08fb37115f85a295"
       },
       "bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
