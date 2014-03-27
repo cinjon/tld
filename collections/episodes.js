@@ -5,7 +5,7 @@
 //   title: string,  // if defined
 //   number: number, // for podcast episode #s
 //   source_url: url,
-//   source_note: string,
+//   source_description: string,
 //   storage_key: string,   // unique s3 key value
 //   show_route: string,
 //   show_id: string,
@@ -17,6 +17,14 @@
 //   length_in_seconds: number,
 //   created_at: date,
 //   updated_at: date,
-//   published: boolean
+//   published: boolean,
+//   feed_item:             // data from rss feed
+    // {
+    //   title:
+    //   link:
+    //   pubDate:
+    //   description:
+    //   guid:
+    // }
 // }
 Episodes = new Meteor.Collection('episodes');
