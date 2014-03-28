@@ -106,7 +106,7 @@ Meteor.startup( function() {
       title: "Moby",
       number: 457,
       source_url: "http://www.nerdist.com/2013/12/nerdist-podcast-moby/",
-      source_note: "Moby sits down with Chris and Jonah to talk about becoming sober (losing the 'sorry, I was super drunk' excuse), sampling, raves, inter-genre overlap in the music industry, L.A. architecture, partying, and a deep conversation about compartmentalizing and human cognition!",
+      source_description: "Moby sits down with Chris and Jonah to talk about becoming sober (losing the 'sorry, I was super drunk' excuse), sampling, raves, inter-genre overlap in the music industry, L.A. architecture, partying, and a deep conversation about compartmentalizing and human cognition!",
       storage_key: "bde5a8980a18df163c1f80618bdbd6d6",
       show_route: "nerdist",
       show_id: nerdist_id,
