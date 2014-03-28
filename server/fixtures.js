@@ -63,7 +63,7 @@ Meteor.startup( function() {
       title: "Back to Work 001",
       number: 1,
       source_url: "http://5by5.tv/b2w/1",
-      source_note: "In the inaugural episode of Back to Work, Merlin Mann and Dan Benjamin discuss why they’re doing this show, getting back to work instead of buying berets, the lizard brain, and compare the Shadow of the Mouse to San Francisco, and eventually get to some practical tips for removing friction.",
+      source_description: "In the inaugural episode of Back to Work, Merlin Mann and Dan Benjamin discuss why they’re doing this show, getting back to work instead of buying berets, the lizard brain, and compare the Shadow of the Mouse to San Francisco, and eventually get to some practical tips for removing friction.",
       storage_key: "c8b1b604524c39612ba0be3423ca4669",
       show_route: "back-to-work",
       show_id: backtowork_id,
@@ -74,7 +74,7 @@ Meteor.startup( function() {
       editor_id: null,
       length_in_seconds: 5368,
       created_at: timestamp,
-      updated_at: timstamp,
+      updated_at: timestamp,
       published: false
     });
 
@@ -85,7 +85,7 @@ Meteor.startup( function() {
       title: "Back to Work 002",
       number: 1,
       source_url: "http://5by5.tv/b2w/2",
-      source_note: "Merlin Mann and Dan Benjamin formulate a five-minute warning tactic before discussing the reality of bringing change to your company, some patterns that work for startups, solving the right problem at the right level, why you can’t find the innovation button, and using PathFinder as a Finder replacement.",
+      source_description: "Merlin Mann and Dan Benjamin formulate a five-minute warning tactic before discussing the reality of bringing change to your company, some patterns that work for startups, solving the right problem at the right level, why you can’t find the innovation button, and using PathFinder as a Finder replacement.",
       storage_key: "118d07e7ac1adfdc6cd8b97400001a87",
       show_route: "back-to-work",
       show_id: backtowork_id,
@@ -96,7 +96,7 @@ Meteor.startup( function() {
       editor_id: null,
       length_in_seconds: 4122,
       created_at: timestamp,
-      updated_at: timstamp,
+      updated_at: timestamp,
       published: false
     });
 
@@ -106,7 +106,7 @@ Meteor.startup( function() {
       title: "Moby",
       number: 457,
       source_url: "http://www.nerdist.com/2013/12/nerdist-podcast-moby/",
-      source_note: "Moby sits down with Chris and Jonah to talk about becoming sober (losing the 'sorry, I was super drunk' excuse), sampling, raves, inter-genre overlap in the music industry, L.A. architecture, partying, and a deep conversation about compartmentalizing and human cognition!",
+      source_description: "Moby sits down with Chris and Jonah to talk about becoming sober (losing the 'sorry, I was super drunk' excuse), sampling, raves, inter-genre overlap in the music industry, L.A. architecture, partying, and a deep conversation about compartmentalizing and human cognition!",
       storage_key: "bde5a8980a18df163c1f80618bdbd6d6",
       show_route: "nerdist",
       show_id: nerdist_id,
@@ -117,7 +117,7 @@ Meteor.startup( function() {
       editor_id: null,
       length_in_seconds: 4770,
       created_at: timestamp,
-      updated_at: timstamp,
+      updated_at: timestamp,
       published: false
     });
 
