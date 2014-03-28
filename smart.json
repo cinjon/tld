@@ -1,9 +1,7 @@
 {
   "packages": {
-    "iron-router": {
-      "git": "git@github.com:EventedMind/iron-router.git",
-      "branch": "dev"
-    },
-    "bootstrap-3": {}
+    "iron-router": {},
+    "bootstrap-3": {},
+    "select2": {}
   }
 }

@@ -2,26 +2,29 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "iron-router": {
-        "git": "git@github.com:EventedMind/iron-router.git",
-        "branch": "dev"
-      },
-      "bootstrap-3": {}
+      "iron-router": {},
+      "bootstrap-3": {},
+      "select2": {}
     },
     "packages": {
       "iron-router": {
-        "git": "git@github.com:EventedMind/iron-router.git",
-        "branch": "dev",
-        "commit": "3cde469a5f454f2130d2fa8a08fb37115f85a295"
+        "git": "https://github.com/EventedMind/iron-router.git",
+        "tag": "v0.7.0",
+        "commit": "05f34bc48c4cad9fdaa366c1ddcabe6980232ece"
       },
       "bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
         "tag": "v3.1.1-1",
         "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
       },
+      "select2": {
+        "git": "https://github.com/nate-strauser/meteor-select2.git",
+        "tag": "v3.4.5",
+        "commit": "4a8d05582b949a14f0ee217c185166abbf112822"
+      },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
-        "branch": "devel",
+        "tag": "v0.2.2",
         "commit": "8bc53798fe5965669ae67c72f91829fcfdceabfd"
       }
     }
