@@ -10,10 +10,10 @@
         </div>
         <div class="row" id="episode_people" style="height:45px">
           {{#each hosts}}
-          {{> people_picture}}
+          {{> small_picture}}
           {{/each}}
           {{#each guest}}
-          {{> people_picture}}
+          {{> small_picture}}
           {{/each}}
         </div>
         <div class="row" style="margin-top:20px;">
@@ -56,11 +56,14 @@
 <template name="editor_highlight">
   <div class="row">
     <div class="col-md-1">
-      {{#if highlight_is_quote_type}}
-      {{> people_picture speaker}}
+      {{#if has_company}}
+      {{> small_picture company}}
       {{/if}}
-      {{#if highlight_is_link_type}}
-      <p><img>Link</p>
+      {{#if has_person}}
+      {{> small_picture person}}
+      {{/if}}
+      {{#if has_link}}
+      <p><img>Linkimg</p>
       {{/if}}
     </div>
     <div class="col-md-1">
@@ -96,12 +99,12 @@
       </select>
 
       <span id="content_input_span" style="display:none; padding-right:10px">
-        <input style="width:100%; {{font_style}}" class="form-control" type="text" id="content_input">
+        <input style="width:100%;" class="form-control" type="text" id="content_input">
       </span>
     </div>
   </div>
 </template>
 
-<template name="people_picture">
-  <img class="person" src="{{img}}">
+<template name="small_picture">
+  <img class="picture" src="{{img}}">(img)
 </template>

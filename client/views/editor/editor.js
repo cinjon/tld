@@ -15,8 +15,6 @@ Template.editor.helpers({
   has_episode: function() {
     return get_episode_by_route_number(this.route, this.number) != null;
   },
-  header_height: function() {
-  },
   highlights: function() {
     var episode = get_episode_by_route_number(this.route, this.number);
     if (episode) {
@@ -60,19 +58,25 @@ Template.editor.rendered = function() {
 }
 
 Template.editor_highlight.helpers({
-  highlight_is_quote_type: function() {
-    return this.type == "quote";
+  company: function() {
+    return People.findOne({_id:this.company_id});
   },
-  speaker: function() {
+  has_person: function() {
+    return this.person_id != null;
+  },
+  has_link: function() {
+    return !this.period_id && !this.company_id
+  },
+  person: function() {
     return People.findOne({_id:this.person_id});
   },
   type_title: function() {
-    if (this.type == "quote") {
+    if (this.person_id) {
       return People.findOne({_id:this.person_id}).first_name;
+    } else if (this.company_id) {
+      return Companies.findOne({_id:this.company_id}).name;
     } else if (this.type == "link") {
       return "Link";
-    } else {
-      return "TODO";
     }
   }
 });
@@ -94,8 +98,10 @@ Template.editor_new_input.events({
     }
   },
   'keydown #content_input': function(e, tmpl) {
-    if (e.keyCode == 8 && $(e.target).val() == '') {
+    var val = $(e.target).val();
+    if (e.keyCode == 8 && val == '') {
       e.preventDefault();
+      set_highlight_type('normal');
       set_highlight_speaker(null);
       $(tmpl.find('#typeahead_input')).show();
       $(tmpl.find('#speaker_name')).hide();
@@ -104,16 +110,20 @@ Template.editor_new_input.events({
       $(tmpl.find('#speaker_input')).val('');
       $(tmpl.find('#speaker_input')).focus();
       return;
+    } else if (e.keyCode == 8 && val == '"') {
+      e.preventDefault();
+      set_highlight_type('note');
+      $(e.target).val('');
     }
   },
   'keyup #content_input': function(e, tmpl) {
     var val = $(e.target).val();
-    if (e.shiftKey && val == '' && e.keyCode == 222) {
+    if (e.shiftKey && val == '"' && e.keyCode == 222) {
       var type = Session.get('highlight')['type'];
       if (type && type == 'link') {
         $(e.target).val('');
       } else {
-        set_highlight_type_to_quote();
+        set_highlight_type('italic');
       }
     } else if (e.keyCode == 13 && val != '') {
       set_highlight_finished(val, this.route, this.number);
@@ -131,6 +141,9 @@ Template.editor_new_input.events({
         $('#select_type').css('display', 'table-cell')
         $(tmpl.find('#content_input')).focus();
       }
+    } else if (val == '' && !Session.get('highlight')['start_time']) {
+      var time = Math.max(Session.get('player_time') - 5, 0)
+      session_var_set_obj('highlight', ['start_time'], time);
     }
   }
 });
@@ -138,13 +151,6 @@ Template.editor_new_input.events({
 Template.editor_new_input.helpers({
   content: function() {
     return Session.get('highlight')['text'];
-  },
-  font_style: function() {
-    var type = Session.get('highlight')['type'];
-    if (type && type == 'quote') {
-      return "font-style:'italic'";
-    }
-    return '';
   },
   has_speaker_src: function() {
     return false;
@@ -280,6 +286,12 @@ var set_highlight_speaker = function(name, type, id) {
   );
 }
 
-var set_highlight_type_to_quote = function() {
-  session_var_set_obj('highlight', ['type'], ['quote']);
+var set_highlight_type = function(style) {
+  if (style == 'italic') {
+    session_var_set_obj('highlight', ['type'], ['quote']);
+  } else if (style == 'note') {
+    session_var_set_obj('highlight', ['type'], ['note']);
+    style = 'normal';
+  }
+  $('#content_input').css('font-style', style);
 }
