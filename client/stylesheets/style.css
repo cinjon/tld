@@ -1,0 +1,45 @@
+#show_title {
+    font-family: "Open Sans", sans-serif;
+    font-size: 40px;
+}
+
+#episode_title {
+    font-family: "Open Sans", sans-serif;
+    font-size: 25px;
+}
+
+#player {
+    width: 100%
+}
+
+.white_text {
+    color: #FFFDF8;
+}
+
+.inherit {
+    height: inherit;
+}
+
+.left {
+    float:left;
+}
+
+hr.style-one {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
+}
+
+.twitter-typeahead {
+     width: 100%;
+}
+.tt-dropdown-menu {
+    width: 100%;
+}
+input.form-control.tt-hint {
+    width:100%
+}

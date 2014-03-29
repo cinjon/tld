@@ -1,28 +1,25 @@
 <template name="layout">
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Timelined</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          {{> loginButtons}}
-        </div><!--/.navbar-collapse -->
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container" style="margin-left:0px">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Timelined</a>
       </div>
+      <div class="navbar-collapse collapse pull-right">
+        {{> loginButtons}}
+      </div><!--/.navbar-collapse -->
     </div>
+  </div>
 
-    <div class="container">
-      {{yield}}
+  {{> yield }}
 
-      <hr>
-
-      <footer>
-        <p>&copy; Timelined 2014</p>
-      </footer>
-    </div> <!-- /container -->
+  <hr>
+  <footer>
+    <p>© Timelined 2014</p>
+  </footer>
 </template>
