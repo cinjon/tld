@@ -1,7 +1,3 @@
-Template.editor.created = function() {
-  Session.set('highlight_typeahead_init', false)
-}
-
 Template.editor.helpers({
   episode_title: function() {
     var episode = get_episode_by_route_number(this.route, this.number);
@@ -19,6 +15,8 @@ Template.editor.helpers({
   has_episode: function() {
     return get_episode_by_route_number(this.route, this.number) != null;
   },
+  header_height: function() {
+  },
   highlights: function() {
     var episode = get_episode_by_route_number(this.route, this.number);
     if (episode) {
@@ -32,6 +30,12 @@ Template.editor.helpers({
       var hosts = episode.hosts || [];
       return People.find({_id:{$in:hosts}});
     }
+  },
+  new_input_time: function() {
+    if (Session.get('player_loaded')) {
+      return Session.get('highlight')['start_time'] || Session.get('player_time') || 0;
+    }
+    return 0;
   },
   show_title: function() {
     var show = Shows.findOne({route:this.route});
@@ -50,6 +54,10 @@ Template.editor.helpers({
     }
   }
 });
+
+Template.editor.rendered = function() {
+  $('#highlight_times').css('padding-top', $('#header').outerHeight().toString() + 'px');
+}
 
 Template.editor_highlight.helpers({
   highlight_is_quote_type: function() {
@@ -74,15 +82,27 @@ Template.editor_new_input.created = function() {
 }
 
 Template.editor_new_input.events({
+  'change select': function(e, tmpl) {
+    var val = $(e.target).val();
+    if (!(val == 'instr')) {
+      session_var_set_obj('highlight', ['type'], [val]);
+      $('#select_type').hide();
+      $('#speaker_name').css('display', 'table-cell');
+      $('#speaker_type').show();
+      $('#content_input_span').css('display', 'table-cell');
+      $('#content_input_span').focus();
+    }
+  },
   'keydown #content_input': function(e, tmpl) {
     if (e.keyCode == 8 && $(e.target).val() == '') {
       e.preventDefault();
       set_highlight_speaker(null);
-      $(tmpl.find('#speaker_name')).hide();
-      $(tmpl.find('#content_input_div')).hide();
       $(tmpl.find('#typeahead_input')).show();
-      $(tmpl.find('#content_input')).val('');
-      $(tmpl.find('#content_input')).focus();
+      $(tmpl.find('#speaker_name')).hide();
+      $(tmpl.find('#content_input_span')).hide();
+      $(tmpl.find('#speaker_col')).hide();
+      $(tmpl.find('#speaker_input')).val('');
+      $(tmpl.find('#speaker_input')).focus();
       return;
     }
   },
@@ -106,8 +126,9 @@ Template.editor_new_input.events({
       if (!type) { //new speaker, ask for what type
         set_highlight_speaker(val, null, null);
         $(tmpl.find('#typeahead_input')).hide();
-        $(tmpl.find('#speaker_name')).show();
-        $('#select_type').css('display', 'inline-block')
+        $(tmpl.find('#speaker_name')).css('display', 'table-cell');
+        $(tmpl.find('#speaker_type')).show();
+        $('#select_type').css('display', 'table-cell')
         $(tmpl.find('#content_input')).focus();
       }
     }
@@ -128,6 +149,10 @@ Template.editor_new_input.helpers({
   has_speaker_src: function() {
     return false;
   },
+  is_speaker_set: function() {
+    var vals = Session.get('highlight');
+    return vals['_speaker_name'] != null && vals['type'] != null;
+  },
   speaker_name: function() {
     return Session.get('highlight')['_speaker_name'];
   },
@@ -135,27 +160,6 @@ Template.editor_new_input.helpers({
     return Session.get('highlight')['type']
   }
 });
-
-Template.editor_select_type.events({
-  'change select': function(e, tmpl) {
-    var val = $(e.target).val();
-    if (!(val == 'instr')) {
-      session_var_set_obj('highlight', ['type'], [val]);
-      $('#select_type').hide();
-      $('#speaker_name').show();
-      $('#content_input_div').css('display', 'block');
-      $('#content_input_div').focus();
-    }
-  },
-});
-
-var get_selections_company = function() {
-  return [{value:'blah', type:'sponsor'}, {value:'blew', type:'sponsor'}]
-  return Companies.find({}, {fields:{name:true}}).map(function(company) {
-    var name = company.name;
-    return {value:name, id:company._id, type:'sponsor'}
-  });
-}
 
 Template.editor_new_input.rendered = function() {
   var datums_company = new Bloodhound({
@@ -210,10 +214,19 @@ Template.editor_new_input.rendered = function() {
     }
   ).on('typeahead:selected', function(event, datum, name) {
     set_highlight_speaker(datum.value, datum.type, datum.id);
-    $('#speaker_name').show();
+    $('#speaker_name').css('display', 'table-cell');
+    $('#speaker_type').show();
     $('#typeahead_input').hide();
-    $('#content_input_div').css('display', 'block');
+    $('#content_input_span').css('display', 'table-cell');
     $('#content_input').focus();
+  });
+}
+
+var get_selections_company = function() {
+  return [{value:'blah', type:'sponsor'}, {value:'blew', type:'sponsor'}]
+  return Companies.find({}, {fields:{name:true}}).map(function(company) {
+    var name = company.name;
+    return {value:name, id:company._id, type:'sponsor'}
   });
 }
 

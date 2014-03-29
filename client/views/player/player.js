@@ -1,3 +1,5 @@
+var player = null;
+
 Template.player.rendered = function() {
   load_video();
 };
@@ -8,6 +10,8 @@ Template.player.destroyed = function() {
 
 var dispose_video = function() {
   videojs("#player").dispose();
+  Session.set('player_loaded', false);
+  Session.set('player_time', null);
 };
 
 var load_video = function(seconds) {
@@ -20,5 +24,13 @@ var load_video = function(seconds) {
         this.currentTime(seconds);
       }
     }
-  );
+  ).ready(function() {
+    player = this;
+    player.play();
+    player.pause();
+    player.on('timeupdate', function() {
+      Session.set('player_time', Math.floor(player.currentTime()));
+    });
+    Session.set('player_loaded', true);
+  });
 };

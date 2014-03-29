@@ -25,11 +25,20 @@
       <div class="col-md-7 inherit">
         <div class="row inherit">
           <div class="col-md-1 inherit white_text">
-            0:10:38
+            <div id="highlight_times">
+              {{#each highlights}}
+              <div class="row highlight_position">
+                <span class="highlight_time">{{format_seconds_to_clock start_time}}</span>
+              </div>
+              {{/each}}
+              <div class="row highlight_position">
+                <span class="highlight_time">{{format_seconds_to_clock new_input_time}}</span>
+              </div>
+            </div>
           </div>
           <div class="col-md-11 inherit">
             <section class="well" style="padding-top:0px; padding-left:14px; padding-right:14px; height:100%; background-color:#BFBFB6">
-              <div class="row" style="background-color:#FFFDF8; padding-top:19px">
+              <div class="row" id="header" style="background-color:#FFFDF8; padding-top:19px">
                 <p style="color:red; text-align:center">Draft Mode</p>
               </div>
               {{#each highlights}}
@@ -46,60 +55,51 @@
 
 <template name="editor_highlight">
   <div class="row">
-    <div class="col-md-1" style="background-color:black; color:grey">
-      {{format_seconds_to_clock start_time}}
+    <div class="col-md-1">
+      {{#if highlight_is_quote_type}}
+      {{> people_picture speaker}}
+      {{/if}}
+      {{#if highlight_is_link_type}}
+      <p><img>Link</p>
+      {{/if}}
     </div>
-    <div class="col-md-11">
-      <div class="row">
-        <div class="col-md-1">
-          {{#if highlight_is_quote_type}}
-          {{> people_picture speaker}}
-          {{/if}}
-          {{#if highlight_is_link_type}}
-          <p><img>Link</p>
-          {{/if}}
-        </div>
-        <div class="col-md-1">
-          {{type_title}}
-        </div>
-        <div class="col-md-10">
-          {{text}}
-        </div>
-      </div>
+    <div class="col-md-1">
+      {{type_title}}
+    </div>
+    <div class="col-md-10">
+      {{text}}
     </div>
   </div>
 </template>
 
 <template name="editor_new_input">
-  <div class="row" style="margin-top:20px">
-    <div class="col-md-2">
-      <div class="row">
+  <div class="row" style="margin-top:20px;">
+    <div style="width:100%; display:table">
+      <span id="speaker_type" style="display:table-cell; vertical-align:middle; padding-left:10px">
         {{#if is_speaker_set}}
-          {{capitalize speaker_type}}
+        {{capitalize speaker_type}}
         {{else}}
-          <i class="fa fa-chevron-circle-right"></i>
+        <i class="fa fa-chevron-circle-right"></i>
         {{/if}}
-      </div>
-    </div>
-    <div class="col-md-10" id="inputs_div">
-      <div id="typeahead_input">
+      </span>
+
+      <div id="typeahead_input" style="display:table-cell; padding-right:10px">
         <input class="form-control" type="text" id="speaker_input">
       </div>
-      <h4 class="left" style="display:none" id="speaker_name">{{speaker_name}}</h4>
-      {{> editor_select_type}}
-      <span id="content_input_div" style="display:none; padding-left:10px; overflow:hidden">
+
+      <h4 style="display:none; vertical-align:middle" id="speaker_name">{{speaker_name}}</h4>
+
+      <select class="form-control" id="select_type" style="display:none; width:160px; height:25px">
+        <option value="instr">Person or Sponsor?</option>
+        <option value="person">Person</option>
+        <option value="sponsor">Sponsor</option>
+      </select>
+
+      <span id="content_input_span" style="display:none; padding-right:10px">
         <input style="width:100%; {{font_style}}" class="form-control" type="text" id="content_input">
       </span>
     </div>
   </div>
-</template>
-
-<template name="editor_select_type">
-  <select class="form-control" id="select_type" style="display:none; width:160px; padding-left:15px">
-    <option value="instr">Person or Sponsor?</option>
-    <option value="person">Person</option>
-    <option value="sponsor">Sponsor</option>
-  </select>
 </template>
 
 <template name="people_picture">

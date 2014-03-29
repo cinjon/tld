@@ -12,6 +12,10 @@
     width: 100%
 }
 
+#speaker_input {
+    width:100%
+}
+
 .white_text {
     color: #FFFDF8;
 }
@@ -26,6 +30,16 @@
 
 .right {
     float:right;
+}
+
+.highlight_position {
+    margin-top:20px;
+    position:absolute
+}
+
+.highlight_time {
+    position:relative;
+    top:5px
 }
 
 hr.style-one {
