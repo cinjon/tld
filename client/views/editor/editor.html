@@ -1,33 +1,44 @@
 <template name="editor">
-  <div class="row">
-    <div class="col-md-5" style="background-color:black">
-      <div class="row" id="show_title">
-        {{show_title}}
+  <div class="container" style="height:700px; min-height:700px;">
+    <div class="row inherit">
+      <div class="col-md-5 inherit">
+        <div class="row">
+          <p id="show_title" class="white_text">{{show_title}}</p>
+        </div>
+        <div class="row">
+          <p id="episode_title" class="white_text"><b>{{episode_title}}</b></p>
+        </div>
+        <div class="row" id="episode_people" style="height:45px">
+          {{#each hosts}}
+          {{> people_picture}}
+          {{/each}}
+          {{#each guest}}
+          {{> people_picture}}
+          {{/each}}
+        </div>
+        <div class="row" style="margin-top:20px;">
+          {{#if has_episode}}
+            {{> player player_data}}
+          {{/if}}
+        </div>
       </div>
-      <div class="row" id="episode_title">
-        {{episode_title}}
-      </div>
-      <div class="row" id="episode_people">
-        {{#each hosts}}
-        {{> people_picture}}
-        {{/each}}
-        {{#each guest}}
-        {{> people_picture}}
-        {{/each}}
-      </div>
-      <div class="row">
-        {{> video_player}}
-      </div>
-    </div>
-    <div class="col-md-7">
-      <div class="row">
-        Draft Mode
-      </div>
-      {{#each highlights}}
-      {{> editor_highlight}}
-      {{/each}}
-      <div class="row">
-        {{> editor_new_input}}
+      <div class="col-md-7 inherit">
+        <div class="row inherit">
+          <div class="col-md-1 inherit white_text">
+            0:10:38
+          </div>
+          <div class="col-md-11 inherit">
+            <section class="well" style="padding-top:0px; padding-left:14px; padding-right:14px; height:100%; background-color:#BFBFB6">
+              <div class="row" style="background-color:#FFFDF8; padding-top:19px">
+                <p style="color:red; text-align:center">Draft Mode</p>
+              </div>
+              {{#each highlights}}
+              {{> editor_highlight}}
+              {{/each}}
+              {{> editor_new_input}}
+            </section>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -60,6 +71,37 @@
 </template>
 
 <template name="editor_new_input">
+  <div class="row" style="margin-top:20px">
+    <div class="col-md-2">
+      <div class="row">
+        {{#if is_speaker_set}}
+          {{capitalize speaker_type}}
+        {{else}}
+          <i class="fa fa-chevron-circle-right"></i>
+        {{/if}}
+      </div>
+    </div>
+    <div class="col-md-10" id="inputs_div">
+      {{#if is_speaker_set}}
+        <div class="left" style="padding-right:10px" id="speaker_name">
+          <h4>{{speaker_name}}</h4>
+        </div>
+        <div class="left" style="width:{{content_width}}">
+          <input style="width:100%; height:25px; {{font_style}}" class="form-control" type="text" id="content_input">
+        </div>
+      {{else}}
+        {{#if is_choose_type}}
+        <select class="form-control">
+          <option value="instr">Person or Sponsor?</option>
+          <option value="person">Person</option>
+          <option value="sponsor">Sponsor</option>
+        </select>
+        {{else}}
+        <input style="height:25px" class="form-control" type="text" id="speaker_input">
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
 </template>
 
 <template name="people_picture">

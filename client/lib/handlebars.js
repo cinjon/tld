@@ -33,6 +33,14 @@ UI.registerHelper("is_claimed", function(uid) {
   return uid != null && uid != Meteor.userId();
 });
 
+UI.registerHelper("s3", function(key) {
+  if (key) {
+    return "http://s3.amazonaws.com/timelined/audio/" + key + ".mp3";
+  } else {
+    return null;
+  }
+});
+
 var _format_time_part = function(time) {
   if (time < 10) {
     return "0" + time.toString();
