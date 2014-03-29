@@ -7,3 +7,4 @@
 //   created_at: date,
 //   updated_at: date
 // }
+Companies = new Meteor.Collection('companies');

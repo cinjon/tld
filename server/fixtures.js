@@ -20,13 +20,13 @@ Meteor.startup( function() {
     Roles.addUsersToRoles(matt_id, ['admin', 'editor']);
 
     var admin_id = Accounts.createUser({
-      email:'admin',
+      email:'admin@tld',
       password:'admin',
       username:'Admin'
     });
 
     var editor_id = Accounts.createUser({
-      email:'editor',
+      email:'editor@tld',
       password:'editor',
       username:'Editor'
     });
@@ -42,7 +42,7 @@ Meteor.startup( function() {
       created_at: timestamp,
       updated_at: timestamp,
       artwork: null,
-      route: 'back-to-work',
+      route: make_name_route('Back To Work'),
     });
 
     var nerdist_id = Shows.insert({
@@ -53,7 +53,7 @@ Meteor.startup( function() {
       created_at: timestamp,
       updated_at: timestamp,
       artwork: null,
-      route: 'nerdist'
+      route: make_name_route('Nerdist')
     });
 
 
@@ -65,7 +65,7 @@ Meteor.startup( function() {
       source_url: "http://5by5.tv/b2w/1",
       source_description: "In the inaugural episode of Back to Work, Merlin Mann and Dan Benjamin discuss why they’re doing this show, getting back to work instead of buying berets, the lizard brain, and compare the Shadow of the Mouse to San Francisco, and eventually get to some practical tips for removing friction.",
       storage_key: "c8b1b604524c39612ba0be3423ca4669",
-      show_route: "back-to-work",
+      show_route: 'back-to-work',
       show_id: backtowork_id,
       hosts: null,
       guests: null,
@@ -108,7 +108,7 @@ Meteor.startup( function() {
       source_url: "http://www.nerdist.com/2013/12/nerdist-podcast-moby/",
       source_description: "Moby sits down with Chris and Jonah to talk about becoming sober (losing the 'sorry, I was super drunk' excuse), sampling, raves, inter-genre overlap in the music industry, L.A. architecture, partying, and a deep conversation about compartmentalizing and human cognition!",
       storage_key: "bde5a8980a18df163c1f80618bdbd6d6",
-      show_route: "nerdist",
+      show_route: 'nerdist',
       show_id: nerdist_id,
       hosts: null,
       guests: null,
@@ -120,6 +120,5 @@ Meteor.startup( function() {
       updated_at: timestamp,
       published: false
     });
-
   }
 });
