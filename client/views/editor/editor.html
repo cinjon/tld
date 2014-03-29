@@ -82,26 +82,24 @@
       </div>
     </div>
     <div class="col-md-10" id="inputs_div">
-      {{#if is_speaker_set}}
-        <div class="left" style="padding-right:10px" id="speaker_name">
-          <h4>{{speaker_name}}</h4>
-        </div>
-        <div class="left" style="width:{{content_width}}">
-          <input style="width:100%; height:25px; {{font_style}}" class="form-control" type="text" id="content_input">
-        </div>
-      {{else}}
-        {{#if is_choose_type}}
-        <select class="form-control">
-          <option value="instr">Person or Sponsor?</option>
-          <option value="person">Person</option>
-          <option value="sponsor">Sponsor</option>
-        </select>
-        {{else}}
-        <input style="height:25px" class="form-control" type="text" id="speaker_input">
-        {{/if}}
-      {{/if}}
+      <div id="typeahead_input">
+        <input class="form-control" type="text" id="speaker_input">
+      </div>
+      <h4 class="left" style="display:none" id="speaker_name">{{speaker_name}}</h4>
+      {{> editor_select_type}}
+      <span id="content_input_div" style="display:none; padding-left:10px; overflow:hidden">
+        <input style="width:100%; {{font_style}}" class="form-control" type="text" id="content_input">
+      </span>
     </div>
   </div>
+</template>
+
+<template name="editor_select_type">
+  <select class="form-control" id="select_type" style="display:none; width:160px; padding-left:15px">
+    <option value="instr">Person or Sponsor?</option>
+    <option value="person">Person</option>
+    <option value="sponsor">Sponsor</option>
+  </select>
 </template>
 
 <template name="people_picture">
