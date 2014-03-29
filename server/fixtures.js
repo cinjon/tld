@@ -62,8 +62,6 @@ Meteor.startup( function() {
       format: "mp3",
       title: "Back to Work 001",
       number: 1,
-      source_url: "http://5by5.tv/b2w/1",
-      source_description: "In the inaugural episode of Back to Work, Merlin Mann and Dan Benjamin discuss why they’re doing this show, getting back to work instead of buying berets, the lizard brain, and compare the Shadow of the Mouse to San Francisco, and eventually get to some practical tips for removing friction.",
       storage_key: "c8b1b604524c39612ba0be3423ca4669",
       show_route: 'back-to-work',
       show_id: backtowork_id,
@@ -75,7 +73,15 @@ Meteor.startup( function() {
       length_in_seconds: 5368,
       created_at: timestamp,
       updated_at: timestamp,
-      published: false
+      published: false,
+      feed: {
+        title: 'Back to Work 001',
+        url: 'http://5by5.tv/b2w/1',
+        summary: "In the inaugural episode of Back to Work, Merlin Mann and Dan Benjamin discuss why they’re doing this show, getting back to work instead of buying berets, the lizard brain, and compare the Shadow of the Mouse to San Francisco, and eventually get to some practical tips for removing friction.",
+        published: 'Tue, 18 Jan 2011 20:00:00 GMT',
+        entry_id: 'http://5by5.tv/b2w/1',
+        enclosure_url: "http://d.5by5.net/redirect.mp3/cdn.5by5.tv/audio/broadcasts/b2w/2011/b2w-001.mp3"
+      }
     });
 
 
@@ -83,9 +89,8 @@ Meteor.startup( function() {
       type: "audio",
       format: "mp3",
       title: "Back to Work 002",
-      number: 1,
+      number: 2,
       source_url: "http://5by5.tv/b2w/2",
-      source_description: "Merlin Mann and Dan Benjamin formulate a five-minute warning tactic before discussing the reality of bringing change to your company, some patterns that work for startups, solving the right problem at the right level, why you can’t find the innovation button, and using PathFinder as a Finder replacement.",
       storage_key: "118d07e7ac1adfdc6cd8b97400001a87",
       show_route: "back-to-work",
       show_id: backtowork_id,
@@ -97,7 +102,15 @@ Meteor.startup( function() {
       length_in_seconds: 4122,
       created_at: timestamp,
       updated_at: timestamp,
-      published: false
+      published: false,
+      feed: {
+        title: 'Back to Work 002',
+        url: 'http://5by5.tv/b2w/2',
+        summary: "Merlin Mann and Dan Benjamin formulate a five-minute warning tactic before discussing the reality of bringing change to your company, some patterns that work for startups, solving the right problem at the right level, why you can’t find the innovation button, and using PathFinder as a Finder replacement.",
+        published: 'Tue, 25 Jan 2011 19:00:00 GMT',
+        entry_id: 'http://5by5.tv/b2w/2',
+        enclosure_url: "http://d.5by5.net/redirect.mp3/cdn.5by5.tv/audio/broadcasts/b2w/2011/b2w-002.mp3"
+      }
     });
 
     var nerdist = Episodes.insert({
@@ -105,8 +118,6 @@ Meteor.startup( function() {
       format: "mp3",
       title: "Moby",
       number: 457,
-      source_url: "http://www.nerdist.com/2013/12/nerdist-podcast-moby/",
-      source_description: "Moby sits down with Chris and Jonah to talk about becoming sober (losing the 'sorry, I was super drunk' excuse), sampling, raves, inter-genre overlap in the music industry, L.A. architecture, partying, and a deep conversation about compartmentalizing and human cognition!",
       storage_key: "bde5a8980a18df163c1f80618bdbd6d6",
       show_route: 'nerdist',
       show_id: nerdist_id,
@@ -118,7 +129,15 @@ Meteor.startup( function() {
       length_in_seconds: 4770,
       created_at: timestamp,
       updated_at: timestamp,
-      published: false
+      published: false,
+      feed: {
+        title: 'Moby',
+        url: 'http://www.nerdist.com/2013/12/nerdist-podcast-moby/',
+        summary: "Moby sits down with Chris and Jonah to talk about becoming sober (losing the 'sorry, I was super drunk' excuse), sampling, raves, inter-genre overlap in the music industry, L.A. architecture, partying, and a deep conversation about compartmentalizing and human cognition!",
+        published: 'Mon, 23 Dec 2013 09:30:00 +0000',
+        entry_id: 'd71f0ad3a64e97f085d7aaf19bbb0666',
+        enclosure_url: "http://www.podtrac.com/pts/redirect.mp3/traffic.libsyn.com/nerdist/Nerdist_457_-_Moby.mp3"
+      }
     });
   }
 });
