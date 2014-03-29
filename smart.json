@@ -2,7 +2,7 @@
   "packages": {
     "iron-router": {},
     "bootstrap-3": {},
-    "select2": {},
-    "roles": {}
+    "roles": {},
+    "typeahead": {}
   }
 }

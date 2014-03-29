@@ -4,8 +4,8 @@
     "basePackages": {
       "iron-router": {},
       "bootstrap-3": {},
-      "select2": {},
-      "roles": {}
+      "roles": {},
+      "typeahead": {}
     },
     "packages": {
       "iron-router": {
@@ -18,15 +18,15 @@
         "tag": "v3.1.1-1",
         "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
       },
-      "select2": {
-        "git": "https://github.com/nate-strauser/meteor-select2.git",
-        "tag": "v3.4.5",
-        "commit": "4a8d05582b949a14f0ee217c185166abbf112822"
-      },
       "roles": {
         "git": "https://github.com/alanning/meteor-roles.git",
         "tag": "v1.2.6",
         "commit": "f2a9058281f8f2fe028767841d7445aadd6893cf"
+      },
+      "typeahead": {
+        "git": "https://github.com/sergeyt/meteor-typeahead.git",
+        "tag": "v0.0.6",
+        "commit": "79b17707e3244f87af08a1a59e1ac4088f3e8644"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
