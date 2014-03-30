@@ -27,18 +27,14 @@
           <div class="col-md-1 inherit white_text">
             <div id="highlight_times">
               {{#each highlights}}
-              <div class="row highlight_position">
-                <span class="highlight_time">{{format_seconds_to_clock start_time}}</span>
-              </div>
+              {{> editor_highlight_time}}
               {{/each}}
-              <div class="row highlight_position">
-                <span class="highlight_time">{{format_seconds_to_clock new_input_time}}</span>
-              </div>
+              {{> editor_highlight_time new_time}}
             </div>
           </div>
           <div class="col-md-11 inherit">
             <section class="well" style="padding-top:0px; padding-left:14px; padding-right:14px; height:100%; background-color:#BFBFB6">
-              <div class="row" id="header" style="background-color:#FFFDF8; padding-top:19px">
+              <div class="row" id="header" style="background-color:#FFFDF8; padding-top:19px; margin-bottom:10px">
                 <p style="color:red; text-align:center">Draft Mode</p>
               </div>
               {{#each highlights}}
@@ -54,8 +50,8 @@
 </template>
 
 <template name="editor_highlight">
-  <div class="row">
-    <div class="col-md-1">
+  <div class="row" style="height:40px">
+    <div class="left highlight_image">
       {{#if has_company}}
       {{> small_picture company}}
       {{/if}}
@@ -63,26 +59,28 @@
       {{> small_picture person}}
       {{/if}}
       {{#if has_link}}
-      <p><img>Linkimg</p>
+      {{> small_picture link}}
       {{/if}}
     </div>
-    <div class="col-md-1">
-      {{type_title}}
-    </div>
-    <div class="col-md-10">
-      {{text}}
+    <div class="highlight_text left">
+      <span class="highlight_type left" style="padding-right:10px;">
+        {{type_title}}
+      </span>
+      <span class="highlight_content left" style="color:grey">
+        {{text}}
+      </span>
     </div>
   </div>
 </template>
 
 <template name="editor_new_input">
-  <div class="row" style="margin-top:20px;">
+  <div class="row">
     <div style="width:100%; display:table">
-      <span id="speaker_type" style="display:table-cell; vertical-align:middle; padding-left:10px">
+      <span id="speaker_type" style="display:table-cell; vertical-align:middle; padding-left:10px; width:40px">
         {{#if is_speaker_set}}
         {{capitalize speaker_type}}
         {{else}}
-        <i class="fa fa-chevron-circle-right"></i>
+        <i class="fa fa-chevron-circle-right" style="font-size:1.5em"></i>
         {{/if}}
       </span>
 
@@ -105,6 +103,18 @@
   </div>
 </template>
 
+<template name="editor_highlight_time">
+  <div class="row" style="height:40px">
+    <span class="highlight_time">{{format_seconds_to_clock start_time}}</span>
+  </div>
+</template>
+
 <template name="small_picture">
+  {{#if is_link}}
+  <span style="width:40px; font-size:1.5em">
+    <i class="fa fa-link fa-inverse"></i>
+  </span>
+  {{else}}
   <img class="picture" src="{{img}}">(img)
+  {{/if}}
 </template>

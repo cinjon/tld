@@ -20,6 +20,14 @@
     color: #FFFDF8;
 }
 
+.grey {
+    color:grey
+}
+
+.red {
+    color:red
+}
+
 .inherit {
     height: inherit;
 }
@@ -32,14 +40,24 @@
     float:right;
 }
 
-.highlight_position {
-    margin-top:20px;
-    position:absolute
+.highlight_content {
+    padding-right: 10px;
+    color: grey;
+}
+
+.highlight_image {
+    padding-left: 10px;
+    padding-right: 10px;
+    top:3px;
 }
 
 .highlight_time {
     position:relative;
     top:5px
+}
+
+.highlight_text {
+    font-size:20px
 }
 
 hr.style-one {
