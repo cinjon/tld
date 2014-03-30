@@ -65,13 +65,14 @@ Template.editor_highlight.helpers({
     return this.person_id != null;
   },
   has_link: function() {
-    return !this.period_id && !this.company_id
+    return this.url != null;
   },
   person: function() {
     return People.findOne({_id:this.person_id});
   },
   type_title: function() {
     if (this.person_id) {
+      console.log(this.person_id);
       return People.findOne({_id:this.person_id}).first_name;
     } else if (this.company_id) {
       return Companies.findOne({_id:this.company_id}).name;
@@ -103,12 +104,7 @@ Template.editor_new_input.events({
       e.preventDefault();
       set_highlight_type('normal');
       set_highlight_speaker(null);
-      $(tmpl.find('#typeahead_input')).show();
-      $(tmpl.find('#speaker_name')).hide();
-      $(tmpl.find('#content_input_span')).hide();
-      $(tmpl.find('#speaker_col')).hide();
-      $(tmpl.find('#speaker_input')).val('');
-      $(tmpl.find('#speaker_input')).focus();
+      set_css_new(tmpl);
       return;
     } else if (e.keyCode == 8 && val == '"') {
       e.preventDefault();
@@ -126,7 +122,7 @@ Template.editor_new_input.events({
         set_highlight_type('italic');
       }
     } else if (e.keyCode == 13 && val != '') {
-      set_highlight_finished(val, this.route, this.number);
+      set_highlight_finished(val, this.route, this.number, tmpl);
     }
   },
   'keyup #speaker_input': function(e, tmpl) {
@@ -229,15 +225,18 @@ Template.editor_new_input.rendered = function() {
 }
 
 var get_selections_company = function() {
-  return [{value:'blah', type:'sponsor'}, {value:'blew', type:'sponsor'}]
+  console.log('g s c');
+  console.log(Companies.find().fetch());
   return Companies.find({}, {fields:{name:true}}).map(function(company) {
     var name = company.name;
+    console.log(name);
     return {value:name, id:company._id, type:'sponsor'}
   });
 }
 
 var get_selections_people = function() {
-  return [{value:'pro', type:'person'}, {value:'plax read', type:'person'}]
+  console.log('g s ppp');
+  console.log(People.find().fetch());
   return People.find({}, {fields:{first_name:true, last_name:true}}).map(function(person) {
     var name = person.first_name + ' ' + person.last_name;
     return {value:name, id:person._id, type:'person'};
@@ -249,15 +248,36 @@ var get_episode_by_route_number = function(route, number) {
 }
 
 var new_highlight = function() {
+  console.log('in new_highlight');
   //_speaker_name holds the name, e.g. "Matt Tanase" or "Link"
   return {type:null, editor_id:Meteor.userId(), episode_id:null,
           start_time:null, text:null, person_id:null,
           company_id:null, url:null, _speaker_name:null}
 }
 
-var set_highlight_finished = function(text, route, number) {
+var set_css_new = function(tmpl) {
+  if (tmpl) {
+    $(tmpl.find('#typeahead_input')).show();
+    $(tmpl.find('#speaker_name')).hide();
+    $(tmpl.find('#content_input_span')).hide();
+    $(tmpl.find('#speaker_col')).hide();
+    $(tmpl.find('#speaker_input')).val('');
+    $(tmpl.find('#speaker_input')).focus();
+  } else {
+    $('#typeahead_input').show();
+    $('#speaker_name').hide();
+    $('#content_input_span').hide();
+    $('#speaker_col').hide();
+    $('#speaker_input').val('');
+    $('#speaker_input').focus();
+  }
+}
+
+var set_highlight_finished = function(text, route, number, tmpl) {
   session_var_set_obj('highlight', ['text'], [text]);
   Meteor.call('new_highlight', Session.get('highlight'), route, number);
+  Session.set('highlight', new_highlight());
+  set_css_new(tmpl)
 }
 
 var set_highlight_speaker = function(name, type, id) {
