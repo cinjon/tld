@@ -1,3 +1,13 @@
+<template name="character_cutoff">
+  <small class="box_title" style="display:inline-block; float:right">
+    <div id="character_cutoff">
+      <span style="color:{{current_notes_color}}">{{current_char_counter}}</span>
+      <span>&nbsp;/&nbsp;</span>
+      <span>{{max_chars}}</span>
+    </div>
+  </small>
+</template>
+
 <template name="editor">
   <div class="container" style="height:700px; min-height:700px;">
     <div class="row inherit">
@@ -35,7 +45,14 @@
           <div class="col-md-11 inherit">
             <section class="well" style="padding-top:0px; padding-left:14px; padding-right:14px; height:100%; background-color:#BFBFB6">
               <div class="row" id="header" style="background-color:#FFFDF8; padding-top:19px; margin-bottom:10px">
-                <p style="color:red; text-align:center">Draft Mode</p>
+                <div class="col-md-5 col-md-offset-5">
+                  <p class="red">Draft Mode</p>
+                </div>
+                <div class="col-md-2">
+                  <p class="right" style="padding-right:10px">
+                    {{> character_cutoff}}
+                  </p>
+                </div>
               </div>
               {{> editor_new_input}}
               {{#each highlights}}

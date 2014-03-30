@@ -1,3 +1,29 @@
+var max_chars = 140;
+
+Template.character_cutoff.helpers({
+  current_char_counter: function() {
+    return Session.get('current_char_counter');
+  },
+  current_notes_color: function() {
+    if (Session.get('current_char_counter') > max_chars) {
+      return '#EB1E2C';
+    } else {
+      return '#000000';
+    }
+  },
+  max_chars: function() {
+    return max_chars;
+  }
+});
+
+Template.editor.created = function() {
+  Session.set('current_char_counter', 0);
+}
+
+Template.editor.destroyed = function() {
+  Session.set('current_char_counter', null);
+}
+
 Template.editor.helpers({
   episode_title: function() {
     var episode = get_episode_by_route_number(this.route, this.number);
@@ -158,6 +184,8 @@ Template.editor_new_input.events({
   },
   'keyup #content_input': function(e, tmpl) {
     var val = $(e.target).val();
+    Session.set('current_char_counter', val.length);
+
     if (e.shiftKey && val == '"' && e.keyCode == 222) {
       var type = Session.get('highlight')['type'];
       if (type && type == 'link') {
@@ -165,7 +193,7 @@ Template.editor_new_input.events({
       } else {
         set_highlight_type('italic');
       }
-    } else if (e.keyCode == 13 && val != '') {
+    } else if (e.keyCode == 13 && val != '' && Session.get('current_char_counter') <= max_chars) {
       set_highlight_finished(val, this.route, this.number, tmpl);
     }
   },
@@ -215,6 +243,13 @@ Template.small_picture.helpers({
   }
 });
 
+var count_text_chars = function(text) {
+  if (typeof text == "undefined" || !text) {
+    return 0;
+  }
+  return text.text().length;
+};
+
 var get_selections_company = function() {
   return Companies.find({}, {fields:{name:true}}).map(function(company) {
     var name = company.name;
@@ -244,6 +279,8 @@ var set_css_new = function(tmpl) {
   if (tmpl) {
     tmpl.$('#typeahead_input').show();
     tmpl.$('#speaker_name').hide();
+    tmpl.$('#content_input').val('');
+    Session.set('current_char_counter', 0);
     tmpl.$('#content_input_span').hide();
     tmpl.$('#speaker_col').hide();
     tmpl.$('#speaker_input').val('');
