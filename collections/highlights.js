@@ -12,3 +12,12 @@
 //   updated_at: date
 // }
 Highlights = new Meteor.Collection('highlights');
+
+make_highlight = function(type, editor_id, episode_id, start_time, text,
+                          person_id, company_id, url, created_at) {
+  created_at = created_at || (new Date()).getTime();
+  return Highlights.insert({type:type, editor_id:editor_id, episode_id:episode_id,
+                            start_time:start_time, text:text, person_id:person_id,
+                            company_id:company_id, url:url,
+                            created_at:created_at})
+}
