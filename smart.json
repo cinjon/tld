@@ -4,6 +4,7 @@
     "bootstrap-3": {},
     "roles": {},
     "typeahead": {},
-    "font-awesome": {}
+    "font-awesome": {},
+    "autoform": {}
   }
 }
