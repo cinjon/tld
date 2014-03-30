@@ -36,6 +36,10 @@ Meteor.publish('show_from_route', function(route) {
   return Shows.find({route:route})
 });
 
+Meteor.publish('shows_list', function() {
+  return Shows.find();
+});
+
 Meteor.publish('shows_with_unedited_episodes', function() {
   return Shows.find({
     _id: {
