@@ -1,5 +1,41 @@
 var max_chars = 140;
 
+Template.add_person.events({
+  'click button': function(e, tmpl) {
+    $(tmpl.find('#add_' + this.id + '_button')).hide();
+    $(tmpl.find('.new_person_input_span')).show();
+    $(tmpl.find('.new_person_input')).focus();
+  },
+  'keydown .new_person_input': function(e, tmpl) {
+    var val = $(e.target).val();
+    if (e.keyCode == 8 && val == '') {
+      e.preventDefault();
+      $(tmpl.find('#add_' + this.id + '_button')).show();
+      $(tmpl.find('.new_person_input_span')).hide();
+      $(tmpl.find('.new_person_input')).val('');
+    }
+  },
+  'keyup .new_person_input': function(e, tmpl) {
+    var val = $(e.target).val().trim();
+    if (e.keyCode == 13 && val != '') {
+      var new_person_input = $(tmpl.find('.new_person_input'));
+      var new_person_input_span = $(tmpl.find('.new_person_input_span'));
+      var add_button = $(tmpl.find('#add_' + this.id + '_button'));
+      var episode_id = Session.get('episode_id');
+      Meteor.call(
+        'new_' + this.id, val, episode_id, function(err, result) {
+          new_person_input.val('');
+          new_person_input_span.hide();
+          add_button.show();
+          if (result['success']) {
+            session_var_push(this.id + 's', result['person_id']);
+          }
+        }
+      );
+    }
+  },
+});
+
 Template.character_cutoff.helpers({
   current_char_counter: function() {
     return Session.get('current_char_counter');
@@ -25,35 +61,44 @@ Template.editor.destroyed = function() {
 }
 
 Template.editor.helpers({
+  add_guest: function() {
+    return {
+      id:'guest',
+    }
+  },
+  add_host: function() {
+    return {
+      id:'host',
+    }
+  },
   episode_title: function() {
-    var episode = get_episode_by_route_number(this.route, this.number);
+    var episode = Episodes.findOne({_id:Session.get('episode_id')});
     if (episode) {
       return episode.title;
     }
   },
   guests: function() {
-    var episode = get_episode_by_route_number(this.route, this.number);
-    if (episode) {
-      var guests = episode.guests || [];
-      return People.find({_id:{$in:guests}});
+    var episode = Episodes.findOne({_id:Session.get('episode_id')});
+    if (!episode) {
+      return [];
     }
+    var guests = episode.guests || [];
+    return People.find({_id:{$in:guests}});
   },
   has_episode: function() {
-    return get_episode_by_route_number(this.route, this.number) != null;
+    return Session.get('episode_id');
+    var episode = Episodes.findOne({_id:Session.get('episode_id')});
   },
   highlights: function() {
-    var episode = get_episode_by_route_number(this.route, this.number);
-    if (episode) {
-      var id  = episode._id
-      return Highlights.find({episode_id:id}, {sort:{start_time:-1}});
-    }
+    return Highlights.find({episode_id:Session.get('episode_id')}, {sort:{start_time:-1}});
   },
   hosts: function() {
-    var episode = get_episode_by_route_number(this.route, this.number);
-    if (episode) {
-      var hosts = episode.hosts || [];
-      return People.find({_id:{$in:hosts}});
+    var episode = Episodes.findOne({_id:Session.get('episode_id')});
+    if (!episode) {
+      return [];
     }
+    var hosts = episode.hosts || [];
+    return People.find({_id:{$in:hosts}});
   },
   new_time: function() {
     var time = 0;
@@ -62,14 +107,8 @@ Template.editor.helpers({
     }
     return {start_time:time}
   },
-  show_title: function() {
-    var show = Shows.findOne({route:this.route});
-    if (show) {
-      return show.name;
-    }
-  },
   player_data: function() {
-    var episode = get_episode_by_route_number(this.route, this.number);
+    var episode = Episodes.findOne({_id:Session.get('episode_id')});
     if (episode) {
       return {
         storage_key: episode.storage_key,
@@ -77,19 +116,22 @@ Template.editor.helpers({
         type: episode.type
       }
     }
-  }
+  },
+  show_title: function() {
+    var show = Shows.findOne({route:this.route});
+    if (show) {
+      return show.name;
+    }
+  },
 });
 
 Template.editor.rendered = function() {
+  Session.set('episode', this.data);
   $('#highlight_times').css(
     'padding-top',
     (parseInt($('#header').css('margin-bottom')) + $('#header').outerHeight()).toString() + 'px'
   );
   Session.set('editor_rendered', true);
-}
-
-Template.editor.destroyed = function() {
-  Session.set('editor_rendered', null);
 }
 
 Template.editor_highlight.helpers({
@@ -157,17 +199,6 @@ Template.editor_new_input.created = function() {
 }
 
 Template.editor_new_input.events({
-  'change select': function(e, tmpl) {
-    var val = $(e.target).val();
-    if (!(val == 'instr')) {
-      session_var_set_obj('highlight', ['type'], [val]);
-      tmpl.$('#select_type').hide();
-      tmpl.$('#speaker_name').css('display', 'table-cell');
-      tmpl.$('#speaker_type').show();
-      tmpl.$('#content_input_span').css('display', 'table-cell');
-      tmpl.$('#content_input_span').focus();
-    }
-  },
   'keydown #content_input': function(e, tmpl) {
     var val = $(e.target).val();
     if (e.keyCode == 8 && val == '') {
@@ -183,7 +214,7 @@ Template.editor_new_input.events({
     }
   },
   'keyup #content_input': function(e, tmpl) {
-    var val = $(e.target).val();
+    var val = $(e.target).val().trim();
     Session.set('current_char_counter', val.length);
 
     if (e.shiftKey && val == '"' && e.keyCode == 222) {
@@ -194,19 +225,19 @@ Template.editor_new_input.events({
         set_highlight_type('italic');
       }
     } else if (e.keyCode == 13 && val != '' && Session.get('current_char_counter') <= max_chars) {
-      set_highlight_finished(val, this.route, this.number, tmpl);
+      set_highlight_finished(val, Session.get('episode_id'), tmpl);
     }
   },
   'keyup #speaker_input': function(e, tmpl) {
-    var val = $(e.target).val();
+    var val = $(e.target).val().trim();
     if (e.keyCode == 13 && val != '') { //enter
       var type = Session.get('highlight')['type'];
-      if (!type) { //new speaker, ask for what type
-        set_highlight_speaker(val, null, null);
+      if (!type) { //new company
+        set_highlight_speaker(val, 'sponsor', null);
         tmpl.$('#typeahead_input').hide();
         tmpl.$('#speaker_name').css('display', 'table-cell');
         tmpl.$('#speaker_type').show();
-        tmpl.$('#select_type').css('display', 'table-cell')
+        tmpl.$('#content_input_span').css('display', 'table-cell');
         tmpl.$('#content_input').focus();
       }
     } else if (val.length == 1 && !Session.get('highlight')['start_time']) {
@@ -258,14 +289,31 @@ var get_selections_company = function() {
 }
 
 var get_selections_people = function() {
-  return People.find({}, {fields:{first_name:true, last_name:true}}).map(function(person) {
-    var name = person.first_name + ' ' + person.last_name;
-    return {value:name, id:person._id, type:'person'};
-  });
+  var episode_id = Session.get('episode_id');
+  return People.find({
+    $or:[{hosts:episode_id}, {guests:episode_id}]
+  }, {
+    fields:{first_name:true, last_name:true}
+  }).map(
+    function(person) {
+      var name = person.first_name + ' ' + person.last_name;
+      return {value:name, id:person._id, type:'person'};
+    }
+  );
 }
 
-var get_episode_by_route_number = function(route, number) {
-  return Episodes.findOne({show_route:route, number:number});
+var get_all_people = function() {
+  var episode_id = Session.get('episode_id');
+  return People.find({
+    $and:[{$nin:{hosts:[episode_id]}}, {$nin:{guests:[episode_id]}}]
+  }, {
+    fields:{first_name:true, last_name:true}
+  }).map(
+    function(person) {
+      var name = person.first_name + ' ' + person.last_name;
+      return {value:name, id:person._id, type:'person'};
+    }
+  );
 }
 
 var new_highlight = function() {
@@ -288,14 +336,35 @@ var set_css_new = function(tmpl) {
   }
 }
 
-var set_highlight_finished = function(text, route, number, tmpl) {
-  session_var_set_obj('highlight', ['text'], [text]);
-  Meteor.call('new_highlight', Session.get('highlight'), route, number);
-  Session.set('highlight', new_highlight());
-  set_css_new(tmpl);
-  $('#speaker_input').typeahead('destroy','NoCached')
-  set_speaker_typeahead();
-  $('#speaker_input').focus();
+var set_episode = function(episode_data) {
+  if (!episode_data) {
+    return;
+  }
+  route = episode_data['route'];
+  number = episode_data['number'];
+  if (!route || !number) {
+    return;
+  }
+  var episode = Episodes.findOne({show_route:route, number:number});
+  if (!episode) {
+    return;
+  }
+  Session.set('episode_id', episode._id);
+  Session.set('episode', null);
+}
+
+var set_highlight_finished = function(text, episode_id, tmpl) {
+  session_var_set_obj('highlight', ['text', 'episode_id'], [text, episode_id]);
+  Meteor.call(
+    'new_highlight', Session.get('highlight'),
+    function(error, result) {
+      $('#speaker_input').typeahead('destroy','NoCached')
+      Session.set('highlight', new_highlight());
+      set_css_new(tmpl);
+      set_speaker_typeahead();
+      $('#speaker_input').focus();
+    }
+  );
 }
 
 var set_highlight_speaker = function(name, type, id) {
@@ -334,25 +403,58 @@ var set_highlight_type = function(style) {
   $('#content_input').css('font-style', style);
 }
 
+var set_people_typeahead = function() {
+  var data = get_all_people();
+  if (data.length == 0) {
+    return;
+  }
+  var datums = new Bloodhound({
+    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: data
+  });
+  datums.initialize();
+
+  $('.new_person_input').typeahead(
+    {
+      highlight: true
+    },
+    {
+      displayKey: 'value',
+      source: datums.ttAdapter(),
+      limit: 5,
+    }
+  ).on('typeahead:selected', function(event, datum, name) {
+    console.log(this)
+    console.log(datum);
+    // set_highlight_speaker(datum.value, datum.type, datum.id);
+    // $('#speaker_name').css('display', 'table-cell');
+    // $('#speaker_type').show();
+    // $('#typeahead_input').hide();
+    // $('#content_input_span').css('display', 'table-cell');
+    // $('#content_input').focus();
+  });
+}
+
 var set_speaker_typeahead = function() {
-  var data_companies = get_selections_company();
   var data_people = get_selections_people();
-  if (data_people.length > 0 || data_companies.length > 0) {
-    Session.set('init_typeahead_editor', true);
+  if (data_people.length > 0) {
+    Session.set('init_speaker_typeahead_editor', true);
   } else {
     return;
   }
-
-  var datums_company = new Bloodhound({
-  datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: data_companies
-  });
 
   var datums_people = new Bloodhound({
     datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     local: data_people
+  });
+
+  var data_companies = get_selections_company();
+  var datums_company = new Bloodhound({
+  datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: data_companies
   });
 
   var datums_link = new Bloodhound({
@@ -404,7 +506,14 @@ var set_speaker_typeahead = function() {
 }
 
 Deps.autorun(function() {
-  if (Session.get('editor_rendered') && !Session.get('init_typeahead_editor')) {
-    set_speaker_typeahead();
+  if (Session.get('editor_rendered')) {
+    var episode = Session.get('episode');
+    var episode_id = Session.get('episode_id');
+    if (episode && !episode_id) {
+      set_episode(episode);
+    } else if (!episode && episode_id && !Session.get('init_typeahead_editor')) {
+      set_speaker_typeahead();
+      set_people_typeahead();
+    }
   }
 });

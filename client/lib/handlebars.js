@@ -41,6 +41,14 @@ UI.registerHelper("s3", function(key) {
   }
 });
 
+UI.registerHelper("text_limit", function(text, length) {
+  if (text.length <= length) {
+    return text;
+  } else {
+    return text.slice(0, length-3) + '...';
+  }
+});
+
 var _format_time_part = function(time) {
   if (time < 10) {
     return "0" + time.toString();

@@ -1,3 +1,13 @@
+<template name="add_person">
+  <button class="btn btn-primary left" id="add_{{id}}_button" type="button" style="margin-right:10px; width:80px;">
+    <i class="fa fa-plus-square"> {{capitalize id}}</i>
+  </button>
+
+  <span class="new_person_input_span" style="display:none; margin-right:10px; width:160px">
+    <input class="form-control left new_person_input" style="width:inherit" type="text" placeholder="Enter {{capitalize id}} Name">
+  </span>
+</template>
+
 <template name="character_cutoff">
   <small class="box_title" style="display:inline-block; float:right">
     <div id="character_cutoff">
@@ -18,15 +28,19 @@
         <div class="row">
           <p id="episode_title" class="white_text"><b>{{episode_title}}</b></p>
         </div>
-        <div class="row" id="episode_people" style="height:45px">
+        <div class="row" id="episode_hosts" style="height:45px">
+          {{> add_person add_host}}
           {{#each hosts}}
-          {{> small_picture}}
-          {{/each}}
-          {{#each guest}}
-          {{> small_picture}}
+          {{> small_person_display}}
           {{/each}}
         </div>
-        <div class="row" style="margin-top:20px;">
+        <div class="row" id="episode_guests" style="height:45px">
+          {{> add_person add_guest}}
+          {{#each guests}}
+          {{> small_person_display}}
+          {{/each}}
+        </div>
+        <div class="row" style="margin-top:20px; margin-right:0px">
           {{#if has_episode}}
             {{> player player_data}}
           {{/if}}
@@ -34,8 +48,9 @@
       </div>
       <div class="col-md-7 inherit">
         <div class="row inherit">
-          <div class="col-md-1 inherit white_text">
-            <div id="highlight_times">
+          <section class="white_text scroller" style="padding-top:0px; padding-left:0px; padding-right:0px; height: 100%; background-color:#BFBFB6">
+          <div class="col-md-1 inherit" style="background-color:#333;">
+            <div class="row" id="highlight_times">
               {{> editor_highlight_time new_time}}
               {{#each highlights}}
               {{> editor_highlight_time}}
@@ -43,23 +58,22 @@
             </div>
           </div>
           <div class="col-md-11 inherit">
-            <section class="well" style="padding-top:0px; padding-left:14px; padding-right:14px; height:100%; background-color:#BFBFB6">
-              <div class="row" id="header" style="background-color:#FFFDF8; padding-top:19px; margin-bottom:10px">
-                <div class="col-md-5 col-md-offset-5">
-                  <p class="red">Draft Mode</p>
-                </div>
-                <div class="col-md-2">
-                  <p class="right" style="padding-right:10px">
-                    {{> character_cutoff}}
-                  </p>
-                </div>
+            <div class="row" id="header" style="background-color:#FFFDF8; padding-top:19px; margin-bottom:10px">
+              <div class="col-md-5 col-md-offset-5">
+                <p class="red">Draft Mode</p>
               </div>
-              {{> editor_new_input}}
-              {{#each highlights}}
-              {{> editor_highlight}}
-              {{/each}}
-            </section>
+              <div class="col-md-2">
+                <p class="right" style="padding-right:10px">
+                  {{> character_cutoff}}
+                </p>
+              </div>
+            </div>
+            {{> editor_new_input}}
+            {{#each highlights}}
+            {{> editor_highlight}}
+            {{/each}}
           </div>
+          </section>
         </div>
       </div>
     </div>
@@ -93,7 +107,7 @@
 <template name="editor_new_input">
   <div class="row" style="height:40px">
     <div style="width:100%; display:table">
-      <span id="speaker_type" style="display:table-cell; vertical-align:middle; padding-left:10px; width:40px">
+      <span id="speaker_type" style="display:table-cell; vertical-align:middle; padding-left:10px; width:40px; padding-right:10px">
         {{#if is_speaker_set}}
         {{capitalize speaker_type}}
         {{else}}
@@ -107,12 +121,6 @@
 
       <h4 style="display:none; vertical-align:middle" id="speaker_name">{{speaker_name}}</h4>
 
-      <select class="form-control" id="select_type" style="display:none; width:160px; height:25px">
-        <option value="instr">Person or Sponsor?</option>
-        <option value="person">Person</option>
-        <option value="sponsor">Sponsor</option>
-      </select>
-
       <span id="content_input_span" style="display:none; padding-right:10px">
         <input style="width:100%;" class="form-control" type="text" id="content_input">
       </span>
@@ -121,8 +129,18 @@
 </template>
 
 <template name="editor_highlight_time">
-  <div class="row" style="height:40px">
+  <div class="row" style="height:40px; text-align:center">
     <span class="highlight_time">{{format_seconds_to_clock start_time}}</span>
+  </div>
+</template>
+
+<template name="small_person_display">
+  <div class="left" style="padding-right:10px">
+    {{> small_picture}}
+  </div>
+  <div class="left" style="padding-right:10px">
+    <p class="white_text" style="margin-bottom:0px">{{text_limit first_name 10}}</p>
+    <p class="white_text" style="margin-bottom:0px">{{text_limit last_name 10}}</p>
   </div>
 </template>
 
@@ -132,6 +150,7 @@
     <i class="fa fa-link fa-inverse fa-rotate-135"></i>
   </span>
   {{else}}
-  <img class="picture" src="{{img}}">(img)
+  <img class="picture" src="{{img}}">
+  <span class="white_text">(img)</span>
   {{/if}}
 </template>

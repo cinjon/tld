@@ -28,6 +28,10 @@
     color:red
 }
 
+.scroller {
+    overflow-y:scroll;
+}
+
 .inherit {
     height: inherit;
 }
@@ -53,7 +57,8 @@
 
 .highlight_time {
     position:relative;
-    top:5px
+    top:7.5px;
+    font-size:12px;
 }
 
 .highlight_text {
@@ -68,16 +73,6 @@ hr.style-one {
     background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
     background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
     background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
-}
-
-.twitter-typeahead {
-     width: 100%;
-}
-.tt-dropdown-menu {
-    width: 100%;
-}
-input.form-control.tt-hint {
-    width:100%
 }
 
 .fa-rotate-135 {
