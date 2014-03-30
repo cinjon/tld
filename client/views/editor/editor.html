@@ -26,10 +26,10 @@
         <div class="row inherit">
           <div class="col-md-1 inherit white_text">
             <div id="highlight_times">
+              {{> editor_highlight_time new_time}}
               {{#each highlights}}
               {{> editor_highlight_time}}
               {{/each}}
-              {{> editor_highlight_time new_time}}
             </div>
           </div>
           <div class="col-md-11 inherit">
@@ -37,10 +37,10 @@
               <div class="row" id="header" style="background-color:#FFFDF8; padding-top:19px; margin-bottom:10px">
                 <p style="color:red; text-align:center">Draft Mode</p>
               </div>
+              {{> editor_new_input}}
               {{#each highlights}}
               {{> editor_highlight}}
               {{/each}}
-              {{> editor_new_input}}
             </section>
           </div>
         </div>
@@ -74,7 +74,7 @@
 </template>
 
 <template name="editor_new_input">
-  <div class="row">
+  <div class="row" style="height:40px">
     <div style="width:100%; display:table">
       <span id="speaker_type" style="display:table-cell; vertical-align:middle; padding-left:10px; width:40px">
         {{#if is_speaker_set}}
@@ -112,7 +112,7 @@
 <template name="small_picture">
   {{#if is_link}}
   <span style="width:40px; font-size:1.5em">
-    <i class="fa fa-link fa-inverse"></i>
+    <i class="fa fa-link fa-inverse fa-rotate-135"></i>
   </span>
   {{else}}
   <img class="picture" src="{{img}}">(img)

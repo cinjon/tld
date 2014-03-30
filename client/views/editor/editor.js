@@ -19,7 +19,7 @@ Template.editor.helpers({
     var episode = get_episode_by_route_number(this.route, this.number);
     if (episode) {
       var id  = episode._id
-      return Highlights.find({episode_id:id});
+      return Highlights.find({episode_id:id}, {sort:{start_time:-1}});
     }
   },
   hosts: function() {

@@ -79,3 +79,11 @@ hr.style-one {
 input.form-control.tt-hint {
     width:100%
 }
+
+.fa-rotate-135 {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
