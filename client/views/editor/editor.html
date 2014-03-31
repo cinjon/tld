@@ -1,17 +1,17 @@
 <template name="add_person">
-  <button class="btn btn-primary left" id="add_{{id}}_button" type="button" style="margin-right:10px; width:80px;">
+  <button class="btn btn-primary left" id="add_{{id}}_button" type="button" style="margin-right:10px; width:80px; height:40px">
     <i class="fa fa-plus-square"> {{capitalize id}}</i>
   </button>
 
-  <span class="new_person_input_span" style="display:none; margin-right:10px; width:160px">
+  <span class="new_person_input_span" style="display:none; width:160px">
     <input class="form-control left new_person_input" style="width:inherit" type="text" placeholder="Enter {{capitalize id}} Name">
   </span>
 </template>
 
 <template name="character_cutoff">
   <small class="box_title" style="display:inline-block; float:right">
-    <div id="character_cutoff">
-      <span style="color:{{current_notes_color}}">{{current_char_counter}}</span>
+    <div id="character_cutoff" style="color:{{current_notes_color}}">
+      <span>{{current_char_counter}}</span>
       <span>&nbsp;/&nbsp;</span>
       <span>{{max_chars}}</span>
     </div>
@@ -31,13 +31,17 @@
         <div class="row" id="episode_hosts" style="height:45px">
           {{> add_person add_host}}
           {{#each hosts}}
-          {{> small_person_display}}
+          <a class="remove_person" type="host">
+            {{> small_person_display}}
+          </a>
           {{/each}}
         </div>
         <div class="row" id="episode_guests" style="height:45px">
           {{> add_person add_guest}}
           {{#each guests}}
-          {{> small_person_display}}
+          <a class="remove_person" type="guest">
+            {{> small_person_display}}
+          </a>
           {{/each}}
         </div>
         <div class="row" style="margin-top:20px; margin-right:0px">
@@ -58,14 +62,15 @@
             </div>
           </div>
           <div class="col-md-11 inherit">
-            <div class="row" id="header" style="background-color:#FFFDF8; padding-top:19px; margin-bottom:10px">
-              <div class="col-md-5 col-md-offset-5">
-                <p class="red">Draft Mode</p>
+            <div class="row" id="header" style="background-color:#FFFDF8; margin-bottom:10px">
+              <div class="col-md-4">
+                {{> editor_header_box header_draft}}
               </div>
-              <div class="col-md-2">
-                <p class="right" style="padding-right:10px">
-                  {{> character_cutoff}}
-                </p>
+              <div class="col-md-4">
+                {{> editor_header_box header_clean}}
+              </div>
+              <div class="col-md-4">
+                {{> editor_header_box header_publish}}
               </div>
             </div>
             {{> editor_new_input}}
@@ -77,6 +82,22 @@
         </div>
       </div>
     </div>
+  </div>
+</template>
+
+<template name="editor_header_box">
+  <div class="row">
+  {{#if is_editor_mode}}
+  <div class="arrow_box_{{key}}">
+    <button class="btn btn-block" style="height:70px;background-color:{{color}}">
+      <span style="text-align:center; color:white">{{title}}</span>
+    </button>
+  </div>
+  {{else}}
+  <button class="btn btn-block" style="height:70px;background-color:white">
+    <span style="text-align:center; color:{{color}}">{{title}}</span>
+  </button>
+  {{/if}}
   </div>
 </template>
 
@@ -101,6 +122,15 @@
         {{text}}
       </span>
     </div>
+    {{#if new_highlight}}
+    {{> character_cutoff}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="editor_highlight_time">
+  <div class="row" style="height:40px; text-align:center">
+    <span class="highlight_time">{{format_seconds_to_clock start_time}}</span>
   </div>
 </template>
 
@@ -121,16 +151,14 @@
 
       <h4 style="display:none; vertical-align:middle" id="speaker_name">{{speaker_name}}</h4>
 
-      <span id="content_input_span" style="display:none; padding-right:10px">
+      <span id="content_input_span" style="display:none;">
         <input style="width:100%;" class="form-control" type="text" id="content_input">
       </span>
-    </div>
-  </div>
-</template>
 
-<template name="editor_highlight_time">
-  <div class="row" style="height:40px; text-align:center">
-    <span class="highlight_time">{{format_seconds_to_clock start_time}}</span>
+      <div style="display:table-cell; padding-right:10px">
+        {{> character_cutoff}}
+      </div>
+    </div>
   </div>
 </template>
 

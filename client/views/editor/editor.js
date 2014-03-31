@@ -53,12 +53,22 @@ Template.character_cutoff.helpers({
 });
 
 Template.editor.created = function() {
+  Session.set('mode', 'draft');
   Session.set('current_char_counter', 0);
 }
 
 Template.editor.destroyed = function() {
   Session.set('current_char_counter', null);
 }
+
+Template.editor.events({
+  'click .remove_person': function(e, tmpl) {
+    var type = $(e.target).closest('a').attr('type');
+    var episode_id = Session.get('episode_id');
+    var person_id = this._id;
+    Meteor.call('remove_' + type, episode_id, person_id);
+  }
+});
 
 Template.editor.helpers({
   add_guest: function() {
@@ -88,6 +98,27 @@ Template.editor.helpers({
   has_episode: function() {
     return Session.get('episode_id');
     var episode = Episodes.findOne({_id:Session.get('episode_id')});
+  },
+  header_clean: function() {
+    return {
+      color:'#E6A861',
+      key:'clean',
+      title:'Clean Up'
+    }
+  },
+  header_draft: function() {
+    return {
+      color:'#df5445',
+      key:'draft',
+      title:'Draft'
+    }
+  },
+  header_publish: function() {
+    return {
+      color:'#00FF7F',
+      key:'publish',
+      title:'Publish'
+    }
   },
   highlights: function() {
     return Highlights.find({episode_id:Session.get('episode_id')}, {sort:{start_time:-1}});
@@ -134,6 +165,18 @@ Template.editor.rendered = function() {
   Session.set('editor_rendered', true);
 }
 
+Template.editor_header_box.events({
+  'click button': function(e, tmpl) {
+    Session.set('mode', this.key);
+  }
+});
+
+Template.editor_header_box.helpers({
+  is_editor_mode: function() {
+    return this.key == Session.get('mode');
+  }
+});
+
 Template.editor_highlight.helpers({
   company: function() {
     return People.findOne({_id:this.company_id});
@@ -171,6 +214,7 @@ Template.editor_highlight.helpers({
 });
 
 Template.editor_highlight.rendered = function() {
+  console.log(this.data);
   if (this.data.type == "quote") {
     this.$('.highlight_text').css('font-style', 'italic');
     this.data.text = '"' + this.data.text + '"';
@@ -303,17 +347,28 @@ var get_selections_people = function() {
 }
 
 var get_all_people = function() {
-  var episode_id = Session.get('episode_id');
-  return People.find({
-    $and:[{$nin:{hosts:[episode_id]}}, {$nin:{guests:[episode_id]}}]
-  }, {
-    fields:{first_name:true, last_name:true}
-  }).map(
-    function(person) {
-      var name = person.first_name + ' ' + person.last_name;
-      return {value:name, id:person._id, type:'person'};
-    }
-  );
+  //Would be great if we ddin't have to do this crap below to dedupe
+  //Problem at the moment is with meteor not accepting $nin
+  console.log('hi in g_a_p')
+  var episode = Episodes.findOne({_id:Session.get('episode_id')});
+  var guests = [];
+  var hosts = [];
+  if (episode) {
+    var guests = episode.guests || guests;
+    var hosts = episode.hosts || hosts;
+  }
+  var map = [];
+  People.find(
+    {}, {fields:{first_name:true, last_name:true}}).forEach(
+      function(person) {
+        if (hosts.indexOf(person._id) == -1 && guests.indexOf(person._id) == -1) {
+          var name = person.first_name + ' ' + person.last_name;
+          map.push({value:name, id:person._id, type:'person'});
+        }
+      }
+    );
+  console.log(map);
+  return map;
 }
 
 var new_highlight = function() {

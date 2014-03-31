@@ -79,6 +79,16 @@ Meteor.methods({
     }
     return {'success':true, 'person_id':person_id};
   },
+  remove_guest: function(episode_id, person_id) {
+    console.log('hey yo, removing guest')
+    Episodes.update({_id:episode_id}, {$pull:{guests:person_id}});
+    People.update({_id:person_id}, {$pull:{guests:episode_id}});
+  },
+  remove_host: function(episode_id, person_id) {
+    console.log('hey yo, removing host');
+    Episodes.update({_id:episode_id}, {$pull:{hosts:person_id}});
+    People.update({_id:person_id}, {$pull:{hosts:episode_id}});
+  },
   unclaim_episode: function(episode_id, user_id) {
     Episodes.update({
       _id: episode_id, editor_id: user_id
