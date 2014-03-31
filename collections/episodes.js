@@ -60,11 +60,13 @@ Episodes = new Meteor.Collection('episodes', {
       },
       hosts: {
         type: [Object],
-        label: 'Hosts'
+        label: 'Hosts',
+        optional: true
       },
       guests: {
         type: [Object],
-        label: 'Guests'
+        label: 'Guests',
+        optional: true
       },
       edited: {
         type: Boolean,
@@ -76,19 +78,36 @@ Episodes = new Meteor.Collection('episodes', {
       },
       editor_id: {
         type: String,
-        label: 'Editor ID'
+        label: 'Editor ID',
+        optional: true
       },
       length_in_seconds: {
         type: Number,
-        label: 'Length in seconds'
+        label: 'Length in seconds',
+        optional: true
       },
       created_at: {
         type: Date,
-        label: 'Created at'
+          autoValue: function() {
+          if (this.isInsert) {
+            return new Date;
+          } else if (this.isUpsert) {
+            return {$setOnInsert: new Date};
+          } else {
+            this.unset();
+          }
+        },
+        denyUpdate: true
       },
       updated_at: {
         type: Date,
-        label: 'Updated at'
+        autoValue: function() {
+          if (this.isUpdate) {
+            return new Date();
+          }
+        },
+        denyInsert: true,
+        optional: true
       },
       published: {
         type: Boolean,
@@ -96,7 +115,8 @@ Episodes = new Meteor.Collection('episodes', {
       },
       feed: {
         type: Object,
-        label: 'Feed data (varying fields)'
+        label: 'Feed data (varying fields)',
+        blackbox: true
       }
   }
 });

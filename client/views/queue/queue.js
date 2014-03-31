@@ -21,7 +21,7 @@ Template.queue.helpers({
     var show_ids = [];
     Episodes.find({
       edited: false
-    }).forEach(function(episode) {
+    }).forEach( function(episode) {
       show_ids.push(episode.show_id);
     });
     return Shows.find({

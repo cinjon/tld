@@ -1,47 +1,66 @@
 <template name="queue">
-  <section class="post">
-    <div class="row">
-      <h3>Episode Queue</h3>
-      <p>
-      Greetings Timelined Editor! Below is our list of oustanding episodes waiting for your magic touch. Claim an episode and click the title to begin your work. You'll be taken to the Editor page for the episode, where you can slice and dice clips to your heart's content. When claimed, only you can work on episode. If for some reason you cannot complete an episode, remember to unclaim it so somebody else can grab it. <a href="/">Let us know</a> if you have any questions. Happy timelining!
-      </p>
-    </div>
+
+  <div class="col-md-1">
+  </div>
+
+  <div class="col-md-10 white_text">
+    <h3>Episode Queue</h3>
+    <p>
+      Greetings Timelined Editor! Below is our list of oustanding episodes waiting for your magic touch.
+      Claim an episode to begin your work. You'll be taken to the Editor page for the episode,
+      where you can highlight to your heart's content. When claimed, only you can work on episode.
+      If for some reason you cannot complete an episode, remember to unclaim it so somebody else can grab it.
+      <a href="/">Let us know</a> if you have any questions. Happy timelining!
+    </p>
+
     {{#each shows}}
-    <hr>
-    <div class="row">
-      <div class="col-md-4">
-        {{name}}
+      <div class="table-responsive">
+        <table class="table">
+          <caption>{{name}}</caption>
+          <thead>
+            <tr>
+              <th>
+                #
+              </th>
+              <th>
+                Title
+              </th>
+              <th>
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each episodes}}
+              <tr>
+                <td>
+                  {{number}}
+                </td>
+                <td>
+                  {{title}}
+                </td>
+                <td>
+                  {{#if is_claimer_unclaimed claimer_id}}
+                  <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
+                  {{/if}}
+
+                  {{#if is_claimed claimer_id}}
+                  <button class="btn btn-primary btn-xs right">Episode Claimed</button>
+                  {{/if}}
+
+                  {{#if is_claimer_user claimer_id}}
+                  <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
+                  {{/if}}
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
       </div>
-      <div class="col-md-8">
-        <div class="row">
-          {{#each episodes}}
-          <div class="col-md-10">
-            <div class="row">
-              <a href="{{pathFor 'editor'}}">{{name}}</a>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="row">
-
-              {{#if is_claimer_unclaimed claimer_id}}
-              <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
-              {{/if}}
-
-              {{#if is_claimed claimer_id}}
-              <button class="btn btn-primary btn-xs right">Episode Claimed</button>
-              {{/if}}
-
-              {{#if is_claimer_user claimer_id}}
-              <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
-              {{/if}}
-
-            </div>
-          </div>
-          {{/each}}
-        </div>
-      </div>
-    </div>
     {{/each}}
-    <hr>
-  </section>
+  </div>
+
+  <div class="col-md-1">
+  </div>
+
 </template>

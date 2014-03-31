@@ -34,7 +34,6 @@
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
         "tag": "v4.0.3",
         "commit": "61e9361384347547ae144f8228faa4deffda23db"
-
       },
       "autoform": {
         "git": "https://github.com/aldeed/meteor-autoform.git",

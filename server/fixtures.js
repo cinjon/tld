@@ -1,7 +1,9 @@
 Meteor.startup( function() {
   //bootstrap an empty db
   if (Shows.find().count() === 0) {
-    var timestamp = (new Date()).getTime();
+    var timestamp = new Date();
+
+    // USERS AND ROLES
 
     var cinjon_id = Accounts.createUser({
       email:'cinjon.resnick@gmail.com',
@@ -25,6 +27,8 @@ Meteor.startup( function() {
       username:'Admin'
     });
 
+    Roles.addUsersToRoles(admin_id, ['admin', 'editor']);
+
     var editor_id = Accounts.createUser({
       email:'editor@tld',
       password:'editor',
@@ -32,17 +36,18 @@ Meteor.startup( function() {
     });
 
     Roles.addUsersToRoles(editor_id, ['editor']);
-    Roles.addUsersToRoles(admin_id, ['admin', 'editor']);
+
+
+    // SHOWS
 
     var backtowork_id = Shows.insert({
       name: 'Back to Work',
       homepage: 'http://5by5.tv/b2w',
       feed: "http://feeds.5by5.tv/b2w",
       description: "Back to Work is an award winning talk show with Merlin Mann and Dan Benjamin discussing productivity, communication, work, barriers, constraints, tools, and more.",
-      created_at: timestamp,
-      updated_at: timestamp,
       artwork: null,
       route: make_name_route('Back To Work'),
+      feed_checked_at: timestamp
     });
 
     var nerdist_id = Shows.insert({
@@ -50,11 +55,13 @@ Meteor.startup( function() {
       homepage: 'http://www.nerdist.com/podcast/nerdist/',
       feed: "http://nerdist.libsyn.com/rss",
       description: "I am Chris Hardwick. I am on TV a lot and have a blog at nerdist.com. This podcast is basically just me talking about stuff and things with my two nerdy friends Jonah Ray and Matt Mira, and usually someone more famous than all of us. Occasionally we swear because that is fun. I hope you like it, but if you don't I'm sure you will not hesitate to unfurl your rage in the 'reviews' section because that's how the Internet works.",
-      created_at: timestamp,
-      updated_at: timestamp,
       artwork: null,
-      route: make_name_route('Nerdist')
+      route: make_name_route('Nerdist'),
+      feed_checked_at: timestamp
     });
+
+
+    // EPISODES
 
 
     var backtowork001 = Episodes.insert({
@@ -71,8 +78,6 @@ Meteor.startup( function() {
       postedited: false,
       editor_id: null,
       length_in_seconds: 5368,
-      created_at: timestamp,
-      updated_at: timestamp,
       published: false,
       feed: {
         title: 'Back to Work 001',
@@ -90,7 +95,6 @@ Meteor.startup( function() {
       format: "mp3",
       title: "Back to Work 002",
       number: 2,
-      source_url: "http://5by5.tv/b2w/2",
       storage_key: "118d07e7ac1adfdc6cd8b97400001a87",
       show_route: "back-to-work",
       show_id: backtowork_id,
@@ -100,8 +104,6 @@ Meteor.startup( function() {
       postedited: false,
       editor_id: null,
       length_in_seconds: 4122,
-      created_at: timestamp,
-      updated_at: timestamp,
       published: false,
       feed: {
         title: 'Back to Work 002',
@@ -127,8 +129,6 @@ Meteor.startup( function() {
       postedited: false,
       editor_id: null,
       length_in_seconds: 4770,
-      created_at: timestamp,
-      updated_at: timestamp,
       published: false,
       feed: {
         title: 'Moby',
