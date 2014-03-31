@@ -13,12 +13,13 @@
       <a href="/">Let us know</a> if you have any questions. Happy timelining!
     </p>
 
-    {{#each shows}}
       <div class="table-responsive">
         <table class="table">
-          <caption>{{name}}</caption>
           <thead>
             <tr>
+              <th>
+                Show
+              </th>
               <th>
                 #
               </th>
@@ -26,38 +27,54 @@
                 Title
               </th>
               <th>
-                Actions
+                Duration
+              </th>
+              <th>
+                Date
+              </th>
+              <th>
+
               </th>
             </tr>
           </thead>
           <tbody>
-            {{#each episodes}}
-              <tr>
-                <td>
-                  {{number}}
-                </td>
-                <td>
-                  {{title}}
-                </td>
-                <td>
-                  {{#if episode_is_unclaimed editor_id }}
-                    <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
-                  {{/if}}
+            {{#each shows}}
+              {{#each episodes}}
+                <tr>
+                  <td>
+                    {{show_route}}
+                  </td>
+                  <td>
+                    {{number}}
+                  </td>
+                  <td>
+                    {{title}}
+                  </td>
+                  <td>
+                    {{length_in_seconds}}
+                  </td>
+                  <td>
+                    {{feed['url']}}
+                  </td>
+                  <td>
+                    {{#if episode_is_unclaimed editor_id }}
+                      <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
+                    {{/if}}
 
-                  {{#if episode_is_claimed editor_id }}
-                    <button class="btn btn-primary btn-xs right">Episode Claimed</button>
-                  {{/if}}
+                    {{#if episode_is_claimed editor_id }}
+                      <button class="btn btn-primary btn-xs right">Episode Claimed</button>
+                    {{/if}}
 
-                  {{#if editor_is_current_user editor_id }}
-                    <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
-                  {{/if}}
-                </td>
-              </tr>
-            {{/each}}
-          </tbody>
+                    {{#if editor_is_current_user editor_id }}
+                      <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
+                    {{/if}}
+                  </td>
+                </tr>
+                {{/each}}
+              {{/each}}
+            </tbody>
         </table>
       </div>
-    {{/each}}
   </div>
 
   <div class="col-md-1">
