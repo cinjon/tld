@@ -2,34 +2,26 @@ var max_chars = 140;
 
 Template.add_person.events({
   'click button': function(e, tmpl) {
-    $(tmpl.find('#add_' + this.id + '_button')).hide();
-    $(tmpl.find('.new_person_input_span')).show();
-    $(tmpl.find('.new_person_input')).focus();
+    toggle_add_person(false, this.id)
   },
   'keydown .new_person_input': function(e, tmpl) {
     var val = $(e.target).val();
     if (e.keyCode == 8 && val == '') {
       e.preventDefault();
-      $(tmpl.find('#add_' + this.id + '_button')).show();
-      $(tmpl.find('.new_person_input_span')).hide();
-      $(tmpl.find('.new_person_input')).val('');
+      toggle_add_person(true, this.id);
     }
   },
   'keyup .new_person_input': function(e, tmpl) {
     var val = $(e.target).val().trim();
+    var type = this.id;
     if (e.keyCode == 13 && val != '') {
-      var new_person_input = $(tmpl.find('.new_person_input'));
-      var new_person_input_span = $(tmpl.find('.new_person_input_span'));
-      var add_button = $(tmpl.find('#add_' + this.id + '_button'));
       var episode_id = Session.get('episode_id');
       Meteor.call(
         'new_' + this.id, val, episode_id, function(err, result) {
-          new_person_input.val('');
-          new_person_input_span.hide();
-          add_button.show();
-          if (result['success']) {
-            session_var_push(this.id + 's', result['person_id']);
-          }
+          destroy_typeaheads();
+          toggle_add_person(true, type);
+          set_speaker_typeahead();
+          set_people_typeahead();
         }
       );
     }
@@ -53,6 +45,7 @@ Template.character_cutoff.helpers({
 });
 
 Template.editor.created = function() {
+  Session.set('init_typeahead', false);
   Session.set('mode', 'draft');
   Session.set('current_char_counter', 0);
 }
@@ -66,7 +59,14 @@ Template.editor.events({
     var type = $(e.target).closest('a').attr('type');
     var episode_id = Session.get('episode_id');
     var person_id = this._id;
-    Meteor.call('remove_' + type, episode_id, person_id);
+    Meteor.call(
+      'remove_' + type, episode_id, person_id,
+      function(error, result) {
+        destroy_typeaheads();
+        set_speaker_typeahead();
+        set_people_typeahead();
+      }
+    );
   }
 });
 
@@ -99,11 +99,11 @@ Template.editor.helpers({
     return Session.get('episode_id');
     var episode = Episodes.findOne({_id:Session.get('episode_id')});
   },
-  header_clean: function() {
+  header_review: function() {
     return {
       color:'#E6A861',
-      key:'clean',
-      title:'Clean Up'
+      key:'review',
+      title:'Review'
     }
   },
   header_draft: function() {
@@ -177,6 +177,12 @@ Template.editor_header_box.helpers({
   }
 });
 
+Template.editor_highlight.events({
+  'click .remove_highlight': function() {
+    Meteor.call('remove_highlight', this._id);
+  }
+});
+
 Template.editor_highlight.helpers({
   company: function() {
     return People.findOne({_id:this.company_id});
@@ -214,7 +220,6 @@ Template.editor_highlight.helpers({
 });
 
 Template.editor_highlight.rendered = function() {
-  console.log(this.data);
   if (this.data.type == "quote") {
     this.$('.highlight_text').css('font-style', 'italic');
     this.data.text = '"' + this.data.text + '"';
@@ -279,6 +284,7 @@ Template.editor_new_input.events({
       if (!type) { //new company
         set_highlight_speaker(val, 'sponsor', null);
         tmpl.$('#typeahead_input').hide();
+        tmpl.$('#speaker_input').val('');
         tmpl.$('#speaker_name').css('display', 'table-cell');
         tmpl.$('#speaker_type').show();
         tmpl.$('#content_input_span').css('display', 'table-cell');
@@ -325,6 +331,12 @@ var count_text_chars = function(text) {
   return text.text().length;
 };
 
+var destroy_typeaheads = function() {
+  $('#speaker_input').typeahead('destroy','NoCached')
+  $('#new_person_input_guest').typeahead('destroy','NoCached');
+  $('#new_person_input_host').typeahead('destroy','NoCached');
+};
+
 var get_selections_company = function() {
   return Companies.find({}, {fields:{name:true}}).map(function(company) {
     var name = company.name;
@@ -349,7 +361,6 @@ var get_selections_people = function() {
 var get_all_people = function() {
   //Would be great if we ddin't have to do this crap below to dedupe
   //Problem at the moment is with meteor not accepting $nin
-  console.log('hi in g_a_p')
   var episode = Episodes.findOne({_id:Session.get('episode_id')});
   var guests = [];
   var hosts = [];
@@ -367,7 +378,6 @@ var get_all_people = function() {
         }
       }
     );
-  console.log(map);
   return map;
 }
 
@@ -385,7 +395,6 @@ var set_css_new = function(tmpl) {
     tmpl.$('#content_input').val('');
     Session.set('current_char_counter', 0);
     tmpl.$('#content_input_span').hide();
-    tmpl.$('#speaker_col').hide();
     tmpl.$('#speaker_input').val('');
     tmpl.$('#speaker_input').focus();
   }
@@ -410,14 +419,16 @@ var set_episode = function(episode_data) {
 
 var set_highlight_finished = function(text, episode_id, tmpl) {
   session_var_set_obj('highlight', ['text', 'episode_id'], [text, episode_id]);
+  var highlight = Session.get('highlight');
   Meteor.call(
-    'new_highlight', Session.get('highlight'),
+    'add_highlight', highlight,
     function(error, result) {
-      $('#speaker_input').typeahead('destroy','NoCached')
+      if (highlight['_speaker_name'] && !highlight['company_id'] && !highlight['person_id']) {
+        $('#speaker_input').typeahead('destroy','NoCached');
+        set_speaker_typeahead();
+      }
       Session.set('highlight', new_highlight());
       set_css_new(tmpl);
-      set_speaker_typeahead();
-      $('#speaker_input').focus();
     }
   );
 }
@@ -458,6 +469,29 @@ var set_highlight_type = function(style) {
   $('#content_input').css('font-style', style);
 }
 
+var _set_people_typeahead = function(type, datums) {
+  $('#new_person_input_' + type).typeahead(
+    {
+      highlight: true
+    },
+    {
+      displayKey: 'value',
+      source: datums.ttAdapter(),
+      limit: 5,
+    }
+  ).on('typeahead:selected', function(event, datum, name) {
+    Meteor.call(
+      'add_' + type, Session.get('episode_id'), datum.id,
+      function(error, result) {
+        destroy_typeaheads();
+        toggle_add_person(true, type);
+        set_speaker_typeahead();
+        set_people_typeahead();
+      }
+    );
+  })
+}
+
 var set_people_typeahead = function() {
   var data = get_all_people();
   if (data.length == 0) {
@@ -470,31 +504,14 @@ var set_people_typeahead = function() {
   });
   datums.initialize();
 
-  $('.new_person_input').typeahead(
-    {
-      highlight: true
-    },
-    {
-      displayKey: 'value',
-      source: datums.ttAdapter(),
-      limit: 5,
-    }
-  ).on('typeahead:selected', function(event, datum, name) {
-    console.log(this)
-    console.log(datum);
-    // set_highlight_speaker(datum.value, datum.type, datum.id);
-    // $('#speaker_name').css('display', 'table-cell');
-    // $('#speaker_type').show();
-    // $('#typeahead_input').hide();
-    // $('#content_input_span').css('display', 'table-cell');
-    // $('#content_input').focus();
-  });
+  _set_people_typeahead('guest', datums);
+  _set_people_typeahead('host', datums);
 }
 
 var set_speaker_typeahead = function() {
   var data_people = get_selections_people();
   if (data_people.length > 0) {
-    Session.set('init_speaker_typeahead_editor', true);
+    Session.set('init_typeahead', true);
   } else {
     return;
   }
@@ -560,15 +577,27 @@ var set_speaker_typeahead = function() {
   });
 }
 
+var toggle_add_person = function(button, type) {
+  if (button) {
+    $('#add_' + type + '_button').show();
+    $('#new_person_input_span_' + type).hide();
+    $('#new_person_input_' + type).val('');
+  } else {
+    $('#add_' + type + '_button').hide();
+    $('#new_person_input_span_' + type).show();
+    $('#new_person_input_' + type).focus();
+  }
+}
+
 Deps.autorun(function() {
-  if (Session.get('editor_rendered')) {
-    var episode = Session.get('episode');
-    var episode_id = Session.get('episode_id');
-    if (episode && !episode_id) {
-      set_episode(episode);
-    } else if (!episode && episode_id && !Session.get('init_typeahead_editor')) {
-      set_speaker_typeahead();
-      set_people_typeahead();
-    }
+  var episode = Session.get('episode');
+  var episode_id = Session.get('episode_id');
+  var rendered = Session.get('editor_rendered');
+  var init_typeaheads = Session.get('init_typeahead');
+  if (rendered && episode && !episode_id) {
+    set_episode(episode);
+  } else if (rendered && !episode && episode_id && !init_typeaheads) {
+    set_people_typeahead();
+    set_speaker_typeahead();
   }
 });

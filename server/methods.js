@@ -1,14 +1,9 @@
 Meteor.methods({
-  claim_episode: function(episode_id, user_id) {
-    Episodes.update({
-      _id: episode_id
-    }, {
-      $set: {
-        editor_id: user_id
-      }
-    });
+  add_guest: function(episode_id, person_id) {
+    Episodes.update({_id:episode_id}, {$addToSet:{guests:person_id}});
+    People.update({_id:person_id}, {$addToSet:{guests:episode_id}});
   },
-  new_highlight: function(info) {
+  add_highlight: function(info) {
     var timestamp = (new Date()).getTime();
     info['created_at'] = timestamp;
 
@@ -20,7 +15,6 @@ Meteor.methods({
     var company_id = info['company_id'];
     var person_id = info['person_id'];
     var text = info['text'];
-    var url = info['url'];
 
     if (speaker_name && !company_id && !person_id) { //new company
       company_id = make_company(
@@ -38,14 +32,25 @@ Meteor.methods({
         }
         text = text.slice(start_slice, end_slice);
       }
-    } else if (type == 'link') {
-      url = text;
     }
 
     make_highlight(
       type, info['editor_id'], episode_id, info['start_time'], text,
-      person_id, company_id, url, timestamp
+      person_id, company_id, null, timestamp
     );
+  },
+  add_host: function(episode_id, person_id) {
+    Episodes.update({_id:episode_id}, {$addToSet:{hosts:person_id}});
+    People.update({_id:person_id}, {$addToSet:{hosts:episode_id}});
+  },
+  claim_episode: function(episode_id, user_id) {
+    Episodes.update({
+      _id: episode_id
+    }, {
+      $set: {
+        editor_id: user_id
+      }
+    });
   },
   new_host: function(name, episode_id) {
     var timestamp = (new Date()).getTime();
@@ -61,7 +66,6 @@ Meteor.methods({
     } else {
       Episodes.update({_id:episode._id}, {$addToSet:{hosts:person_id}});
     }
-    return {'success':true, 'person_id':person_id};
   },
   new_guest: function(name, episode_id) {
     var timestamp = (new Date()).getTime();
@@ -77,15 +81,15 @@ Meteor.methods({
     } else {
       Episodes.update({_id:episode._id}, {$addToSet:{guests:person_id}});
     }
-    return {'success':true, 'person_id':person_id};
   },
   remove_guest: function(episode_id, person_id) {
-    console.log('hey yo, removing guest')
     Episodes.update({_id:episode_id}, {$pull:{guests:person_id}});
     People.update({_id:person_id}, {$pull:{guests:episode_id}});
   },
+  remove_highlight: function(highlight_id) {
+    Highlights.remove({_id:highlight_id});
+  },
   remove_host: function(episode_id, person_id) {
-    console.log('hey yo, removing host');
     Episodes.update({_id:episode_id}, {$pull:{hosts:person_id}});
     People.update({_id:person_id}, {$pull:{hosts:episode_id}});
   },

@@ -3,8 +3,8 @@
     <i class="fa fa-plus-square"> {{capitalize id}}</i>
   </button>
 
-  <span class="new_person_input_span" style="display:none; width:160px">
-    <input class="form-control left new_person_input" style="width:inherit" type="text" placeholder="Enter {{capitalize id}} Name">
+  <span id="new_person_input_span_{{id}}" class="left" style="display:none; width:160px">
+    <input id="new_person_input_{{id}}" class="form-control left new_person_input" style="width:inherit" type="text" placeholder="Enter {{capitalize id}} Name">
   </span>
 </template>
 
@@ -67,7 +67,7 @@
                 {{> editor_header_box header_draft}}
               </div>
               <div class="col-md-4">
-                {{> editor_header_box header_clean}}
+                {{> editor_header_box header_review}}
               </div>
               <div class="col-md-4">
                 {{> editor_header_box header_publish}}
@@ -122,9 +122,9 @@
         {{text}}
       </span>
     </div>
-    {{#if new_highlight}}
-    {{> character_cutoff}}
-    {{/if}}
+    <button class="btn btn-default btn-xs remove_highlight right" style="margin-right:10px">
+      <i class="fa fa-times"></i>
+    </button>
   </div>
 </template>
 
@@ -146,7 +146,7 @@
       </span>
 
       <div id="typeahead_input" style="display:table-cell; padding-right:10px">
-        <input class="form-control" type="text" id="speaker_input">
+        <input class="form-control" type="text" id="speaker_input" placeholder="Enter >
       </div>
 
       <h4 style="display:none; vertical-align:middle" id="speaker_name">{{speaker_name}}</h4>
