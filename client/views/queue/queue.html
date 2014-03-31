@@ -40,16 +40,16 @@
                   {{title}}
                 </td>
                 <td>
-                  {{#if is_claimer_unclaimed claimer_id}}
-                  <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
+                  {{#if episode_is_unclaimed editor_id }}
+                    <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
                   {{/if}}
 
-                  {{#if is_claimed claimer_id}}
-                  <button class="btn btn-primary btn-xs right">Episode Claimed</button>
+                  {{#if episode_is_claimed editor_id }}
+                    <button class="btn btn-primary btn-xs right">Episode Claimed</button>
                   {{/if}}
 
-                  {{#if is_claimer_user claimer_id}}
-                  <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
+                  {{#if editor_is_current_user editor_id }}
+                    <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
                   {{/if}}
                 </td>
               </tr>
