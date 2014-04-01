@@ -30,7 +30,7 @@ Template.add_person.events({
 
 Template.character_cutoff.helpers({
   current_char_counter: function() {
-    return Session.get('current_char_counter');
+    return parseInt(Session.get('current_char_counter'));
   },
   current_notes_color: function() {
     if (Session.get('current_char_counter') > max_chars) {
@@ -299,18 +299,32 @@ Template.editor_new_input.events({
     }
   },
   'keyup #content_input': function(e, tmpl) {
-    var val = $(e.target).val().trim();
-    Session.set('current_char_counter', val.length);
+    var input = $(e.target);
+    var val = input.val().trim();
+    var length = val.length;
 
-    if (e.shiftKey && val == '"' && e.keyCode == 222) {
+    if (length > max_chars*1.5) { //Check for it being way too long
+      input.val(val.slice(0,max_chars*1.5))
+    } else if (e.shiftKey && val == '"' && e.keyCode == 222) { //Quote in beginning
       var type = Session.get('highlight')['type'];
       if (type && type == 'link') {
         $(e.target).val('');
       } else {
         set_highlight_type('italic');
       }
-    } else if (e.keyCode == 13 && val != '' && Session.get('current_char_counter') <= max_chars) {
+    } else if (e.keyCode == 13 && val != '' && Session.get('current_char_counter') <= max_chars) { //Complete highlight
       set_highlight_finished(val, Session.get('episode_id'), tmpl);
+    } else {
+      Session.set('current_char_counter', length);
+      var test = $(tmpl.find('#content_input_text_test'));
+      test.text(val);
+      var width = test.width();
+      var rows = parseInt(input.attr('rows'));
+      if (width >= input.width()*rows) {
+        input.attr('rows', (rows + 1).toString());
+      } else if (width < input.width()*(rows-1)) {
+        input.attr('rows', (rows - 1).toString());
+      }
     }
   },
   'keyup #speaker_input': function(e, tmpl) {
