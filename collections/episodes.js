@@ -28,4 +28,95 @@
     //   enclosure_url
     // }
 // }
-Episodes = new Meteor.Collection('episodes');
+Episodes = new Meteor.Collection('episodes', {
+  schema: {
+      type: {
+        type: String,
+        label: 'Type (audio or video)',
+      },
+      format: {
+        type: String,
+        label: 'Encoding Format'
+      },
+      title: {
+        type: String,
+        label: 'Title'
+      },
+      number: {
+        type: Number,
+        label: 'Episode Number'
+      },
+      storage_key: {
+        type: String,
+        label: 'S3 storage key'
+      },
+      show_route: {
+        type: String,
+        label: 'Show Route'
+      },
+      show_id: {
+        type: String,
+        label: 'Show ID'
+      },
+      hosts: {
+        type: [Object],
+        label: 'Hosts',
+        optional: true
+      },
+      guests: {
+        type: [Object],
+        label: 'Guests',
+        optional: true
+      },
+      edited: {
+        type: Boolean,
+        label: 'Edited flag'
+      },
+      postedited: {
+        type: Boolean,
+        label: 'Postedit flag'
+      },
+      editor_id: {
+        type: String,
+        label: 'Editor ID',
+        optional: true
+      },
+      length_in_seconds: {
+        type: Number,
+        label: 'Length in seconds',
+        optional: true
+      },
+      created_at: {
+        type: Date,
+          autoValue: function() {
+          if (this.isInsert) {
+            return new Date;
+          } else if (this.isUpsert) {
+            return {$setOnInsert: new Date};
+          } else {
+            this.unset();
+          }
+        },
+        denyUpdate: true
+      },
+      updated_at: {
+        type: Date,
+        autoValue: function() {
+          if (this.isUpdate) {
+            return new Date();
+          }
+        },
+        denyInsert: true,
+        optional: true
+      },
+      published: {
+        type: Boolean,
+        label: 'Published flag'
+      },
+      feed: {
+        type: Object,
+        label: 'Feed data (varying fields)',
+        blackbox: true
+      }
+  }
+});

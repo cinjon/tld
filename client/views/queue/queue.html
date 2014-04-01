@@ -1,47 +1,83 @@
 <template name="queue">
-  <section class="post">
-    <div class="row">
-      <h3>Episode Queue</h3>
-      <p>
-      Greetings Timelined Editor! Below is our list of oustanding episodes waiting for your magic touch. Claim an episode and click the title to begin your work. You'll be taken to the Editor page for the episode, where you can slice and dice clips to your heart's content. When claimed, only you can work on episode. If for some reason you cannot complete an episode, remember to unclaim it so somebody else can grab it. <a href="/">Let us know</a> if you have any questions. Happy timelining!
-      </p>
-    </div>
-    {{#each shows}}
-    <hr>
-    <div class="row">
-      <div class="col-md-4">
-        {{name}}
+
+  <div class="col-md-1">
+  </div>
+
+  <div class="col-md-10 white_text">
+    <h3>Episode Queue</h3>
+    <p>
+      Greetings Timelined Editor! Below is our list of oustanding episodes waiting for your magic touch.
+      Claim an episode to begin your work. You'll be taken to the Editor page for the episode,
+      where you can highlight to your heart's content. When claimed, only you can work on episode.
+      If for some reason you cannot complete an episode, remember to unclaim it so somebody else can grab it.
+      <a href="/">Let us know</a> if you have any questions. Happy timelining!
+    </p>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                Show
+              </th>
+              <th>
+                #
+              </th>
+              <th>
+                Title
+              </th>
+              <th>
+                Duration
+              </th>
+              <th>
+                Date
+              </th>
+              <th>
+
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each shows}}
+              {{#each episodes}}
+                <tr>
+                  <td>
+                    {{show_route}}
+                  </td>
+                  <td>
+                    {{number}}
+                  </td>
+                  <td>
+                    {{title}}
+                  </td>
+                  <td>
+                    {{length_in_seconds}}
+                  </td>
+                  <td>
+                    {{feed['url']}}
+                  </td>
+                  <td>
+                    {{#if episode_is_unclaimed editor_id }}
+                      <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
+                    {{/if}}
+
+                    {{#if episode_is_claimed editor_id }}
+                      <button class="btn btn-primary btn-xs right">Episode Claimed</button>
+                    {{/if}}
+
+                    {{#if editor_is_current_user editor_id }}
+                      <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
+                    {{/if}}
+                  </td>
+                </tr>
+                {{/each}}
+              {{/each}}
+            </tbody>
+        </table>
       </div>
-      <div class="col-md-8">
-        <div class="row">
-          {{#each episodes}}
-          <div class="col-md-10">
-            <div class="row">
-              <a href="{{pathFor 'editor'}}">{{name}}</a>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="row">
+  </div>
 
-              {{#if is_claimer_unclaimed claimer_id}}
-              <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
-              {{/if}}
+  <div class="col-md-1">
+  </div>
 
-              {{#if is_claimed claimer_id}}
-              <button class="btn btn-primary btn-xs right">Episode Claimed</button>
-              {{/if}}
-
-              {{#if is_claimer_user claimer_id}}
-              <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
-              {{/if}}
-
-            </div>
-          </div>
-          {{/each}}
-        </div>
-      </div>
-    </div>
-    {{/each}}
-    <hr>
-  </section>
 </template>

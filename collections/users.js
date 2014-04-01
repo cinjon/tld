@@ -13,3 +13,48 @@
 // services: an Object containing data used by particular login services.
 // For example, its reset field contains tokens used by forgot password links,
 // and its resume field contains tokens used to keep you logged in between sessions.
+
+
+// Users = new Meteor.Collection('users', {
+//   schema: {
+//     username:{
+//       type: String,
+//       label: 'Username'
+//     },
+//     emails: {
+//       type: [Object],
+//       label: 'Email'
+//     },
+//     createdAt: {
+//       type: Date,
+//         autoValue: function() {
+//           if (this.isInsert) {
+//             return new Date;
+//           } else if (this.isUpsert) {
+//             return {$setOnInsert: new Date};
+//           } else {
+//             this.unset();
+//           }
+//         },
+//         denyUpdate: true
+//     },
+//     updatedAt: {
+//       type: Date,
+//       autoValue: function() {
+//         if (this.isUpdate) {
+//           return new Date();
+//         }
+//       },
+//       denyInsert: true,
+//       optional: true
+//     },
+//     profile: {
+//       type: Object,
+//       label: "Profile"
+//     },
+//     services: {
+//       type: Object,
+//       label: "Services"
+//     }
+//   }
+// });

@@ -30,15 +30,31 @@ Shows = new Meteor.Collection('shows', {
       },
       created_at: {
         type: Date,
-        label: 'Created at'
+          autoValue: function() {
+          if (this.isInsert) {
+            return new Date;
+          } else if (this.isUpsert) {
+            return {$setOnInsert: new Date};
+          } else {
+            this.unset();
+          }
+        },
+        denyUpdate: true
       },
       updated_at: {
         type: Date,
-        label: 'Updated at'
+        autoValue: function() {
+          if (this.isUpdate) {
+            return new Date();
+          }
+        },
+        denyInsert: true,
+        optional: true
       },
       artwork: {
         type: String,
-        label: 'Artwork Link'
+        label: 'Artwork Link',
+        optional: true
       },
       route: {
         type: String,

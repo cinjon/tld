@@ -13,6 +13,10 @@ Meteor.publish('episode_from_show', function(route, number) {
   });
 });
 
+Meteor.publish('episodes_from_show', function (route) {
+  return Episodes.find( {show_route: route} );
+})
+
 Meteor.publish('highlights_from_episode', function(route, number) {
   var episode = Episodes.findOne({show_route:route, number:number});
   return Highlights.find({episode_id:episode._id});
@@ -33,7 +37,7 @@ Meteor.publish('people_from_episode', function(route, number) {
 });
 
 Meteor.publish('show_from_route', function(route) {
-  return Shows.find({route:route})
+  return Shows.find({route:route});
 });
 
 Meteor.publish('shows_list', function() {
