@@ -136,7 +136,7 @@ Template.editor.helpers({
     if (Session.get('player_loaded')) {
       time = Session.get('highlight')['start_time'] || Math.max(Session.get('player_time') - 5, 0) || 0;
     }
-    return {start_time:time}
+    return {start_time:time, new_time:true}
   },
   player_data: function() {
     var episode = Episodes.findOne({_id:Session.get('episode_id')});
@@ -242,6 +242,42 @@ Template.editor_highlight.rendered = function() {
     char_slice -= 3;
   }
 }
+
+Template.editor_highlight_time.events({
+  'click .edit_time': function(e, tmpl) {
+    $('.edit_text_time').hide();
+    $(tmpl.find('.plain_text_time')).hide();
+    $(tmpl.find('.edit_text_time')).show();
+  },
+  'keydown .edit_text_time': function(e, tmpl) {
+    var val = $(e.target).val();
+    if (e.keyCode == 8 && val == '') {
+      e.preventDefault();
+      $(tmpl.find('.plain_text_time')).show();
+      $(tmpl.find('.edit_text_time')).hide();
+    }
+  },
+  'keyup .edit_text_time': function(e, tmpl) {
+    if (e.keyCode == 13) {
+      var val = validate_time($(e.target).val(), this.start_time);
+      if (val) {
+        Meteor.call('set_start_time', this._id, val)
+      }
+      $(tmpl.find('.plain_text_time')).show();
+      $(tmpl.find('.edit_text_time')).hide();
+    }
+  }
+});
+
+Template.editor_highlight_time.helpers({
+  edit_time: function() {
+    if (!this.new_time) {
+      return "edit_time";
+    } else {
+      return "";
+    }
+  }
+});
 
 Template.editor_new_input.created = function() {
   Session.set('highlight', new_highlight());
@@ -586,6 +622,16 @@ var toggle_add_person = function(button, type) {
     $('#add_' + type + '_button').hide();
     $('#new_person_input_span_' + type).show();
     $('#new_person_input_' + type).focus();
+  }
+}
+
+var validate_time = function(new_time_string, old_time_secs) {
+  var new_time_secs = format_clock_to_seconds(new_time_string);
+  //include a check for it to be less than the duration of the video
+  if (new_time_secs && new_time_secs != old_time_secs) {
+    return new_time_secs;
+  } else {
+    return false;
   }
 }
 

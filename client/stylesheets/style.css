@@ -159,3 +159,18 @@ hr.style-one {
 .twitter-typeahead {
     width:inherit;
 }
+
+.edit_text_time {
+    font-size:12px;
+    color: #FFFDF8;
+    background-color:#333;
+    height:25px;
+    text-align:center;
+    margin-left:15px;
+    padding-left:3px;
+    padding-right:3px;
+}
+
+.edit_time {
+    cursor:pointer;
+}

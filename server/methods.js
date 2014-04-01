@@ -93,6 +93,9 @@ Meteor.methods({
     Episodes.update({_id:episode_id}, {$pull:{hosts:person_id}});
     People.update({_id:person_id}, {$pull:{hosts:episode_id}});
   },
+  set_start_time: function(highlight_id, seconds) {
+    Highlights.update({_id:highlight_id}, {$set:{start_time:seconds}});
+  },
   unclaim_episode: function(episode_id, user_id) {
     Episodes.update({
       _id: episode_id, editor_id: user_id

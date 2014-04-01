@@ -130,7 +130,10 @@
 
 <template name="editor_highlight_time">
   <div class="row" style="height:40px; text-align:center">
-    <span class="highlight_time">{{format_seconds_to_clock start_time}}</span>
+    <span class="highlight_time {{edit_time}}">
+      <span class="plain_text_time">{{format_seconds_to_clock start_time}}</span>
+      <input type="text" style="display:none" class="form-control edit_text_time" value="{{format_seconds_to_clock start_time}}">
+    </span>
   </div>
 </template>
 
@@ -146,7 +149,7 @@
       </span>
 
       <div id="typeahead_input" style="display:table-cell; padding-right:10px">
-        <input class="form-control" type="text" id="speaker_input" placeholder="Enter >
+        <input class="form-control" type="text" id="speaker_input" placeholder="Search Speaker" >
       </div>
 
       <h4 style="display:none; vertical-align:middle" id="speaker_name">{{speaker_name}}</h4>

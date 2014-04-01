@@ -4,17 +4,7 @@ UI.registerHelper("capitalize", function(str) {
 
 UI.registerHelper("format_seconds_to_clock", function(seconds) {
   //assumes seconds >= 0, formats into 01:12:42 format
-  var hours = Math.floor(seconds / 3600);
-  var minutes = Math.floor((seconds - (hours * 3600)) / 60);
-  var secs = seconds - (hours * 3600) - (minutes * 60);
-
-  var ret = "";
-  ret += _format_time_part(hours);
-  ret += ":";
-  ret += _format_time_part(minutes);
-  ret += ":";
-  ret += _format_time_part(secs);
-  return ret;
+  return format_seconds_to_clock(seconds);
 });
 
 UI.registerHelper("has_role", function(roles) {
@@ -56,3 +46,17 @@ var _format_time_part = function(time) {
     return time.toString();
   }
 };
+
+var format_seconds_to_clock = function(seconds) {
+  var hours = Math.floor(seconds / 3600);
+  var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+  var secs = seconds - (hours * 3600) - (minutes * 60);
+
+  var ret = "";
+  ret += _format_time_part(hours);
+  ret += ":";
+  ret += _format_time_part(minutes);
+  ret += ":";
+  ret += _format_time_part(secs);
+  return ret;
+}
