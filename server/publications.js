@@ -30,10 +30,11 @@ Meteor.publish('people_names', function() {
 
 Meteor.publish('people_from_episode', function(route, number) {
   var episode = Episodes.findOne({show_route:route, number:number});
-  var people = episode.hosts || [];
-  var guests = episode.guests || [];
-  people.push.apply(people, guests);
-  return People.find({_id:{$in:people}});
+  return People.find({
+    $or:[{hosts:episode._id}, {guests:episode._id}]
+  }, {
+    fields:{first_name:true, last_name:true, hosts:true, guests:true}
+  })
 });
 
 Meteor.publish('show_from_route', function(route) {
