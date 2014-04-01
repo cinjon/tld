@@ -48,7 +48,11 @@
                     {{number}}
                   </td>
                   <td>
-                    {{title}}
+                    {{#if editor_is_current_user editor_id }}
+                      <a href="{{pathFor 'editor' route=show_route number=number}}">{{title}}</a>
+                    {{else}}
+                      {{title}}
+                    {{/if}}
                   </td>
                   <td>
                     {{length_in_seconds}}
