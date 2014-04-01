@@ -34,3 +34,7 @@ var load_video = function(seconds) {
     Session.set('player_loaded', true);
   });
 };
+
+player_duration = function() {
+  return player.duration();
+}
