@@ -1,7 +1,7 @@
 // Chapters
 // {
 //   title: string,
-//   number: number,     // necessary?
+//   first: boolean,
 //   episode_id: string,
 //   editor_id: string,
 //   start_time: number,
@@ -12,15 +12,15 @@
 // }
 
 
-Episodes = new Meteor.Collection('chapters', {
+Chapters = new Meteor.Collection('chapters', {
   schema: new SimpleSchema({
     title: {
       type: String,
       label: 'Title'
     },
-    number: {
-      type: Number,
-      label: 'Number'
+    first: {
+      type: Boolean,
+      label: 'Is First Chapter'
     },
     episode_id: {
       type: String,
@@ -35,7 +35,7 @@ Episodes = new Meteor.Collection('chapters', {
       label: 'Start time'
     },
     highlights: {
-      type: [Object],
+      type: [String],
       label: 'Highlights'
     },
     next_chapter_id: {
@@ -68,3 +68,15 @@ Episodes = new Meteor.Collection('chapters', {
     }
   })
 });
+
+make_chapter = function(title, first, episode_id, editor_id,
+                        start_time, highlights, next_chapter_id,
+                        created_at) {
+  created_at = created_at || (new Date()).getTime();
+  highlights = highlights || [];
+  return Chapters.insert(
+    {title:title, editor_id:editor_id, first:first,
+     episode_id:episode_id, start_time:start_time,
+     highlights:highlights, next_chapter_id:next_chapter_id,
+     created_at:created_at});
+};

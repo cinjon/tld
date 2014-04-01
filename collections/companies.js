@@ -11,6 +11,7 @@ Companies = new Meteor.Collection('companies');
 
 make_company = function(name, homepage, twitter,
                         created_at, sponsored_episodes) {
+  //TODO: put in schema for this s.t. created_at is automatcially filled
   created_at = created_at || (new Date()).getTime();
   sponsored_episodes = sponsored_episodes || [];
   return Companies.insert({name:name, homepage:homepage,

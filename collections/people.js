@@ -17,6 +17,7 @@ People = new Meteor.Collection('people');
 
 make_person = function(first_name, last_name, twitter, avatar, homepage,
                        hosts, guests, created_at) {
+  //TODO: put in schema for this s.t. created_at is automatcially filled
   created_at = created_at || (new Date()).getTime();
   hosts = hosts || [];
   guests = guests || [];

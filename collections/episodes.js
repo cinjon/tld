@@ -11,7 +11,6 @@
 //   guests: array of guests, // should include person_id
 //   chapters: array of chapters,
 //   highlights: array of highlights,
-//   edited: boolean,
 //   postedited: boolean,
 //   editor_id: string,
 //   length_in_seconds: number,
@@ -62,28 +61,24 @@ Episodes = new Meteor.Collection('episodes', {
         label: 'Show ID'
       },
       hosts: {
-        type: [Object],
+        type: [String],
         label: 'Hosts',
         optional: true
       },
       guests: {
-        type: [Object],
+        type: [String],
         label: 'Guests',
         optional: true
       },
       chapters: {
-        type: [Object],
+        type: [String],
         label: 'Chapters',
         optional: true
       },
       highlights: {
-        type: [Object],
+        type: [String],
         label: 'Highlights',
         optional: true
-      },
-      edited: {
-        type: Boolean,
-        label: 'Edited flag'
       },
       postedited: {
         type: Boolean,
@@ -133,3 +128,35 @@ Episodes = new Meteor.Collection('episodes', {
       }
   })
 });
+
+make_episode = function(type, format, title, number, storage_key,
+                        show_route, show_id, hosts, guests,
+                        chapters, highlights, postedited,
+                        editor_id, length_in_seconds, created_at,
+                        published, feed_title, feed_url, feed_published,
+                        feed_summary, feed_entry_id, feed_enclosure_url) {
+  created_at = created_at || (new Date()).getTime();
+  chapters = chapters || [];
+  highlights = highlights || [];
+  guests = guests || [];
+  hosts = hosts || [];
+  var episode_id = Episodes.insert(
+    {type:type, format:format, title:title, number:number,
+     storage_key:storage_key, show_route:show_route, show_id:show_id,
+     hosts:hosts, guests:guests, chapters:chapters, highlights:highlights,
+     postedited:postedited, editor_id:editor_id,
+     length_in_seconds:length_in_seconds, created_at:created_at,
+     published:published, feed: {
+       url:feed_url, title:feed_title, published:feed_published,
+       summary:feed_summary, entry_id:feed_entry_id,
+       enclosure_url:feed_enclosure_url
+     }
+    }
+  );
+  if (chapters.length == 0) {
+    var chapter_id = make_chapter(
+      'Introduction', true, episode_id, 'cinjon', 0, highlights,
+      null, created_at);
+    Episodes.update({_id:episode_id}, {$addToSet:{chapters:chapter_id}});
+  }
+};
