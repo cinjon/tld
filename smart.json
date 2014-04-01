@@ -5,6 +5,7 @@
     "roles": {},
     "typeahead": {},
     "font-awesome": {},
-    "autoform": {}
+    "autoform": {},
+    "accounts-admin-ui-bootstrap-3": {}
   }
 }
