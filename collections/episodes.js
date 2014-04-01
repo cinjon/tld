@@ -9,6 +9,8 @@
 //   show_id: string,
 //   hosts: array of hosts,   // should include person_id
 //   guests: array of guests, // should include person_id
+//   chapters: array of chapters,
+//   highlights: array of highlights,
 //   edited: boolean,
 //   postedited: boolean,
 //   editor_id: string,
@@ -28,6 +30,7 @@
     //   enclosure_url
     // }
 // }
+
 Episodes = new Meteor.Collection('episodes', {
   schema: {
       type: {
@@ -66,6 +69,16 @@ Episodes = new Meteor.Collection('episodes', {
       guests: {
         type: [Object],
         label: 'Guests',
+        optional: true
+      },
+      chapters: {
+        type: [Object],
+        label: 'Chapters',
+        optional: true
+      },
+      highlights: {
+        type: [Object],
+        label: 'Highlights',
         optional: true
       },
       edited: {
