@@ -120,9 +120,13 @@
     top:3px;
 }
 
+#highlight_times {
+    margin-top:10px;
+}
+
 .highlight_time {
     position:relative;
-    top:7.5px;
+    top:5px;
     font-size:12px;
 }
 
@@ -165,12 +169,24 @@ hr.style-one {
     color: #FFFDF8;
     background-color:#333;
     height:25px;
-    text-align:center;
-    margin-left:15px;
+    text-align:right;
+    margin-left:30px;
     padding-left:3px;
     padding-right:3px;
+    width:60px;
+    padding-top:1px;
+    padding-bottom:1px;
 }
 
 .edit_time {
     cursor:pointer;
+}
+
+/* Temporary */
+.box {
+    position: relative;
+    margin: 0 auto;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2), inset 0 0 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2), inset 0 0 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2), inset 0 0 1px rgba(0, 0, 0, 0.1);
 }

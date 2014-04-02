@@ -66,7 +66,7 @@ Highlights = new Meteor.Collection('highlights', {
           }
         }
     }
-  });
+  })
 });
 
 make_highlight = function(type, editor_id, episode_id, chapter_id,

@@ -51,50 +51,45 @@
         </div>
       </div>
       <div class="col-md-7 inherit">
-        <div class="row inherit">
-          <section class="white_text scroller" style="padding-top:0px; padding-left:0px; padding-right:0px; height: 100%; background-color:#BFBFB6">
-          <div class="col-md-1 inherit" style="background-color:#333;">
-            <div class="row" id="highlight_times">
-              {{> editor_highlight_time new_time}}
-              {{#each highlights}}
-              {{> editor_highlight_time}}
-              {{/each}}
+        <section class="white_text scroller" style="padding-top:0px; padding-left:0px; padding-right:0px; height: 100%; background-color:#BFBFB6;">
+          <div class="row" id="header" style="background-color:#333; margin-bottom:10px; padding-left:65px; margin-left:0px">
+            <div class="col-md-4">
+              {{> editor_header_box header_draft}}
+            </div>
+            <div class="col-md-4">
+              {{> editor_header_box header_review}}
+            </div>
+            <div class="col-md-4">
+              {{> editor_header_box header_publish}}
             </div>
           </div>
-          <div class="col-md-11 inherit">
-            <div class="row" id="header" style="background-color:#FFFDF8; margin-bottom:10px">
-              <div class="col-md-4">
-                {{> editor_header_box header_draft}}
-              </div>
-              <div class="col-md-4">
-                {{> editor_header_box header_review}}
-              </div>
-              <div class="col-md-4">
-                {{> editor_header_box header_publish}}
-              </div>
-            </div>
-            {{> editor_new_input}}
-            {{#each highlights}}
-            {{> editor_highlight}}
-            {{/each}}
+          <div class="row" id="mode_row">
+            {{#if is_editor_mode "draft"}}
+            {{> editor_mode_draft}}
+            {{/if}}
+            {{#if is_editor_mode "review"}}
+            {{> editor_mode_review}}
+            {{/if}}
+            {{#if is_editor_mode "publish"}}
+            {{> editor_mode_publish}}
+            {{/if}}
           </div>
-          </section>
-        </div>
+        </section>
       </div>
     </div>
   </div>
 </template>
 
 <template name="editor_header_box">
-  <div class="row">
-  {{#if is_editor_mode}}
+  <div class="row" style="background-color:white">
+  {{#if is_editor_mode key}}
   <div class="arrow_box_{{key}}">
     <button class="btn btn-block" style="height:70px;background-color:{{color}}">
       <span style="text-align:center; color:white">{{title}}</span>
     </button>
   </div>
   {{else}}
-  <button class="btn btn-block" style="height:70px;background-color:white">
+  <button class="btn btn-block" style="height:70px; background-color:white">
     <span style="text-align:center; color:{{color}}">{{title}}</span>
   </button>
   {{/if}}
@@ -102,7 +97,7 @@
 </template>
 
 <template name="editor_highlight">
-  <div class="row" style="height:40px">
+  <div class="row" style="height:40px; margin-left:0px">
     <div class="left highlight_image">
       {{#if has_company}}
       {{> small_picture company}}
@@ -129,16 +124,56 @@
 </template>
 
 <template name="editor_highlight_time">
-  <div class="row" style="height:40px; text-align:center">
-    <span class="highlight_time {{edit_time}}">
+  <div class="row row_text_time" style="height:40px; text-align:right; margin-right:10px">
+    <span class="highlight_time {{edit_time}}" style="{{edit_time_display}}">
       <span class="plain_text_time">{{format_seconds_to_clock start_time}}</span>
       <input type="text" style="display:none" class="form-control edit_text_time" value="{{format_seconds_to_clock start_time}}">
     </span>
   </div>
 </template>
 
+<template name="editor_mode_draft">
+  <div id="highlight_times" class="inherit left" style="background-color:#333; margin-top:-10px">
+    <div style="clear:both; min-width:80px; margin-top:10px">
+      {{> editor_highlight_time new_time}}
+      {{#each highlights}}
+      {{> editor_highlight_time}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="inherit left">
+    <div style="clear:both">
+    {{> editor_new_input}}
+    {{#each highlights}}
+    {{> editor_highlight}}
+    {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="editor_mode_publish">
+
+</template>
+
+<template name="editor_mode_review">
+  <div id="highlight_times" class="inherit left" style="background-color:#333; margin-top:-10px">
+    <div style="clear:both; min-width:80px; margin-top:10px">
+      {{#each highlights}}
+      {{> editor_highlight_time}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="inherit left">
+    <div style="clear:both">
+    {{#each highlights}}
+    {{> editor_highlight}}
+    {{/each}}
+    </div>
+  </div>
+</template>
+
 <template name="editor_new_input">
-  <div class="row" style="min-height:40px">
+  <div class="row" style="min-height:40px; margin-left:0px">
     <div style="width:100%; display:table">
       <span id="speaker_type" style="display:table-cell; vertical-align:middle; padding-left:10px; width:40px; padding-right:10px">
         {{#if is_speaker_set}}
@@ -149,7 +184,7 @@
       </span>
 
       <div id="typeahead_input" style="display:table-cell; padding-right:10px; color:black">
-        <input class="form-control" type="text" id="speaker_input" placeholder="Search Speaker">
+        {{> editor_search}}
       </div>
 
       <h4 style="display:none; vertical-align:middle" id="speaker_name">{{speaker_name}}</h4>
@@ -163,7 +198,17 @@
       </div>
     </div>
   </div>
-  <div id="content_input_text_test" class="form-control" style="display:none; height:auto; width:auto;"></div>
+  <div id="content_input_text_test" style="display:none; height:auto; width:auto;"></div>
+</template>
+
+<template name="editor_search">
+  <input class="form-control" type="text" id="prefix_token_input" placeholder="Speaker:@, Sponsor:!, Link:#">
+  <span id="speaker_span" style="display:none">
+    <input class="form-control editor_search_input" type="text" id="speaker_input" placeholder="Search Speaker">
+  </span>
+  <span id="sponsor_span" style="display:none">
+    <input class="form-control editor_search_input" type="text" id="sponsor_input" placeholder="Search Sponsors">
+  </span>
 </template>
 
 <template name="small_person_display">
