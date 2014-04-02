@@ -20,13 +20,17 @@ UI.registerHelper("format_seconds_to_clock", function(seconds) {
 });
 
 UI.registerHelper("has_role", function(roles) {
+  //TODO: change to the helper in Roles that does this.
   return Roles.userIsInRole(Meteor.userId(), roles);
 });
 
-UI.registerHelper("s3", function(key) {
-  if (key) {
-    // TODO: this should check the format field instead of using .mp3 string
-    return "http://s3.amazonaws.com/timelined/audio/" + key + ".mp3";
+UI.registerHelper("is_editor_mode", function(key) {
+  return is_editor_mode(key);
+});
+
+UI.registerHelper("s3", function(storage_key, format) {
+  if (storage_key && format) {
+    return "http://s3.amazonaws.com/timelined/audio/" + storage_key + "." + format;
   } else {
     return null;
   }
@@ -60,4 +64,8 @@ var format_seconds_to_clock = function(seconds) {
   ret += ":";
   ret += _format_time_part(secs);
   return ret;
+}
+
+is_editor_mode = function(mode) {
+  return Session.get('editor_mode') == mode;
 }
