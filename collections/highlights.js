@@ -12,66 +12,66 @@
 //   updated_at: date
 // }
 Highlights = new Meteor.Collection('highlights', {
-  schema: {
-    type: {
-      type: String,
-      label: 'Type'
-    },
-    editor_id: {
-      type: String,
-      label: 'Editor ID'
-    },
-    episode_id: {
-      type: String,
-      label: 'Editor ID'
-    },
-    start_time: {
-      type: String,
-      label: 'Start Time'
-    },
-    text: {
-      type: String,
-      label: 'Text'
-    },
-    person_id: {
-      type: String,
-      label: 'Person ID',
-      optional: true
-    },
-    company_id: {
-      type: String,
-      label: 'Company ID',
-      optional: true
-    },
-    url: {
-      type: String,
-      label: 'URL',
-      optional: true
-    },
-    created_at: {
-      type: Date,
+  schema: new SimpleSchema({
+      type: {
+        type: String,
+        label: 'Type'
+      },
+      editor_id: {
+        type: String,
+        label: 'Editor ID'
+      },
+      episode_id: {
+        type: String,
+        label: 'Editor ID'
+      },
+      start_time: {
+        type: String,
+        label: 'Start Time'
+      },
+      text: {
+        type: String,
+        label: 'Text'
+      },
+      person_id: {
+        type: String,
+        label: 'Person ID',
+        optional: true
+      },
+      company_id: {
+        type: String,
+        label: 'Company ID',
+        optional: true
+      },
+      url: {
+        type: String,
+        label: 'URL',
+        optional: true
+      },
+      created_at: {
+        type: Date,
+          autoValue: function() {
+          if (this.isInsert) {
+            return new Date;
+          } else if (this.isUpsert) {
+            return {$setOnInsert: new Date};
+          } else {
+            this.unset();
+          }
+        },
+        denyUpdate: true
+      },
+      updated_at: {
+        type: Date,
         autoValue: function() {
-        if (this.isInsert) {
-          return new Date;
-        } else if (this.isUpsert) {
-          return {$setOnInsert: new Date};
-        } else {
-          this.unset();
-        }
-      },
-      denyUpdate: true
-    },
-    updated_at: {
-      type: Date,
-      autoValue: function() {
-        if (this.isUpdate) {
-          return new Date();
-        }
-      },
-      denyInsert: true,
-      optional: true
-    }
-  }
+          if (this.isUpdate) {
+            return new Date();
+          }
+        },
+        denyInsert: true,
+        optional: true
+      }
+  })
 });
 
 

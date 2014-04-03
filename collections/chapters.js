@@ -13,7 +13,7 @@
 
 
 Episodes = new Meteor.Collection('chapters', {
-  schema: {
+  schema: new SimpleSchema({
     title: {
       type: String,
       label: 'Title'
@@ -66,5 +66,5 @@ Episodes = new Meteor.Collection('chapters', {
       denyInsert: true,
       optional: true
     }
-  }
+  })
 });

@@ -32,7 +32,7 @@
 // }
 
 Episodes = new Meteor.Collection('episodes', {
-  schema: {
+  schema: new SimpleSchema({
       type: {
         type: String,
         label: 'Type (audio or video)',
@@ -103,9 +103,9 @@ Episodes = new Meteor.Collection('episodes', {
         type: Date,
           autoValue: function() {
           if (this.isInsert) {
-            return new Date;
+            return new Date();
           } else if (this.isUpsert) {
-            return {$setOnInsert: new Date};
+            return {$setOnInsert: new Date()};
           } else {
             this.unset();
           }
@@ -131,5 +131,5 @@ Episodes = new Meteor.Collection('episodes', {
         label: 'Feed data (varying fields)',
         blackbox: true
       }
-  }
+  })
 });
