@@ -5,6 +5,7 @@ Template.add_person.events({
   'keydown .new_person_input': function(e, tmpl) {
     var val = $(e.target).val();
     if (e.keyCode == 8 && val == '') {
+      e.preventDefault();
       toggle_add_person(true, this.id);
     }
   },
@@ -78,21 +79,21 @@ Template.editor.helpers({
   },
   header_review: function() {
     return {
-      color:'#E6A861',
+      color_class:'mint',
       key:'review',
       title:'Review'
     }
   },
   header_draft: function() {
     return {
-      color:'#df5445',
+      color_class:"coral",
       key:'draft',
       title:'Draft'
     }
   },
   header_publish: function() {
     return {
-      color:'#00FF7F',
+      color_class:'tangerine',
       key:'publish',
       title:'Publish'
     }
@@ -173,11 +174,12 @@ Template.editor_highlight.helpers({
     } else if (this.company_id) {
       var company = Companies.findOne({_id:this.company_id});
       if (company) {
-        return company.name;
+        return company.name
       }
     } else if (this.type == "link") {
       return "Link";
     }
+    return '';
   }
 });
 
@@ -205,26 +207,13 @@ Template.editor_highlight.rendered = function() {
   }
 }
 
-Template.editor_highlight_time.events({
-  'click .edit_time': function(e, tmpl) {
-    set_css_time(null, true);
-    set_css_time(tmpl, false);
+Template.small_person_display.helpers({
+  has_twitter: function() {
+    return this.twitter && this.twitter != '';
   },
-  'keydown .edit_text_time': function(e, tmpl) {
-    var val = $(e.target).val();
-    if (e.keyCode == 8 && val == '') {
-      set_css_time(tmpl, true);
-    }
-  },
-  'keyup .edit_text_time': function(e, tmpl) {
-    if (e.keyCode == 13) {
-      var val = validate_time($(e.target).val(), this.start_time);
-      if (val) {
-        Meteor.call('set_start_time', this._id, val)
-      }
-      set_css_time(tmpl, true);
-    }
-  },
+  name: function() {
+    return this.first_name + ' ' + this.last_name;
+  }
 });
 
 Template.small_picture.helpers({
@@ -268,29 +257,6 @@ var reset_typeaheads = function() {
   set_speaker_typeahead();
   set_people_typeahead();
   set_sponsor_typeahead();
-}
-
-var set_css_time = function(tmpl, plain_text) {
-  var hide, show, margin;
-  if (plain_text) {
-    margin = '10px'
-    show = '.plain_text_time';
-    hide = '.edit_text_time';
-  } else {
-    margin = '5px';
-    hide = '.plain_text_time';
-    show = '.edit_text_time';
-  }
-
-  if (tmpl) {
-    tmpl.$(hide).hide();
-    tmpl.$(show).show();
-    tmpl.$('.row_text_time').css('margin-right', margin);
-  } else {
-    $(show).show();
-    $(hide).hide();
-    $('.row_text_time').css('margin-right', '10px');
-  }
 }
 
 var set_episode = function(episode_data) {
@@ -356,16 +322,6 @@ var toggle_add_person = function(button, type) {
     $('#add_' + type + '_button').hide();
     $('#new_person_input_span_' + type).show();
     $('#new_person_input_' + type).focus();
-  }
-}
-
-var validate_time = function(new_time_string, old_time_secs) {
-  var new_time_secs = format_clock_to_seconds(new_time_string);
-  //include a check for it to be less than the duration of the video
-  if (new_time_secs && new_time_secs != old_time_secs && new_time_secs < player_duration()) {
-    return new_time_secs;
-  } else {
-    return false;
   }
 }
 
