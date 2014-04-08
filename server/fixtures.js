@@ -1,10 +1,9 @@
 Meteor.startup( function() {
   //bootstrap an empty db
-  if (Shows.find().count() === 0) {
-    var timestamp = new Date();
+  var timestamp = new Date();
 
+  if (Meteor.users.find().count() == 0) {
     // USERS AND ROLES
-
     var cinjon_id = Accounts.createUser({
       email:'cinjon.resnick@gmail.com',
       password:'sharpsharksshank',
@@ -36,10 +35,10 @@ Meteor.startup( function() {
     });
 
     Roles.addUsersToRoles(editor_id, ['editor']);
+  }
 
-
-    // SHOWS
-
+  // SHOWS
+  if (Shows.find().count() === 0) {
     var backtowork_id = Shows.insert({
       name: 'Back to Work',
       homepage: 'http://5by5.tv/b2w',
@@ -59,10 +58,10 @@ Meteor.startup( function() {
       route: make_name_route('Nerdist'),
       feed_checked_at: timestamp
     });
+  }
 
-
+  if (Episodes.find().count() === 0) {
     // EPISODES
-
     var backtowork001 = make_episode(
       "audio", "mp3", "Back to Work 001",
       1, "c8b1b604524c39612ba0be3423ca4669",
