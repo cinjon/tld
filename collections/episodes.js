@@ -155,8 +155,7 @@ make_episode = function(type, format, title, number, storage_key,
   );
   if (chapters.length == 0) {
     var chapter_id = make_chapter(
-      'Introduction', true, episode_id, 'cinjon', 0, highlights,
-      null, created_at);
+      'Introduction', true, episode_id, 'cinjon', 0, highlights, null);
     Episodes.update({_id:episode_id}, {$addToSet:{chapters:chapter_id}});
   }
 };

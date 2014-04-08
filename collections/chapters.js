@@ -70,13 +70,10 @@ Chapters = new Meteor.Collection('chapters', {
 });
 
 make_chapter = function(title, first, episode_id, editor_id,
-                        start_time, highlights, next_chapter_id,
-                        created_at) {
-  created_at = created_at || (new Date()).getTime();
+                        start_time, highlights, next_chapter_id) {
   highlights = highlights || [];
   return Chapters.insert(
     {title:title, editor_id:editor_id, first:first,
      episode_id:episode_id, start_time:start_time,
-     highlights:highlights, next_chapter_id:next_chapter_id,
-     created_at:created_at});
+     highlights:highlights, next_chapter_id:next_chapter_id})
 };
