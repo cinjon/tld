@@ -1,0 +1,76 @@
+<template name="character_cutoff">
+  <small class="box_title" style="display:inline-block; float:right">
+    <div id="character_cutoff" style="color:{{current_notes_color}}">
+      <span>{{current_char_counter}}</span>
+      <span>&nbsp;/&nbsp;</span>
+      <span>{{max_chars}}</span>
+    </div>
+  </small>
+</template>
+
+<template name="editor_highlight_time">
+  <div class="row row_text_time" style="height:40px; text-align:right; margin-right:10px">
+    <span class="highlight_time {{edit_time}}">
+      <span class="plain_text_time">{{format_seconds_to_clock start_time}}</span>
+      <input type="text" style="display:none" class="form-control edit_text_time" value="{{format_seconds_to_clock start_time}}">
+    </span>
+  </div>
+</template>
+
+<template name="editor_mode_draft">
+  <div id="highlight_times" class="inherit left" style="background-color:#333; margin-top:-10px">
+    <div style="clear:both; min-width:80px; margin-top:10px">
+      {{> editor_highlight_time new_time}}
+      {{#each highlights}}
+      {{> editor_highlight_time}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="inherit left">
+    <div style="clear:both">
+    {{> editor_new_input}}
+    {{#each highlights}}
+    {{> editor_highlight}}
+    {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="editor_new_input">
+  <div class="row" style="min-height:40px; margin-left:0px">
+    <div style="width:100%; display:table">
+      <span id="speaker_type" style="display:table-cell; vertical-align:middle; padding-left:10px; width:40px; padding-right:10px">
+        {{#if is_speaker_set}}
+        {{capitalize speaker_type}}
+        {{else}}
+        <i class="fa fa-chevron-circle-right" style="font-size:1.5em"></i>
+        {{/if}}
+      </span>
+
+      <div id="typeahead_input" style="display:table-cell; padding-right:10px; color:black">
+        {{> editor_search}}
+      </div>
+
+      <h4 style="display:none; vertical-align:middle" id="speaker_name">{{speaker_name}}</h4>
+
+      <span id="content_input_span" style="display:none;">
+        <textarea class="form-control" id="content_input" rows="1"></textarea>
+      </span>
+
+      <div style="display:table-cell; padding-right:10px">
+        {{> character_cutoff}}
+      </div>
+    </div>
+  </div>
+  <div id="content_input_text_test" style="display:none; height:auto; width:auto;"></div>
+</template>
+
+<template name="editor_search">
+  <input class="form-control" type="text" id="prefix_token_input" placeholder="Speaker:@, Sponsor:!, Link:#">
+  <span id="speaker_span" style="display:none">
+    <input class="form-control editor_search_input" type="text" id="speaker_input" placeholder="Search Speaker">
+  </span>
+  <span id="sponsor_span" style="display:none">
+    <input class="form-control editor_search_input" type="text" id="sponsor_input" placeholder="Search Sponsors">
+  </span>
+</template>

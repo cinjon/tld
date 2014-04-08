@@ -120,10 +120,6 @@
     top:3px;
 }
 
-#highlight_times {
-    margin-top:10px;
-}
-
 .highlight_time {
     position:relative;
     top:5px;
@@ -180,6 +176,27 @@ hr.style-one {
 
 .edit_time {
     cursor:pointer;
+}
+
+.chapter_divider {
+    cursor:pointer;
+    display:none;
+    position:relative;
+    top:20px;
+}
+
+.row_text_time:hover .chapter_divider {
+    display:block
+}
+
+.chapter_title {
+    background-color:white;
+    text-align:center;
+    color:black;
+    padding-top:10px;
+    border-top:1px solid;
+    border-bottom:1px solid;
+    overflow:hidden;
 }
 
 /* Temporary */

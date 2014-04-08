@@ -1,0 +1,35 @@
+<template name="editor_mode_review">
+  {{#each chapters}}
+  {{> chapter_layout}}
+  {{/each}}
+</template>
+
+<template name="chapter_layout">
+  <div class="chapter_box" style="background-color:#333; height:40px; padding-left:80px; margin-top:-10px; clear:both">
+    <div id="{{title}}" class="chapter_title inherit" contenteditable="true">
+      {{title}}
+    </div>
+  </div>
+  <div class="left" style="background-color:#333; margin-top:-10px;">
+    <div style="clear:both; min-width:80px; margin-top:10px">
+      {{#each highlights}}
+      {{> editor_make_chapter}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="left">
+    <div style="clear:both">
+    {{#each highlights}}
+    {{> editor_highlight}}
+    {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="editor_make_chapter">
+  <div class="row row_text_time" style="height:40px; text-align:right; margin-right:10px">
+    <span class="chapter_divider">
+      <i class="fa fa-hand-o-right" style="font-size:1.5em"></i>
+    </span>
+  </div>
+</template>

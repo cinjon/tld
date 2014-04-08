@@ -1,5 +1,10 @@
 // Meteor.publish definitions
 
+Meteor.publish('chapters_from_episode', function(route, number) {
+  var episode = Episodes.findOne({show_route:route, number:number});
+  return Chapters.find({episode_id:episode._id});
+});
+
 Meteor.publish('company_names', function() {
   return Companies.find({}, {
     fields:{name:true}
