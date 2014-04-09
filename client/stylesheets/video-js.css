@@ -1,6 +1,6 @@
 /*!
 Video.js Default Styles (http://videojs.com)
-Version 4.4.0
+Version 4.5.1
 Create your own skin at http://designer.videojs.com
 */
 /* SKIN
@@ -20,8 +20,8 @@ The control icons are from a custom font. Each icon corresponds to a character
 */
 @font-face {
   font-family: 'VideoJS';
-  src: url('/fonts/vjs.eot');
-  src: url('/fonts/vjs.eot?#iefix') format('embedded-opentype'), url('/fonts/vjs.woff') format('woff'), url('/fonts/vjs.ttf') format('truetype');
+  src: url('fonts/vjs.eot');
+  src: url('fonts/vjs.eot?#iefix') format('embedded-opentype'), url('fonts/vjs.woff') format('woff'), url('fonts/vjs.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -104,21 +104,20 @@ The default control bar that is a container for most of the controls.
 }
 /* Hide the control bar when the video is playing and the user is inactive  */
 .vjs-default-skin.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
-  /*display: block;
+/*  display: block;
   visibility: hidden;
-  opacity: 0;
+  opacity: 0;*/
   /* transition */
-  /*
-  -webkit-transition: visibility 1s, opacity 1s;
+/*  -webkit-transition: visibility 1s, opacity 1s;
   -moz-transition: visibility 1s, opacity 1s;
   -o-transition: visibility 1s, opacity 1s;
   transition: visibility 1s, opacity 1s;*/
 }
 .vjs-default-skin.vjs-controls-disabled .vjs-control-bar {
-  /*display: none;*/
+/*  display: none;*/
 }
 .vjs-default-skin.vjs-using-native-controls .vjs-control-bar {
- /* display: none;*/
+/*  display: none;*/
 }
 /* IE8 is flakey with fonts, and you have to change the actual content to force
 fonts to show/hide properly.
@@ -732,6 +731,10 @@ body.vjs-full-window {
   /* Leave padding on left and right */
   left: 1em;
   right: 1em;
+}
+/* Move captions down when controls aren't being shown */
+.video-js.vjs-user-inactive.vjs-playing .vjs-text-track-display {
+  bottom: 1em;
 }
 /* Individual tracks */
 .video-js .vjs-text-track {
