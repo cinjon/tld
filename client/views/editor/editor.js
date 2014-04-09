@@ -13,10 +13,10 @@ Template.add_person.events({
     var val = $(e.target).val().trim();
     var type = this.id;
     if (e.keyCode == 13 && val != '') {
-      var episode_id = Session.get('episode_id');
+      var episode_id = this.episode_id;
       Meteor.call(
         'new_' + this.id, val, episode_id, function(err, result) {
-          reset_typeaheads();
+          reset_typeaheads(episode_id);
           toggle_add_person(true, type);
         }
       );
@@ -37,12 +37,12 @@ Template.editor.destroyed = function() {
 Template.editor.events({
   'click .remove_person': function(e, tmpl) {
     var type = $(e.target).closest('a').attr('type');
-    var episode_id = Session.get('episode_id');
+    var episode_id = this.episode._id
     var person_id = this._id;
     Meteor.call(
       'remove_' + type, episode_id, person_id,
       function(error, result) {
-        reset_typeaheads();
+        reset_typeaheads(episode_id);
       }
     );
   }
@@ -50,23 +50,39 @@ Template.editor.events({
 
 Template.editor.helpers({
   add_guest: function() {
-    return {
-      id:'guest',
+    if (this.episode) {
+      return {
+        id:'guest',
+        episode_id:this.episode._id
+      }
     }
   },
   add_host: function() {
-    return {
-      id:'host',
+    if (this.episode) {
+      return {
+        id:'host',
+        episode_id:this.episode._id
+      }
+    }
+  },
+  episode_data: function() {
+    console.log(this.episode);
+    if (this.episode) {
+      return {
+        storage_key: this.episode.storage_key,
+        format: this.episode.format,
+        type: this.episode.type
+      }
     }
   },
   episode_title: function() {
-    var episode = Episodes.findOne({_id:Session.get('episode_id')});
+    var episode = this.episode;
     if (episode) {
       return episode.title;
     }
   },
   guests: function() {
-    var episode = Episodes.findOne({_id:Session.get('episode_id')});
+    var episode = this.episode;
     if (!episode) {
       return [];
     }
@@ -74,8 +90,7 @@ Template.editor.helpers({
     return People.find({_id:{$in:guests}});
   },
   has_episode: function() {
-    return Session.get('episode_id');
-    var episode = Episodes.findOne({_id:Session.get('episode_id')});
+    return this.episode;
   },
   header_review: function() {
     return {
@@ -99,33 +114,22 @@ Template.editor.helpers({
     }
   },
   hosts: function() {
-    var episode = Episodes.findOne({_id:Session.get('episode_id')});
+    var episode = this.episode;
     if (!episode) {
       return [];
     }
     var hosts = episode.hosts || [];
     return People.find({_id:{$in:hosts}});
   },
-  player_data: function() {
-    var episode = Episodes.findOne({_id:Session.get('episode_id')});
-    if (episode) {
-      return {
-        storage_key: episode.storage_key,
-        format: episode.format,
-        type: episode.type
-      }
-    }
-  },
   show_title: function() {
-    var show = Shows.findOne({route:this.route});
-    if (show) {
-      return show.name;
+    console.log(this.show);
+    if (this.show) {
+      return this.show.title;
     }
   },
 });
 
 Template.editor.rendered = function() {
-  Session.set('episode', this.data);
   Session.set('editor_rendered', true);
 }
 
@@ -229,10 +233,10 @@ var destroy_typeaheads = function() {
   $('#new_person_input_host').typeahead('destroy','NoCached');
 };
 
-var get_all_people = function() {
+var get_all_people = function(episode_id) {
   //Would be great if we ddin't have to do this crap below to dedupe
   //Problem at the moment is with meteor not accepting $nin
-  var episode = Episodes.findOne({_id:Session.get('episode_id')});
+  var episode = Episodes.findOne({_id:episode_id});
   var guests = [];
   var hosts = [];
   if (episode) {
@@ -241,7 +245,7 @@ var get_all_people = function() {
   }
   var map = [];
   People.find(
-    {}, {fields:{first_name:true, last_name:true}}).forEach(
+    {}, {fields:{first_name:true, last_name:true}, reactive:false}).forEach(
       function(person) {
         if (hosts.indexOf(person._id) == -1 && guests.indexOf(person._id) == -1) {
           var name = person.first_name + ' ' + person.last_name;
@@ -252,28 +256,28 @@ var get_all_people = function() {
   return map;
 }
 
-var reset_typeaheads = function() {
-  destroy_typeaheads();
-  set_speaker_typeahead();
-  set_people_typeahead();
-  set_sponsor_typeahead();
+var get_selections_people = function(episode_id) {
+  return People.find({
+    $or:[{hosts:episode_id}, {guests:episode_id}]
+  }, {
+    fields:{first_name:true, last_name:true}, reactive:false
+  }).map(
+    function(person) {
+      var name = person.first_name + ' ' + person.last_name;
+      return {value:name, id:person._id, type:'person'};
+    }
+  );
 }
 
-var set_episode = function(episode_data) {
-  if (!episode_data) {
-    return;
+var reset_typeaheads = function(episode_id) {
+  destroy_typeaheads();
+  if (episode_id) {
+    set_speaker_typeahead(episode_id);
+    set_people_typeahead(episode_id);
+  } else {
+    console.log('no episode_id in reset typeaheads')
   }
-  route = episode_data['route'];
-  number = episode_data['number'];
-  if (!route || !number) {
-    return;
-  }
-  var episode = Episodes.findOne({show_route:route, number:number});
-  if (!episode) {
-    return;
-  }
-  Session.set('episode_id', episode._id);
-  Session.set('episode', null);
+  set_sponsor_typeahead();
 }
 
 var _set_people_typeahead = function(type, datums) {
@@ -297,8 +301,8 @@ var _set_people_typeahead = function(type, datums) {
   })
 }
 
-var set_people_typeahead = function() {
-  var data = get_all_people();
+var set_people_typeahead = function(episode_id) {
+  var data = get_all_people(episode_id);
   if (data.length == 0) {
     return;
   }
@@ -311,6 +315,40 @@ var set_people_typeahead = function() {
 
   _set_people_typeahead('guest', datums);
   _set_people_typeahead('host', datums);
+}
+
+var set_speaker_typeahead = function(episode_id) {
+  //TODO: bug here because if there are no hosts or guests, then this always rfails --> destroy_typeaheads throws error.
+  //Either way this is terrible and should be fixed.
+  var data_people = get_selections_people(episode_id);
+  if (data_people.length > 0) {
+    Session.set('init_typeahead', true);
+  } else {
+    return false;
+  }
+
+  var datums_people = new Bloodhound({
+    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: data_people
+  });
+  datums_people.initialize();
+
+  $('#speaker_input').typeahead(
+    {
+      highlight: true
+    },
+    {
+      displayKey: 'value',
+      source: datums_people.ttAdapter(),
+      limit: 5,
+      templates: {
+        header: '<h3>People</h3>'
+      }
+    }
+  ).on('typeahead:selected', function(event, datum, name) {
+    do_typeahead_type_of_highlight(datum);
+  });
 }
 
 var toggle_add_person = function(button, type) {
@@ -326,20 +364,8 @@ var toggle_add_person = function(button, type) {
 }
 
 Deps.autorun(function() {
-  var episode = Session.get('episode');
-  var episode_id = Session.get('episode_id');
-  var rendered = Session.get('editor_rendered');
-  var init_typeaheads = Session.get('init_typeahead');
-  if (rendered && episode && !episode_id) {
-    set_episode(episode);
-  } else if (rendered && !episode && episode_id && !init_typeaheads) {
-    set_people_typeahead();
-    set_speaker_typeahead();
-    if (Session.get('init_typeahead')) {
-      set_sponsor_typeahead();
-    }
-  }
-
   //TODO Fix the below through css, not JS
-  $('#mode_row').height($('.scroller').height() - $('#header').height())
+  if (Session.get('editor_rendered')) {
+    $('#mode_row').height($('.scroller').height() - $('#header').height())
+  }
 });

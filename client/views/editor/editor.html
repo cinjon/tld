@@ -37,9 +37,7 @@
           {{/each}}
         </div>
         <div class="row" style="margin-top:20px; margin-right:0px">
-          {{#if has_episode}}
-            {{> player player_data}}
-          {{/if}}
+          {{> player episode_data}}
         </div>
       </div>
       <div class="col-md-7 inherit">
@@ -56,15 +54,17 @@
             </div>
           </div>
           <div class="row" id="mode_row">
-            {{#if is_editor_mode "draft"}}
-            {{> editor_mode_draft}}
-            {{/if}}
-            {{#if is_editor_mode "review"}}
-            {{> editor_mode_review}}
-            {{/if}}
-            {{#if is_editor_mode "publish"}}
-            {{> editor_mode_publish}}
-            {{/if}}
+            {{#with episode}}
+              {{#if is_editor_mode "draft"}}
+                {{> editor_mode_draft}}
+              {{/if}}
+              {{#if is_editor_mode "review"}}
+                {{> editor_mode_review}}
+              {{/if}}
+              {{#if is_editor_mode "publish"}}
+                {{> editor_mode_publish}}
+              {{/if}}
+            {{/with}}
           </div>
         </section>
       </div>
@@ -89,30 +89,28 @@
 </template>
 
 <template name="editor_highlight">
-  <div class="row" style="height:40px; margin-left:0px; {{padding_top}}">
-    <div class="left highlight_image">
-      {{#if has_company}}
-      {{> small_picture company}}
-      {{/if}}
-      {{#if has_person}}
-      {{> small_picture person}}
-      {{/if}}
-      {{#if has_link}}
-      {{> small_picture link}}
-      {{/if}}
-    </div>
-    <div class="highlight_text left">
-      <span class="highlight_type left lato bold_font" style="padding-right:10px;">
-        {{text_limit type_title 18}}
-      </span>
-      <span class="highlight_content left roboto_slab light_font">
-        {{text}}
-      </span>
-    </div>
-    <button class="btn btn-default btn-xs remove_highlight right" style="margin-right:10px">
-      <i class="fa fa-times"></i>
-    </button>
+  <div class="left highlight_image">
+    {{#if has_company}}
+    {{> small_picture company}}
+    {{/if}}
+    {{#if has_person}}
+    {{> small_picture person}}
+    {{/if}}
+    {{#if has_link}}
+    {{> small_picture link}}
+    {{/if}}
   </div>
+  <div class="highlight_text left">
+    <span class="highlight_type left lato bold_font" style="padding-right:10px;">
+      {{text_limit type_title 18}}
+    </span>
+    <span class="highlight_content left roboto_slab light_font">
+      {{text}}
+    </span>
+  </div>
+  <button class="btn btn-default btn-xs remove_highlight right" style="margin-right:10px">
+    <i class="fa fa-times"></i>
+  </button>
 </template>
 
 <template name="small_person_display">

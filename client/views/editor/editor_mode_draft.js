@@ -48,8 +48,11 @@ Template.editor_highlight_time.helpers({
 });
 
 Template.editor_mode_draft.helpers({
+  episode_id: function() {
+    return this._id;
+  },
   highlights: function() {
-    return Highlights.find({episode_id:Session.get('episode_id')}, {sort:{start_time:-1}});
+    return Highlights.find({episode_id:this._id}, {sort:{start_time:-1}});
   },
   new_time: function() {
     var time = 0;
@@ -97,7 +100,7 @@ Template.editor_new_input.events({
       }
     } else if (e.keyCode == 13 && val != '' && Session.get('current_char_counter') <= max_chars) { //Complete highlight
       //TODO: stop flickering newline
-      set_highlight_finished(val, Session.get('episode_id'), tmpl);
+      set_highlight_finished(val, this.episode_id, tmpl);
     } else {
       Session.set('current_char_counter', length);
       var test = tmpl.$('#content_input_text_test');
@@ -185,24 +188,10 @@ var count_text_chars = function(text) {
 };
 
 var get_selections_company = function() {
-  return Companies.find({}, {fields:{name:true}}).map(function(company) {
+  return Companies.find({}, {fields:{name:true}, reactive:false}).map(function(company) {
     var name = company.name;
     return {value:name, id:company._id, type:'sponsor'}
   });
-}
-
-var get_selections_people = function() {
-  var episode_id = Session.get('episode_id');
-  return People.find({
-    $or:[{hosts:episode_id}, {guests:episode_id}]
-  }, {
-    fields:{first_name:true, last_name:true}
-  }).map(
-    function(person) {
-      var name = person.first_name + ' ' + person.last_name;
-      return {value:name, id:person._id, type:'person'};
-    }
-  );
 }
 
 var hide_content_input = function() {
@@ -310,40 +299,6 @@ var set_highlight_type = function(style) {
     style = 'normal';
   }
   $('#content_input').css('font-style', style);
-}
-
-set_speaker_typeahead = function() {
-  //TODO: bug here because if there are no hosts or guests, then this always rfails --> destroy_typeaheads throws error.
-  //Either way this is terrible and should be fixed.
-  var data_people = get_selections_people();
-  if (data_people.length > 0) {
-    Session.set('init_typeahead', true);
-  } else {
-    return false;
-  }
-
-  var datums_people = new Bloodhound({
-    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: data_people
-  });
-  datums_people.initialize();
-
-  $('#speaker_input').typeahead(
-    {
-      highlight: true
-    },
-    {
-      displayKey: 'value',
-      source: datums_people.ttAdapter(),
-      limit: 5,
-      templates: {
-        header: '<h3>People</h3>'
-      }
-    }
-  ).on('typeahead:selected', function(event, datum, name) {
-    do_typeahead_type_of_highlight(datum);
-  });
 }
 
 set_sponsor_typeahead = function() {
