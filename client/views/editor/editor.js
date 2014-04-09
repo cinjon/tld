@@ -66,7 +66,6 @@ Template.editor.helpers({
     }
   },
   episode_data: function() {
-    console.log(this.episode);
     if (this.episode) {
       return {
         storage_key: this.episode.storage_key,
@@ -122,7 +121,6 @@ Template.editor.helpers({
     return People.find({_id:{$in:hosts}});
   },
   show_title: function() {
-    console.log(this.show);
     if (this.show) {
       return this.show.title;
     }
@@ -193,22 +191,22 @@ Template.editor_highlight.rendered = function() {
     this.data.text = '"' + this.data.text + '"';
   }
 
-  var text = this.data.text;
-  var char_slice = 57;
-  var row_width = this.$('.row').width();
-  var highlight_image_width = this.$('.highlight_image').outerWidth();
-  var highlight_type_width = this.$('.highlight_type').outerWidth();
-  var highlight_content_width = this.$('.highlight_content').width();
-  var available_width = row_width - highlight_image_width - highlight_type_width;
-  while(highlight_content_width > available_width) {
-    text = text.slice(0,char_slice) + '...'
-    if (text.slice(0,1) == '"') {
-      text += '"'
-    }
-    this.$('.highlight_content').text(text);
-    highlight_content_width = this.$('.highlight_content').width();
-    char_slice -= 3;
-  }
+  // var text = this.data.text;
+  // var char_slice = 57;
+  // var row_width = this.$('.row').width();
+  // var highlight_image_width = this.$('.highlight_image').outerWidth();
+  // var highlight_type_width = this.$('.highlight_type').outerWidth();
+  // var highlight_content_width = this.$('.highlight_content').width();
+  // var available_width = row_width - highlight_image_width - highlight_type_width;
+  // while(highlight_content_width > available_width) {
+  //   text = text.slice(0,char_slice) + '...'
+  //   if (text.slice(0,1) == '"') {
+  //     text += '"'
+  //   }
+  //   this.$('.highlight_content').text(text);
+  //   highlight_content_width = this.$('.highlight_content').width();
+  //   char_slice -= 3;
+  // }
 }
 
 Template.small_person_display.helpers({
@@ -291,6 +289,7 @@ var _set_people_typeahead = function(type, datums) {
       limit: 5,
     }
   ).on('typeahead:selected', function(event, datum, name) {
+    console.log('_set_people_typeahead')
     Meteor.call(
       'add_' + type, Session.get('episode_id'), datum.id,
       function(error, result) {
@@ -362,10 +361,3 @@ var toggle_add_person = function(button, type) {
     $('#new_person_input_' + type).focus();
   }
 }
-
-Deps.autorun(function() {
-  //TODO Fix the below through css, not JS
-  if (Session.get('editor_rendered')) {
-    $('#mode_row').height($('.scroller').height() - $('#header').height())
-  }
-});

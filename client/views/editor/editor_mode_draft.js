@@ -43,8 +43,14 @@ Template.editor_highlight_time.helpers({
     if (!this.new_time) {
       return "edit_time";
     }
-    return "";
+    return "new_time";
   },
+  new_time_style: function() {
+    if (this.new_time) {
+      return "height:50px; margin-top:-10px";
+    }
+    return "";
+  }
 });
 
 Template.editor_mode_draft.helpers({

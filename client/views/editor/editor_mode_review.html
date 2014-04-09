@@ -5,14 +5,14 @@
 </template>
 
 <template name="chapter_layout">
-  <div class="chapter_box smoke_1" style="height:40px; padding-left:80px; margin-top:-10px; clear:both">
+  <div class="chapter_box smoke_1" style="height:40px; padding-left:65px; margin-top:-10px; clear:both">
     <div id="{{title}}" class="chapter_title inherit" contenteditable="true">
       {{title}}
     </div>
   </div>
-  <div class="smoke_1" style="margin-top:-10px">
+  <div class="cream_1">
     {{#each highlights}}
-    <div class="row" style="clear:both; margin-top:10px; height:40px;">
+    <div class="row" style="clear:both">
       {{> editor_make_chapter}}
       {{> editor_highlight}}
     </div>
@@ -21,7 +21,7 @@
 </template>
 
 <template name="editor_make_chapter">
-  <div class="left row_text_time" style="min-width:80px;">
+  <div class="row_text_time left smoke_1">
     <span class="chapter_divider">
       <i class="fa fa-hand-o-right fa-inverse" style="font-size:1.5em"></i>
     </span>

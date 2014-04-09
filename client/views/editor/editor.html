@@ -37,12 +37,14 @@
           {{/each}}
         </div>
         <div class="row" style="margin-top:20px; margin-right:0px">
+          {{#if has_episode}}
           {{> player episode_data}}
+          {{/if}}
         </div>
       </div>
       <div class="col-md-7 inherit">
-        <section class="scroller cream_1" style="padding-top:0px; padding-left:0px; padding-right:0px; height: 100%;">
-          <div class="row smoke_1" id="header" style="margin-bottom:10px; padding-left:65px; margin-left:0px">
+        <section class="scroller smoke_1" style="padding-top:0px; padding-left:0px; padding-right:0px; height: 100%;">
+          <div class="row" id="header" style="margin-bottom:10px; padding-left:65px; margin-left:0px">
             <div class="col-md-4">
               {{> editor_header_box header_draft}}
             </div>
@@ -53,19 +55,15 @@
               {{> editor_header_box header_publish}}
             </div>
           </div>
-          <div class="row" id="mode_row">
-            {{#with episode}}
-              {{#if is_editor_mode "draft"}}
-                {{> editor_mode_draft}}
-              {{/if}}
-              {{#if is_editor_mode "review"}}
-                {{> editor_mode_review}}
-              {{/if}}
-              {{#if is_editor_mode "publish"}}
-                {{> editor_mode_publish}}
-              {{/if}}
-            {{/with}}
-          </div>
+          {{#if is_editor_mode "draft"}}
+          {{> editor_mode_draft episode}}
+          {{/if}}
+          {{#if is_editor_mode "review"}}
+          {{> editor_mode_review episode}}
+          {{/if}}
+          {{#if is_editor_mode "publish"}}
+          {{> editor_mode_publish episode}}
+          {{/if}}
         </section>
       </div>
     </div>
@@ -100,7 +98,7 @@
     {{> small_picture link}}
     {{/if}}
   </div>
-  <div class="highlight_text left">
+  <div class="left highlight_text">
     <span class="highlight_type left lato bold_font" style="padding-right:10px;">
       {{text_limit type_title 18}}
     </span>

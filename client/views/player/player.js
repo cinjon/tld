@@ -1,7 +1,9 @@
 var player = null;
 
 Template.player.rendered = function() {
-  load_video();
+  if (this.data) {
+    load_video();
+  }
 };
 
 Template.player.destroyed = function() {

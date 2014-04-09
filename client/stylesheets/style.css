@@ -159,6 +159,9 @@ hr.style-one {
 .edit_time {
     cursor:pointer;
 }
+.new_time {
+    top:15px
+}
 
 .plain_text_time:hover {
     color:#FFFDF8;
@@ -169,10 +172,17 @@ hr.style-one {
     display:none;
     position:relative;
     top:20px;
+    text-align:right;
 }
 
 .row_text_time:hover .chapter_divider {
     display:block
+}
+
+.row_text_time {
+    height:40px;
+    width:65px;
+    margin-left:15px;
 }
 
 .chapter_title {

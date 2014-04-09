@@ -9,7 +9,7 @@
 </template>
 
 <template name="editor_highlight_time">
-  <div class="row_text_time left" style="text-align:right; margin-right:10px">
+  <div class="row_text_time left smoke_1" style="text-align:center; {{new_time_style}}">
     <span class="highlight_time {{edit_time}}">
       <span class="plain_text_time lato regular_font ash_1_text">{{format_seconds_to_clock start_time}}</span>
       <input type="text" style="display:none" class="form-control edit_text_time smoke_3 white_text" value="{{format_seconds_to_clock start_time}}">
@@ -18,13 +18,13 @@
 </template>
 
 <template name="editor_mode_draft">
-  <div class="inherit smoke_1" style="margin-top:-10px">
-    <div class="row" style="margin-top:10px; height:40px; margin-left:0px">
+  <div class="cream_1" style="margin-top:-10px">
+    <div class="row" style="padding-top:10px">
       {{> editor_highlight_time new_time}}
       {{> editor_new_input episode_id}}
     </div>
     {{#each highlights}}
-    <div class="row" style="clear:both; margin-top:10px; height:40px;">
+    <div class="row" style="clear:both;">
       {{> editor_highlight_time}}
       {{> editor_highlight}}
     </div>
@@ -33,7 +33,7 @@
 </template>
 
 <template name="editor_new_input">
-  <div class="left" style="width:100%; display:table">
+  <div class="left" style="display:table">
     <span id="speaker_type" style="display:table-cell; vertical-align:middle; padding-left:10px; width:40px; padding-right:10px">
       {{#if is_speaker_set}}
       {{capitalize speaker_type}}

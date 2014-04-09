@@ -37,6 +37,6 @@ Template.editor_make_chapter.events({
 
 Template.editor_mode_review.helpers({
   chapters: function() {
-    return Chapters.find({episode_id:Session.get('episode_id')}, {sort:{start_time:1}});
+    return Chapters.find({episode_id:this._id}, {sort:{start_time:1}});
   },
 });
