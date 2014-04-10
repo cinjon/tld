@@ -28,6 +28,10 @@ UI.registerHelper("is_editor_mode", function(key) {
   return is_editor_mode(key);
 });
 
+UI.registerHelper("prettifyDate", function(date) {
+  return new Date(date).toDateString('yyyy-MM-dd')
+});
+
 UI.registerHelper("s3", function(storage_key, format) {
   if (storage_key && format) {
     return "http://s3.amazonaws.com/timelined/audio/" + storage_key + "." + format;

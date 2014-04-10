@@ -1,87 +1,79 @@
 <template name="queue">
 
-  <div class="col-md-1">
-  </div>
+  <div class="container" style="height:700px; overflow-y:scroll">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1 metal_1_text cream_1">
+        <h3 class="lato light_font">Episode Queue</h3>
+        <p class="lato light_font">
+          Greetings Timelined Editor! Below is our list of oustanding episodes waiting for your magic touch.Claim an episode to begin your work. You'll be taken to the Editor page for the episode, where you can highlight to your heart's content. When claimed, only you can work on episode. If for some reason you cannot complete an episode, remember to unclaim it so somebody else can grab it.
+          <a href="/">Let us know</a> if you have any questions. Happy timelining!
+        </p>
 
-  <div class="col-md-10 white_text">
-    <h3>Episode Queue</h3>
-    <p>
-      Greetings Timelined Editor! Below is our list of oustanding episodes waiting for your magic touch.
-      Claim an episode to begin your work. You'll be taken to the Editor page for the episode,
-      where you can highlight to your heart's content. When claimed, only you can work on episode.
-      If for some reason you cannot complete an episode, remember to unclaim it so somebody else can grab it.
-      <a href="/">Let us know</a> if you have any questions. Happy timelining!
-    </p>
-
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>
-                Show
-              </th>
-              <th>
-                #
-              </th>
-              <th>
-                Title
-              </th>
-              <th>
-                Duration
-              </th>
-              <th>
-                Date
-              </th>
-              <th>
-
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each shows}}
+        <div class="table-responsive roboto_slab light_font">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  Show
+                </th>
+                <th>
+                  #
+                </th>
+                <th>
+                  Title
+                </th>
+                <th>
+                  Length
+                </th>
+                <th>
+                  Date
+                </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each shows}}
               {{#each episodes}}
-                <tr>
-                  <td>
-                    {{show_route}}
-                  </td>
-                  <td>
-                    {{number}}
-                  </td>
-                  <td>
-                    {{#if editor_is_current_user editor_id }}
-                      <a href="{{pathFor 'editor' route=show_route number=number}}">{{title}}</a>
-                    {{else}}
-                      {{title}}
-                    {{/if}}
-                  </td>
-                  <td>
-                    {{length_in_seconds}}
-                  </td>
-                  <td>
-                    {{feed['url']}}
-                  </td>
-                  <td>
-                    {{#if episode_is_unclaimed editor_id }}
-                      <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
-                    {{/if}}
+              <tr>
+                <td>
+                  {{show_name}}
+                </td>
+                <td>
+                  {{number}}
+                </td>
+                <td>
+                  {{#if editor_is_current_user editor_id }}
+                  <a href="{{pathFor 'editor' route=show_route number=number}}">{{title}}</a>
+                  {{else}}
+                  {{title}}
+                  {{/if}}
+                </td>
+                <td>
+                  {{format_seconds_to_clock length_in_seconds}}
+                </td>
+                <td>
+                  {{prettifyDate published}}
+                </td>
+                <td>
+                  {{#if episode_is_unclaimed editor_id }}
+                  <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
+                  {{/if}}
 
-                    {{#if episode_is_claimed editor_id }}
-                      <button class="btn btn-primary btn-xs right">Episode Claimed</button>
-                    {{/if}}
+                  {{#if episode_is_claimed editor_id }}
+                  <button class="btn btn-primary btn-xs right">Episode Claimed</button>
+                  {{/if}}
 
-                    {{#if editor_is_current_user editor_id }}
-                      <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
-                    {{/if}}
-                  </td>
-                </tr>
-                {{/each}}
+                  {{#if editor_is_current_user editor_id }}
+                  <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
+                  {{/if}}
+                </td>
+              </tr>
+              {{/each}}
               {{/each}}
             </tbody>
-        </table>
+          </table>
+        </div>
       </div>
+    </div>
   </div>
-
-  <div class="col-md-1">
-  </div>
-
 </template>

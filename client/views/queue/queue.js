@@ -13,9 +13,16 @@ Template.queue.events({
 
 Template.queue.helpers({
   episodes: function() {
+    var show_name = this.name;
     return Episodes.find({
       show_id: this._id
+    }).map(function(episode) {
+      episode.show_name = show_name;
+      return episode;
     });
+  },
+  published: function() {
+    return this.feed.published;
   },
   shows: function() {
     var show_ids = [];
