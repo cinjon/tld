@@ -1,21 +1,3 @@
-var max_chars = 140;
-
-Template.character_cutoff.helpers({
-  current_char_counter: function() {
-    return parseInt(Session.get('current_char_counter'));
-  },
-  current_notes_color: function() {
-    if (Session.get('current_char_counter') > max_chars) {
-      return '#EB1E2C';
-    } else {
-      return '#000000';
-    }
-  },
-  max_chars: function() {
-    return max_chars;
-  }
-});
-
 Template.editor_highlight_time.events({
   'click .edit_time': function(e, tmpl) {
     set_css_time(null, true);
@@ -81,7 +63,7 @@ Template.editor_new_input.created = function() {
 
 Template.editor_new_input.events({
   'keydown #content_input': function(e, tmpl) {
-    var val = $(e.target).val();
+    var val = tmpl.$(e.target).val();
     if (e.keyCode == 8 && val == '') {
       set_highlight_type('normal');
       set_highlight_speaker(null);
@@ -89,42 +71,11 @@ Template.editor_new_input.events({
       return;
     } else if (e.keyCode == 8 && val == '"') {
       set_highlight_type('note');
-      $(e.target).val('');
+      // tmpl.$(e.target).val('');
     }
   },
   'keyup #content_input': function(e, tmpl) {
-    var input = $(e.target);
-    var val = input.val().trim();
-    var length = val.length;
-
-    if (e.keyCode == 13) {
-      //TODO: Still flickering...
-      e.preventDefault();
-    }
-
-    if (length > max_chars*1.5) { //Check for it being way too long
-      input.val(val.slice(0,max_chars*1.5))
-    } else if (e.shiftKey && val == '"' && e.keyCode == 222) { //Quote in beginning
-      var type = Session.get('highlight')['type'];
-      if (type && type == 'link') {
-        $(e.target).val('');
-      } else {
-        set_highlight_type('italic');
-      }
-    } else if (e.keyCode == 13 && val != '' && Session.get('current_char_counter') <= max_chars) { //Complete highlight
-      set_highlight_finished(val, this.episode_id, tmpl);
-    } else { //Maybe adjust row nums based on width
-      Session.set('current_char_counter', length);
-      var test = tmpl.$('#content_input_text_test');
-      test.text(val);
-      var width = test.width();
-      var rows = parseInt(input.attr('rows'));
-      if (width >= input.width()*rows) {
-        input.attr('rows', (rows + 1).toString());
-      } else if (width < input.width()*(rows-1)) {
-        input.attr('rows', (rows - 1).toString());
-      }
-    }
+    do_content_input(e, true, tmpl, null);
   }
 });
 
@@ -185,6 +136,64 @@ Template.editor_search.events({
     }
   },
 });
+
+do_content_input = function(e, is_editing, tmpl, highlight) {
+  var input = $(e.target);
+  var val = input.val().trim();
+  var length = val.length;
+
+  if (e.keyCode == 13) {
+    //TODO: Still flickering...
+    e.preventDefault();
+  }
+
+  if (length > MAX_CHARACTERS_IN_CONTENT) { //Check for it being way too long
+    e.preventDefault();
+  } else if (e.shiftKey && val == '"' && e.keyCode == 222) { //Quote in beginning
+    e.preventDefault();
+    if (is_editing) {
+      var type = Session.get('highlight')['type'];
+      if (type && type == 'link') {
+        $(e.target).val('');
+      } else {
+        set_highlight_type('italic');
+      }
+    } else if (highlight.type == 'note') {
+      Meteor.call(
+        'set_highlight_type', highlight._id, 'quote', function(error, result) {
+          Session.set('is_editing_highlight_content', false);
+        }
+      )
+    }
+  } else if (e.keyCode == 13 && val != '' && length <= MAX_CHARACTERS_IN_CONTENT) { //Complete highlight
+    if (is_editing && tmpl) {
+      set_highlight_finished(val, tmpl.data.episode_id, tmpl);
+    } else if (!is_editing) {
+      Meteor.call(
+        'set_highlight_text', highlight._id, val, function(error, result) {
+          Session.set('is_editing_highlight_content', false);
+        }
+      );
+    }
+  } else if (!is_editing && e.keyCode == 27) {
+    Session.set('is_editing_highlight_content', false);
+  } else { //adjust row nums based on width
+    Session.set('current_char_counter', length);
+    if (tmpl) {
+      var test = tmpl.$('#content_input_text_test');
+    } else {
+      var test = $('#content_input_text_test');
+    }
+    test.text(val);
+    var width = test.width();
+    var rows = parseInt(input.attr('rows'));
+    if (width >= input.width()*rows) {
+      input.attr('rows', (rows + 1).toString());
+    } else if (width < input.width()*(rows-1)) {
+      input.attr('rows', (rows - 1).toString());
+    }
+  }
+}
 
 do_typeahead_type_of_highlight = function(datum) {
   set_highlight_speaker(datum.value, datum.type, datum.id);

@@ -1,3 +1,5 @@
+MAX_CHARACTERS_IN_CONTENT = 140;
+
 Template.add_person.events({
   'click button': function(e, tmpl) {
     if (!Session.get('init_typeaheads')) {
@@ -25,6 +27,22 @@ Template.add_person.events({
       );
     }
   },
+});
+
+Template.character_cutoff.helpers({
+  current_char_counter: function() {
+    return parseInt(Session.get('current_char_counter'));
+  },
+  current_notes_color: function() {
+    if (Session.get('current_char_counter') > MAX_CHARACTERS_IN_CONTENT) {
+      return '#EB1E2C';
+    } else {
+      return '#000000';
+    }
+  },
+  max_chars: function() {
+    return MAX_CHARACTERS_IN_CONTENT;
+  }
 });
 
 Template.editor.created = function() {
@@ -147,8 +165,20 @@ Template.editor_header_box.events({
 });
 
 Template.editor_highlight.events({
-  'click .remove_highlight': function() {
+  'click .highlight_content': function(e, tmpl) {
+    Session.set('is_editing_highlight_content', this._id);
+    //TODO: focus the element after this happens
+  },
+  'click .remove_highlight': function(e, tmpl) {
     Meteor.call('remove_highlight', this._id);
+  },
+  'keydown #content_input': function(e, tmpl) {
+    if (e.keyCode == 8 && tmpl.$(e.target).val() == '"') {
+      Meteor.call('set_highlight_type', this._id, 'note');
+    }
+  },
+  'keyup #content_input': function(e, tmpl) {
+    do_content_input(e, false, null, this);
   }
 });
 
@@ -157,6 +187,9 @@ Template.editor_highlight.helpers({
     var company = Companies.findOne({_id:this.company_id});
     company.type = 'company';
     return company;
+  },
+  is_editing_highlight_content: function() {
+    return is_editor_mode('review') && Session.get('is_editing_highlight_content') == this._id;
   },
   has_person: function() {
     return this.person_id != null;
@@ -204,22 +237,7 @@ Template.editor_highlight.rendered = function() {
     this.data.text = '"' + this.data.text + '"';
   }
 
-  // var text = this.data.text;
-  // var char_slice = 57;
-  // var row_width = this.$('.row').width();
-  // var highlight_image_width = this.$('.highlight_image').outerWidth();
-  // var highlight_type_width = this.$('.highlight_type').outerWidth();
-  // var highlight_content_width = this.$('.highlight_content').width();
-  // var available_width = row_width - highlight_image_width - highlight_type_width;
-  // while(highlight_content_width > available_width) {
-  //   text = text.slice(0,char_slice) + '...'
-  //   if (text.slice(0,1) == '"') {
-  //     text += '"'
-  //   }
-  //   this.$('.highlight_content').text(text);
-  //   highlight_content_width = this.$('.highlight_content').width();
-  //   char_slice -= 3;
-  // }
+  fit_content_text_to_row(this);
 }
 
 Template.small_person_display.helpers({
@@ -246,6 +264,29 @@ var destroy_typeaheads = function() {
   $('#new_person_input_guest').typeahead('destroy','NoCached');
   $('#new_person_input_host').typeahead('destroy','NoCached');
 };
+
+var fit_content_text_to_row = function(tmpl) {
+  //TODO: currently does not work and causes an infinite loop that crashes the tab
+
+  /*
+  var text = this.data.text;
+  var char_slice = 57;
+  var row_width = this.$('.row').width();
+  var highlight_image_width = this.$('.highlight_image').outerWidth();
+  var highlight_type_width = this.$('.highlight_type').outerWidth();
+  var highlight_content_width = this.$('.highlight_content').width();
+  var available_width = row_width - highlight_image_width - highlight_type_width;
+  while(highlight_content_width > available_width) {
+    text = text.slice(0,char_slice) + '...'
+    if (text.slice(0,1) == '"') {
+      text += '"'
+    }
+    this.$('.highlight_content').text(text);
+    highlight_content_width = this.$('.highlight_content').width();
+    char_slice -= 3;
+  }
+  */
+}
 
 var get_all_people = function(episode_id) {
   //Would be great if we ddin't have to do this crap below to dedupe

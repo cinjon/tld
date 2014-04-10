@@ -9,6 +9,15 @@
   </span>
 </template>
 
+<template name="character_cutoff">
+  <small class="box_title lato light_font" style="display:inline-block;">
+    <div style="color:{{current_notes_color}}; width:auto; max-width:55px">
+      <span>{{current_char_counter}}</span>
+      <span>&nbsp;/&nbsp;</span>
+      <span>{{max_chars}}</span>
+    </div>
+  </small>
+</template>
 
 <template name="editor">
   <div class="container" style="height:700px; min-height:700px;">
@@ -68,6 +77,7 @@
       </div>
     </div>
   </div>
+  <div id="content_input_text_test" style="display:none; height:auto; width:auto;"></div>
 </template>
 
 <template name="editor_header_box">
@@ -102,9 +112,16 @@
     <span class="highlight_type left lato bold_font" style="padding-right:10px;">
       {{text_limit type_title 18}}
     </span>
+    {{#if is_editing_highlight_content}}
+    <textarea rows="1" id="content_input" class="left lato light_font metal_1_text form-control" style="width:250px; margin-top:-5px; margin-right:10px">{{text}}</textarea>
+    <div class="left" id="character_cutoff">
+      {{> character_cutoff}}
+    </div>
+    {{else}}
     <span class="highlight_content left lato light_font metal_1_text">
       {{text}}
     </span>
+    {{/if}}
   </div>
   <button class="btn btn-default btn-xs remove_highlight right" style="margin-right:10px">
     <i class="fa fa-times"></i>

@@ -27,6 +27,11 @@ Template.chapter_layout.events({
 });
 
 Template.chapter_layout.helpers({
+  background_color_class: function() {
+    if (Session.get('is_editing_highlight_content') == this._id) {
+      return 'lemon'
+    }
+  },
   highlights: function() {
     return Highlights.find({_id:{$in:this.highlights}}, {sort:{start_time:1}});
   },
@@ -39,8 +44,6 @@ Template.chapter_layout.helpers({
 
 Template.editor_make_chapter.events({
   'click .row_text_time': function(e, tmpl) {
-    console.log('clikced rtt');
-    console.log(this);
     Meteor.call(
       'new_chapter', this.chapter_id, this.start_time, Meteor.userId()
     );
