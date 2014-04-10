@@ -12,9 +12,11 @@
   </div>
   <div class="cream_1">
     {{#each highlights}}
-    <div class="row" style="clear:both">
+    <div class="row" style="clear:both; margin-right:0px">
       {{> editor_make_chapter}}
+      <div style="padding-top:5px">
       {{> editor_highlight}}
+      </div>
     </div>
     {{/each}}
   </div>

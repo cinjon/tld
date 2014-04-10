@@ -55,7 +55,9 @@ Template.editor_highlight_time.helpers({
 
 Template.editor_mode_draft.helpers({
   episode_id: function() {
-    return this._id;
+    return {
+      episode_id:this._id
+    }
   },
   highlights: function() {
     return Highlights.find({episode_id:this._id}, {sort:{start_time:-1}});
@@ -95,6 +97,11 @@ Template.editor_new_input.events({
     var val = input.val().trim();
     var length = val.length;
 
+    if (e.keyCode == 13) {
+      //TODO: Still flickering...
+      e.preventDefault();
+    }
+
     if (length > max_chars*1.5) { //Check for it being way too long
       input.val(val.slice(0,max_chars*1.5))
     } else if (e.shiftKey && val == '"' && e.keyCode == 222) { //Quote in beginning
@@ -105,9 +112,8 @@ Template.editor_new_input.events({
         set_highlight_type('italic');
       }
     } else if (e.keyCode == 13 && val != '' && Session.get('current_char_counter') <= max_chars) { //Complete highlight
-      //TODO: stop flickering newline
       set_highlight_finished(val, this.episode_id, tmpl);
-    } else {
+    } else { //Maybe adjust row nums based on width
       Session.set('current_char_counter', length);
       var test = tmpl.$('#content_input_text_test');
       test.text(val);
@@ -129,16 +135,9 @@ Template.editor_new_input.helpers({
   has_speaker_src: function() {
     return false;
   },
-  is_speaker_set: function() {
-    var vals = Session.get('highlight');
-    return vals['_speaker_name'] != null && vals['type'] != null;
-  },
   speaker_name: function() {
     return Session.get('highlight')['_speaker_name'];
   },
-  speaker_type: function() {
-    return Session.get('highlight')['type']
-  }
 });
 
 Template.editor_search.events({
@@ -161,9 +160,15 @@ Template.editor_search.events({
       show_content_input();
       set_start_time(true);
     } else if (value == '!') {
+      if (!Session.get('init_typeaheads')) {
+        reset_typeaheads(this.episode_id)
+      }
       show_prefix_selection(tmpl, 'sponsor');
       set_start_time(true);
     } else if (value == '@') {
+      if (!Session.get('init_typeahead')) {
+        reset_typeaheads(this.episode_id)
+      }
       show_prefix_selection(tmpl, 'speaker');
       set_start_time(true);
     }
@@ -181,7 +186,7 @@ Template.editor_search.events({
   },
 });
 
-var do_typeahead_type_of_highlight = function(datum) {
+do_typeahead_type_of_highlight = function(datum) {
   set_highlight_speaker(datum.value, datum.type, datum.id);
   show_content_input();
 }
@@ -343,12 +348,20 @@ var set_start_time = function(now) {
   }
 }
 
+var set_width_of_content_input = function() {
+  var total_width = $('#new_input_row').outerWidth() - 65; //65 is the highlight_time width
+  var speaker_width = $('#speaker_name').outerWidth();
+  var character_cutoff_width = $('#character_cutoff').outerWidth();
+  var icon_width = $('#new_input_dot').outerWidth();
+  $('#content_input').width(total_width - speaker_width - character_cutoff_width - icon_width);
+}
+
 var show_content_input = function() {
   $('#typeahead_input').hide();
-  $('#speaker_name').css('display', 'table-cell');
-  $('#speaker_type').show();
-  $('#content_input_span').css('display', 'table-cell');
+  $('#speaker_name').show();
+  $('#content_input_span').show();
   $('#content_input').focus();
+  set_width_of_content_input();
 }
 
 var show_prefix = function(tmpl, type) {

@@ -1,5 +1,8 @@
 Template.add_person.events({
   'click button': function(e, tmpl) {
+    if (!Session.get('init_typeaheads')) {
+      reset_typeaheads(this.episode_id);
+    }
     toggle_add_person(false, this.id)
   },
   'keydown .new_person_input': function(e, tmpl) {
@@ -25,7 +28,7 @@ Template.add_person.events({
 });
 
 Template.editor.created = function() {
-  Session.set('init_typeahead', false);
+  Session.set('init_typeaheads', false);
   Session.set('editor_mode', 'draft');
   Session.set('current_char_counter', 0);
 }
@@ -37,7 +40,7 @@ Template.editor.destroyed = function() {
 Template.editor.events({
   'click .remove_person': function(e, tmpl) {
     var type = $(e.target).closest('a').attr('type');
-    var episode_id = this.episode._id
+    var episode_id = this.episode_id
     var person_id = this._id;
     Meteor.call(
       'remove_' + type, episode_id, person_id,
@@ -86,7 +89,10 @@ Template.editor.helpers({
       return [];
     }
     var guests = episode.guests || [];
-    return People.find({_id:{$in:guests}});
+    return People.find({_id:{$in:guests}}).map(function(person) {
+      person.episode_id = episode._id;
+      return person
+    });
   },
   has_episode: function() {
     return this.episode;
@@ -118,7 +124,10 @@ Template.editor.helpers({
       return [];
     }
     var hosts = episode.hosts || [];
-    return People.find({_id:{$in:hosts}});
+    return People.find({_id:{$in:hosts}}).map(function(person) {
+      person.episode_id = episode._id;
+      return person;
+    });
   },
   show_title: function() {
     if (this.show) {
@@ -247,7 +256,7 @@ var get_all_people = function(episode_id) {
       function(person) {
         if (hosts.indexOf(person._id) == -1 && guests.indexOf(person._id) == -1) {
           var name = person.first_name + ' ' + person.last_name;
-          map.push({value:name, id:person._id, type:'person'});
+          map.push({value:name, id:person._id, type:'person', episode_id:episode_id});
         }
       }
     );
@@ -262,20 +271,21 @@ var get_selections_people = function(episode_id) {
   }).map(
     function(person) {
       var name = person.first_name + ' ' + person.last_name;
-      return {value:name, id:person._id, type:'person'};
+      return {value:name, id:person._id, type:'person', episode_id:episode_id};
     }
   );
 }
 
-var reset_typeaheads = function(episode_id) {
+reset_typeaheads = function(episode_id) {
   destroy_typeaheads();
   if (episode_id) {
     set_speaker_typeahead(episode_id);
     set_people_typeahead(episode_id);
-  } else {
-    console.log('no episode_id in reset typeaheads')
   }
   set_sponsor_typeahead();
+  if (!Session.get('init_typeaheads')) {
+    Session.set('init_typeaheads', true);
+  }
 }
 
 var _set_people_typeahead = function(type, datums) {
@@ -289,12 +299,11 @@ var _set_people_typeahead = function(type, datums) {
       limit: 5,
     }
   ).on('typeahead:selected', function(event, datum, name) {
-    console.log('_set_people_typeahead')
     Meteor.call(
-      'add_' + type, Session.get('episode_id'), datum.id,
+      'add_' + type, datum.episode_id, datum.id,
       function(error, result) {
         toggle_add_person(true, type);
-        reset_typeaheads();
+        reset_typeaheads(datum.episode_id);
       }
     );
   })
@@ -320,12 +329,6 @@ var set_speaker_typeahead = function(episode_id) {
   //TODO: bug here because if there are no hosts or guests, then this always rfails --> destroy_typeaheads throws error.
   //Either way this is terrible and should be fixed.
   var data_people = get_selections_people(episode_id);
-  if (data_people.length > 0) {
-    Session.set('init_typeahead', true);
-  } else {
-    return false;
-  }
-
   var datums_people = new Bloodhound({
     datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
     queryTokenizer: Bloodhound.tokenizers.whitespace,

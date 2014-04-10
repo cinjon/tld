@@ -37,7 +37,9 @@ UI.registerHelper("s3", function(storage_key, format) {
 });
 
 UI.registerHelper("text_limit", function(text, length) {
-  if (text.length <= length) {
+  if (!text) {
+    return '';
+  } else if (text.length <= length) {
     return text;
   } else {
     return text.slice(0, length-3) + '...';
