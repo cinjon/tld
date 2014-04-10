@@ -266,7 +266,7 @@ var set_highlight_finished = function(text, episode_id, tmpl) {
   Meteor.call(
     'add_highlight', highlight,
     function(error, result) {
-      if (highlight['_speaker_name'] && !highlight['company_id'] && !highlight['person_id']) { //new company
+      if (highlight['_speaker_name'] && !highlight['company_id'] && !highlight['person_id'] && !(highlight['type'] == 'link')) { //new company
         $('#sponsor_input').typeahead('destroy','NoCached');
         set_sponsor_typeahead();
       }

@@ -5,9 +5,14 @@
 </template>
 
 <template name="chapter_layout">
-  <div class="chapter_box smoke_1" style="height:40px; padding-left:65px; margin-top:-10px; clear:both">
-    <div id="{{title}}" class="chapter_title inherit" contenteditable="true">
-      {{title}}
+  <div class="chapter_box smoke_1" style="height:40px; padding-left:65px; clear:both; {{margin_top}}">
+    <div class="white inherit" style="border-top:1px solid; padding-top:10px">
+      <div class="chapter_title" contenteditable="true">
+        {{title}}
+      </div>
+      <button class="btn btn-default btn-xs remove_chapter right" style="margin-right:10px">
+        <i class="fa fa-times"></i>
+      </button>
     </div>
   </div>
   <div class="cream_1">

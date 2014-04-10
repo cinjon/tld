@@ -105,7 +105,11 @@
 .highlight_image {
     padding-left: 10px;
     padding-right: 10px;
-    top:3px;
+}
+
+.highlight_text {
+    position:relative;
+    top:5px;
 }
 
 .highlight_time {
@@ -186,13 +190,13 @@ hr.style-one {
 }
 
 .chapter_title {
-    background-color:white;
     text-align:center;
     color:black;
-    padding-top:10px;
-    border-top:1px solid;
-    border-bottom:1px solid;
     overflow:hidden;
+    width:88%;
+    float:left;
+    position:relative;
+    left:35px
 }
 
 /* Temporary */
@@ -262,6 +266,14 @@ hr.style-one {
 
 .lemon {
     background-color:#FFF1A9
+}
+
+.metal_1_text {
+    color:#444443
+}
+
+.metal_2_text {
+    color:#727272
 }
 
 .mint {

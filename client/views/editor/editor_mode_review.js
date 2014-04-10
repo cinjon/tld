@@ -1,6 +1,11 @@
 var max_chapter_title_chars = 30;
 
 Template.chapter_layout.events({
+  'click .remove_chapter': function(e, tmpl) {
+    if (!this.first) { //Don't let editors squash the first chapter.
+      Meteor.call('remove_chapter', this._id);
+    }
+  },
   'keydown .chapter_title': function(e, tmpl) {
     var title = tmpl.$('.chapter_title');
     var val = title.text().trim();
@@ -24,11 +29,18 @@ Template.chapter_layout.events({
 Template.chapter_layout.helpers({
   highlights: function() {
     return Highlights.find({_id:{$in:this.highlights}}, {sort:{start_time:1}});
+  },
+  margin_top: function() {
+    if (this.first) {
+      return "margin-top:-10px";
+    }
   }
 })
 
 Template.editor_make_chapter.events({
   'click .row_text_time': function(e, tmpl) {
+    console.log('clikced rtt');
+    console.log(this);
     Meteor.call(
       'new_chapter', this.chapter_id, this.start_time, Meteor.userId()
     );

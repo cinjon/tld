@@ -102,7 +102,7 @@
     <span class="highlight_type left lato bold_font" style="padding-right:10px;">
       {{text_limit type_title 18}}
     </span>
-    <span class="highlight_content left roboto_slab light_font">
+    <span class="highlight_content left lato light_font metal_1_text">
       {{text}}
     </span>
   </div>
@@ -113,7 +113,9 @@
 
 <template name="small_person_display">
   <div class="left" style="padding-right:10px">
-    {{> small_picture}}
+    {{#if has_avatar}}
+    <img class="picture" src="{{avatar}}">
+    {{/if}}
   </div>
   <div class="left" style="padding-right:10px">
     <p class="white_text lato bold_font" style="margin-bottom:0px">{{text_limit name 18}}</p>
@@ -124,12 +126,15 @@
 </template>
 
 <template name="small_picture">
-  {{#if is_link}}
-  <span style="width:40px; font-size:1.5em">
-    <i class="fa fa-link fa-inverse fa-rotate-135"></i>
+  <span style="width:auto; position:relative; top:5px">
+    {{#if is_type "link"}}
+    <i class="fa fa-link fa-rotate-135" style="font-size:1.2em"></i>
+    {{/if}}
+    {{#if is_type "company"}}
+    <i class="fa fa-users" style="font-size:1.2em"></i>
+    {{/if}}
+    {{#if is_type "person"}}
+    <img class="picture" src="{{img}}">
+    {{/if}}
   </span>
-  {{else}}
-  <img class="picture" src="{{img}}">
-  <span class="white_text">(img)</span>
-  {{/if}}
 </template>

@@ -154,7 +154,9 @@ Template.editor_highlight.events({
 
 Template.editor_highlight.helpers({
   company: function() {
-    return People.findOne({_id:this.company_id});
+    var company = Companies.findOne({_id:this.company_id});
+    company.type = 'company';
+    return company;
   },
   has_person: function() {
     return this.person_id != null;
@@ -163,7 +165,7 @@ Template.editor_highlight.helpers({
     return this.company_id != null;
   },
   has_link: function() {
-    return this.url != null;
+    return this.type == 'link';
   },
   link: function() {
     return {type:'link'}
@@ -174,7 +176,9 @@ Template.editor_highlight.helpers({
     }
   },
   person: function() {
-    return People.findOne({_id:this.person_id});
+    var person = People.findOne({_id:this.person_id});
+    person.type = 'person';
+    return person;
   },
   type_title: function() {
     if (this.person_id) {
@@ -219,17 +223,20 @@ Template.editor_highlight.rendered = function() {
 }
 
 Template.small_person_display.helpers({
+  has_avatar: function() {
+    return this.avatar && this.avatar != '';
+  },
   has_twitter: function() {
     return this.twitter && this.twitter != '';
   },
   name: function() {
     return this.first_name + ' ' + this.last_name;
-  }
+  },
 });
 
 Template.small_picture.helpers({
-  is_link: function() {
-    return this.type == 'link'
+  is_type: function(type) {
+    return this.type == type;
   }
 });
 
