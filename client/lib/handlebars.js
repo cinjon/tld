@@ -28,7 +28,7 @@ UI.registerHelper("is_editor_mode", function(key) {
   return is_editor_mode(key);
 });
 
-UI.registerHelper("prettifyDate", function(date) {
+UI.registerHelper("prettify_date", function(date) {
   return new Date(date).toDateString('yyyy-MM-dd')
 });
 
