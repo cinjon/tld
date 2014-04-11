@@ -73,3 +73,7 @@ Meteor.publish('shows_with_unedited_episodes', function() {
 Meteor.publish('unedited_episodes', function() {
   return Episodes.find({postedited: false});
 });
+
+Meteor.publish('user_roles', function(user_id) {
+  return Meteor.users.find({_id:user_id}, {fields:{roles:true}});
+});
