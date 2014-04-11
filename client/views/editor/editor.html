@@ -10,7 +10,7 @@
 </template>
 
 <template name="character_cutoff">
-  <small class="box_title lato light_font" style="display:inline-block;">
+  <small class="box_title" style="display:inline-block;">
     <div style="color:{{current_notes_color}}; width:auto; max-width:55px">
       <span>{{current_char_counter}}</span>
       <span>&nbsp;/&nbsp;</span>
@@ -24,10 +24,10 @@
     <div class="row inherit">
       <div class="col-md-5 inherit">
         <div class="row">
-          <p id="show_title" class="white_text lato light_font">{{show_title}}</p>
+          <p id="show_title" class="white_text light_font">{{show_title}}</p>
         </div>
         <div class="row">
-          <p id="episode_title" class="white_text lato bold_font"><b>{{episode_title}}</b></p>
+          <p id="episode_title" class="white_text bold_font"><b>{{episode_title}}</b></p>
         </div>
         <div class="row" id="episode_hosts" style="height:45px">
           {{> add_person add_host}}
@@ -81,7 +81,7 @@
 </template>
 
 <template name="editor_header_box">
-  <div class="row lato bold_font" style="background-color:white">
+  <div class="row bold_font" style="background-color:white">
     {{#if is_editor_mode key}}
     <div class="arrow_box_{{key}}">
       <button class="btn btn-block {{color_class}}" style="height:70px">
@@ -109,16 +109,16 @@
     {{/if}}
   </div>
   <div class="left highlight_text">
-    <span class="highlight_type left lato bold_font" style="padding-right:10px;">
+    <span class="highlight_type left bold_font" style="padding-right:10px;">
       {{text_limit type_title 18}}
     </span>
     {{#if is_editing_highlight_content}}
-    <textarea rows="1" id="content_input" class="left lato light_font metal_1_text form-control" style="width:250px; margin-top:-5px; margin-right:10px">{{text}}</textarea>
+    <textarea rows="1" id="content_input" class="left light_font metal_1_text form-control" style="width:250px; margin-top:-5px; margin-right:10px">{{text}}</textarea>
     <div class="left" id="character_cutoff">
       {{> character_cutoff}}
     </div>
     {{else}}
-    <span class="highlight_content left lato light_font metal_1_text">
+    <span class="highlight_content left light_font metal_1_text">
       {{text}}
     </span>
     {{/if}}
@@ -135,9 +135,9 @@
     {{/if}}
   </div>
   <div class="left" style="padding-right:10px">
-    <p class="white_text lato bold_font" style="margin-bottom:0px">{{text_limit name 18}}</p>
+    <p class="white_text bold_font" style="margin-bottom:0px">{{text_limit name 18}}</p>
     {{#if has_twitter}}
-    <p class="white_text lato regular_font" style="margin-bottom:0px">@{{twitter}}</p>
+    <p class="white_text regular_font" style="margin-bottom:0px">@{{twitter}}</p>
     {{/if}}
   </div>
 </template>

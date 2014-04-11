@@ -1,7 +1,7 @@
 <template name="editor_highlight_time">
   <div class="row_text_time left smoke_1" style="text-align:center; {{new_time_style}}">
     <span class="highlight_time {{edit_time}}">
-      <span class="plain_text_time lato regular_font ash_1_text">{{format_seconds_to_clock start_time}}</span>
+      <span class="plain_text_time regular_font ash_1_text">{{format_seconds_to_clock start_time}}</span>
       <input type="text" style="display:none" class="form-control edit_text_time smoke_3 white_text" value="{{format_seconds_to_clock start_time}}">
     </span>
   </div>
@@ -31,7 +31,7 @@
     {{> editor_search}}
   </div>
 
-  <span class="left lato bold_font" style="display:none; float:left; padding-right:10px; position:relative; top:5px; width:110px" id="speaker_name">
+  <span class="left bold_font" style="display:none; float:left; padding-right:10px; position:relative; top:5px; width:110px" id="speaker_name">
     {{text_limit speaker_name 15}}
   </span>
 
