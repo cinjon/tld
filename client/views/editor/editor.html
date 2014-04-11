@@ -1,6 +1,6 @@
 <!--TODO: new_person_input, like all of the typeaheads, are visually off-->
 <template name="add_person">
-  <button class="btn btn-primary left" id="add_{{id}}_button" type="button" style="margin-right:10px; width:80px; height:40px">
+  <button class="add-person-btn btn btn-primary" id="add_{{id}}_button" type="button">
     <i class="fa fa-plus-square"> {{capitalize id}}</i>
   </button>
 
@@ -20,9 +20,9 @@
 </template>
 
 <template name="editor">
-  <div class="container" style="height:700px; min-height:700px;">
+  <div class="editor-container container" style="height:700px; min-height:700px;">
     <div class="row inherit">
-      <div class="col-md-5 inherit">
+      <div class="col-sm-5 inherit">
         <div class="row">
           <p id="show_title" class="white_text light_font">{{show_title}}</p>
         </div>
@@ -51,16 +51,16 @@
           {{/if}}
         </div>
       </div>
-      <div class="col-md-7 inherit">
+      <div class="col-sm-7 inherit">
         <section class="scroller smoke_1" style="padding-top:0px; padding-left:0px; padding-right:0px; height: 100%; overflow-x:hidden">
           <div class="row" id="header" style="margin-bottom:10px; padding-left:65px; margin-left:0px">
-            <div class="col-md-4">
+            <div class="col-sm-4">
               {{> editor_header_box header_draft}}
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
               {{> editor_header_box header_review}}
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
               {{> editor_header_box header_publish}}
             </div>
           </div>
