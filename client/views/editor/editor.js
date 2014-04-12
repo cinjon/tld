@@ -159,6 +159,12 @@ Template.editor_header_box.events({
 Template.editor_highlight.events({
   'click .highlight_content': function(e, tmpl) {
     Session.set('is_editing_highlight_content', this._id);
+    Session.set('is_editing_highlight_url', false);
+    //TODO: focus the element after this happens
+  },
+  'click .highlight_url': function(e, tmpl) {
+    Session.set('is_editing_highlight_url', this._id);
+    Session.set('is_editing_highlight_content', false);
     //TODO: focus the element after this happens
   },
   'click .remove_highlight': function(e, tmpl) {
@@ -171,6 +177,18 @@ Template.editor_highlight.events({
   },
   'keyup #content_input': function(e, tmpl) {
     do_content_input(e, false, null, this);
+  },
+  'keyup #url_input': function(e, tmpl) {
+    var input = $(e.target);
+    var val = input.val().trim();
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      Meteor.call('set_highlight_url', this._id, val);
+      Session.set('is_editing_highlight_url', false);
+    } else if (e.keyCode == 27) {
+      e.preventDefault();
+      Session.set('is_editing_highlight_url', false);
+    }
   }
 });
 
@@ -183,6 +201,9 @@ Template.editor_highlight.helpers({
   is_editing_highlight_content: function() {
     return is_editor_mode('review') && Session.get('is_editing_highlight_content') == this._id;
   },
+  is_editing_highlight_url: function() {
+    return is_editor_mode('review') && Session.get('is_editing_highlight_url') == this._id;
+  },
   has_person: function() {
     return this.person_id != null;
   },
@@ -191,6 +212,9 @@ Template.editor_highlight.helpers({
   },
   has_link: function() {
     return this.type == 'link';
+  },
+  has_link_review: function() {
+    return this.type == 'link' && is_editor_mode('review');
   },
   link: function() {
     return {type:'link'}
@@ -220,6 +244,12 @@ Template.editor_highlight.helpers({
       return "Link";
     }
     return '';
+  },
+  url_placeholder: function() {
+    if (!this.url || this.url == '') {
+      return "Enter Url";
+    }
+    return this.url;
   }
 });
 

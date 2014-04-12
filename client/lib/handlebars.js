@@ -41,13 +41,14 @@ UI.registerHelper("s3", function(storage_key, format) {
 });
 
 UI.registerHelper("text_limit", function(text, length) {
-  if (!text) {
-    return '';
-  } else if (text.length <= length) {
-    return text;
-  } else {
-    return text.slice(0, length-3) + '...';
-  }
+  return text_limit(text, length);
+});
+
+UI.registerHelper("text_limit_url", function(text, length) {
+  //strip away superfluous url parts, then do the text limit
+  text = safe_split(text, '://', 1);
+  text = safe_split(text, 'www.', 1);
+  return text_limit(text, length);
 });
 
 var _format_time_part = function(time) {
@@ -74,4 +75,22 @@ var format_seconds_to_clock = function(seconds) {
 
 is_editor_mode = function(mode) {
   return Session.get('editor_mode') == mode;
+}
+
+var safe_split = function(text, str, num) {
+  var parts = text.split(str);
+  if (parts.length > num) {
+    return parts[num];
+  }
+  return text;
+}
+
+var text_limit = function(text, length) {
+  if (!text) {
+    return '';
+  } else if (text.length <= length) {
+    return text;
+  } else {
+    return text.slice(0, length-3) + '...';
+  }
 }

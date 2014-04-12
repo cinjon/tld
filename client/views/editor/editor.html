@@ -122,6 +122,19 @@
       {{text}}
     </span>
     {{/if}}
+
+    {{#if has_link_review}}
+    <span class="left" style="margin-left:-5px; padding-right:5px">/</span>
+    <div class="light_font left">
+      {{#if is_editing_highlight_url}}
+      <input id="url_input" class="form-control smoke_3" type="text" placeholder="{{url_placeholder}}">
+      {{else}}
+      <span class="highlight_url" style="cursor:pointer">
+        {{text_limit_url url_placeholder 25}}
+      </span>
+      {{/if}}
+    </div>
+    {{/if}}
   </div>
   <button class="btn btn-default btn-xs remove_highlight">
     <i class="fa fa-times"></i>
@@ -153,7 +166,7 @@
     <i class="fa fa-users" style="font-size:1.2em"></i>
     {{/if}}
     {{#if is_type "person"}}
-    <img class="picture" src="{{img}}">
+    <img class="picture" style="width:18px" src="{{img}}">
     {{/if}}
   </span>
 </template>
