@@ -117,21 +117,18 @@ Template.editor.helpers({
   },
   header_review: function() {
     return {
-      color_class:'mint',
       key:'review',
       title:'Review'
     }
   },
   header_draft: function() {
     return {
-      color_class:"coral",
       key:'draft',
       title:'Draft'
     }
   },
   header_publish: function() {
     return {
-      color_class:'tangerine',
       key:'publish',
       title:'Publish'
     }

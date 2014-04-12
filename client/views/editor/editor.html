@@ -20,16 +20,16 @@
 </template>
 
 <template name="editor">
-  <div class="editor-container container" style="height:700px; min-height:700px;">
-    <div class="row inherit">
-      <div class="col-sm-5 inherit">
+  <div class="editor-container container">
+    <div class="row">
+      <div class="col-sm-5">
         <div class="row">
-          <p id="show_title" class="white_text light_font">{{show_title}}</p>
+          <p class="show_title">{{show_title}}</p>
         </div>
         <div class="row">
-          <p id="episode_title" class="white_text bold_font"><b>{{episode_title}}</b></p>
+          <p class="episode_title"><b>{{episode_title}}</b></p>
         </div>
-        <div class="row" id="episode_hosts" style="height:45px">
+        <div class="row episode_hosts">
           {{> add_person add_host}}
           {{#each hosts}}
           <a class="remove_person" type="host">
@@ -37,7 +37,7 @@
           </a>
           {{/each}}
         </div>
-        <div class="row" id="episode_guests" style="height:45px">
+        <div class="row episode_guests">
           {{> add_person add_guest}}
           {{#each guests}}
           <a class="remove_person" type="guest">
@@ -45,15 +45,15 @@
           </a>
           {{/each}}
         </div>
-        <div class="row" style="margin-top:20px; margin-right:0px">
+        <div class="player-wrap row">
           {{#if has_episode}}
           {{> player episode_data}}
           {{/if}}
         </div>
       </div>
-      <div class="col-sm-7 inherit">
-        <section class="scroller smoke_1" style="padding-top:0px; padding-left:0px; padding-right:0px; height: 100%; overflow-x:hidden">
-          <div class="row" id="header" style="margin-bottom:10px; padding-left:65px; margin-left:0px">
+      <div class="col-sm-7 right-pane">
+        <section class="scroller">
+          <div class="row header">
             <div class="col-sm-4">
               {{> editor_header_box header_draft}}
             </div>
@@ -81,16 +81,16 @@
 </template>
 
 <template name="editor_header_box">
-  <div class="row bold_font" style="background-color:white">
+  <div class="editing-stage editing-stage-{{key}} row">
     {{#if is_editor_mode key}}
-    <div class="arrow_box_{{key}}">
-      <button class="btn btn-block {{color_class}}" style="height:70px">
-        <span style="text-align:center" class="white_text">{{title}}</span>
+    <div class="arrow_box">
+      <button class="active btn btn-block">
+        <span class="title">{{title}}</span>
       </button>
     </div>
     {{else}}
-    <button class="btn btn-block white" style="height:70px">
-      <span class="{{color_class}}_text" style="text-align:center">{{title}}</span>
+    <button class="btn btn-block">
+      <span class="title">{{title}}</span>
     </button>
     {{/if}}
   </div>

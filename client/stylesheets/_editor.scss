@@ -6,5 +6,82 @@
 }
 
 .editor-container {
-  
+  min-height: 700px;
+  .show_title, .episode_title {
+    color: $white;
+    font-weight: $font-weight-light;
+    font-size: 40px;
+    // should be open sans?
+  }
+  .episode_title {
+    font-weight: $font-weight-heavy;
+    font-size: 25px;
+    // should be open sans?
+  }
+  .episode_hosts, .episode_guests {
+    min-height: 45px;
+  }
+  .player-wrap {
+    margin-top: 20px;
+    margin-right:0px
+  }
+  .right-pane {
+    .scroller {
+      background: $smoke1;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+    .header {
+      margin-bottom: 10px;
+      padding-left: 65px;
+      margin-left: 0;
+      .editing-stage {
+        font-weight: $font-weight-heavy;
+        .btn {
+          height: 70px;
+          background: $white;
+          border-radius: 0;
+        }
+        .title {
+          text-align: center;
+        }
+        .arrow_box {
+          position: relative;
+        }
+        @mixin editing-stage-for-key($color) {
+          color: $color;
+          .active { //.btn
+            background: $color;
+            color: $white;
+          }
+          .arrow_box:after {
+            top: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: fade_out($color, 1);
+            border-top-color: $color;
+            border-width: 10px;
+            margin-left: -10px
+          }
+        }
+        &.editing-stage-review {
+          @include editing-stage-for-key($mint);
+        }
+        &.editing-stage-draft {
+          @include editing-stage-for-key($coral);
+        }
+        &.editing-stage-publish {
+          @include editing-stage-for-key($tangerine);
+        }
+
+      }
+    }
+  }
 }

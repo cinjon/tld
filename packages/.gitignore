@@ -1,5 +1,4 @@
 /iron-router
-/bootstrap-3
 /blaze-layout
 /roles
 /accounts-entry
@@ -18,3 +17,4 @@
 /jquery-migrate
 /bootstrap3-sass
 /scss
+/bootstrap-3

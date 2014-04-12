@@ -2,92 +2,12 @@ body {
     background-color:#444240;
 }
 
-.arrow_box_draft {
-    position: relative;
-    background: #df5445;
-}
-
-.arrow_box_publish {
-    position: relative;
-    background: #E6A861;
-}
-
-.arrow_box_review {
-    position: relative;
-    background: #76C58D;
-}
-
-.arrow_box_draft:after, .arrow_box_draft:before, .arrow_box_publish:after, .arrow_box_publish:before, .arrow_box_review:after, .arrow_box_review:before {
-    top: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-.arrow_box_publish:after {
-    border-color: rgba(0, 255, 127, 0);
-    border-top-color: #E6A861;
-    border-width: 10px;
-    margin-left: -10px
-}
-.arrow_box_publish:before {
-    border-color: rgba(0, 255, 127, 0);
-    border-top-color: #E6A861;
-    border-width: 10px;
-    margin-left: -10px
-}
-
-.arrow_box_draft:after {
-    border-color: rgba(223, 84, 69, 0);
-    border-top-color: #df5445;
-    border-width: 10px;
-    margin-left: -10px
-}
-.arrow_box_draft:before {
-    border-color: rgba(223, 84, 69, 0);
-    border-top-color: #df5445;
-    border-width: 10px;
-    margin-left: -10px
-}
-
-.arrow_box_review:after {
-    border-color: rgba(230, 168, 97, 0);
-    border-top-color: #76C58D;
-    border-width: 10px;
-    margin-left: -10px
-}
-.arrow_box_review:before {
-    border-color: rgba(230, 168, 97, 0);
-    border-top-color: #76C58D;
-    border-width: 10px;
-    margin-left: -10px
-}
-
-#show_title {
-    font-family: "Open Sans", sans-serif;
-    font-size: 40px;
-}
-
-#episode_title {
-    font-family: "Open Sans", sans-serif;
-    font-size: 25px;
-}
-
 #player {
     width: 100%
 }
 
 #speaker_input {
     width:100%
-}
-
-
-.scroller {
-    overflow-y:scroll;
 }
 
 .inherit {
