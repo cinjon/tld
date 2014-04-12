@@ -144,11 +144,6 @@ Template.editor.helpers({
       return person;
     });
   },
-  show_title: function() {
-    if (this.show) {
-      return this.show.title;
-    }
-  },
 });
 
 Template.editor.rendered = function() {
