@@ -22,26 +22,7 @@ body {
     float:right;
 }
 
-.highlight_content {
-    padding-right: 10px;
-    cursor:pointer;
-}
 
-.highlight_image {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.highlight_text {
-    position:relative;
-    top:5px;
-}
-
-.highlight_time {
-    position:relative;
-    top:5px;
-    font-size:12px;
-}
 
 hr.style-one {
     border: 0;
@@ -135,7 +116,7 @@ hr.style-one {
 
 /* Fonts */
 .light_font {
-    font-weight: 300;
+    font-weight: 100;
 }
 
 .regular_font {
@@ -147,7 +128,7 @@ hr.style-one {
 }
 
 .roboto_slab {
-    font-family: 'Robot Slab' !important;
+    font-family: 'Roboto Slab' !important;
 }
 
 .lato {

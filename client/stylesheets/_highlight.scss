@@ -1,0 +1,42 @@
+.highlight-wrap {
+  .highlight_content {
+      padding-right: 10px;
+      cursor:pointer;
+      float: left;
+      color: $metal1;
+  }
+  .highlight_image {
+      float: left;
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+  .highlight_text {
+      float: left;
+      position:relative;
+      top:5px;
+  }
+  .highlight_type {
+    float: left;
+    font-weight: $font-weight-heavy;
+    padding-right: 10px;
+  }
+  .highlight_time {
+      position:relative;
+      top:5px;
+      font-size:12px;
+  }
+  #content_input {
+    float: left;
+    color: $metal1;
+    width:250px;
+    margin-top:-5px;
+    margin-right:10px;
+  }
+  #character_cutoff {
+    float: left;
+  }
+  .remove_highlight {
+    float: right;
+    margin-right: 10px;
+  }
+}
