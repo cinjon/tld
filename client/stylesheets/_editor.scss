@@ -1,14 +1,37 @@
 .add-person-btn {
   margin-right: 10px;
-  width: 80px;
-  height: 40px;
+  // width: 80px;
+  // height: 40px;
   float: left;
+  position: relative;
+  padding-left: 30px;
+  .plus {
+    font-weight: $font-weight-light;
+    font-size: 27px;
+    position: absolute;
+    top: -4px;
+    left: 8px;
+  }
+}
+
+.btn-dotted {
+  background: transparent;
+  border: 2px dashed $ash1;
+  color: $ash1;
+  &:hover {
+    color: $off-white;
+    border-color: $off-white;
+  }
 }
 
 .editor-container {
   min-height: 700px;
+  width: 100%; // full screen it!
+  margin-right: 0;
+  padding-right: 0;
+  padding-left: 30px;
   .show_title, .episode_title {
-    color: $white;
+    color: $off-white;
     font-weight: $font-weight-light;
     font-size: 40px;
     // should be open sans?
@@ -19,7 +42,7 @@
     // should be open sans?
   }
   .episode_hosts, .episode_guests {
-    min-height: 45px;
+    margin-bottom: 10px;
   }
   .player-wrap {
     margin-top: 20px;
@@ -43,18 +66,24 @@
           height: 70px;
           background: $white;
           border-radius: 0;
+          font-weight: $font-weight-heavy;
+          text-transform: uppercase;
+          border-right: 1px solid $cream1;
         }
         .title {
           text-align: center;
+          font-size: 16px;
+          letter-spacing: 2px;
         }
         .arrow_box {
           position: relative;
         }
         @mixin editing-stage-for-key($color) {
-          color: $color;
+          color: $cream2; //$color;
           .active { //.btn
             background: $color;
             color: $white;
+            border-color: transparent;
           }
           .arrow_box:after {
             top: 100%;
@@ -67,7 +96,7 @@
             pointer-events: none;
             border-color: fade_out($color, 1);
             border-top-color: $color;
-            border-width: 10px;
+            border-width: 7px 10px;
             margin-left: -10px
           }
         }
@@ -75,12 +104,11 @@
           @include editing-stage-for-key($mint);
         }
         &.editing-stage-draft {
-          @include editing-stage-for-key($coral);
+          @include editing-stage-for-key($mint);
         }
         &.editing-stage-publish {
-          @include editing-stage-for-key($tangerine);
+          @include editing-stage-for-key($mint);
         }
-
       }
     }
   }

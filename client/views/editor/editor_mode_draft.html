@@ -8,13 +8,13 @@
 </template>
 
 <template name="editor_mode_draft">
-  <div class="cream_1" style="margin-top:-10px">
-    <div id="new_input_row" class="row" style="padding-top:10px; margin-right:0px">
+  <div class="editor_mode_draft">
+    <div id="new_input_row" class="row">
       {{> editor_highlight_time new_time}}
       {{> editor_new_input episode_id}}
     </div>
     {{#each highlights}}
-    <div class="row" style="clear:both; margin-right:0px">
+    <div class="highlight-wrap row">
       {{> editor_highlight_time}}
       {{> editor_highlight}}
     </div>

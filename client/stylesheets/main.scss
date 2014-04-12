@@ -1,5 +1,10 @@
-@import "bootstrap";
-@import "editor";
+@import "bootstrap"; // bootstrap, automatically includes local _variables.scss
+
+@import "editor"; // overall editor view
+@import "editor-mode-draft"; // draft mode view
+@import "highlight";
+
 @import "split-pane";
-@import "video-js";
-@import "style";
+@import "video-js"; // video player
+
+@import "style"; // legacy code to be refactored
