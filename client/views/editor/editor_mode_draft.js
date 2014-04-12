@@ -71,7 +71,6 @@ Template.editor_new_input.events({
       return;
     } else if (e.keyCode == 8 && val == '"') {
       set_highlight_type('note');
-      // tmpl.$(e.target).val('');
     }
   },
   'keyup #content_input': function(e, tmpl) {
@@ -149,13 +148,10 @@ do_content_input = function(e, is_editing, tmpl, highlight) {
 
   if (length > MAX_CHARACTERS_IN_CONTENT) { //Check for it being way too long
     e.preventDefault();
-  } else if (e.shiftKey && val == '"' && e.keyCode == 222) { //Quote in beginning
-    e.preventDefault();
+  } else if (e.shiftKey && e.keyCode == 222 && val.slice(0,1) == '"') { //Quote in beginning
     if (is_editing) {
       var type = Session.get('highlight')['type'];
-      if (type && type == 'link') {
-        $(e.target).val('');
-      } else {
+      if (!type || type != 'link') {
         set_highlight_type('italic');
       }
     } else if (highlight.type == 'note') {
