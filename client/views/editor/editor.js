@@ -51,10 +51,6 @@ Template.editor.created = function() {
   Session.set('current_char_counter', 0);
 }
 
-Template.editor.destroyed = function() {
-  Session.set('current_char_counter', null);
-}
-
 Template.editor.events({
   'click .remove_person': function(e, tmpl) {
     var type = $(e.target).closest('a').attr('type');
@@ -152,7 +148,11 @@ Template.editor.rendered = function() {
 
 Template.editor_header_box.events({
   'click button': function(e, tmpl) {
+    var editor_mode = Session.get('editor_mode');
     Session.set('editor_mode', this.key);
+    if (this.key != editor_mode) {
+      reset_editor_session_vars();
+    }
   }
 });
 
@@ -344,6 +344,11 @@ var get_selections_people = function(episode_id) {
       return {value:name, id:person._id, type:'person', episode_id:episode_id};
     }
   );
+}
+
+var reset_editor_session_vars = function() {
+  Session.set('is_editing_highlight_content', null);
+  Session.set('is_editing_highlight_url', null);
 }
 
 reset_typeaheads = function(episode_id) {
