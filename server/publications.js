@@ -18,7 +18,8 @@ Meteor.publish('episode_from_show', function(route, number) {
     show_route: route,
     number: number
   }, {
-    fields:{length_in_seconds:false, created_at:false, updated_at:false, feed:false}
+    fields:{editor_id:false, length_in_seconds:false,
+            created_at:false, updated_at:false, feed:false}
   });
 });
 

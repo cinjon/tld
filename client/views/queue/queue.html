@@ -55,7 +55,17 @@
                   {{prettify_date published}}
                 </td>
                 <td>
-                  {{> claimed_or_unclaimed}}
+                  {{#if episode_is_unclaimed editor_id }}
+                  <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
+                  {{/if}}
+
+                  {{#if episode_is_claimed editor_id }}
+                  <button class="btn btn-primary btn-xs right">Episode Claimed</button>
+                  {{/if}}
+
+                  {{#if editor_is_current_user editor_id }}
+                  <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
+                  {{/if}}
                 </td>
               </tr>
               {{/each}}
@@ -66,18 +76,4 @@
       </div>
     </div>
   </div>
-</template>
-
-<template name="claimed_or_unclaimed">
-  {{#if episode_is_unclaimed editor_id }}
-  <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
-  {{/if}}
-
-  {{#if episode_is_claimed editor_id }}
-  <button class="btn btn-primary btn-xs right">Episode Claimed</button>
-  {{/if}}
-
-  {{#if editor_is_current_user editor_id }}
-  <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
-  {{/if}}
 </template>

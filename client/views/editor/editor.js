@@ -53,17 +53,15 @@ Template.editor.created = function() {
 
 Template.editor.events({
   'click .remove_person': function(e, tmpl) {
-    if (this.editor_id && this.editor_id == Meteor.userId()) {
-      var type = $(e.target).closest('a').attr('type');
-      var episode_id = this.episode_id
-      var person_id = this._id;
-      Meteor.call(
-        'remove_' + type, episode_id, person_id,
-        function(error, result) {
-          reset_typeaheads(episode_id);
-        }
-      );
-    }
+    var type = $(e.target).closest('a').attr('type');
+    var episode_id = this.episode_id
+    var person_id = this._id;
+    Meteor.call(
+      'remove_' + type, episode_id, person_id,
+      function(error, result) {
+        reset_typeaheads(episode_id);
+      }
+    );
   }
 });
 
@@ -84,9 +82,13 @@ Template.editor.helpers({
       }
     }
   },
-  editor_id: function() {
+  episode_data: function() {
     if (this.episode) {
-      return this.episode.editor_id;
+      return {
+        storage_key: this.episode.storage_key,
+        format: this.episode.format,
+        type: this.episode.type
+      }
     }
   },
   episode_title: function() {
@@ -103,7 +105,6 @@ Template.editor.helpers({
     var guests = episode.guests || [];
     return People.find({_id:{$in:guests}}).map(function(person) {
       person.episode_id = episode._id;
-      person.editor_id = episode.editor_id
       return person
     });
   },
@@ -136,11 +137,14 @@ Template.editor.helpers({
     var hosts = episode.hosts || [];
     return People.find({_id:{$in:hosts}}).map(function(person) {
       person.episode_id = episode._id;
-      person.editor_id = episode.editor_id;
       return person;
     });
   },
 });
+
+Template.editor.rendered = function() {
+  Session.set('editor_rendered', true);
+}
 
 Template.editor_header_box.events({
   'click button': function(e, tmpl) {

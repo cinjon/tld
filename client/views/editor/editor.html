@@ -27,17 +27,10 @@
           <p class="show_title">{{show_title}}</p>
         </div>
         <div class="row">
-          <div class="left">
-            <p class="episode_title"><b>{{episode_title}}</b></p>
-          </div>
-          <div class="left">
-            {{> claimed_or_unclaimed episode}}
-          </div>
+          <p class="episode_title"><b>{{episode_title}}</b></p>
         </div>
         <div class="row episode_hosts">
-          {{#if editor_is_current_user editor_id}}
-            {{> add_person add_host}}
-          {{/if}}
+          {{> add_person add_host}}
           {{#each hosts}}
           <a class="remove_person" type="host">
             {{> small_person_display}}
@@ -45,9 +38,7 @@
           {{/each}}
         </div>
         <div class="row episode_guests">
-          {{#if editor_is_current_user editor_id}}
-            {{> add_person add_guest}}
-          {{/if}}
+          {{> add_person add_guest}}
           {{#each guests}}
           <a class="remove_person" type="guest">
             {{> small_person_display}}
@@ -56,7 +47,7 @@
         </div>
         <div class="player-wrap row">
           {{#if has_episode}}
-          {{> player episode}}
+          {{> player episode_data}}
           {{/if}}
         </div>
       </div>

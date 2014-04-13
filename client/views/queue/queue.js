@@ -1,6 +1,6 @@
 // EVENTS
 
-Template.claimed_or_unclaimed.events({
+Template.queue.events({
   'click .claim_episode': function(e, tmpl) {
     Meteor.call('claim_episode', this._id, Meteor.userId());
   },
