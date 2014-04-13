@@ -8,8 +8,7 @@
       "font-awesome": {},
       "autoform": {},
       "accounts-admin-ui-bootstrap-3": {},
-      "bootstrap3-sass": {},
-      "select2": {}
+      "bootstrap3-sass": {}
     },
     "packages": {
       "iron-router": {
@@ -46,11 +45,6 @@
         "git": "https://github.com/reywood/meteor-bootstrap3-sass.git",
         "tag": "v3.1.1-4",
         "commit": "398582dc4d07d7126b9a1c6a244d1a0deec31732"
-      },
-      "select2": {
-        "git": "https://github.com/nate-strauser/meteor-select2.git",
-        "tag": "v3.4.5",
-        "commit": "4a8d05582b949a14f0ee217c185166abbf112822"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
