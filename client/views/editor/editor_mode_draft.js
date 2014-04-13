@@ -37,6 +37,9 @@ Template.editor_highlight_time.helpers({
 
 Template.editor_mode_draft.helpers({
   episode_id: function() {
+    if (this._id) {
+      Session.set('episode_id_for_search', this._id);
+    }
     return {
       episode_id:this._id
     }
@@ -75,6 +78,23 @@ Template.editor_new_input.events({
   },
   'keyup #content_input': function(e, tmpl) {
     do_content_input(e, true, tmpl, null);
+  },
+  'keyup #speaker_input': function(e, tmpl) {
+    var val = $(e.target).val().trim();
+    if (e.keyCode == 13 && val != '') { //enter
+      var type = Session.get('highlight')['type'];
+      if (!type) { //new company
+        set_highlight_speaker(val, 'sponsor', null);
+        set_start_time(true);
+        show_content_input();
+      }
+    } else if (val == '#') {
+      session_var_set_obj(
+        'highlight', ['type', '_speaker_name'], ['link', 'Link']
+      )
+      show_content_input();
+      set_start_time(true);
+    }
   }
 });
 
@@ -87,52 +107,6 @@ Template.editor_new_input.helpers({
   },
   speaker_name: function() {
     return Session.get('highlight')['_speaker_name'];
-  },
-});
-
-Template.editor_search.events({
-  'keydown .editor_search_input': function(e, tmpl) {
-    var val = $(e.target).val();
-    if (e.keyCode == 8 && val == '') {
-      set_highlight_type('normal');
-      set_highlight_speaker(null);
-      set_css_new(tmpl);
-      return;
-    }
-  },
-  'keyup #prefix_token_input': function(e, tmpl) {
-    var value = $(e.target).val();
-    $(e.target).val('');
-    if (value == '#') {
-      session_var_set_obj(
-        'highlight', ['type', '_speaker_name'], ['link', 'Link']
-      )
-      show_content_input();
-      set_start_time(true);
-    } else if (value == '!') {
-      if (!Session.get('init_typeaheads')) {
-        reset_typeaheads(this.episode_id)
-      }
-      show_prefix_selection(tmpl, 'sponsor');
-      set_start_time(true);
-    } else if (value == '@') {
-      if (!Session.get('init_typeahead')) {
-        reset_typeaheads(this.episode_id)
-      }
-      show_prefix_selection(tmpl, 'speaker');
-      set_start_time(true);
-    }
-  },
-  'keyup #sponsor_input': function(e, tmpl) {
-    var val = $(e.target).val().trim();
-    if (e.keyCode == 13 && val != '') { //enter
-      var type = Session.get('highlight')['type'];
-      if (!type) { //new company
-        set_highlight_speaker(val, 'sponsor', null);
-        show_prefix(tmpl, 'sponsor');
-        show_content_input();
-      }
-    }
   },
 });
 
@@ -193,6 +167,7 @@ do_content_input = function(e, is_editing, tmpl, highlight) {
 
 do_typeahead_type_of_highlight = function(datum) {
   set_highlight_speaker(datum.value, datum.type, datum.id);
+  set_start_time(true);
   show_content_input();
 }
 
@@ -204,10 +179,23 @@ var count_text_chars = function(text) {
 };
 
 var get_selections_company = function() {
-  return Companies.find({}, {fields:{name:true}, reactive:false}).map(function(company) {
-    var name = company.name;
-    return {value:name, id:company._id, type:'sponsor'}
+  return Companies.find({}, {fields:{name:true, _id:true}}).fetch().map(function(company) {
+    return {value:company.name, id:company._id, type:'sponsor'}
   });
+}
+
+var get_selections_people = function() {
+  var episode_id = Session.get('episode_id_for_search');
+  return People.find({
+    $or:[{hosts:episode_id}, {guests:episode_id}]
+  }, {
+    fields:{first_name:true, last_name:true},
+  }).fetch().map(
+    function(person) {
+      var name = person.first_name + ' ' + person.last_name;
+      return {value:name, id:person._id, type:'person', episode_id:episode_id}
+    }
+  );
 }
 
 var hide_content_input = function() {
@@ -231,15 +219,8 @@ var set_css_new = function() {
   hide_content_input();
   Session.set('current_char_counter', 0);
   set_start_time(false);
-
-  hide_input('speaker_input', 'speaker_span');
-  hide_input('sponsor_input', 'sponsor_span');
-
   $('#typeahead_input').show();
-  var prefix_token_input = $('#prefix_token_input');
-  prefix_token_input.val('');
-  prefix_token_input.show();
-  prefix_token_input.focus();
+  $('#speaker_input').focus();
 }
 
 var set_css_time = function(tmpl, plain_text) {
@@ -265,6 +246,46 @@ var set_css_time = function(tmpl, plain_text) {
   }
 }
 
+set_editor_search = function() {
+  var datums_company = new Bloodhound({
+  datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: get_selections_company()
+  });
+  datums_company.initialize();
+
+  var datums_people = new Bloodhound({
+    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: get_selections_people()
+  });
+  datums_people.initialize();
+
+  $('#speaker_input').typeahead(
+    {
+      highlight:true
+    },
+    {
+      displayKey: 'value',
+      source: datums_company.ttAdapter(),
+      limit: 5,
+      templates: {
+        header: '<h3>Companies</h3>'
+      }
+    },
+    {
+      displayKey: 'value',
+      source: datums_people.ttAdapter(),
+      limit: 5,
+      templates: {
+        header: '<h3>People</h3>'
+      }
+    }
+  ).on('typeahead:selected', function(event, datum, name) {
+    do_typeahead_type_of_highlight(datum);
+  });
+}
+
 var set_highlight_finished = function(text, episode_id, tmpl) {
   session_var_set_obj('highlight', ['text', 'episode_id'], [text, episode_id]);
   var highlight = Session.get('highlight');
@@ -272,8 +293,7 @@ var set_highlight_finished = function(text, episode_id, tmpl) {
     'add_highlight', highlight,
     function(error, result) {
       if (highlight['_speaker_name'] && !highlight['company_id'] && !highlight['person_id'] && !(highlight['type'] == 'link')) { //new company
-        $('#sponsor_input').typeahead('destroy','NoCached');
-        set_sponsor_typeahead();
+        reset_typeaheads();
       }
       Session.set('highlight', new_highlight());
       set_css_new(tmpl);
@@ -317,32 +337,6 @@ var set_highlight_type = function(style) {
   $('#content_input').css('font-style', style);
 }
 
-set_sponsor_typeahead = function() {
-  var data_companies = get_selections_company();
-  var datums_company = new Bloodhound({
-  datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: data_companies
-  });
-  datums_company.initialize();
-
-  $('#sponsor_input').typeahead(
-    {
-      highlight: true
-    },
-    {
-      displayKey: 'value',
-      source: datums_company.ttAdapter(),
-      limit: 5,
-      templates: {
-        header: '<h3>Companies</h3>'
-      }
-    }
-  ).on('typeahead:selected', function(event, datum, name) {
-    do_typeahead_type_of_highlight(datum);
-  });
-}
-
 var set_start_time = function(now) {
   if (!now) {
     session_var_set_obj('highlight', ['start_time'], [null]);
@@ -369,18 +363,6 @@ var show_content_input = function() {
   set_width_of_content_input();
 }
 
-var show_prefix = function(tmpl, type) {
-  tmpl.$('#' + type + '_input').val('');
-  tmpl.$('#' + type + '_span').hide();
-  tmpl.$('#prefix_token_input').show();
-}
-
-var show_prefix_selection = function(tmpl, type) {
-  tmpl.$('#prefix_token_input').hide();
-  tmpl.$('#' + type + '_span').show();
-  tmpl.$('#' + type + '_input').focus();
-}
-
 var validate_time = function(new_time_string, old_time_secs) {
   var new_time_secs = format_clock_to_seconds(new_time_string);
   //include a check for it to be less than the duration of the video
@@ -390,3 +372,9 @@ var validate_time = function(new_time_string, old_time_secs) {
     return false;
   }
 }
+
+Deps.autorun(function() {
+  if (Session.get('episode_id_for_search') && !Session.get('init_typeaheads')) {
+    reset_typeaheads(Session.get('episode_id_for_search'));
+  }
+})

@@ -28,7 +28,7 @@
   </div>
 
   <div id="typeahead_input" style="float:left; padding-right:10px; color:black">
-    {{> editor_search}}
+    <input class="form-control editor_search_input" type="text" id="speaker_input" placeholder="Search Hosts, Guests, Companies. Press '#' for Link.">
   </div>
 
   <span class="left bold_font" style="display:none; float:left; padding-right:10px; position:relative; top:5px; width:110px" id="speaker_name">
@@ -45,14 +45,4 @@
   </div>
 
   <div id="content_input_text_test" style="display:none; height:auto; width:auto;"></div>
-</template>
-
-<template name="editor_search">
-  <input class="form-control" type="text" id="prefix_token_input" placeholder="Speaker:@, Sponsor:!, Link:#" style="min-width:215px">
-  <span id="speaker_span" style="display:none">
-    <input class="form-control editor_search_input" type="text" id="speaker_input" placeholder="Search Speaker">
-  </span>
-  <span id="sponsor_span" style="display:none">
-    <input class="form-control editor_search_input" type="text" id="sponsor_input" placeholder="Search Sponsors">
-  </span>
 </template>

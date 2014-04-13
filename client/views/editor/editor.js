@@ -2,9 +2,6 @@ MAX_CHARACTERS_IN_CONTENT = 140;
 
 Template.add_person.events({
   'click button': function(e, tmpl) {
-    if (!Session.get('init_typeaheads')) {
-      reset_typeaheads(this.episode_id);
-    }
     toggle_add_person(false, this.id)
   },
   'keydown .new_person_input': function(e, tmpl) {
@@ -82,14 +79,8 @@ Template.editor.helpers({
       }
     }
   },
-  episode_data: function() {
-    if (this.episode) {
-      return {
-        storage_key: this.episode.storage_key,
-        format: this.episode.format,
-        type: this.episode.type
-      }
-    }
+  episode: function() {
+    return this.episode;
   },
   episode_title: function() {
     var episode = this.episode;
@@ -282,7 +273,6 @@ Template.small_picture.helpers({
 
 var destroy_typeaheads = function() {
   $('#speaker_input').typeahead('destroy','NoCached')
-  $('#sponsor_input').typeahead('destroy','NoCached')
   $('#new_person_input_guest').typeahead('destroy','NoCached');
   $('#new_person_input_host').typeahead('destroy','NoCached');
 };
@@ -320,30 +310,16 @@ var get_all_people = function(episode_id) {
     var guests = episode.guests || guests;
     var hosts = episode.hosts || hosts;
   }
-  var map = [];
+  var data = []
   People.find(
-    {}, {fields:{first_name:true, last_name:true}, reactive:false}).forEach(
-      function(person) {
-        if (hosts.indexOf(person._id) == -1 && guests.indexOf(person._id) == -1) {
-          var name = person.first_name + ' ' + person.last_name;
-          map.push({value:name, id:person._id, type:'person', episode_id:episode_id});
-        }
-      }
-    );
-  return map;
-}
-
-var get_selections_people = function(episode_id) {
-  return People.find({
-    $or:[{hosts:episode_id}, {guests:episode_id}]
-  }, {
-    fields:{first_name:true, last_name:true}, reactive:false
-  }).map(
-    function(person) {
+    {}, {fields:{first_name:true, last_name:true}}
+  ).forEach(function(person) {
+    if (hosts.indexOf(person._id) == -1 && guests.indexOf(person._id) == -1) {
       var name = person.first_name + ' ' + person.last_name;
-      return {value:name, id:person._id, type:'person', episode_id:episode_id};
+      data.push({value:name, id:person._id, type:'person', episode_id:episode_id});
     }
-  );
+  });
+  return data;
 }
 
 var reset_editor_session_vars = function() {
@@ -353,17 +329,17 @@ var reset_editor_session_vars = function() {
 
 reset_typeaheads = function(episode_id) {
   destroy_typeaheads();
+  set_editor_search();
   if (episode_id) {
-    set_speaker_typeahead(episode_id);
     set_people_typeahead(episode_id);
   }
-  set_sponsor_typeahead();
   if (!Session.get('init_typeaheads')) {
     Session.set('init_typeaheads', true);
   }
 }
 
 var _set_people_typeahead = function(type, datums) {
+  datums.initialize();
   $('#new_person_input_' + type).typeahead(
     {
       highlight: true
@@ -374,11 +350,12 @@ var _set_people_typeahead = function(type, datums) {
       limit: 5,
     }
   ).on('typeahead:selected', function(event, datum, name) {
+    //TODO: bug here with this bieng called multiple times.
     Meteor.call(
       'add_' + type, datum.episode_id, datum.id,
       function(error, result) {
-        toggle_add_person(true, type);
         reset_typeaheads(datum.episode_id);
+        toggle_add_person(true, type);
       }
     );
   })
@@ -389,43 +366,17 @@ var set_people_typeahead = function(episode_id) {
   if (data.length == 0) {
     return;
   }
-  var datums = new Bloodhound({
+
+  _set_people_typeahead('guest', new Bloodhound({
     datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     local: data
-  });
-  datums.initialize();
-
-  _set_people_typeahead('guest', datums);
-  _set_people_typeahead('host', datums);
-}
-
-var set_speaker_typeahead = function(episode_id) {
-  //TODO: bug here because if there are no hosts or guests, then this always rfails --> destroy_typeaheads throws error.
-  //Either way this is terrible and should be fixed.
-  var data_people = get_selections_people(episode_id);
-  var datums_people = new Bloodhound({
+  }))
+  _set_people_typeahead('host', new Bloodhound({
     datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: data_people
-  });
-  datums_people.initialize();
-
-  $('#speaker_input').typeahead(
-    {
-      highlight: true
-    },
-    {
-      displayKey: 'value',
-      source: datums_people.ttAdapter(),
-      limit: 5,
-      templates: {
-        header: '<h3>People</h3>'
-      }
-    }
-  ).on('typeahead:selected', function(event, datum, name) {
-    do_typeahead_type_of_highlight(datum);
-  });
+    local: data
+  }))
 }
 
 var toggle_add_person = function(button, type) {
