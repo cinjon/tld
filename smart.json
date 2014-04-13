@@ -6,6 +6,7 @@
     "font-awesome": {},
     "autoform": {},
     "accounts-admin-ui-bootstrap-3": {},
-    "bootstrap3-sass": {}
+    "bootstrap3-sass": {},
+    "select2": {}
   }
 }
