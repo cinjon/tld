@@ -13,6 +13,10 @@ Meteor.publish('company_names', function() {
   });
 });
 
+Meteor.publish('user_legal_agreement', function(user_id) {
+  return Meteor.users.find({_id:user_id}, {fields:{signed_editor_legal:true}});
+});
+
 Meteor.publish('episode_from_show', function(route, number) {
   return Episodes.find({
     show_route: route,

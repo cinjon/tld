@@ -1,4 +1,4 @@
-<template name="queue">
+<template name="queue_helper">
 
   <div class="container" style="height:700px; overflow-y:scroll">
     <div class="row">
@@ -76,4 +76,8 @@
       </div>
     </div>
   </div>
+</template>
+
+<template name="queue">
+  {{> queue_helper queue_data}}
 </template>

@@ -1,3 +1,12 @@
+#legal_agreement {
+  width:60%;
+  margin:auto;
+  #terms {
+    overflow-y:scroll;
+    height:250px;
+  }
+}
+
 .add-person-btn {
   margin-right: 10px;
   // width: 80px;

@@ -1,6 +1,6 @@
 // EVENTS
 
-Template.queue.events({
+Template.queue_helper.events({
   'click .claim_episode': function(e, tmpl) {
     Meteor.call('claim_episode', this._id, Meteor.userId());
   },
@@ -11,30 +11,43 @@ Template.queue.events({
 
 // HELPERS
 
-Template.queue.helpers({
+Template.queue_helper.helpers({
   episodes: function() {
     var show_name = this.name;
-    return Episodes.find({
-      show_id: this._id
+    var is_trial = this.trial || false;
+    var show_id = this._id;
+    var episodes = Episodes.find({
+      show_id: show_id,
+      trial: {$exists: is_trial}
     }).map(function(episode) {
       episode.show_name = show_name;
       return episode;
     });
+    return episodes;
   },
   published: function() {
     return this.feed.published;
   },
-  shows: function() {
-    var show_ids = [];
-    Episodes.find({
-      postedited: false
-    }).forEach( function(episode) {
-      show_ids.push(episode.show_id);
+});
+
+Template.queue.helpers({
+  queue_data: function() {
+    var show_ids = Episodes.find({
+      postedited: false,
+    }).map(function(episode) {
+      return episode.show_id;
     });
-    return Shows.find({
-      _id: {
-        $in: show_ids
-      }
-    });
-  },
+    return {
+      shows: _.uniq(
+        Shows.find({
+          _id: {
+            $in: show_ids
+          }
+        }).map(function(show) {
+          show.trial = false;
+          return show;
+        })
+      )
+    }
+  }
 });
