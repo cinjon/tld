@@ -1,4 +1,10 @@
 var player = null;
+var default_marker_setting = {
+  markerStyle: {
+    'width':'1px',
+    'background-color': 'red'
+  }
+}
 
 Template.player.rendered = function() {
   if (this.data) {
@@ -23,6 +29,31 @@ Template.player.destroyed = function() {
   dispose_video();
 };
 
+var _add_cuepoint = function(namespace, start, end, onStart, onEnd, params) {
+  player.addCuepoint({
+    namespace: namespace,
+    start: start,
+    end: end,
+    onStart: onStart,
+    onEnd: onEnd,
+    params: params
+  });
+}
+
+var add_highlight_cuepoint = function(highlight) {
+  _add_cuepoint(
+    "highlight", highlight.start_time, highlight.start_time + 15,
+    function(params) {
+      Session.set('current_chapter_cue', params.chapter_id);
+      Session.set('current_highlight_cue', params.id)
+    },
+    function(params) {
+      Session.set('current_highlight_cue', null);
+    },
+    {chapter_id:highlight.chapter_id, id:highlight._id}
+  )
+}
+
 var dispose_video = function() {
   videojs("#player").dispose();
   Session.set('player_loaded', false);
@@ -43,13 +74,18 @@ var load_video = function(seconds, highlights) {
     player = this;
     player.play();
     player.pause();
-    player.cuepoints();
-    highlights.forEach(function(highlight) {
-      add_highlight_cuepoint(highlight);
-    });
+
     set_timeupdate(function() {
       Session.set('player_time', Math.floor(player.currentTime()));
     });
+
+    if (highlights) {
+      player.cuepoints();
+      highlights.forEach(function(highlight) {
+        add_highlight_cuepoint(highlight);
+      });
+      set_markers(highlights);
+    }
 
     Session.set('player_loaded', true);
   });
@@ -76,29 +112,13 @@ var player_toggle = function () {
   return;
 }
 
-var _add_cuepoint = function(namespace, start, end, onStart, onEnd, params) {
-  player.addCuepoint({
-    namespace: namespace,
-    start: start,
-    end: end,
-    onStart: onStart,
-    onEnd: onEnd,
-    params: params
+var set_markers = function(highlights, setting) {
+  setting = setting || default_marker_setting;
+  player.markers({
+    setting: setting,
+    marker_breaks: highlights.map(function(highlight) {return highlight.start_time}),
+    marker_text: highlights.map(function(highlight) {return text_limit(highlight.text, 20)})
   });
-}
-
-add_highlight_cuepoint = function(highlight) {
-  _add_cuepoint(
-    "highlight", highlight.start_time, highlight.start_time + 15,
-    function(params) {
-      Session.set('current_chapter_cue', params.chapter_id);
-      Session.set('current_highlight_cue', params.id)
-    },
-    function(params) {
-      Session.set('current_highlight_cue', null);
-    },
-    {chapter_id:highlight.chapter_id, id:highlight._id}
-  )
 }
 
 get_player_duration = function() {

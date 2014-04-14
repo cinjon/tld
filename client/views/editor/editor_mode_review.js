@@ -3,6 +3,7 @@ var max_chapter_title_chars = 30;
 Template.chapter_layout.events({
   'click .remove_chapter': function(e, tmpl) {
     if (!this.first) { //Don't let editors squash the first chapter.
+      var highlights = this.highlights;
       Meteor.call('remove_chapter', this._id);
     }
   },
