@@ -153,6 +153,19 @@ Template.editor_header_box.events({
   }
 });
 
+Template.editor_header_box.helpers({
+  num_reviews: function() {
+    if (this.key == 'review') {
+      var count = get_untitled_chapter_count() + get_incomplete_links_count();
+      if (count > 0) {
+        return '(' + count.toString() + ')';
+      } else {
+        return '';
+      }
+    }
+  }
+});
+
 Template.editor_highlight.events({
   'click .highlight_content': function(e, tmpl) {
     Session.set('is_editing_highlight_content', this._id);
@@ -335,6 +348,30 @@ var get_all_people = function(episode_id) {
 
 var get_cuepoints = function(highlight_ids) {
   Highlights.find({_id:{$in:highlight_ids}}, {start_time:true});
+}
+
+var get_incomplete_links_count = function() {
+  var episode_id = Session.get('episode_id_for_search');
+  if (!episode_id) {
+    return 0;
+  }
+  var count = 0;
+  Highlights.find({episode_id:episode_id, type:"link"}).fetch().forEach(function(highlight) {
+    var url = highlight.url;
+    var text = highlight.text;
+    if (!url || url == '' || !text || text == '') {
+      count += 1;
+    }
+  });
+  return count;
+}
+
+var get_untitled_chapter_count = function() {
+  var episode_id = Session.get('episode_id_for_search');
+  if (!episode_id) {
+    return 0;
+  }
+  return Chapters.find({episode_id:episode_id, title:null}).count();
 }
 
 var reset_editor_session_vars = function() {

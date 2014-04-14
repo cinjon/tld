@@ -33,9 +33,9 @@ Template.chapter_layout.helpers({
       return 'lemon'
     }
   },
-  cue_color: function() {
-    if (Session.get('current_chapter_cue') == this._id) {
-      return 'lemon';
+  title_color: function() {
+    if (!this.title) {
+      return "red_text";
     }
   },
   highlights: function() {
@@ -45,6 +45,9 @@ Template.chapter_layout.helpers({
     if (this.first) {
       return "margin-top:-10px";
     }
+  },
+  title: function() {
+    return this.title || "Title this Chapter"
   }
 })
 
@@ -52,7 +55,7 @@ Template.editor_make_chapter.events({
   'click .row_text_time': function(e, tmpl) {
     Meteor.call(
       'new_chapter', this.chapter_id, this.start_time, Meteor.userId()
-    );
+    )
   }
 });
 

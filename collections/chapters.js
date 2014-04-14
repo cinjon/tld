@@ -16,7 +16,8 @@ Chapters = new Meteor.Collection('chapters', {
   schema: new SimpleSchema({
     title: {
       type: String,
-      label: 'Title'
+      label: 'Title',
+      optional: true
     },
     first: {
       type: Boolean,

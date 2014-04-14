@@ -295,10 +295,11 @@ set_editor_search = function() {
 var set_highlight_finished = function(text, episode_id, tmpl) {
   session_var_set_obj('highlight', ['text', 'episode_id'], [text, episode_id]);
   var highlight = Session.get('highlight');
+  var type = highlight['type'];
   Meteor.call(
     'add_highlight', highlight,
     function(error, result) {
-      if (highlight['_speaker_name'] && !highlight['company_id'] && !highlight['person_id'] && !(highlight['type'] == 'link')) { //new company
+      if (type != 'link' && highlight['_speaker_name'] && !highlight['company_id'] && !highlight['person_id']) { //new company
         reset_typeaheads();
       }
       Session.set('highlight', new_highlight());

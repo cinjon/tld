@@ -1,3 +1,10 @@
+session_var_increment = function(key, num) {
+  //Assumes Session.get(key) is a number value
+  //num can be a negative number as well
+  var value = Session.get(key);
+  Session.set(key, value + num);
+}
+
 session_var_set_obj = function(key, fields, values) {
   vals = Session.get(key);
   for (var i = 0; i < fields.length; i++) {
