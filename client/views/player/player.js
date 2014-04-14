@@ -2,7 +2,7 @@ var player = null;
 
 Template.player.rendered = function() {
   if (this.data) {
-    load_video();
+    load_video(this.data.seconds, this.data.highlights);
   }
 
   Meteor.Keybindings.add({
@@ -29,7 +29,7 @@ var dispose_video = function() {
   Session.set('player_time', null);
 };
 
-var load_video = function(seconds) {
+var load_video = function(seconds, highlights) {
   videojs(
     "#player", {"controls":true, "preload":"auto", "autoplay":false},
     function() {
@@ -43,16 +43,17 @@ var load_video = function(seconds) {
     player = this;
     player.play();
     player.pause();
-    player.on('timeupdate', function() {
+    player.cuepoints();
+    highlights.forEach(function(highlight) {
+      add_highlight_cuepoint(highlight);
+    });
+    set_timeupdate(function() {
       Session.set('player_time', Math.floor(player.currentTime()));
     });
+
     Session.set('player_loaded', true);
   });
 };
-
-player_duration = function() {
-  return player.duration();
-}
 
 var player_skip = function(direction, amount) {
   amount = amount || 5;
@@ -73,4 +74,37 @@ var player_toggle = function () {
     videojs("#player").pause();
   }
   return;
+}
+
+var _add_cuepoint = function(namespace, start, end, onStart, onEnd, params) {
+  player.addCuepoint({
+    namespace: namespace,
+    start: start,
+    end: end,
+    onStart: onStart,
+    onEnd: onEnd,
+    params: params
+  });
+}
+
+add_highlight_cuepoint = function(highlight) {
+  _add_cuepoint(
+    "highlight", highlight.start_time, highlight.start_time + 15,
+    function(params) {
+      Session.set('current_chapter_cue', params.chapter_id);
+      Session.set('current_highlight_cue', params.id)
+    },
+    function(params) {
+      Session.set('current_highlight_cue', null);
+    },
+    {chapter_id:highlight.chapter_id, id:highlight._id}
+  )
+}
+
+get_player_duration = function() {
+  return player.duration();
+}
+
+set_timeupdate = function(doFunc) {
+  player.on('timeupdate', doFunc)
 }

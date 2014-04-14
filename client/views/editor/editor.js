@@ -79,8 +79,15 @@ Template.editor.helpers({
       }
     }
   },
-  episode: function() {
-    return this.episode;
+  player_data: function() {
+    return {
+      storage_key: this.episode.storage_key,
+      format: this.episode.format,
+      type: this.episode.type,
+      seconds: 0,
+      highlights: Highlights.find({_id:{$in:this.episode.highlights}}, {
+        start_time:true, chapter_id:true, reactive:false})
+    }
   },
   episode_title: function() {
     var episode = this.episode;
@@ -184,6 +191,11 @@ Template.editor_highlight.helpers({
     var company = Companies.findOne({_id:this.company_id});
     company.type = 'company';
     return company;
+  },
+  cue_color: function() {
+    if (Session.get('current_highlight_cue') == this._id) {
+      return 'lemon';
+    }
   },
   is_editing_highlight_content: function() {
     return is_editor_mode('review') && Session.get('is_editing_highlight_content') == this._id;
@@ -316,6 +328,10 @@ var get_all_people = function(episode_id) {
     }
   });
   return data;
+}
+
+var get_cuepoints = function(highlight_ids) {
+  Highlights.find({_id:{$in:highlight_ids}}, {start_time:true});
 }
 
 var reset_editor_session_vars = function() {

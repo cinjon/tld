@@ -47,7 +47,7 @@
         </div>
         <div class="player-wrap row">
           {{#if has_episode}}
-          {{> player episode}}
+          {{> player player_data}}
           {{/if}}
         </div>
       </div>
@@ -118,7 +118,7 @@
       {{> character_cutoff}}
     </div>
     {{else}}
-    <span class="highlight_content">
+    <span class="highlight_content {{cue_color}}">
       {{text}}
     </span>
     {{/if}}

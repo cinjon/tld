@@ -32,6 +32,11 @@ Template.chapter_layout.helpers({
       return 'lemon'
     }
   },
+  cue_color: function() {
+    if (Session.get('current_chapter_cue') == this._id) {
+      return 'lemon';
+    }
+  },
   highlights: function() {
     return Highlights.find({_id:{$in:this.highlights}}, {sort:{start_time:1}});
   },

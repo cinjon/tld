@@ -372,7 +372,7 @@ var show_content_input = function() {
 var validate_time = function(new_time_string, old_time_secs) {
   var new_time_secs = format_clock_to_seconds(new_time_string);
   //include a check for it to be less than the duration of the video
-  if (new_time_secs && new_time_secs != old_time_secs && new_time_secs < player_duration()) {
+  if (new_time_secs && new_time_secs != old_time_secs && new_time_secs < get_player_duration()) {
     return new_time_secs;
   } else {
     return false;
