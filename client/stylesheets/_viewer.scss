@@ -1,0 +1,65 @@
+.viewer-container {
+  min-height: 700px;
+  width: 100%; // full screen it!
+  margin-right: 0;
+  padding-right: 0;
+  padding-left: 30px;
+  .show_title, .episode_title {
+    color: $off-white;
+    font-weight: $font-weight-light;
+    font-size: 40px;
+    // should be open sans?
+  }
+  .episode_title {
+    font-weight: $font-weight-heavy;
+    font-size: 25px;
+    // should be open sans?
+  }
+  .episode_people {
+    margin-bottom: 10px;
+  }
+  .player-wrap {
+    margin-top: 20px;
+    margin-right:0px
+  }
+  .right-pane {
+    .scroller {
+      background: $smoke1;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+    .header {
+      margin-bottom: 10px;
+      padding-left: 65px;
+      margin-left: 0;
+      .top-bar {
+        font-weight: $font-weight-heavy;
+        .btn {
+          height: 70px;
+          background: $white;
+          border-radius: 0;
+          font-weight: $font-weight-heavy;
+          text-transform: uppercase;
+          border-right: 1px solid $cream1;
+        }
+        .title {
+          text-align: center;
+          font-size: 16px;
+          letter-spacing: 2px;
+        }
+      }
+    }
+    .chapters {
+      .highlights {
+        margin-top: -10px;
+        background: $cream1;
+        .highlight-wrap {
+          clear: both;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 @import "bootstrap"; // bootstrap, automatically includes local _variables.scss
 
+@import "viewer"; // overall viewer view
 @import "editor"; // overall editor view
 @import "editor-mode-draft"; // draft mode view
 @import "highlight";
