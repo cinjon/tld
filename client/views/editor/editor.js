@@ -208,6 +208,11 @@ Template.editor_highlight.helpers({
     company.type = 'company';
     return company;
   },
+  font_style: function() {
+    if (this.type == "quote") {
+      return "font-style:italic;"
+    }
+  },
   is_editing_highlight_content: function() {
     return is_editor_mode('review') && Session.get('is_editing_highlight_content') == this._id;
   },
@@ -259,10 +264,6 @@ Template.editor_highlight.helpers({
 });
 
 Template.editor_highlight.rendered = function() {
-  if (this.data.type == "quote") {
-    this.$('.highlight_content').css('font-style', 'italic');
-  }
-
   fit_content_text_to_row(this);
 }
 
