@@ -5,8 +5,8 @@
 //   twitter: string,
 //   avatar: url,
 //   homepage: url,
-//   host_on: array of show_ids,
-//   guest_on: array of episode_ids,
+//   hosts: array of show_ids,
+//   guests: array of episode_ids,
 //   // it might make sense to extract host & guest
 //   created_at: date,
 //   updated_at: date
@@ -36,11 +36,11 @@ People = new Meteor.Collection('people', {
       type: String,
       label: 'Homepage URL'
     },
-    host_on: {
+    hosts: {
       type: [String],
       label: 'Host on Show IDs Array'
     },
-    guest_on: {
+    guests: {
       type: [String],
       label: 'Guest on Show IDs array'
     },
@@ -71,12 +71,12 @@ People = new Meteor.Collection('people', {
 });
 
 make_person = function(first_name, last_name, twitter, avatar, homepage,
-                       host_on, guest_on, created_at) {
+                       hosts, guests, created_at) {
   //TODO: put in schema for this s.t. created_at is automatcially filled
   created_at = created_at || (new Date()).getTime();
   hosts = hosts || [];
   guests = guests || [];
   return People.insert({first_name:first_name, last_name:last_name,
                        twitter:twitter, avatar:avatar, homepage:homepage,
-                       host_on:host_on, guest_on:guest_on, created_at:created_at, updated_at:created_at});
+                       hosts:hosts, guests:guests, created_at:created_at, updated_at:created_at});
 }

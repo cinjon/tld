@@ -2,8 +2,8 @@ Meteor.startup( function() {
   //bootstrap an empty db
   var timestamp = new Date();
 
+  // USERS AND ROLES
   if (Meteor.users.find().count() === 0) {
-    // USERS AND ROLES
     var cinjon_id = Accounts.createUser({
       email:'cinjon.resnick@gmail.com',
       password:'sharpsharksshank',
@@ -131,8 +131,8 @@ Meteor.startup( function() {
 
   }
 
+  // EPISODES
   if (Episodes.find().count() === 0) {
-    // EPISODES
     var backtowork001 = make_episode(
       "audio", "mp3", "Back to Work 001",
       1, "c8b1b604524c39612ba0be3423ca4669",
@@ -169,4 +169,13 @@ Meteor.startup( function() {
       "http://www.podtrac.com/pts/redirect.mp3/traffic.libsyn.com/nerdist/Nerdist_457_-_Moby.mp3"
     );
   }
+
+  // PEOPLE
+  // if (People.find().count() === 0) {
+  //
+  //   var merlin_mann = make_people(
+  //     "merlin", "mann", "hotdogsladies",
+  //   )
+  // }
+
 });
