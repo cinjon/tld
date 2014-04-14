@@ -19,13 +19,12 @@ UI.registerHelper("format_seconds_to_clock", function(seconds) {
   return format_seconds_to_clock(seconds);
 });
 
-UI.registerHelper("has_role", function(roles) {
-  //TODO: change to the helper in Roles that does this.
-  return Roles.userIsInRole(Meteor.userId(), roles);
-});
-
 UI.registerHelper("is_editor_mode", function(key) {
   return is_editor_mode(key);
+});
+
+UI.registerHelper("is_regular_user", function() {
+  return Meteor.userId() && !Roles.userIsInRole(Meteor.userId(), ['admin', 'editor']);
 });
 
 UI.registerHelper("prettify_date", function(date) {
@@ -83,14 +82,4 @@ var safe_split = function(text, str, num) {
     return parts[num];
   }
   return text;
-}
-
-var text_limit = function(text, length) {
-  if (!text) {
-    return '';
-  } else if (text.length <= length) {
-    return text;
-  } else {
-    return text.slice(0, length-3) + '...';
-  }
 }
