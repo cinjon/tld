@@ -77,7 +77,7 @@ Template.editor_new_input.events({
     }
   },
   'keyup #content_input': function(e, tmpl) {
-    do_content_input(e, true, tmpl, null);
+    do_content_input(e, true, tmpl, Session.get('highlight'));
   },
   'keyup #speaker_input': function(e, tmpl) {
     var val = $(e.target).val().trim();
@@ -115,22 +115,15 @@ do_content_input = function(e, is_editing, tmpl, highlight) {
   var val = input.val().trim();
   var length = val.length;
 
-  if (e.keyCode == 13) {
-    //TODO: Still flickering...
-    e.preventDefault();
-  }
-
   if (length > MAX_CHARACTERS_IN_CONTENT) { //Check for it being way too long
     e.preventDefault();
-  } else if (e.shiftKey && e.keyCode == 222 && val.slice(0,1) == '"') { //Quote in beginning
+  } else if (e.shiftKey && e.keyCode == 222 && highlight.type == 'note' && val.slice(0,1) == '"') { //Quote in beginning
     if (is_editing) {
-      var type = Session.get('highlight')['type'];
-      if (!type || type != 'link') {
-        set_highlight_type('italic');
-      }
-    } else if (highlight.type == 'note') {
+      set_highlight_type('italic');
+    } else {
       Meteor.call(
-        'set_highlight_type', highlight._id, 'quote', function(error, result) {
+        'set_highlight_type', highlight._id, 'quote',
+        function(error, result) {
           Session.set('is_editing_highlight_content', false);
         }
       )
@@ -140,13 +133,25 @@ do_content_input = function(e, is_editing, tmpl, highlight) {
       set_highlight_finished(val, tmpl.data.episode_id, tmpl);
     } else if (!is_editing) {
       Meteor.call(
-        'set_highlight_text', highlight._id, val, function(error, result) {
+        'set_highlight_text', highlight._id, val,
+        function(error, result) {
           Session.set('is_editing_highlight_content', false);
         }
       );
     }
-  } else if (!is_editing && e.keyCode == 27) {
+  } else if (!is_editing && e.keyCode == 27) { //escape key on review mode input
     Session.set('is_editing_highlight_content', false);
+  } else if (highlight.type == 'quote' && val.slice(0,1) != '"') {
+    if (is_editing) {
+      set_highlight_type('note');
+    } else {
+      Meteor.call(
+        'set_highlight_type', highlight._id, 'note',
+        function(error, result) {
+          Session.set('is_editing_highlight_content', false);
+        }
+      )
+    }
   } else { //adjust row nums based on width
     Session.set('current_char_counter', length);
     if (tmpl) {
@@ -220,6 +225,7 @@ var set_css_new = function() {
   Session.set('current_char_counter', 0);
   set_start_time(false);
   $('#typeahead_input').show();
+  $('#speaker_input').typeahead('val', '');
   $('#speaker_input').focus();
 }
 
@@ -296,7 +302,7 @@ var set_highlight_finished = function(text, episode_id, tmpl) {
         reset_typeaheads();
       }
       Session.set('highlight', new_highlight());
-      set_css_new(tmpl);
+      set_css_new();
     }
   );
 }

@@ -133,10 +133,6 @@ Template.editor.helpers({
   },
 });
 
-Template.editor.rendered = function() {
-  Session.set('editor_rendered', true);
-}
-
 Template.editor_header_box.events({
   'click button': function(e, tmpl) {
     var editor_mode = Session.get('editor_mode');
@@ -246,8 +242,7 @@ Template.editor_highlight.helpers({
 
 Template.editor_highlight.rendered = function() {
   if (this.data.type == "quote") {
-    this.$('.highlight_text').css('font-style', 'italic');
-    this.data.text = '"' + this.data.text + '"';
+    this.$('.highlight_content').css('font-style', 'italic');
   }
 
   fit_content_text_to_row(this);
@@ -278,6 +273,7 @@ var destroy_typeaheads = function() {
 };
 
 var fit_content_text_to_row = function(tmpl) {
+  //Reduces the size of the text to fit the row
   //TODO: currently does not work and causes an infinite loop that crashes the tab
 
   /*
