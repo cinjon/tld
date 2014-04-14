@@ -14,7 +14,7 @@ Shows = new Meteor.Collection('shows', {
   schema: new SimpleSchema({
       name: {
         type: String,
-        label: 'Name',
+        label: 'Name'
       },
       homepage: {
         type: String,
