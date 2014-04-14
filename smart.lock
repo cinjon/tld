@@ -7,8 +7,8 @@
       "typeahead": {},
       "font-awesome": {},
       "autoform": {},
-      "accounts-admin-ui-bootstrap-3": {},
-      "bootstrap3-sass": {}
+      "bootstrap3-sass": {},
+      "keybindings": {}
     },
     "packages": {
       "iron-router": {
@@ -36,15 +36,15 @@
         "tag": "v0.6.1",
         "commit": "5c0f36950c7ca91e91d4917a1b4209495151bf1b"
       },
-      "accounts-admin-ui-bootstrap-3": {
-        "git": "https://github.com/hharnisc/meteor-accounts-admin-ui-bootstrap-3.git",
-        "tag": "v0.2.5",
-        "commit": "381d4ca347f16d2ca2e1e6ca5f51c3f2e9c6c5cd"
-      },
       "bootstrap3-sass": {
         "git": "https://github.com/reywood/meteor-bootstrap3-sass.git",
         "tag": "v3.1.1-4",
         "commit": "398582dc4d07d7126b9a1c6a244d1a0deec31732"
+      },
+      "keybindings": {
+        "git": "https://github.com/matteodem/meteor-keybindings.git",
+        "tag": "v0.4.1",
+        "commit": "d461475eec435acd8b61af6f1b8696fc70fcea78"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
@@ -65,11 +65,6 @@
         "git": "https://github.com/acreeger/meteor-moment.git",
         "tag": "v2.5.1",
         "commit": "8c9bc5d3fc96705057737cb9743d555417f6e551"
-      },
-      "bootstrap-3": {
-        "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
-        "tag": "v3.1.1-1",
-        "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
       },
       "scss": {
         "git": "https://github.com/fourseven/meteor-scss.git",

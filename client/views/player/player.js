@@ -4,9 +4,22 @@ Template.player.rendered = function() {
   if (this.data) {
     load_video();
   }
+
+  Meteor.Keybindings.add({
+    'shift+space': function() {
+      player_toggle();
+    },
+    'shift+,': function () {
+      player_skip("back");
+     },
+    'shift+.': function () {
+      player_skip("forward");
+    }
+  });
 };
 
 Template.player.destroyed = function() {
+  Meteor.Keybindings.removeAll();
   dispose_video();
 };
 
@@ -39,4 +52,25 @@ var load_video = function(seconds) {
 
 player_duration = function() {
   return player.duration();
+}
+
+var player_skip = function(direction, amount) {
+  amount = amount || 5;
+  time = videojs("#player").currentTime();
+  if ( direction == 'back' )
+  {
+    videojs("#player").currentTime(time - amount);
+  } else {
+    videojs("#player").currentTime(time + amount);
+  }
+  return;
+};
+
+var player_toggle = function () {
+  if ( videojs("#player").paused() ) {
+    videojs("#player").play();
+  } else {
+    videojs("#player").pause();
+  }
+  return;
 }
