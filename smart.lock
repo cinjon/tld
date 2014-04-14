@@ -8,7 +8,8 @@
       "font-awesome": {},
       "autoform": {},
       "bootstrap3-sass": {},
-      "keybindings": {}
+      "keybindings": {},
+      "accounts-entry": {}
     },
     "packages": {
       "iron-router": {
@@ -46,6 +47,11 @@
         "tag": "v0.4.1",
         "commit": "d461475eec435acd8b61af6f1b8696fc70fcea78"
       },
+      "accounts-entry": {
+        "git": "https://github.com/Differential/accounts-entry.git",
+        "tag": "v0.7.2",
+        "commit": "cda8617139b5edd79a52023986bfecb48e4b9dc4"
+      },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
         "tag": "v0.2.2",
@@ -53,8 +59,8 @@
       },
       "simple-schema": {
         "git": "https://github.com/aldeed/meteor-simple-schema.git",
-        "tag": "v0.2.46",
-        "commit": "30b5d3e08433fbbfe49f09845559bf3ca0ab9101"
+        "tag": "v0.2.47",
+        "commit": "d97bf419498efb560771e94a8a3e2c92db33d06d"
       },
       "collection2": {
         "git": "https://github.com/aldeed/meteor-collection2.git",
@@ -70,6 +76,16 @@
         "git": "https://github.com/fourseven/meteor-scss.git",
         "tag": "v0.8.4",
         "commit": "11af0da643944d241fe7d173af76162c4b670dee"
+      },
+      "just-i18n": {
+        "git": "https://github.com/subhog/meteor-just-i18n.git",
+        "tag": "v0.2.4",
+        "commit": "91decfcf5b3b5e67f202a67658350b862330bf3d"
+      },
+      "accounts-t9n": {
+        "git": "https://github.com/softwarerero/meteor-accounts-t9n.git",
+        "tag": "v0.0.3",
+        "commit": "d1710f979d6955459d9ce0374df81d22c3c6a6ab"
       }
     }
   }
