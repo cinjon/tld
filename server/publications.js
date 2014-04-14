@@ -13,6 +13,11 @@ Meteor.publish('company_names', function() {
   });
 });
 
+Meteor.publish('company_names_from_episode', function(route, number) {
+  var episode = Episodes.findOne({show_route:route, number:number});
+  return Companies.find({sponsored_episodes:episode._id}, {fields:{name:true}});
+});
+
 Meteor.publish('user_legal_agreement', function(user_id) {
   return Meteor.users.find({_id:user_id}, {fields:{signed_editor_legal:true}});
 });

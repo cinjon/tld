@@ -1,0 +1,106 @@
+<template name="viewer">
+  <div class="viewer-container container">
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="row">
+          <p class="show_title">{{show_title}}</p>
+        </div>
+        <div class="row">
+          <p class="episode_title"><b>{{episode_title}}</b></p>
+        </div>
+        <div class="row episode_people">
+          {{#each hosts}}
+          <a class="episode_person">
+            {{> small_person_display}}
+          </a>
+          {{/each}}
+        </div>
+        <div class="row episode_people">
+          {{#each guests}}
+          <a class="episode_person">
+            {{> small_person_display}}
+          </a>
+          {{/each}}
+        </div>
+        <div class="player-wrap row">
+          {{#if has_episode}}
+          {{> player player_data}}
+          {{/if}}
+        </div>
+      </div>
+      <div class="col-sm-7 right-pane">
+        <section class="scroller">
+          <div class="row header">
+            {{> viewer_header}}
+          </div>
+          <div class="row chapters">
+            {{#each chapters}}
+            {{> viewer_chapter}}
+            {{/each}}
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="viewer_chapter">
+  <div class="chapter_box smoke_1" style="height:40px; padding-left:65px; clear:both; {{margin_top}}">
+    <div class="white inherit" style="border-top:1px solid; padding-top:10px">
+      <div class="chapter_title {{title_color}}" contenteditable="true">
+        {{index}}. {{title}}
+      </div>
+    </div>
+  </div>
+
+  <div class="cream_1">
+    {{#each highlights}}
+    <div class="row {{cue_color}}">
+      {{> viewer_marker}}
+      <div class="highlight-wrap">
+        {{> viewer_highlight}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</template>
+
+<template name="viewer_header">
+  <div class="top-bar row">
+    <button class="btn btn-block">
+      <span class="title">Viewer</span>
+    </button>
+  </div>
+</template>
+
+<template name="viewer_highlight">
+  <div class="highlight_image">
+    {{#if has_company}}
+    {{> small_picture company}}
+    {{/if}}
+    {{#if has_person}}
+    {{> small_picture person}}
+    {{/if}}
+    {{#if has_link}}
+    {{> small_picture link}}
+    {{/if}}
+  </div>
+  <div class="highlight_text">
+    <span class="highlight_type">
+      {{text_limit type_title 18}}
+    </span>
+    <span class="highlight_content {{cue_color}}">
+      {{#if has_link}}
+        <a href="{{url}}">{{text}}</a>
+      {{else}}
+        {{text}}
+      {{/if}}
+    </span>
+  </div>
+</template>
+
+<template name="viewer_marker">
+  <div class="row_text_time left smoke_1" style="text-align:right">
+    <i class="fa fa-caret-right fa-inverse" style="font-size:1.5em; margin-right:10px; {{display}}"></i>
+  </div>
+</template>
