@@ -208,11 +208,6 @@ Template.editor_highlight.helpers({
     company.type = 'company';
     return company;
   },
-  cue_color: function() {
-    if (Session.get('current_highlight_cue') == this._id) {
-      return 'lemon';
-    }
-  },
   is_editing_highlight_content: function() {
     return is_editor_mode('review') && Session.get('is_editing_highlight_content') == this._id;
   },
@@ -233,11 +228,6 @@ Template.editor_highlight.helpers({
   },
   link: function() {
     return {type:'link'}
-  },
-  padding_top: function() {
-    if (is_editor_mode('review')) {
-      return "padding-top:5px"
-    }
   },
   person: function() {
     var person = People.findOne({_id:this.person_id});

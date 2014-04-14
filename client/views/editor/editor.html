@@ -120,7 +120,7 @@
       {{> character_cutoff}}
     </div>
     {{else}}
-    <span class="highlight_content {{cue_color}}">
+    <span class="highlight_content">
       {{text}}
     </span>
     {{/if}}
@@ -154,6 +154,8 @@
       <p class="name">{{text_limit name 18}}</p>
       {{#if has_twitter}}
       <p class="twitter">@{{twitter}}</p>
+      {{else}}
+      <p class="twitter">@here</p>
       {{/if}}
     </div>
   </div>
