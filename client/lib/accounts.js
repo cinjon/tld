@@ -7,7 +7,7 @@ Meteor.startup( function() {
 AccountsEntry.config({
   privacyUrl: '/privacy-policy',
   termsUrl: '/terms-of-use',
-  passwordSignupFields: 'EMAIL_ONLY', //TODO: prompt for username for editors
+  passwordSignupFields: 'USERNAME_AND_EMAIL',
   homeRoute: '/',
   dashboardRoute: '/',
   profileRoute: '/',
