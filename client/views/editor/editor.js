@@ -264,7 +264,7 @@ Template.editor_highlight.helpers({
 });
 
 Template.editor_highlight.rendered = function() {
-  fit_content_text_to_row(this);
+  fit_content_text_to_row(this); //TODO: fix this
 }
 
 Template.small_person_display.helpers({

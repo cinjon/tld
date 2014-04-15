@@ -99,17 +99,15 @@
 </template>
 
 <template name="editor_highlight">
-  <div class="highlight_image">
-    {{#if has_company}}
-    {{> small_picture company}}
-    {{/if}}
-    {{#if has_person}}
-    {{> small_picture person}}
-    {{/if}}
-    {{#if has_link}}
-    {{> small_picture link}}
-    {{/if}}
-  </div>
+  {{#if has_company}}
+  {{> small_picture company}}
+  {{/if}}
+  {{#if has_person}}
+  {{> small_picture person}}
+  {{/if}}
+  {{#if has_link}}
+  {{> small_picture link}}
+  {{/if}}
   <div class="highlight_text">
     <span class="highlight_type">
       {{text_limit type_title 18}}
@@ -162,15 +160,15 @@
 </template>
 
 <template name="small_picture">
-  <span style="width:auto; position:relative; top:5px">
+  <span class="highlight_image">
     {{#if is_type "link"}}
-    <i class="fa fa-link fa-rotate-135" style="font-size:1.2em"></i>
+    <i class="fa fa-link fa-rotate-135"></i>
     {{/if}}
     {{#if is_type "company"}}
-    <i class="fa fa-users" style="font-size:1.2em"></i>
+    <i class="fa fa-users"></i>
     {{/if}}
     {{#if is_type "person"}}
-    <img class="picture" style="width:18px" src="{{img}}">
+    <img class="picture" src="{{avatar}}">
     {{/if}}
   </span>
 </template>
