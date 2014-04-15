@@ -1,6 +1,14 @@
 Deps.autorun(function() {
   Meteor.subscribe('user_roles', Meteor.userId());
   Meteor.subscribe('editor_legal_agreement', Meteor.userId());
+  Meteor.subscribe('trial_episodes', Meteor.userId());
+  Meteor.subscribe('trial_shows', Meteor.userId());
+});
+
+Template.legal_agreement.events({
+  'click #set_agree_to_terms': function(e, tmpl) {
+    Meteor.call('set_agree_to_terms', Meteor.userId());
+  }
 });
 
 Template.on_boarding.helpers({
@@ -11,23 +19,20 @@ Template.on_boarding.helpers({
     }
   },
   trial_data: function() {
-    var show_ids = Episodes.find({
-      postedited: false,
-      trial: true
-    }).map(function(episode) {
-      return episode.show_id;
-    });
     return {
-      shows: _.uniq(
-        Shows.find({
-          _id: {
-            $in: show_ids
-          }
-        }).map(function(show) {
-          show.trial = true;
-          return show;
-        })
-      )
+      shows: Shows.find({
+        _id: {
+          $in: Episodes.find(
+            {trial:true, editor_id:Meteor.userId()}).map(
+              function(episode) {
+                return episode.show_id;
+              }
+            )
+        }
+      }).map(function(show) {
+        show.trial = true;
+        return show;
+      });
     }
   }
 });
