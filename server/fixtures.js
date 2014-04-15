@@ -133,7 +133,7 @@ Meteor.startup( function() {
 
   // EPISODES
   if (Episodes.find().count() === 0) {
-    backtowork001 = make_episode(
+    var backtowork001 = make_episode(
       "audio", "mp3", "Back to Work 001",
       1, "c8b1b604524c39612ba0be3423ca4669",
       'back-to-work', backtowork_id, [], [],
@@ -145,7 +145,7 @@ Meteor.startup( function() {
       'http://d.5by5.net/redirect.mp3/cdn.5by5.tv/audio/broadcasts/b2w/2011/b2w-001.mp3'
     );
 
-    backtowork002 = make_episode(
+    var backtowork002 = make_episode(
       "audio", "mp3", "Back to Work 002",
       2, "118d07e7ac1adfdc6cd8b97400001a87",
       'back-to-work', backtowork_id, [], [],
@@ -157,7 +157,7 @@ Meteor.startup( function() {
       'http://d.5by5.net/redirect.mp3/cdn.5by5.tv/audio/broadcasts/b2w/2011/b2w-002.mp3'
     );
 
-    nerdist = make_episode(
+    var nerdist = make_episode(
       "audio", "mp3", "Moby",
       457, "bde5a8980a18df163c1f80618bdbd6d6",
       'nerdist', nerdist_id, [], [],

@@ -79,22 +79,22 @@ People = new Meteor.Collection('people', {
 
 make_person = function(first_name, last_name, twitter, homepage,
                        hosts, guests) {
-  //TODO: put in schema for this s.t. created_at is automatcially filled
   hosts = hosts || [];
   guests = guests || [];
-  avatar = twitter_avatar_url(twitter);
   return People.insert({first_name:first_name, last_name:last_name,
                        twitter:twitter, homepage:homepage,
                        hosts:hosts, guests:guests});
 };
 
-wrapped_twitter_get = Async.wrap(twitter, 'get');
+if (Meteor.server) {
+  wrapped_twitter_get = Async.wrap(twitter, 'get');
 
-twitter_avatar_url = function(name) {
-  var response = wrapped_twitter_get('users/show', {screen_name: name});
-  if (response.profile_image_url) {
-    return response.profile_image_url;
-  } else {
-    return "";
+  twitter_avatar_url = function(name) {
+    var response = wrapped_twitter_get('users/show', {screen_name: name});
+    if (response.profile_image_url) {
+      return response.profile_image_url;
+    } else {
+      return "";
+    }
   }
-};
+}

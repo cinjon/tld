@@ -22,17 +22,18 @@ Template.on_boarding.helpers({
     return {
       shows: Shows.find({
         _id: {
-          $in: Episodes.find(
-            {trial:true, editor_id:Meteor.userId()}).map(
-              function(episode) {
-                return episode.show_id;
-              }
-            )
+          $in: Episodes.find({
+            trial:true, editor_id:Meteor.userId()
+          }).map(
+            function(episode) {
+              return episode.show_id;
+            }
+          )
         }
       }).map(function(show) {
         show.trial = true;
         return show;
-      });
+      })
     }
   }
 });

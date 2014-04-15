@@ -23,7 +23,7 @@ Template.queue_helper.helpers({
     } else {
       var episodes = Episodes.find({
         show_id: show_id,
-        trial: false
+        trial: {$exists:false}
       });
     }
     return episodes.map(function(episode) {
@@ -38,22 +38,21 @@ Template.queue_helper.helpers({
 
 Template.queue.helpers({
   queue_data: function() {
-    var show_ids = Episodes.find({
-      postedited: false,
-    }).map(function(episode) {
-      return episode.show_id;
-    });
     return {
-      shows: _.uniq(
-        Shows.find({
-          _id: {
-            $in: show_ids
-          }
-        }).map(function(show) {
-          show.trial = false;
-          return show;
-        })
-      )
+      shows: Shows.find({
+        _id: {
+          $in: Episodes.find({
+            postedited:false
+          }).map(
+            function(episode) {
+              return episode.show_id;
+            }
+          )
+        }
+      }).map(function(show) {
+        show.trial = false;
+        return show;
+      })
     }
   }
 });

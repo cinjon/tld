@@ -73,6 +73,7 @@ Chapters = new Meteor.Collection('chapters', {
 make_chapter = function(title, first, episode_id, editor_id,
                         start_time, highlights, next_chapter_id) {
   highlights = highlights || [];
+  editor_id = editor_id || 'autogen'; //For making that first chapter
   return Chapters.insert(
     {title:title, editor_id:editor_id, first:first,
      episode_id:episode_id, start_time:start_time,
