@@ -22,8 +22,6 @@ body {
     float:right;
 }
 
-
-
 hr.style-one {
     border: 0;
     height: 1px;
@@ -81,7 +79,7 @@ hr.style-one {
     cursor:pointer;
     display:none;
     position:relative;
-    top:25px;
+    top:33px;
     text-align:right;
 }
 
@@ -104,6 +102,19 @@ hr.style-one {
     float:left;
     position:relative;
     left:35px
+}
+
+.contenteditable {
+  font-family: $font-lato;
+  font-weight: $font-weight-heavy;
+  color: $ash1
+}
+
+.message {
+  color:$white;
+  font-weight:$font-weight-medium;
+  font-family:$font-slab;
+  font-size:25px
 }
 
 /* Temporary */

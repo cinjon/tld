@@ -1,0 +1,29 @@
+.editor_mode_publish {
+  margin-top: -10px;
+  background: $cream1;
+  margin-left: 65px;
+  #editor_stats {
+    padding-top:20px;
+    font-family: $font-lato;
+    font-weight: $font-weight-medium;
+    color: $metal1;
+  }
+  #editor_summary {
+    height: 75px;
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+    border-radius:3px;
+    border: 1px dashed $ash1
+  }
+  .episode_people {
+    margin-left:10px;
+    .small_person_display {
+      .details {
+        .editable_profile {
+          cursor:pointer;
+        }
+      }
+    }
+  }
+}
