@@ -100,10 +100,6 @@ Meteor.publish('unedited_episodes', function() {
   return Episodes.find({postedited: false});
 });
 
-Meteor.publish('user_roles', function(user_id) {
-  return Meteor.users.find({_id:user_id}, {fields:{roles:true}});
-});
-
 Meteor.publish('usernames_and_roles', function() {
   return Meteor.users.find({}, {
     fields:{username:true, roles:true}
