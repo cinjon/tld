@@ -1,0 +1,24 @@
+.padded_text {
+  padding:10px;
+}
+
+#set_agree_to_terms {
+  margin-top:10px;
+  width:100%;
+}
+
+#terms {
+  overflow-y:scroll;
+  height:250px;
+  background:$off-white;
+  border-radius: 3px;
+  border: 2px solid $ash1;
+  margin-top:10px;
+}
+
+.welcome_message {
+  background:$cream1;
+  color:$metal1;
+  font-weight:$font-weight-medium;
+  font-family:$font-lato;
+}
