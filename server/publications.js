@@ -80,7 +80,6 @@ Meteor.publish('shows_with_unedited_episodes', function() {
 });
 
 Meteor.publish('trial_episodes', function(user_id) {
-  console.log(user_id);
   return Episodes.find({trial:true, editor_id:user_id});
 });
 
@@ -103,4 +102,10 @@ Meteor.publish('unedited_episodes', function() {
 
 Meteor.publish('user_roles', function(user_id) {
   return Meteor.users.find({_id:user_id}, {fields:{roles:true}});
+});
+
+Meteor.publish('usernames_and_roles', function() {
+  return Meteor.users.find({}, {
+    fields:{username:true, roles:true}
+  });
 });
