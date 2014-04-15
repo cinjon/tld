@@ -10,18 +10,18 @@
       <div class="chapter_title {{title_color}}" contenteditable="true">
         {{title}}
       </div>
+      {{#unless first}}
       <button class="btn btn-default btn-xs remove_chapter right" style="margin-right:10px">
         <i class="fa fa-times"></i>
       </button>
+      {{/unless}}
     </div>
   </div>
   <div class="cream_1">
     {{#each highlights}}
-    <div class="row {{background_color_class}}" style="clear:both; margin-right:0px">
+    <div class="row highlight-wrap {{background_color_class}}">
       {{> editor_make_chapter}}
-      <div class="highlight-wrap" style="padding-top:5px">
       {{> editor_highlight}}
-      </div>
     </div>
     {{/each}}
   </div>
@@ -29,8 +29,10 @@
 
 <template name="editor_make_chapter">
   <div class="row_text_time left smoke_1">
+    {{#unless last}}
     <span class="chapter_divider">
       <i class="fa fa-hand-o-right fa-inverse" style="font-size:1.5em"></i>
     </span>
+    {{/unless}}
   </div>
 </template>

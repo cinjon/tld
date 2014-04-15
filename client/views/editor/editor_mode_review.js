@@ -39,7 +39,13 @@ Template.chapter_layout.helpers({
     }
   },
   highlights: function() {
-    return Highlights.find({_id:{$in:this.highlights}}, {sort:{start_time:1}});
+    var highlights = this.highlights;
+    var index = 1;
+    return Highlights.find({_id:{$in:highlights}}, {sort:{start_time:1}}).map(function(highlight) {
+      highlight.last = (index == highlights.length);
+      index += 1;
+      return highlight;
+    });
   },
   margin_top: function() {
     if (this.first) {
