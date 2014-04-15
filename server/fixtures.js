@@ -62,7 +62,7 @@ Meteor.startup( function() {
     var wtf_id = Shows.insert({
       name: "WTF with Marc Maron",
       homepage: "http://www.wtfpod.com/podcast",
-      feed: "http://www.wtfpod.com/podcast/rss",
+      feed: "http://wtfpod.libsyn.com/rss",
       description: "Comedian Marc Maron is tackling the most complex philosophical question of our day - WTF? He'll get to the bottom of it with help from comedian friends, celebrity guests and the voices in his own head.",
       artwork: "https://pbs.twimg.com/profile_images/423276205/Marc_Avatar.jpg",
       route: make_name_route('WTF with Marc Maron'),
@@ -72,7 +72,7 @@ Meteor.startup( function() {
     var joerogan_id = Shows.insert({
       name: "The Joe Rogan Experience",
       homepage: "http://podcasts.joerogan.net/",
-      feed: "http://podcasts.joerogan.net/feed",
+      feed: "http://joeroganexp.joerogan.libsynpro.com/rss",
       description: "The Joe Rogan Experience podcast is a long form conversation hosted by comedian, UFC color commentator, and actor Joe Rogan with friends and guests that have included comedians, actors, musicians, MMA instructors and commentators, authors, artists, and porn stars.",
       artwork: "http://upload.wikimedia.org/wikipedia/en/6/60/The_Joe_Rogan_Experience.jpg",
       route: make_name_route('The Joe Rogan Experience'),
