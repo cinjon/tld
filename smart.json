@@ -7,7 +7,8 @@
     "autoform": {},
     "bootstrap3-sass": {},
     "keybindings": {},
+    "npm": {},
     "accounts-entry": {},
-    "npm": {}
+    "mailgun": {}
   }
 }

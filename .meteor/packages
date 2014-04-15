@@ -17,5 +17,6 @@ collection2
 bootstrap3-sass
 scss
 keybindings
-accounts-entry
 npm
+accounts-entry
+mailgun

@@ -9,14 +9,15 @@
       "autoform": {},
       "bootstrap3-sass": {},
       "keybindings": {},
+      "npm": {},
       "accounts-entry": {},
-      "npm": {}
+      "mailgun": {}
     },
     "packages": {
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.7.0",
-        "commit": "05f34bc48c4cad9fdaa366c1ddcabe6980232ece"
+        "tag": "v0.7.1",
+        "commit": "d1ffb3f06ea4c112132b030f2eb1a70b81675ecb"
       },
       "roles": {
         "git": "https://github.com/alanning/meteor-roles.git",
@@ -48,20 +49,25 @@
         "tag": "v0.4.1",
         "commit": "d461475eec435acd8b61af6f1b8696fc70fcea78"
       },
-      "accounts-entry": {
-        "git": "https://github.com/Differential/accounts-entry.git",
-        "tag": "v0.7.2",
-        "commit": "cda8617139b5edd79a52023986bfecb48e4b9dc4"
-      },
       "npm": {
         "git": "https://github.com/arunoda/meteor-npm.git",
         "tag": "v0.2.6",
         "commit": "177ab6118de5bf8cffb19481343d5762ff7a2aaf"
       },
+      "accounts-entry": {
+        "git": "https://github.com/Differential/accounts-entry.git",
+        "tag": "v0.7.2",
+        "commit": "cda8617139b5edd79a52023986bfecb48e4b9dc4"
+      },
+      "mailgun": {
+        "git": "https://github.com/cunneen/meteor-mailgun.git",
+        "tag": "v0.9.1",
+        "commit": "5ebfa17d4dadc4ae4b3784903d6bc252d09126e2"
+      },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
-        "tag": "v0.2.2",
-        "commit": "8bc53798fe5965669ae67c72f91829fcfdceabfd"
+        "tag": "v0.2.4",
+        "commit": "b40e9b0612329288d75cf52ad14a7da64bb8618f"
       },
       "simple-schema": {
         "git": "https://github.com/aldeed/meteor-simple-schema.git",
