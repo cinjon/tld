@@ -187,4 +187,5 @@ make_trial_episode = function(number, show_route, editor_id) {
     People.update({_id:{$in:episode.hosts}}, {$addToSet:{hosts:episode_id}}, {multi:true});
     Episodes.update({_id:episode_id}, {$addToSet:{chapters:chapter_id}});
   }
+  return episode_id
 };

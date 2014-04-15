@@ -133,7 +133,7 @@ Meteor.startup( function() {
 
   // EPISODES
   if (Episodes.find().count() === 0) {
-    var backtowork001 = make_episode(
+    backtowork001 = make_episode(
       "audio", "mp3", "Back to Work 001",
       1, "c8b1b604524c39612ba0be3423ca4669",
       'back-to-work', backtowork_id, [], [],
@@ -145,7 +145,7 @@ Meteor.startup( function() {
       'http://d.5by5.net/redirect.mp3/cdn.5by5.tv/audio/broadcasts/b2w/2011/b2w-001.mp3'
     );
 
-    var backtowork002 = make_episode(
+    backtowork002 = make_episode(
       "audio", "mp3", "Back to Work 002",
       2, "118d07e7ac1adfdc6cd8b97400001a87",
       'back-to-work', backtowork_id, [], [],
@@ -157,7 +157,7 @@ Meteor.startup( function() {
       'http://d.5by5.net/redirect.mp3/cdn.5by5.tv/audio/broadcasts/b2w/2011/b2w-002.mp3'
     );
 
-    var nerdist = make_episode(
+    nerdist = make_episode(
       "audio", "mp3", "Moby",
       457, "bde5a8980a18df163c1f80618bdbd6d6",
       'nerdist', nerdist_id, [], [],
@@ -171,11 +171,47 @@ Meteor.startup( function() {
   }
 
   // PEOPLE
-  // if (People.find().count() === 0) {
-  //
-  //   var merlin_mann = make_people(
-  //     "merlin", "mann", "hotdogsladies",
-  //   )
-  // }
+  if (People.find().count() === 0) {
+
+    var merlin_mann = make_person(
+      "merlin", "mann", "hotdogsladies", "http://www.merlinmann.com/", [backtowork001, backtowork002]
+    );
+
+    var dan_benjamin = make_person(
+      "dan", "benjamin", "danbenjamin", "http://benjamin.org/dan/", [backtowork001, backtowork002]
+    );
+
+    var marc_maron = make_person(
+      "marc", "maron", "marcmaron", "http://www.wtfpod.com/"
+    );
+
+    var chris_hardwick = make_person(
+      "chris", "hardwick", "nerdist", "http://nerdist.com", [nerdist]
+    );
+
+    var joe_rogan = make_person(
+      "joe", "rogan", "joerogan", "http://joerogan.net"
+    );
+
+    var john_gruber = make_person(
+      "john", "gruber", "gruber", "http://daringfireball.net/"
+    );
+
+    var michael_wolf = make_person(
+      "michael", "wolf", "michaelwolf", "http://about.me/wolf"
+    );
+
+    var marco_arment = make_person(
+      "marco", "arment", "marcoarment", "http://marco.org"
+    );
+
+    var casey_liss = make_person(
+      "casey", "liss", "caseyliss", "http://tumblr.caseyliss.com/"
+    );
+
+    var john_siracusa = make_person(
+      "john", "siracusa", "siracusa", "http://hypercritical.co/"
+    );
+  }
 
 });
