@@ -129,6 +129,18 @@ Meteor.startup( function() {
       feed_checked_at: timestamp
     });
 
+    var foundation_audio_id = Shows.insert({
+      name: "Foundation with Kevin Rose",
+      homepage: "http://foundation.bz/",
+      feed: "http://foundation.squealingrat.org/feed/",
+      description: "Kevin Rose interviews entrepreneurs.",
+      artwork: "http://videos.revision3.com/revision3/images/shows/foundation/foundation_200x200.jpg",
+      route: make_name_route('Foundation with Kevin Rose'),
+      feed_checked_at: timestamp
+    });
+
+
+
   }
 
   // EPISODES
@@ -211,6 +223,10 @@ Meteor.startup( function() {
 
     var john_siracusa = make_person(
       "john", "siracusa", "siracusa", "http://hypercritical.co/"
+    );
+
+    var kevin_rose = make_person(
+      "kevin", "rose", "kevinrose", "http://about.me/kevinrose"
     );
   }
 
