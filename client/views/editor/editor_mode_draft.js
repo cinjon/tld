@@ -197,7 +197,7 @@ var get_selections_people = function() {
     fields:{first_name:true, last_name:true},
   }).fetch().map(
     function(person) {
-      var name = person.first_name + ' ' + person.last_name;
+      var name = capitalize(person.first_name) + ' ' + capitalize(person.last_name);
       return {value:name, id:person._id, type:'person', episode_id:episode_id}
     }
   );
@@ -226,6 +226,7 @@ var set_css_new = function() {
   set_start_time(false);
   $('#typeahead_input').show();
   $('#speaker_input').typeahead('val', '');
+  $('#speaker_input').val('');
   $('#speaker_input').focus();
 }
 

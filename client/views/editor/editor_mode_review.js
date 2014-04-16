@@ -1,4 +1,4 @@
-var max_chapter_title_chars = 30;
+var max_chapter_title_chars = 60;
 
 Template.chapter_layout.events({
   'click .remove_chapter': function(e, tmpl) {

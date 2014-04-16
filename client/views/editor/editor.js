@@ -17,7 +17,7 @@ Template.add_person.events({
     if (e.keyCode == 13 && val != '') {
       var episode_id = this.episode_id;
       Meteor.call(
-        'new_' + this.id, val, episode_id, function(err, result) {
+        'new_' + type, val, episode_id, function(err, result) {
           reset_typeaheads(episode_id);
           toggle_add_person(true, type);
         }
@@ -330,7 +330,7 @@ var get_all_people = function(episode_id) {
     {}, {fields:{first_name:true, last_name:true}}
   ).forEach(function(person) {
     if (hosts.indexOf(person._id) == -1 && guests.indexOf(person._id) == -1) {
-      var name = person.first_name + ' ' + person.last_name;
+      var name = capitalize(person.first_name) + ' ' + capitalize(person.last_name);
       data.push({value:name, id:person._id, type:'person', episode_id:episode_id});
     }
   });
