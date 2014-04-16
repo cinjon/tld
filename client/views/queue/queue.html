@@ -16,9 +16,6 @@
                   Show
                 </th>
                 <th>
-                  #
-                </th>
-                <th>
                   Title
                 </th>
                 <th>
@@ -38,11 +35,8 @@
                   {{show_name}}
                 </td>
                 <td>
-                  {{number}}
-                </td>
-                <td>
                   {{#if editor_is_current_user editor_id }}
-                  <a href="{{pathFor 'editor' route=show_route number=number}}">{{title}}</a>
+                  <a href="{{pathFor 'editor' route=show_route id=_id}}">{{title}}</a>
                   {{else}}
                   {{title}}
                   {{/if}}
