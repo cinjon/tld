@@ -2,6 +2,7 @@
 // {
 //   first_name: string,
 //   last_name: string,
+//   confirmed: boolean, //Means that editors can't change this person's twitter/names
 //   twitter: string,
 //   avatar: url,
 //   homepage: url,
@@ -24,14 +25,19 @@ People = new Meteor.Collection('people', {
       type: String,
       label: 'Last Name'
     },
+    confirmed: {
+      type: Boolean,
+      label: 'Confirmed'
+    },
     twitter: {
       type: String,
-      label: 'Twitter Username'
+      label: 'Twitter Username',
+      optional: true
     },
     avatar: {
       type: String,
       autoValue: function() {
-        if (this.field("twitter").isSet) {
+        if (this.field("twitter").isSet && Meteor.server) {
           return twitter_avatar_url(this.field("twitter").value);
         }
       },
@@ -78,12 +84,15 @@ People = new Meteor.Collection('people', {
 });
 
 make_person = function(first_name, last_name, twitter, homepage,
-                       hosts, guests) {
+                       hosts, guests, confirmed) {
   hosts = hosts || [];
   guests = guests || [];
+  if (!confirmed) {
+    confirmed = false;
+  }
   return People.insert({first_name:first_name, last_name:last_name,
                        twitter:twitter, homepage:homepage,
-                       hosts:hosts, guests:guests});
+                       hosts:hosts, guests:guests, confirmed:confirmed});
 };
 
 if (Meteor.server) {

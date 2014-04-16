@@ -129,18 +129,6 @@ Meteor.startup( function() {
       feed_checked_at: timestamp
     });
 
-    var foundation_audio_id = Shows.insert({
-      name: "Foundation with Kevin Rose",
-      homepage: "http://foundation.bz/",
-      feed: "http://foundation.squealingrat.org/feed/",
-      description: "Kevin Rose interviews entrepreneurs.",
-      artwork: "http://videos.revision3.com/revision3/images/shows/foundation/foundation_200x200.jpg",
-      route: make_name_route('Foundation with Kevin Rose'),
-      feed_checked_at: timestamp
-    });
-
-
-
   }
 
   // EPISODES
@@ -184,49 +172,44 @@ Meteor.startup( function() {
 
   // PEOPLE
   if (People.find().count() === 0) {
-
     var merlin_mann = make_person(
-      "merlin", "mann", "hotdogsladies", "http://www.merlinmann.com/", [backtowork001, backtowork002]
+      "merlin", "mann", "hotdogsladies", "http://www.merlinmann.com/", [backtowork001, backtowork002], [], true
     );
 
     var dan_benjamin = make_person(
-      "dan", "benjamin", "danbenjamin", "http://benjamin.org/dan/", [backtowork001, backtowork002]
+      "dan", "benjamin", "danbenjamin", "http://benjamin.org/dan/", [backtowork001, backtowork002], [], true
     );
 
     var marc_maron = make_person(
-      "marc", "maron", "marcmaron", "http://www.wtfpod.com/"
+      "marc", "maron", "marcmaron", "http://www.wtfpod.com/", [], [], true
     );
 
     var chris_hardwick = make_person(
-      "chris", "hardwick", "nerdist", "http://nerdist.com", [nerdist]
+      "chris", "hardwick", "nerdist", "http://nerdist.com", [nerdist], [], true
     );
 
     var joe_rogan = make_person(
-      "joe", "rogan", "joerogan", "http://joerogan.net"
+      "joe", "rogan", "joerogan", "http://joerogan.net", [], [], true
     );
 
     var john_gruber = make_person(
-      "john", "gruber", "gruber", "http://daringfireball.net/"
+      "john", "gruber", "gruber", "http://daringfireball.net/", [], [], true
     );
 
     var michael_wolf = make_person(
-      "michael", "wolf", "michaelwolf", "http://about.me/wolf"
+      "michael", "wolf", "michaelwolf", "http://about.me/wolf", [], [], true
     );
 
     var marco_arment = make_person(
-      "marco", "arment", "marcoarment", "http://marco.org"
+      "marco", "arment", "marcoarment", "http://marco.org", [], [], true
     );
 
     var casey_liss = make_person(
-      "casey", "liss", "caseyliss", "http://tumblr.caseyliss.com/"
+      "casey", "liss", "caseyliss", "http://tumblr.caseyliss.com/", [], [], true
     );
 
     var john_siracusa = make_person(
-      "john", "siracusa", "siracusa", "http://hypercritical.co/"
-    );
-
-    var kevin_rose = make_person(
-      "kevin", "rose", "kevinrose", "http://about.me/kevinrose"
+      "john", "siracusa", "siracusa", "http://hypercritical.co/", [], [], true
     );
   }
 

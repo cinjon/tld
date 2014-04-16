@@ -126,6 +126,19 @@ Episodes = new Meteor.Collection('episodes', {
       type: Boolean,
       optional: true
     },
+    summary: {
+      type: String,
+      autoValue: function() {
+        if (this.isInsert) {
+          return null;
+        } else if (this.isUpsert) {
+          return {$setOnInsert: null};
+        } else {
+          this.unset();
+        }
+      },
+      optional: true
+    },
     feed: {
       type: Object,
       label: 'Feed data (varying fields)',
