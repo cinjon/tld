@@ -1,3 +1,53 @@
 <template name="editor_mode_publish">
+  <div class="editor_mode_publish">
+    <div class="message metal_1_text" style="text-align:center; margin-top:10px">
+      {{message}}
+    </div>
+    <div id="editor_stats">
+      {{> editor_stats}}
+    </div>
+    <div id="editor_summary" contenteditable="true" class="contenteditable">
+      {{summary}}
+    </div>
+    <div class="episode_people" style="margin-left:10px; margin-top:30px; margin-bottom:30px">
+      {{#each hosts}}
+      {{> editable_profile}}
+      {{/each}}
+      {{#each guests}}
+      {{> editable_profile}}
+      {{/each}}
+    </div>
+    <button class="btn btn-primary btn-block">
+      {{title}} is Ready for Prime Time
+    </button>
+  </div>
+</template>
 
+<template name="editable_profile">
+  <span class="small_person_display">
+    {{#if has_avatar}}
+    <img class="picture" src="{{avatar}}">
+    {{else}}
+    <span class="picture-placeholder"></span>
+    {{/if}}
+    <div class="details">
+      {{#if is_editing_name}}
+      <input id="set_name" value="{{capitalize first_name}} {{capitalize last_name}}">
+      {{else}}
+      <p class="name editable_profile">{{capitalize first_name}} {{capitalize last_name}}</p>
+      {{/if}}
+      {{#if is_editing_twitter}}
+      @<input id="set_twitter" value="{{twitter}}">
+      {{else}}
+      <p class="twitter editable_profile">
+        @{{twitter}}
+      </p>
+      {{/if}}
+    </div>
+  </span>
+</template>
+
+<template name="editor_stats">
+  <!-- Links: {{num_links}}, -->
+  <!-- Quotes: {{num_quotes}}, -->
 </template>

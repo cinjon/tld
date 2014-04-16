@@ -243,12 +243,12 @@ Template.editor_highlight.helpers({
     if (this.person_id) {
       var person = People.findOne({_id:this.person_id});
       if (person) {
-        return person.first_name;
+        return capitalize(person.first_name);
       }
     } else if (this.company_id) {
       var company = Companies.findOne({_id:this.company_id});
       if (company) {
-        return company.name
+        return capitalize(company.name)
       }
     } else if (this.type == "link") {
       return "Link";
@@ -275,7 +275,7 @@ Template.small_person_display.helpers({
     return this.twitter && this.twitter != '';
   },
   name: function() {
-    return this.first_name + ' ' + this.last_name;
+    return capitalize(this.first_name) + ' ' + capitalize(this.last_name);
   },
 });
 

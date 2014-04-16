@@ -28,7 +28,7 @@
         <div class="row">
           <p class="episode_title"><b>{{episode_title}}</b></p>
         </div>
-        <div class="row episode_hosts">
+        <div class="row episode_people">
           {{> add_person add_host}}
           {{#each hosts}}
           <a class="remove_person" type="host">
@@ -36,7 +36,7 @@
           </a>
           {{/each}}
         </div>
-        <div class="row episode_guests">
+        <div class="row episode_people">
           {{> add_person add_guest}}
           {{#each guests}}
           <a class="remove_person" type="guest">
