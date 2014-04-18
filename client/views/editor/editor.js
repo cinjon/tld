@@ -79,19 +79,6 @@ Template.editor.helpers({
       }
     }
   },
-  player_data: function() {
-    return {
-      storage_key: this.episode.storage_key,
-      format: this.episode.format,
-      type: this.episode.type,
-      seconds: 0
-      /* Commented out below as we don't need to include cue points for the editor
-         Leaving it here for now so that we have a template for including it on viewer
-      highlights: Highlights.find({_id:{$in:this.episode.highlights}}, {
-        start_time:true, chapter_id:true, reactive:false}).fetch()
-      */
-    }
-  },
   episode_title: function() {
     var episode = this.episode;
     if (episode) {
@@ -140,6 +127,19 @@ Template.editor.helpers({
       person.episode_id = episode._id;
       return person;
     });
+  },
+  player_data: function() {
+    return {
+      storage_key: this.episode.storage_key,
+      format: this.episode.format,
+      type: this.episode.type,
+      seconds: 0
+      /* Commented out below as we don't need to include cue points for the editor
+         Leaving it here for now so that we have a template for including it on viewer
+      highlights: Highlights.find({_id:{$in:this.episode.highlights}}, {
+        start_time:true, chapter_id:true, reactive:false}).fetch()
+      */
+    }
   },
 });
 

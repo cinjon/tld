@@ -74,8 +74,6 @@ Template.editor_new_input.events({
       set_highlight_speaker(null);
       set_css_new();
       return;
-    } else if (e.keyCode == 8 && val == '"') {
-      set_highlight_type('note');
     }
   },
   'keyup #content_input': function(e, tmpl) {
@@ -145,7 +143,7 @@ do_content_input = function(e, is_editing, tmpl, highlight) {
     Session.set('is_editing_highlight_content', false);
   } else if (highlight.type == 'quote' && val.slice(0,1) != '"') {
     if (is_editing) {
-      set_highlight_type('note');
+      set_highlight_type('normal');
     } else {
       Meteor.call(
         'set_highlight_type', highlight._id, 'note',
@@ -340,9 +338,8 @@ var set_highlight_speaker = function(name, type, id) {
 var set_highlight_type = function(style) {
   if (style == 'italic') {
     session_var_set_obj('highlight', ['type'], ['quote']);
-  } else if (style == 'note') {
+  } else if (style == 'normal') {
     session_var_set_obj('highlight', ['type'], ['note']);
-    style = 'normal';
   }
   $('#content_input').css('font-style', style);
 }
