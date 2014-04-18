@@ -348,9 +348,13 @@ var set_start_time = function(now) {
   if (!now) {
     session_var_set_obj('highlight', ['start_time'], [null]);
   } else {
-    session_var_set_obj('highlight', ['start_time'],
+    if (Meteor.settings && Meteor.settings.public.dev_mode) {
+      session_var_set_obj('highlight', ['start_time'],
                         [Math.floor(Math.random()*300) + 1]);
-                        // [Math.max(Session.get('player_time') - 5, 0)]);
+    } else {
+      session_var_set_obj('highlight', ['start_time'],
+                        [Math.max(Session.get('player_time') - 5, 0)]);
+    }
   }
 }
 
