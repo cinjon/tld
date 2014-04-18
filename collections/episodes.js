@@ -193,6 +193,7 @@ make_trial_episode = function(number, show_route, editor_id) {
     episode.chapters = [];
     episode.highlights = [];
     episode.guests = [];
+    episode.editor_id = editor_id;
 
     var episode_id = Episodes.insert(episode);
     var chapter_id = make_chapter(
