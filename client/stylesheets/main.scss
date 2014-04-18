@@ -1,9 +1,11 @@
 @import "bootstrap"; // bootstrap, automatically includes local _variables.scss
+@import "bourbon"; // bourbon, only include necessary libraries
 
 @import "layout"; // nav bar view
 @import "home"; //home and onboarding views
 @import "viewer"; // overall viewer view
 @import "editor"; // overall editor view
+@import "highlights-pane"; // highlights side
 @import "editor-mode-draft"; // draft mode view
 @import "editor-mode-publish"; // publish mode view
 @import "highlight";

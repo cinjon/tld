@@ -1,3 +1,33 @@
+// overall layout
+html, body {
+  height: 100%;
+}
+body {
+  @include box(vertical);
+}
+.editor-container {
+  @include box-flex(1);
+  @include box(vertical);
+  > .row {
+    @include box-flex(1);
+    @include box();
+    margin: 0;
+    .highlights-pane, .media-pane {
+      float: none;
+      @include box(vertical);
+    }
+    .scroller {
+      @include box(vertical);
+      @include box-flex(1);
+      .editor_mode_draft {
+        @include box-flex(1);
+        overflow-y: scroll;
+      }
+    }
+  }
+}
+
+
 .add-person-btn {
   margin-right: 10px;
   // width: 80px;
@@ -82,14 +112,7 @@ a.remove_person, a.episode_person {
     margin-top: 20px;
     margin-right:0px
   }
-  .right-pane {
-    .scroller {
-      background: $smoke1;
-      padding: 0;
-      height: 100%;
-      overflow-x: hidden;
-      overflow-y: scroll;
-    }
+  .highlights-pane {
     .header {
       margin-bottom: 10px;
       padding-left: 65px;

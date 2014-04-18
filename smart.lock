@@ -11,7 +11,8 @@
       "keybindings": {},
       "npm": {},
       "accounts-entry": {},
-      "mailgun": {}
+      "mailgun": {},
+      "bourbon": {}
     },
     "packages": {
       "iron-router": {
@@ -36,8 +37,8 @@
       },
       "autoform": {
         "git": "https://github.com/aldeed/meteor-autoform.git",
-        "tag": "v0.6.1",
-        "commit": "5c0f36950c7ca91e91d4917a1b4209495151bf1b"
+        "tag": "v0.6.2",
+        "commit": "032bc8180adca7c40a7d518f994ee07ef54d0100"
       },
       "bootstrap3-sass": {
         "git": "https://github.com/reywood/meteor-bootstrap3-sass.git",
@@ -64,6 +65,11 @@
         "tag": "v0.9.1",
         "commit": "5ebfa17d4dadc4ae4b3784903d6bc252d09126e2"
       },
+      "bourbon": {
+        "git": "https://github.com/chicagogrooves/meteor-bourbon.git",
+        "tag": "v3.1.8.1",
+        "commit": "b55f0968fe7d4a2886898cd8e81394de066a3ae1"
+      },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
         "tag": "v0.2.4",
@@ -71,8 +77,8 @@
       },
       "simple-schema": {
         "git": "https://github.com/aldeed/meteor-simple-schema.git",
-        "tag": "v0.2.47",
-        "commit": "d97bf419498efb560771e94a8a3e2c92db33d06d"
+        "tag": "v0.3.0",
+        "commit": "8093f4350dc707af51d668deaeed529e8434a090"
       },
       "collection2": {
         "git": "https://github.com/aldeed/meteor-collection2.git",
