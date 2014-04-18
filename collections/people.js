@@ -2,7 +2,7 @@
 // {
 //   first_name: string,
 //   last_name: string,
-//   confirmed: boolean, //Means that editors can't change this person's twitter/names
+//   confirmed: boolean, // Means that editors can't change this person's twitter/names
 //   twitter: string,
 //   avatar: url,
 //   homepage: url,
@@ -37,8 +37,10 @@ People = new Meteor.Collection('people', {
     avatar: {
       type: String,
       autoValue: function() {
-        if (this.field("twitter").isSet && Meteor.server) {
+        if (this.field("twitter").value !== null && Meteor.server) {
           return twitter_avatar_url(this.field("twitter").value);
+        } else if (Meteor.server) {
+          return twitter_avatar_url("timelinedhq");
         }
       },
       denyInsert: false,
@@ -99,11 +101,14 @@ if (Meteor.server) {
   wrapped_twitter_get = Async.wrap(twitter, 'get');
 
   twitter_avatar_url = function(name) {
+    if (!name) {
+      return;
+    }
     var response = wrapped_twitter_get('users/show', {screen_name: name});
     if (response.profile_image_url) {
       return response.profile_image_url;
     } else {
       return "";
     }
-  }
+  };
 }
