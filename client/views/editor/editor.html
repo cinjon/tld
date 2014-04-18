@@ -112,7 +112,7 @@
       {{text_limit type_title 18}}
     </span>
     {{#if is_editing_highlight_content}}
-    <textarea rows="1" id="content_input" class="form-control">{{text}}</textarea>
+    <div contenteditable="true" id="content_input" class="form-control">{{text}}</div>
     <div id="character_cutoff">
       {{> character_cutoff}}
     </div>

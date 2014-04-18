@@ -113,8 +113,8 @@ a.remove_person, a.episode_person {
   }
   .highlights-pane {
     .header {
-      margin: 0 0 10px;
-      padding-left: 65px;
+      padding-left: $text-time-width;
+      margin: 0;
       .editing-stage {
         font-weight: $font-weight-heavy;
         .btn {

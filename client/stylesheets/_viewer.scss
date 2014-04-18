@@ -32,7 +32,7 @@
     }
     .header {
       margin-bottom: 10px;
-      padding-left: 65px;
+      padding-left: $text-time-width;
       margin-left: 0;
       .top-bar {
         font-weight: $font-weight-heavy;
@@ -55,7 +55,7 @@
       .highlights {
         margin-top: -10px;
         background: $cream1;
-        .highlight-wrap {
+        .highlight-wrap { 
           clear: both;
           margin-right: 0;
         }

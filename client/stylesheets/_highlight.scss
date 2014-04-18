@@ -55,7 +55,6 @@
       color: $ash1;
     }
   }
-
   .link_review {
     #url_input {
 
@@ -99,18 +98,40 @@
     font-size:12px;
   }
   #content_input {
-    color: $metal1;
-    width:250px;
-    margin-top:-5px;
-    margin-right:10px;
-    max-height: 3em;
-  }
-  #character_cutoff {
-
+    //color: $metal1;
   }
   .remove_highlight {
     margin-right: 10px;
     position: relative;
     top: 13px;
+  }
+}
+
+#new_input_row {
+  background: $lemon;
+  #new_input_dot {
+    padding: 12px 16px 0;
+    .fa {
+      font-size: 1.5em;
+    }
+  }
+  #typeahead_input {
+    .twitter-typeahead {
+      display: block !important;
+    }
+    .form-control {
+      padding: 0;
+      height: auto;
+      @include clear-input();
+    }
+  }
+  #content_input {
+    outline: none;
+  }
+  #character_cutoff {
+    padding-right:13px; position:relative; top:5px;
+  }
+  #content_input_text_test {
+    height:auto; width:auto;
   }
 }

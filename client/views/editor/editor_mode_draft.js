@@ -60,7 +60,7 @@ Template.editor_new_input.created = function() {
 
 Template.editor_new_input.events({
   'keydown #content_input': function(e, tmpl) {
-    var val = tmpl.$(e.target).val();
+    var val = tmpl.$(e.target).text();
     if (e.keyCode == 13) { //To remove the flickering on the content add.
       e.preventDefault();
     } else if (e.keyCode == 8 && val == '') {
@@ -106,7 +106,7 @@ Template.editor_new_input.helpers({
 
 do_content_input = function(e, is_editing, tmpl, highlight) {
   var input = $(e.target);
-  var val = input.val().trim();
+  var val = input.text().trim();
   var length = val.length;
 
   if (length > MAX_CHARACTERS_IN_CONTENT) { //Check for it being way too long
@@ -352,20 +352,11 @@ var set_start_time = function(now) {
   }
 }
 
-var set_width_of_content_input = function() {
-  var total_width = $('#new_input_row').outerWidth() - 65; //65 is the highlight_time width
-  var speaker_width = $('#speaker_name').outerWidth();
-  var character_cutoff_width = $('#character_cutoff').outerWidth();
-  var icon_width = $('#new_input_dot').outerWidth();
-  $('#content_input').width(total_width - speaker_width - character_cutoff_width - icon_width);
-}
-
 var show_content_input = function() {
   $('#typeahead_input').hide();
   $('#speaker_name').show();
   $('#content_input_span').show();
   $('#content_input').focus();
-  set_width_of_content_input();
 }
 
 var validate_time = function(new_time_string, old_time_secs) {

@@ -8,13 +8,13 @@
 </template>
 
 <template name="editor_mode_draft">
-  <div id="new_input_row" class="row">
+  <div id="new_input_row" class="highlight-wrap">
     {{> editor_highlight_time new_time}}
     {{> editor_new_input episode_id}}
   </div>
   <div class="editor_mode_draft scroller">
     {{#each highlights}}
-    <div class="highlight-wrap row">
+    <div class="highlight-wrap">
       {{> editor_highlight_time}}
       {{> editor_highlight}}
     </div>
@@ -23,26 +23,27 @@
 </template>
 
 <template name="editor_new_input">
-  <div id="new_input_dot" class="left" style="vertical-align:middle; padding-left:10px; width:auto; padding-right:10px; position:relative; top:5px">
-    <i class="fa fa-chevron-circle-right" style="font-size:1.5em"></i>
+  <div id="new_input_dot">
+    <i class="fa fa-chevron-circle-right"></i>
   </div>
 
-  <div id="typeahead_input" style="float:left; padding-right:10px; color:black">
-    <input class="form-control editor_search_input" type="text" id="speaker_input" placeholder="Search Hosts, Guests, Companies. Press '#' for Link.">
+  <div class="highlight_text">
+    <div id="typeahead_input">
+      <input class="form-control editor_search_input" type="text" id="speaker_input" placeholder="Search Hosts, Guests, Companies. Press '#' for Link.">
+    </div>
+
+    <span class="highlight_type" style="display:none;" id="speaker_name">
+      {{text_limit speaker_name 15}}
+    </span>
+
+    <span id="content_input_span" style="display:none;">
+      <span contenteditable="true" id="content_input">{{text}}</span>
+    </span>
   </div>
 
-  <span class="left bold_font" style="display:none; float:left; padding-right:10px; position:relative; top:5px; width:110px" id="speaker_name">
-    {{text_limit speaker_name 15}}
-  </span>
-
-  <span id="content_input_span" style="display:none;">
-    <!--TODO: Fix this so that it fits with the rest of the line-->
-    <textarea class="form-control" id="content_input" rows="1"></textarea>
-  </span>
-
-  <div class="right" id="character_cutoff" style="padding-right:13px; position:relative; top:5px;">
+  <div id="character_cutoff">
     {{> character_cutoff}}
   </div>
 
-  <div id="content_input_text_test" style="display:none; height:auto; width:auto;"></div>
+  <div id="content_input_text_test" style="display:none;"></div>
 </template>
