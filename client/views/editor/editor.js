@@ -1,4 +1,5 @@
 MAX_CHARACTERS_IN_CONTENT = 140;
+var title_placeholder = "Title Me Please"
 
 Template.add_person.events({
   'click button': function(e, tmpl) {
@@ -59,6 +60,31 @@ Template.editor.events({
         reset_typeaheads(episode_id);
       }
     );
+  },
+  'keydown .episode_title': function(e, tmpl) {
+    var target = tmpl.$(e.target);
+    var val = target.text().trim();
+    var title = this.episode.title || title_placeholder;
+    if (e.keyCode == 13) {
+      e.preventDefault();
+    }
+
+    if (e.keyCode == 13 && val != '' && val != title_placeholder) {
+      Meteor.call(
+        'set_episode_title', this.episode._id, val,
+        function(error, result) {
+          if (error) {
+            Session.set('message', 'Error: Server error. Please try again.');
+          } else {
+            Session.set('message', 'Success: Title set.');
+          }
+          target.blur();
+        }
+      );
+    } else if (e.keyCode == 27) {
+      target.blur();
+      target.text(title);
+    }
   }
 });
 
@@ -80,10 +106,12 @@ Template.editor.helpers({
     }
   },
   episode_title: function() {
+    var title = title_placeholder;
     var episode = this.episode;
-    if (episode) {
-      return episode.title;
+    if (episode && episode.title) {
+      title = episode.title;
     }
+    return title;
   },
   guests: function() {
     var episode = this.episode;
