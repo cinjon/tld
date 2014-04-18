@@ -12,7 +12,7 @@ Template.player.rendered = function() {
   }
 
   Meteor.Keybindings.add({
-    'shift+space': function() {
+    'esc': function() {
       player_toggle();
     },
     'shift+,': function () {
