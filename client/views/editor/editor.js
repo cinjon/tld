@@ -255,7 +255,7 @@ Template.editor_highlight.helpers({
     }
   },
   is_editing_highlight_content: function() {
-    return is_editor_mode('review') && Session.get('is_editing_highlight_content') == this._id;
+    return Session.get('is_editing_highlight_content') == this._id;
   },
   is_editing_highlight_url: function() {
     return is_editor_mode('review') && Session.get('is_editing_highlight_url') == this._id;

@@ -108,6 +108,7 @@ do_content_input = function(e, is_editing, tmpl, highlight) {
   var input = $(e.target);
   var val = input.text().trim();
   var length = val.length;
+  Session.set('current_char_counter', length);
 
   if (length > MAX_CHARACTERS_IN_CONTENT) { //Check for it being way too long
     e.preventDefault();
@@ -145,21 +146,6 @@ do_content_input = function(e, is_editing, tmpl, highlight) {
           Session.set('is_editing_highlight_content', false);
         }
       )
-    }
-  } else { //adjust row nums based on width
-    Session.set('current_char_counter', length);
-    if (tmpl) {
-      var test = tmpl.$('#content_input_text_test');
-    } else {
-      var test = $('#content_input_text_test');
-    }
-    test.text(val);
-    var width = test.width();
-    var rows = parseInt(input.attr('rows'));
-    if (width >= input.width()*rows) {
-      input.attr('rows', (rows + 1).toString());
-    } else if (width < input.width()*(rows-1)) {
-      input.attr('rows', (rows - 1).toString());
     }
   }
 }
