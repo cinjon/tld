@@ -51,28 +51,26 @@
         </div>
       </div>
       <div class="col-sm-7 right-pane highlights-pane">
-        <section class="scroller">
-          <div class="row header">
-            <div class="col-sm-4">
-              {{> editor_header_box header_draft}}
-            </div>
-            <div class="col-sm-4">
-              {{> editor_header_box header_review}}
-            </div>
-            <div class="col-sm-4">
-              {{> editor_header_box header_publish}}
-            </div>
+        <div class="row header">
+          <div class="col-sm-4">
+            {{> editor_header_box header_draft}}
           </div>
-          {{#if is_editor_mode "draft"}}
-          {{> editor_mode_draft episode}}
-          {{/if}}
-          {{#if is_editor_mode "review"}}
-          {{> editor_mode_review episode}}
-          {{/if}}
-          {{#if is_editor_mode "publish"}}
-          {{> editor_mode_publish episode}}
-          {{/if}}
-        </section>
+          <div class="col-sm-4">
+            {{> editor_header_box header_review}}
+          </div>
+          <div class="col-sm-4">
+            {{> editor_header_box header_publish}}
+          </div>
+        </div>
+        {{#if is_editor_mode "draft"}}
+        {{> editor_mode_draft episode}}
+        {{/if}}
+        {{#if is_editor_mode "review"}}
+        {{> editor_mode_review episode}}
+        {{/if}}
+        {{#if is_editor_mode "publish"}}
+        {{> editor_mode_publish episode}}
+        {{/if}}
       </div>
     </div>
   </div>
@@ -125,12 +123,11 @@
     {{/if}}
 
     {{#if has_link_review}}
-    <span class="left" style="margin-left:-5px; padding-right:5px">/</span>
-    <div class="light_font left">
+    <div class="link_review">
       {{#if is_editing_highlight_url}}
-      <input id="url_input" class="form-control smoke_3" type="text" placeholder="{{url_placeholder}}">
+      <input id="url_input" class="form-control" type="text" placeholder="{{url_placeholder}}">
       {{else}}
-      <span class="highlight_url" style="cursor:pointer">
+      <span class="highlight_url">
         {{text_limit_url url_placeholder 25}}
       </span>
       {{/if}}

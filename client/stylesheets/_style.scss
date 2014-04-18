@@ -52,58 +52,6 @@ hr.style-one {
     width:inherit;
 }
 
-.edit_text_time {
-    font-size:12px;
-    height:25px;
-    text-align:right;
-    margin-left:30px;
-    padding-left:3px;
-    padding-right:3px;
-    width:60px;
-    padding-top:1px;
-    padding-bottom:1px;
-}
-
-.edit_time {
-    cursor:pointer;
-}
-.new_time {
-    top:15px
-}
-
-.plain_text_time:hover {
-    color:#FFFDF8;
-}
-
-.chapter_divider {
-    cursor:pointer;
-    display:none;
-    position:relative;
-    top:33px;
-    text-align:right;
-}
-
-.row_text_time:hover .chapter_divider {
-    display:block
-}
-
-.row_text_time {
-    height:41px;
-    width:65px;
-    margin-left:15px;
-    text-align:center;
-}
-
-.chapter_title {
-    text-align:center;
-    color:black;
-    overflow:hidden;
-    width:88%;
-    float:left;
-    position:relative;
-    left:35px
-}
-
 .contenteditable {
   font-family: $font-lato;
   font-weight: $font-weight-heavy;

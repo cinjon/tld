@@ -1,51 +1,114 @@
+
+.edit_text_time {
+    font-size:12px;
+    height:25px;
+    text-align:right;
+    margin-left:30px;
+    padding-left:3px;
+    padding-right:3px;
+    width:60px;
+    padding-top:1px;
+    padding-bottom:1px;
+}
+.edit_time {
+    cursor:pointer;
+}
+.new_time {
+    top:15px
+}
+.plain_text_time:hover {
+    color:#FFFDF8;
+}
+.chapter_divider {
+    cursor:pointer;
+    display:none;
+    position:relative;
+    top:33px;
+    text-align:right;
+}
+.row_text_time:hover .chapter_divider {
+    display:block
+}
+.chapter_title {
+    text-align:center;
+    color:black;
+    overflow:hidden;
+    width:88%;
+    float:left;
+    position:relative;
+    left:35px
+}
+
+.dark-input {
+  background: $smoke3;
+  color: $white;
+}
+
 .highlight-wrap {
-  margin-right:0px;
+  @include box();
+  margin: 0;
+  .row_text_time {
+    background: $smoke1;
+    text-align: center;
+    width: $text-time-width;
+    .plain_text_time {
+      color: $ash1;
+    }
+  }
+
+  .link_review {
+    #url_input {
+
+    }
+    .highlight_url {
+      cursor: pointer;
+    }
+    &:before {
+      content: "/";
+    }
+  }
   .highlight_content {
-      padding-right: 10px;
-      cursor:pointer;
-      float: left;
-      color: $metal1;
+    padding-right: 10px;
+    cursor:pointer;
+    color: $metal1;
   }
   .highlight_image {
-      float: left;
-      padding-left: 10px;
-      padding-right: 10px;
-      width: 51px;
-      font-size: 2.1em;
-      .picture {
-        width: 31px;
-        height: 31px;
-        border-radius: 3px;
-        display: inline-block;
-      }
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 51px;
+    font-size: 2.1em;
+    .picture {
+      width: 31px;
+      height: 31px;
+      border-radius: 3px;
+      display: inline-block;
+    }
   }
   .highlight_text {
-      float: left;
-      position:relative;
-      top:13px;
+    @include box-flex(1);
+    padding: 13px 0;
   }
   .highlight_type {
-    float: left;
     font-weight: $font-weight-heavy;
-    padding-right: 10px;
+    padding-right: 4px;
+    text-transform: uppercase;
   }
   .highlight_time {
-      position:relative;
-      top:13px;
-      font-size:12px;
+    position:relative;
+    top:13px;
+    font-size:12px;
   }
   #content_input {
-    float: left;
     color: $metal1;
     width:250px;
     margin-top:-5px;
     margin-right:10px;
+    max-height: 3em;
   }
   #character_cutoff {
-    float: left;
+
   }
   .remove_highlight {
-    float: right;
     margin-right: 10px;
     position: relative;
     top: 13px;

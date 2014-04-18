@@ -26,12 +26,6 @@ Template.editor_highlight_time.helpers({
       return "edit_time";
     }
     return "new_time";
-  },
-  new_time_style: function() {
-    if (this.new_time) {
-      return "height:50px; margin-top:-10px";
-    }
-    return "";
   }
 });
 

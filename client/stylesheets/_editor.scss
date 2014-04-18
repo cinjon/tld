@@ -1,3 +1,5 @@
+$text-time-width: 65px;
+
 // overall layout
 html, body {
   height: 100%;
@@ -14,15 +16,12 @@ body {
     margin: 0;
     .highlights-pane, .media-pane {
       float: none;
+      padding: 0;
       @include box(vertical);
     }
     .scroller {
-      @include box(vertical);
+      overflow-y: scroll;
       @include box-flex(1);
-      .editor_mode_draft {
-        @include box-flex(1);
-        overflow-y: scroll;
-      }
     }
   }
 }
@@ -114,9 +113,8 @@ a.remove_person, a.episode_person {
   }
   .highlights-pane {
     .header {
-      margin-bottom: 10px;
+      margin: 0 0 10px;
       padding-left: 65px;
-      margin-left: 0;
       .editing-stage {
         font-weight: $font-weight-heavy;
         .btn {

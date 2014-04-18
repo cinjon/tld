@@ -1,18 +1,18 @@
 <template name="editor_highlight_time">
-  <div class="row_text_time left smoke_1" style="{{new_time_style}}">
+  <div class="row_text_time">
     <span class="highlight_time {{edit_time}}">
-      <span class="plain_text_time regular_font ash_1_text">{{format_seconds_to_clock start_time}}</span>
-      <input type="text" style="display:none" class="form-control edit_text_time smoke_3 white_text" value="{{format_seconds_to_clock start_time}}">
+      <span class="plain_text_time">{{format_seconds_to_clock start_time}}</span>
+      <input type="text" style="display:none" class="form-control edit_text_time dark-input" value="{{format_seconds_to_clock start_time}}">
     </span>
   </div>
 </template>
 
 <template name="editor_mode_draft">
-  <div class="editor_mode_draft">
-    <div id="new_input_row" class="row">
-      {{> editor_highlight_time new_time}}
-      {{> editor_new_input episode_id}}
-    </div>
+  <div id="new_input_row" class="row">
+    {{> editor_highlight_time new_time}}
+    {{> editor_new_input episode_id}}
+  </div>
+  <div class="editor_mode_draft scroller">
     {{#each highlights}}
     <div class="highlight-wrap row">
       {{> editor_highlight_time}}
