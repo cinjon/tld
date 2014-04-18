@@ -1,18 +1,4 @@
 
-.edit_text_time {
-    font-size:12px;
-    height:25px;
-    text-align:right;
-    margin-left:30px;
-    padding-left:3px;
-    padding-right:3px;
-    width:60px;
-    padding-top:1px;
-    padding-bottom:1px;
-}
-.edit_time {
-    cursor:pointer;
-}
 .new_time {
     top:15px
 }
@@ -53,6 +39,19 @@
     width: $text-time-width;
     .plain_text_time {
       color: $ash1;
+    }
+    .edit_text_time {
+        font-size:12px;
+        height:25px;
+        text-align:right;
+        padding-left:3px;
+        padding-right:3px;
+        width:60px;
+        padding-top:1px;
+        padding-bottom:1px;
+    }
+    .edit_time {
+        cursor:pointer;
     }
   }
   .link_review {
@@ -129,7 +128,9 @@
     outline: none;
   }
   #character_cutoff {
-    padding-right:13px; position:relative; top:5px;
+    padding-right:13px;
+    position:relative;
+    top:12px;
   }
   #content_input_text_test {
     height:auto; width:auto;

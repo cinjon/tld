@@ -225,13 +225,11 @@ var set_css_new = function() {
 }
 
 var set_css_time = function(tmpl, plain_text) {
-  var hide, show, margin;
+  var hide, show;
   if (plain_text) {
-    margin = '10px'
     show = '.plain_text_time';
     hide = '.edit_text_time';
   } else {
-    margin = '5px';
     hide = '.plain_text_time';
     show = '.edit_text_time';
   }
@@ -239,11 +237,9 @@ var set_css_time = function(tmpl, plain_text) {
   if (tmpl) {
     tmpl.$(hide).hide();
     tmpl.$(show).show();
-    tmpl.$('.row_text_time').css('margin-right', margin);
   } else {
     $(show).show();
     $(hide).hide();
-    $('.row_text_time').css('margin-right', '10px');
   }
 }
 
