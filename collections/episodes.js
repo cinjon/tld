@@ -84,7 +84,14 @@ Episodes = new Meteor.Collection('episodes', {
     },
     postedited: {
       type: Boolean,
-      label: 'Postedit flag'
+      label: 'Postedit flag',
+      autoValue: function() {
+        if (this.isSet) {
+          return this.value;
+        } else if (this.isInsert || this.isUpdate) {
+          return false;
+        }
+      }
     },
     editor_id: {
       type: String,
