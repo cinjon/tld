@@ -15,8 +15,7 @@ Template.editor_mode_publish.events({
         function(error, result) {
           if (error) {
             Session.set('message', 'Error: Server error. Please try again.');
-          }
-          else {
+          } else {
             Session.set('message', 'Success: Summary set.');
           }
           target.blur();
@@ -26,10 +25,48 @@ Template.editor_mode_publish.events({
       target.blur();
       target.text(summary);
     }
+  },
+  'click #set_postedited_true': function(e, tmpl) {
+    var episode_id = this._id;
+    if (!this.postedited) {
+      Meteor.call(
+        'set_postedited_true', episode_id,
+        function(error, result) {
+          if (error) {
+            Session.set('message', 'Error: Server error. Please try again.');
+          } else if (result && result['success']) {
+            Session.set('message', "Success: Thanks so much!.");
+            Meteor.call('send_email', {
+              to: 'admin@timelined.com',
+              from: 'admin@timelined.com',
+              subject: 'Episode submission from ' + Meteor.user().emails[0].address,
+              text: "",
+              html: publish_results(episode_id, Meteor.userId())
+            });
+            Meteor.call('send_email', {
+              to: Meteor.user().emails[0].address,
+              from: 'admin@timelined.com',
+              subject: 'Editor Submission',
+              text: "Thanks so much for completeing this.",
+              html: ''
+            });
+          } else if (result && !result['success']) {
+            Session.set('message', result['message']);
+          }
+        }
+      )
+    }
   }
 });
 
 Template.editor_mode_publish.helpers({
+  btn_type: function() {
+    if (this.postedited) {
+      return "btn-default";
+    } else {
+      return "btn-primary";
+    }
+  },
   guests: function() {
     return People.find({_id:{$in:this.guests}, confirmed:false}, {
       fields:{first_name:true, last_name:true, avatar:true, twitter:true}
@@ -103,6 +140,23 @@ Template.editable_profile.events({
     }
   },
 });
+
+var publish_results = function(episode_id, user_id)  {
+  var message = "";
+
+  var chapters = Chapters.find({episode_id:episode_id}, {sort:{start_time:1}}).fetch();
+  chapters.forEach(function(chapter) {
+    message += "<p>" + chapter.title + "</p>"
+    var highlights = Highlights.find({chapter_id:chapter_id}, {sort:{start_time:1}}).fetch();
+    highlights.forEach(function(highlight) {
+      message += "<p>" + highlight.text + "</p>";
+      message += "<hr>";
+    });
+    message += "<hr>";
+  });
+
+  return message;
+}
 
 var validate_name = function(name) {
   if (name == '') {

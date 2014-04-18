@@ -17,6 +17,7 @@
 //   created_at: date,
 //   updated_at: date,
 //   published: boolean,
+//   summary: string,
 //   trial: boolean,
 //   feed:
     // data from rss feed, this can vary depending on how much info is provided
