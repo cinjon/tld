@@ -45,7 +45,6 @@ Meteor.startup( function() {
       feed: "http://feeds.5by5.tv/b2w",
       description: "Back to Work is an award winning talk show with Merlin Mann and Dan Benjamin discussing productivity, communication, work, barriers, constraints, tools, and more.",
       artwork: "http://icebox.5by5.tv/images/broadcasts/19/cover_quarter.jpg",
-      route: make_name_route('Back To Work'),
       feed_checked_at: timestamp
     });
 
@@ -55,7 +54,6 @@ Meteor.startup( function() {
       feed: "http://nerdist.libsyn.com/rss",
       description: "I am Chris Hardwick. I am on TV a lot and have a blog at nerdist.com. This podcast is basically just me talking about stuff and things with my two nerdy friends Jonah Ray and Matt Mira, and usually someone more famous than all of us. Occasionally we swear because that is fun. I hope you like it, but if you don't I'm sure you will not hesitate to unfurl your rage in the 'reviews' section because that's how the Internet works.",
       artwork: "http://www.nerdist.com/wp-content/uploads/2011/10/nerdistpodcastv2.png",
-      route: make_name_route('Nerdist'),
       feed_checked_at: timestamp
     });
 
@@ -65,7 +63,6 @@ Meteor.startup( function() {
       feed: "http://wtfpod.libsyn.com/rss",
       description: "Comedian Marc Maron is tackling the most complex philosophical question of our day - WTF? He'll get to the bottom of it with help from comedian friends, celebrity guests and the voices in his own head.",
       artwork: "https://pbs.twimg.com/profile_images/423276205/Marc_Avatar.jpg",
-      route: make_name_route('WTF with Marc Maron'),
       feed_checked_at: timestamp
     });
 
@@ -75,7 +72,6 @@ Meteor.startup( function() {
       feed: "http://joeroganexp.joerogan.libsynpro.com/rss",
       description: "The Joe Rogan Experience podcast is a long form conversation hosted by comedian, UFC color commentator, and actor Joe Rogan with friends and guests that have included comedians, actors, musicians, MMA instructors and commentators, authors, artists, and porn stars.",
       artwork: "http://upload.wikimedia.org/wikipedia/en/6/60/The_Joe_Rogan_Experience.jpg",
-      route: make_name_route('The Joe Rogan Experience'),
       feed_checked_at: timestamp
     });
 
@@ -85,7 +81,6 @@ Meteor.startup( function() {
       feed: "http://feeds.5by5.tv/quit",
       description: "Ever quit a job? Ever redefined yourself within one? Ever started something and won big ... or failed? QUIT! is a call-in show helping people sort out their lives, reevaluate their options, kick their crummy jobs, and start something awesome. Call in live at 512-518-5714 or leave a voicemail at 512-222-8141.",
       artwork: "http://icebox.5by5.tv/images/broadcasts/44/cover_quarter.jpg",
-      route: make_name_route('Quit'),
       feed_checked_at: timestamp
     });
 
@@ -95,7 +90,6 @@ Meteor.startup( function() {
       feed: "http://feeds.muleradio.net/thetalkshow",
       description: "Sort of like the director’s commentary track for Daring Fireball.",
       artwork: "http://www.muleradio.net/images/shows/thetalkshow/hero.jpg",
-      route: make_name_route('The Talk Show'),
       feed_checked_at: timestamp
     });
 
@@ -105,7 +99,6 @@ Meteor.startup( function() {
       feed: "http://feeds.feedburner.com/soundcloud/JEcj",
       description: "The NextMarket podcast features Michael Wolf's conversations with some of the biggest and most interesting names in tech, media and podcasting.",
       artwork: "http://www.launchpaddigitalmedia.com/images/podcast/300x300/NextMarket-Podcast-Logo-300-by-300.jpg",
-      route: make_name_route('The NextMarket Podcast'),
       feed_checked_at: timestamp
     });
 
@@ -115,7 +108,6 @@ Meteor.startup( function() {
       feed: "http://feeds.soundcloud.com/users/soundcloud:users:62921190/sounds.rss",
       description: "Podcast by a16z.",
       artwork: "https://i1.sndcdn.com/avatars-000073120599-46q7im-t500x500.jpg?77d7a69",
-      route: make_name_route('a16z Podcast'),
       feed_checked_at: timestamp
     });
 
@@ -125,7 +117,6 @@ Meteor.startup( function() {
       feed: "http://atp.fm/episodes?format=rss",
       description: "Three nerds discussing tech, Apple, programming, and loosely related matters.",
       artwork: "http://a3.mzstatic.com/us/r30/Podcasts6/v4/45/be/74/45be745d-c0ce-ecc0-d27a-acecbd8b735d/mza_2368113117096256823.170x170-75.jpg",
-      route: make_name_route('Accidental Tech Podcast'),
       feed_checked_at: timestamp
     });
 

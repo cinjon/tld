@@ -3,6 +3,7 @@
 //   type: string,    // audio or video
 //   format: string,   // encoding format: mp3, mp4, avi
 //   title: string,  // if defined
+//   route: string, // url slug
 //   number: number, // for podcast episode #s
 //   storage_key: string,   // unique s3 key value
 //   show_route: string,
@@ -45,6 +46,17 @@ Episodes = new Meteor.Collection('episodes', {
     title: {
       type: String,
       label: 'Title'
+    },
+    route: {
+      type: String,
+      label: 'Route',
+      autoValue: function() {
+        var title_field = this.field('title');
+        if (title_field.isSet) {
+          var count = Episodes.find({title:title_field.value}).count();
+          return make_name_route(title_field.value, count);
+        }
+      }
     },
     number: {
       type: Number,

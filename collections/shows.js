@@ -7,7 +7,7 @@
 //   created_at: date,
 //   updated_at: date,
 //   artwork: url,  // still deciding
-//   route: string,  // name with spaces replaced by -, ex. Joe-Rogan-Experience
+//   route: string,  // url slug
 //   feed_checked_at: date,  // for use in aggregator
 // }
 Shows = new Meteor.Collection('shows', {
@@ -58,7 +58,14 @@ Shows = new Meteor.Collection('shows', {
       },
       route: {
         type: String,
-        label: 'Router path'
+        label: 'Router path',
+        autoValue: function() {
+          var name_field = this.field('name');
+          if (name_field.isSet) {
+            var count = Episodes.find({name:name_field.value}).count();
+            return make_name_route(name_field.value, count);
+          }
+        }
       },
       feed_checked_at: {
         type: Date,

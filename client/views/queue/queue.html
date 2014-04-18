@@ -36,7 +36,7 @@
                 </td>
                 <td>
                   {{#if editor_is_current_user editor_id }}
-                  <a href="{{pathFor 'editor' route=show_route id=_id}}">{{title}}</a>
+                  <a href="{{pathFor 'editor' route=show_route episode_id=_id}}">{{title}}</a>
                   {{else}}
                   {{title}}
                   {{/if}}

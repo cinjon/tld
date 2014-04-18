@@ -1,8 +1,14 @@
 // Meteor.publish definitions
 
-Meteor.publish('chapters_from_episode', function(route, id) {
-  var episode = Episodes.findOne({show_route:route, _id:id});
-  return Chapters.find({episode_id:episode._id}, {
+Meteor.publish('chapters_from_episode', function(episode_id) {
+  return Chapters.find({episode_id:episode_id}, {
+    fields:{created_at:false, updated_at:false}
+  });
+});
+
+Meteor.publish('chapters_from_episode_route', function(episode_route) {
+  var episode_id = Episodes.findOne({route:episode_route})._id;
+  return Chapters.find({episode_id:episode_id}, {
     fields:{created_at:false, updated_at:false}
   });
 });
@@ -13,31 +19,44 @@ Meteor.publish('company_names', function() {
   });
 });
 
-Meteor.publish('company_names_from_episode', function(route, id) {
-  var episode = Episodes.findOne({show_route:route, _id:id});
-  return Companies.find({sponsored_episodes:episode._id}, {fields:{name:true}});
+Meteor.publish('company_names_from_episode', function(episode_id) {
+  return Companies.find({sponsored_episodes:episode_id}, {fields:{name:true}});
+});
+
+Meteor.publish('company_names_from_episode_route', function(episode_route) {
+  var episode_id = Episodes.findOne({route:episode_route})._id;
+  return Companies.find({sponsored_episodes:episode_id}, {fields:{name:true}});
 });
 
 Meteor.publish('editor_legal_agreement', function(user_id) {
   return Meteor.users.find({_id:user_id}, {fields:{signed_editor_legal:true}});
 });
 
-Meteor.publish('episode_from_show', function(route, id) {
-  return Episodes.find({
-    show_route: route,
-    _id: id
-  }, {
+Meteor.publish('episode_from_id', function(episode_id) {
+  return Episodes.find({_id:episode_id}, {
+    fields:{length_in_seconds:false, created_at:false, updated_at:false}
+  });
+});
+
+Meteor.publish('episode_from_route', function(episode_route) {
+  return Episodes.find({route:episode_route}, {
     fields:{length_in_seconds:false, created_at:false, updated_at:false}
   });
 });
 
 Meteor.publish('episodes_from_show', function (route) {
-  return Episodes.find( {show_route: route} );
+  return Episodes.find({show_route: route});
 })
 
-Meteor.publish('highlights_from_episode', function(route, id) {
-  var episode = Episodes.findOne({show_route:route, _id:id});
-  return Highlights.find({episode_id:episode._id}, {
+Meteor.publish('highlights_from_episode', function(episode_id) {
+  return Highlights.find({episode_id:episode_id}, {
+    fields:{editor_id:false, created_at:false, updated_at:false}
+  });
+});
+
+Meteor.publish('highlights_from_episode_route', function(episode_route) {
+  var episode_id = Episodes.findOne({route:episode_route})._id;
+  return Highlights.find({episode_id:episode_id}, {
     fields:{editor_id:false, created_at:false, updated_at:false}
   });
 });
@@ -48,10 +67,23 @@ Meteor.publish('people_names', function() {
   });
 });
 
-Meteor.publish('people_from_episode', function(route, id) {
-  var episode = Episodes.findOne({show_route:route, _id:id});
+Meteor.publish('people_from_episode', function(episode_id) {
   return People.find({
-    $or:[{hosts:episode._id}, {guests:episode._id}]
+    $or:[{hosts:episode_id}, {guests:episode_id}]
+  }, {
+    fields:{first_name:true, last_name:true, twitter:true,
+            avatar:true, hosts:true, guests:true, confirmed:true}
+  })
+});
+
+Meteor.publish('people_from_episode_route', function(episode_route) {
+  var episode = Episodes.findOne({route:episode_route});
+  if (!episode) {
+    return null;
+  }
+  var episode_id = episode._id;
+  return People.find({
+    $or:[{hosts:episode_id}, {guests:episode_id}]
   }, {
     fields:{first_name:true, last_name:true, twitter:true,
             avatar:true, hosts:true, guests:true, confirmed:true}
