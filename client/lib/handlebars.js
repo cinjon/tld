@@ -6,8 +6,12 @@ UI.registerHelper("editor_is_current_user", function(editor_id) {
   return editor_id == Meteor.userId();
 });
 
-UI.registerHelper("episode_is_claimed", function(editor_id) {
+UI.registerHelper("episode_is_claimed", function(editor_id, episode_id) {
   return editor_id != null && editor_id != Meteor.userId();
+});
+
+UI.registerHelper("episode_is_postedited", function(episode_id) {
+  return episode_is_postedited(episode_id);
 });
 
 UI.registerHelper("episode_is_unclaimed", function(editor_id) {
@@ -49,6 +53,14 @@ UI.registerHelper("text_limit_url", function(text, length) {
   text = safe_split(text, 'www.', 1);
   return text_limit(text, length);
 });
+
+var episode_is_postedited = function(episode_id) {
+  var episode = Episodes.findOne({_id:episode_id});
+  if (episode) {
+    return episode.postedited
+  }
+  return null;
+}
 
 var _format_time_part = function(time) {
   if (time < 10) {

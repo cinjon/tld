@@ -66,11 +66,11 @@ Meteor.publish('shows_list', function() {
   return Shows.find();
 });
 
-Meteor.publish('shows_with_unedited_episodes', function() {
+Meteor.publish('shows_with_unpublished_episodes', function() {
   return Shows.find({
     _id: {
       $in: Episodes.find(
-        {postedited: false}).map(
+        {published: false}).map(
           function(episode) {
             return episode.show_id;
           }
@@ -96,8 +96,8 @@ Meteor.publish('trial_shows', function(user_id) {
   });
 })
 
-Meteor.publish('unedited_episodes', function() {
-  return Episodes.find({postedited: false});
+Meteor.publish('unpublished_episodes', function() {
+  return Episodes.find({published: false});
 });
 
 Meteor.publish('user_roles', function(user_id) {

@@ -48,17 +48,7 @@
                   {{prettify_date published}}
                 </td>
                 <td>
-                  {{#if episode_is_unclaimed editor_id }}
-                  <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
-                  {{/if}}
-
-                  {{#if episode_is_claimed editor_id }}
-                  <button class="btn btn-primary btn-xs right">Episode Claimed</button>
-                  {{/if}}
-
-                  {{#if editor_is_current_user editor_id }}
-                  <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
-                  {{/if}}
+                  {{> editor_permissions_button}}
                 </td>
               </tr>
               {{/each}}
@@ -73,4 +63,24 @@
 
 <template name="queue">
   {{> queue_helper queue_data}}
+</template>
+
+<template name="editor_permissions_button">
+  {{#if episode_is_postedited _id editor_id}}
+  <button class="btn btn-primary btn-xs right">Edited, Waiting Publishing</button>
+  {{else}}
+
+  {{#if episode_is_unclaimed editor_id }}
+  <button class="btn btn-primary btn-xs right claim_episode">Claim Episode</button>
+  {{/if}}
+
+  {{#if episode_is_claimed editor_id _id}}
+  <button class="btn btn-primary btn-xs right">Episode Claimed</button>
+  {{/if}}
+
+  {{#if editor_is_current_user editor_id _id }}
+  <button class="btn btn-primary btn-xs right unclaim_episode">Unclaim Episode</button>
+  {{/if}}
+
+  {{/if}}
 </template>
