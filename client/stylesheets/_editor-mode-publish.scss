@@ -10,9 +10,12 @@
   }
   #editor_summary {
     height: 75px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
     padding: 10px;
     text-align: center;
-    margin: 10px;
     border-radius:3px;
     border: 1px dashed $ash1
   }
