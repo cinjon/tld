@@ -1,3 +1,34 @@
+var summary_placeholder = "Summarize the Episode";
+
+Template.editor_mode_publish.events({
+  'keydown #editor_summary': function(e, tmpl) {
+    var target = tmpl.$(e.target);
+    var val = target.text().trim();
+    var summary = this.summary || summary_placeholder
+    if (e.keyCode == 13) {
+      e.preventDefault();
+    }
+
+    if (e.keyCode == 13 && val != '' && val != summary_placeholder) {
+      Meteor.call(
+        'set_episode_summary', this._id, val,
+        function(error, result) {
+          if (error) {
+            Session.set('message', 'Error: Server error. Please try again.');
+          }
+          else {
+            Session.set('message', 'Success: Summary set.');
+          }
+          target.blur();
+        }
+      );
+    } else if (e.keyCode == 27) {
+      target.blur();
+      target.text(summary);
+    }
+  }
+});
+
 Template.editor_mode_publish.helpers({
   guests: function() {
     return People.find({_id:{$in:this.guests}, confirmed:false}, {
@@ -13,7 +44,7 @@ Template.editor_mode_publish.helpers({
     return Session.get('message') || '';
   },
   summary: function() {
-    return this.summary || "Summarize the Episode";
+    return this.summary || summary_placeholder;
   }
 });
 
@@ -70,7 +101,7 @@ Template.editable_profile.events({
       e.preventDefault();
       Session.set('is_editing_name', null);
     }
-  }
+  },
 });
 
 var validate_name = function(name) {

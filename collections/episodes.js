@@ -131,10 +131,6 @@ Episodes = new Meteor.Collection('episodes', {
       autoValue: function() {
         if (this.isInsert) {
           return null;
-        } else if (this.isUpsert) {
-          return {$setOnInsert: null};
-        } else {
-          this.unset();
         }
       },
       optional: true

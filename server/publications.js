@@ -54,7 +54,7 @@ Meteor.publish('people_from_episode', function(route, id) {
     $or:[{hosts:episode._id}, {guests:episode._id}]
   }, {
     fields:{first_name:true, last_name:true, twitter:true,
-            avatar:true, hosts:true, guests:true}
+            avatar:true, hosts:true, guests:true, confirmed:true}
   })
 });
 
