@@ -67,7 +67,9 @@ Template.editor_new_input.created = function() {
 Template.editor_new_input.events({
   'keydown #content_input': function(e, tmpl) {
     var val = tmpl.$(e.target).val();
-    if (e.keyCode == 8 && val == '') {
+    if (e.keyCode == 13) { //To remove the flickering on the content add.
+      e.preventDefault();
+    } else if (e.keyCode == 8 && val == '') {
       set_highlight_type('normal');
       set_highlight_speaker(null);
       set_css_new();
