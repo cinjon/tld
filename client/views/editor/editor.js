@@ -16,13 +16,19 @@ Template.add_person.events({
     var val = $(e.target).val().trim();
     var type = this.id;
     if (e.keyCode == 13 && val != '') {
-      var episode_id = this.episode_id;
-      Meteor.call(
-        'new_' + type, val, episode_id, function(err, result) {
-          reset_typeaheads(episode_id);
-          toggle_add_person(true, type);
-        }
-      );
+      if (name.split(' ').length < 2) {
+        $('#add_person_modal').modal(
+          {keyboard:true, show:true}
+        );
+      } else {
+        var episode_id = this.episode_id;
+        Meteor.call(
+          'new_' + type, val, episode_id, function(err, result) {
+            reset_typeaheads(episode_id);
+            toggle_add_person(true, type);
+          }
+        );
+      }
     }
   },
 });
