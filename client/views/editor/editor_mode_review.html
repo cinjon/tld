@@ -1,25 +1,27 @@
 <template name="editor_mode_review">
+  <div class="editor_mode_review scroller">
   {{#each chapters}}
   {{> chapter_layout}}
   {{/each}}
+</div>
 </template>
 
 <template name="chapter_layout">
-  <div class="chapter_box smoke_1" style="height:40px; padding-left:65px; clear:both; {{margin_top}}">
-    <div class="white inherit" style="border-top:1px solid; padding-top:10px">
-      <div class="chapter_title contenteditable {{title_color}}" contenteditable="true">
+  <div class="chapter_box">
+    <div class="chapter_inner">
+      <div class="chapter_title contenteditable {{ chapter_title_class }}" contenteditable="true">
         {{title}}
       </div>
       {{#unless first}}
-      <button class="btn btn-default btn-xs remove_chapter right" style="margin-right:10px">
+      <button class="btn btn-default btn-xs remove_chapter">
         <i class="fa fa-times"></i>
       </button>
       {{/unless}}
     </div>
   </div>
-  <div class="cream_1">
+  <div class="highlights">
     {{#each highlights}}
-    <div class="highlight-wrap {{background_color_class}}">
+    <div class="highlight-wrap {{ editing_content_class }}">
       {{> editor_make_chapter}}
       {{> editor_highlight}}
     </div>
@@ -28,9 +30,9 @@
 </template>
 
 <template name="editor_make_chapter">
-  <div class="row_text_time left smoke_1">
+  <div class="row_text_time">
     {{#unless last}}
-    <span class="chapter_divider">
+    <span class="chapter_divider" data-toggle="tooltip" data-placement="right" title="Insert chapter heading">
       <i class="fa fa-hand-o-right fa-inverse" style="font-size:1.5em"></i>
     </span>
     {{/unless}}

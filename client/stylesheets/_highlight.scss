@@ -5,30 +5,32 @@
 .plain_text_time:hover {
     color:#FFFDF8;
 }
-.chapter_divider {
-    cursor:pointer;
-    display:none;
-    position:relative;
-    top:33px;
-    text-align:right;
-}
-.row_text_time:hover .chapter_divider {
-    display:block
-}
-.chapter_title {
-    text-align:center;
-    color:black;
-    overflow:hidden;
-    width:88%;
-    float:left;
-    position:relative;
-    left:35px
-}
 
 .dark-input {
   background: $smoke3;
   color: $white;
 }
+
+.chapter_box {
+  background: $smoke1;
+  padding-left: $text-time-width;
+  clear:both;
+  .chapter_inner {
+    background: $off-white;
+    border-top: 1px solid $cream1;
+    padding: 10px;
+    position: relative;
+  }
+  .chapter_title {
+    text-align: center;
+  }
+  .remove_chapter {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+  }
+}
+
 
 .highlight-wrap {
   @include box();
@@ -103,6 +105,10 @@
     margin-right: 10px;
     position: relative;
     top: 13px;
+    opacity: 0;
+  }
+  &.is-editing {
+    background: $lemon;
   }
 }
 
@@ -133,6 +139,7 @@
     top:12px;
   }
   #content_input_text_test {
-    height:auto; width:auto;
+    height:auto;
+    width:auto;
   }
 }

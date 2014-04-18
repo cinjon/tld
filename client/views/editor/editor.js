@@ -177,6 +177,13 @@ Template.editor.helpers({
   },
 });
 
+Template.editor.rendered = function(){
+  var me = this;
+  $('body').tooltip({
+      selector: '[data-toggle="tooltip"]'
+  });
+}
+
 Template.editor_header_box.events({
   'click button': function(e, tmpl) {
     var editor_mode = Session.get('editor_mode');

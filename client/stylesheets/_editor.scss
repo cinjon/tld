@@ -152,7 +152,8 @@ a.remove_person, a.episode_person {
             border-color: fade_out($color, 1);
             border-top-color: $color;
             border-width: 7px 10px;
-            margin-left: -10px
+            margin-left: -10px;
+            z-index: 1;
           }
         }
         &.editing-stage-review {

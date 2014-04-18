@@ -4,4 +4,16 @@
     padding-top: 10px;
     margin-right: 0;
   }
+  .highlight-wrap {
+    &:hover {
+      background: $cream2;
+      // TODO: remove for mobile
+      .remove_highlight {
+        opacity: 1;
+      }
+      .plain_text_time {
+        color: $off-white;
+      }
+    }
+  }
 }

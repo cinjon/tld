@@ -28,12 +28,12 @@ Template.chapter_layout.events({
 });
 
 Template.chapter_layout.helpers({
-  background_color_class: function() {
+  editing_content_class: function() {
     if (Session.get('is_editing_highlight_content') == this._id) {
-      return 'lemon'
+      return 'is-editing';
     }
   },
-  title_color: function() {
+  chapter_title_class: function() {
     if (!this.title) {
       return "red_text";
     }
@@ -46,11 +46,6 @@ Template.chapter_layout.helpers({
       index += 1;
       return highlight;
     });
-  },
-  margin_top: function() {
-    if (this.first) {
-      return "margin-top:-10px";
-    }
   },
   title: function() {
     return this.title || "Title this Chapter"
