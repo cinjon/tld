@@ -327,7 +327,7 @@ var set_start_time = function(now) {
   } else {
     if (Meteor.settings && Meteor.settings.public.dev_mode) {
       session_var_set_obj('highlight', ['start_time'],
-                        [Math.floor(Math.random()*300) + 1]);
+                        [Math.floor(Math.random()*3000) + 1]);
     } else {
       session_var_set_obj('highlight', ['start_time'],
                         [Math.max(Session.get('player_time') - 5, 0)]);
