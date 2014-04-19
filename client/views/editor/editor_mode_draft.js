@@ -186,10 +186,11 @@ var get_selections_people = function() {
 var hide_content_input = function() {
   $('#speaker_name').hide();
   hide_input('content_input', 'content_input_span');
+  $('#character_cutoff').hide();
 }
 
 var hide_input = function(input, span) {
-  $('#' + input).val('');
+  $('#' + input).text('');
   $('#' + span).hide();
 }
 
@@ -250,18 +251,18 @@ set_editor_search = function() {
     },
     {
       displayKey: 'value',
-      source: datums_company.ttAdapter(),
-      limit: 5,
-      templates: {
-        header: '<h3>Companies</h3>'
-      }
-    },
-    {
-      displayKey: 'value',
       source: datums_people.ttAdapter(),
       limit: 5,
       templates: {
         header: '<h3>People</h3>'
+      }
+    },
+    {
+      displayKey: 'value',
+      source: datums_company.ttAdapter(),
+      limit: 5,
+      templates: {
+        header: '<h3>Companies</h3>'
       }
     }
   ).on('typeahead:selected', function(event, datum, name) {
@@ -339,6 +340,7 @@ var show_content_input = function() {
   $('#speaker_name').show();
   $('#content_input_span').show();
   $('#content_input').focus();
+  $('#character_cutoff').show();
 }
 
 var validate_time = function(new_time_string, old_time_secs) {
