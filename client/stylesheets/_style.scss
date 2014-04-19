@@ -1,5 +1,5 @@
 body {
-    background-color:#444240;
+    background-color: $smoke1;
 }
 
 #player {
@@ -38,14 +38,6 @@ hr.style-one {
     -ms-transform: rotate(135deg);
     -o-transform: rotate(135deg);
     transform: rotate(135deg);
-}
-
-.remove_person {
-    background-color:#444240;
-    padding:0px;
-    height:40px;
-    border-color:#444240;
-    cursor:pointer;
 }
 
 .contenteditable {

@@ -12,7 +12,6 @@
 }
 
 .chapter_box {
-  background: $smoke1;
   padding-left: $text-time-width;
   clear:both;
   .chapter_inner {
@@ -35,8 +34,25 @@
 .highlight-wrap {
   @include box();
   margin: 0;
+  position: relative;
+  > *:not(.row_text_time) {
+    position: relative;
+    z-index: 1;
+  }
+  > .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+  &.highlight-wrap-time {
+    .background {
+      left: $text-time-width;
+    }
+  }
   .row_text_time {
-    background: $smoke1;
     text-align: center;
     width: $text-time-width;
     .plain_text_time {
@@ -113,7 +129,9 @@
 }
 
 #new_input_row {
-  background: $lemon;
+  > div:not(.row_text_time) {
+    background: $lemon;
+  }
   #new_input_dot {
     padding: 12px 16px 0;
     .fa {

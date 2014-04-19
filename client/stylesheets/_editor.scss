@@ -46,6 +46,11 @@ body {
   margin-right:16px;
 }
 
+
+.remove_person {
+  //cursor:pointer;
+}
+
 .small_person_display {
   padding-right: 10px;
   display: inline-block;
@@ -87,6 +92,7 @@ a.remove_person, a.episode_person {
   }
 }
 
+// overall editor container
 .editor-container {
   min-height: 700px;
   width: 100%; // full screen it!

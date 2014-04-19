@@ -21,7 +21,8 @@
   </div>
   <div class="highlights">
     {{#each highlights}}
-    <div class="highlight-wrap {{ editing_content_class }}">
+    <div class="highlight-wrap highlight-wrap-time {{ editing_content_class }}">
+      <div class="background"></div>
       {{> editor_make_chapter}}
       {{> editor_highlight}}
     </div>

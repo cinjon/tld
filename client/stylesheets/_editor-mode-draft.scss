@@ -1,12 +1,13 @@
 .editor_mode_draft {
-  background: $cream1;
   #new_input_row {
     padding-top: 10px;
     margin-right: 0;
   }
   .highlight-wrap {
     &:hover {
-      background: $cream2;
+      .background {
+          background: $cream2;
+      }
       // TODO: remove for mobile
       .remove_highlight {
         opacity: 1;

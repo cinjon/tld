@@ -1,3 +1,15 @@
 .highlights-pane {
-  background: $smoke1;
+  > div {
+    position: relative;
+    z-index: 1;
+  }
+  > .background {
+    background: $cream1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: $text-time-width;
+    bottom: 0;
+    z-index: 0;
+  }
 }
