@@ -6,6 +6,7 @@ $text-time-width: 65px;
 // TODO: perhaps restrain to only editing/viewing style interface?
 html, body {
   height: 100%;
+  width: 100%;
 }
 body {
   @include box(vertical);
@@ -18,11 +19,20 @@ body {
     @include box();
     margin: 0;
     .highlights-pane, .media-pane {
+      position: relative;
       float: none;
       padding: 0;
+      //@include box-flex(1); // for firefox
       @include box(vertical);
     }
+    .highlights-pane {
+      width: 500px;
+    }
+    .media-pane {
+      @include box-flex(1);
+    }
     .scroller {
+      @include box(vertical);
       overflow-y: scroll;
       @include box-flex(1);
     }

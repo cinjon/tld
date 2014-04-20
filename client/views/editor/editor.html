@@ -17,7 +17,7 @@
 <template name="editor">
   <div class="editor-container container">
     <div class="row">
-      <div class="col-sm-5 media-pane">
+      <div class="media-pane">
         <div class="row">
           <p class="show_title">{{show_title}}</p>
         </div>
@@ -48,7 +48,7 @@
           {{/if}}
         </div>
       </div>
-      <div class="col-sm-7 right-pane highlights-pane">
+      <div class="highlights-pane">
         <div class="background"></div>
         <div class="row header">
           <div class="col-sm-4">
@@ -135,9 +135,11 @@
     </div>
     {{/if}}
   </div>
-  <button class="btn btn-default btn-xs remove_highlight">
-    <i class="fa fa-times"></i>
-  </button>
+  <div class="remove_highlight_wrap">
+    <button class="btn btn-default btn-xs remove_highlight">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
 </template>
 
 <template name="small_person_display">
@@ -159,7 +161,7 @@
 </template>
 
 <template name="small_picture">
-  <span class="highlight_image">
+  <div class="highlight_image">
     {{#if is_type "link"}}
     <i class="fa fa-link fa-rotate-135"></i>
     {{/if}}
@@ -169,5 +171,5 @@
     {{#if is_type "person"}}
     <img class="picture" src="{{avatar}}">
     {{/if}}
-  </span>
+  </div>
 </template>
