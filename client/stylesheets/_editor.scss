@@ -1,6 +1,9 @@
 $text-time-width: 65px;
 
-// overall layout
+// TODO: perhaps rename episode viewer, not really just about the editor
+
+// overall layout of editing interface
+// TODO: perhaps restrain to only editing/viewing style interface?
 html, body {
   height: 100%;
 }
@@ -26,72 +29,6 @@ body {
   }
 }
 
-
-.add-person-btn {
-  margin-right: 10px;
-  // width: 80px;
-  // height: 40px;
-  display: inline-block;
-  position: relative;
-  padding-left: 30px;
-  .plus {
-    font-weight: $font-weight-light;
-    font-size: 27px;
-    position: absolute;
-    top: -4px;
-    left: 8px;
-  }
-}
-#add_host_button {
-  margin-right:16px;
-}
-
-
-.remove_person {
-  //cursor:pointer;
-}
-
-.small_person_display {
-  padding-right: 10px;
-  display: inline-block;
-  .picture, .picture-placeholder {
-    width: 31px;
-    height: 31px;
-    border-radius: 3px;
-    display: inline-block;
-    margin-right: 5px;
-  }
-  .picture-placeholder {
-    background: $gray;
-  }
-  .details {
-    padding-right:10px;
-    display: inline-block;
-    position:relative;
-    top:9px;
-    .name {
-      font-weight: $font-weight-heavy;
-      margin-bottom: 0;
-    }
-    .twitter {
-      margin-bottom: 0;
-    }
-  }
-}
-a.remove_person, a.episode_person {
-  color: $white;
-}
-
-.btn-dotted {
-  background: transparent;
-  border: 2px dashed $ash1;
-  color: $ash1;
-  &:hover {
-    color: $off-white;
-    border-color: $off-white;
-  }
-}
-
 // overall editor container
 .editor-container {
   min-height: 700px;
@@ -102,7 +39,8 @@ a.remove_person, a.episode_person {
   .show_title, .episode_title {
     color: $off-white;
     font-weight: $font-weight-light;
-    font-size: 40px;
+    font-size: 30px;
+    margin-bottom: 20px;
     // should be open sans?
   }
   .episode_title {
@@ -118,6 +56,7 @@ a.remove_person, a.episode_person {
     margin-right:0px
   }
   .highlights-pane {
+    // header is only relevant for editing
     .header {
       padding-left: $text-time-width;
       margin: 0;

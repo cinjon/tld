@@ -3,8 +3,8 @@
     <span class="plus">+</span> {{capitalize id}}
   </button>
 
-  <span id="new_person_input_span_{{id}}" class="left" style="display:none; width:160px">
-    <input id="new_person_input_{{id}}" class="form-control left new_person_input smoke_3" style="width:inherit" type="text" placeholder="Enter {{capitalize id}} Name">
+  <span id="new_person_input_span_{{id}}" class="new_person_input_wrap" style="display:none;">
+    <input id="new_person_input_{{id}}" class="form-control new_person_input" type="text" placeholder="Enter {{capitalize id}} Name">
   </span>
 </template>
 
@@ -29,20 +29,22 @@
           <b>{{episode_title}}</b>
         </div>
         <div class="row episode_people">
-          {{> add_person add_host}}
           {{#each hosts}}
-          <a class="remove_person" type="host">
+          <div class="person-wrap">
             {{> small_person_display}}
-          </a>
+            <a class="remove_person" type="host">&times;</a>
+          </div>
           {{/each}}
+          {{> add_person add_host}}
         </div>
         <div class="row episode_people">
-          {{> add_person add_guest}}
           {{#each guests}}
-          <a class="remove_person" type="guest">
+          <div class="person-wrap">
             {{> small_person_display}}
-          </a>
+            <a class="remove_person" type="guest">&times;</a>
+          </div>
           {{/each}}
+          {{> add_person add_guest}}
         </div>
         <div class="player-wrap row">
           {{#if has_episode}}

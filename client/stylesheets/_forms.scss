@@ -2,4 +2,33 @@
   background: transparent;
   border: 0;
   box-shadow: none;
-} 
+}
+
+@mixin dotted-style() {
+  background: transparent;
+  border: 2px dashed $ash1;
+  color: $ash1;
+  &:hover {
+    color: $off-white;
+    border-color: $off-white;
+  }
+}
+
+@mixin dotted-input() {
+  color: $white;
+  &:focus {
+    box-shadow: none;
+    border-color: $white;
+  }
+}
+
+.btn-dotted {
+  @include dotted-style();
+}
+
+// Twitter Typeahead
+.tt-dropdown-menu {
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}

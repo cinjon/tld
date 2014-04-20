@@ -1,0 +1,33 @@
+
+.small_person_display {
+  margin: 0 10px 10px 0;
+  display: inline-block;
+  .picture, .picture-placeholder {
+    width: 31px;
+    height: 31px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: top;
+  }
+  .picture-placeholder {
+    background: $gray;
+  }
+  .details {
+    padding-right: 10px;
+    display: inline-block;
+    position: relative;
+    top: -3px;
+    .name {
+      font-weight: $font-weight-heavy;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
+    .twitter {
+      margin-bottom: 0;
+      color: $ash1;
+      font-size: 11px;
+    }
+  }
+}
