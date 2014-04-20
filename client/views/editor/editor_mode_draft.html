@@ -39,12 +39,12 @@
 
     <span id="content_input_span" style="display:none;">
       <span contenteditable="true" id="content_input">{{text}}</span>
+      <div id="character_cutoff">
+        {{> character_cutoff}}
+      </div>
     </span>
   </div>
 
-  <div id="character_cutoff">
-    {{> character_cutoff}}
-  </div>
 
   <div id="content_input_text_test" style="display:none;"></div>
 </template>

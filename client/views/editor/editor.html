@@ -9,12 +9,8 @@
 </template>
 
 <template name="character_cutoff">
-  <small class="box_title" style="display:inline-block;">
-    <div style="color:{{current_notes_color}}; width:auto; max-width:55px">
-      <span>{{current_char_counter}}</span>
-      <span>&nbsp;/&nbsp;</span>
-      <span>{{max_chars}}</span>
-    </div>
+  <small class="character_cutoff {{current_char_class}}">
+      <span>{{current_char_counter}}/{{max_chars}}</span>
   </small>
 </template>
 
@@ -115,10 +111,12 @@
       {{text_limit type_title 18}}
     </span>
     {{#if is_editing_highlight_content}}
-    <div contenteditable="true" id="content_input" class="form-control">{{text}}</div>
-    <div id="character_cutoff">
-      {{> character_cutoff}}
-    </div>
+    <span id="content_input_span">
+      <span contenteditable="true" id="content_input">{{text}}</span>
+      <div id="character_cutoff">
+        {{> character_cutoff}}
+      </div>
+    </span>
     {{else}}
     <span class="highlight_content" style="{{font_style}}">
       {{text}}

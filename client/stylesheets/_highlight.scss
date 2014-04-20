@@ -89,6 +89,22 @@
     color: $metal1;
     font-family: $font-slab;
   }
+  #content_input_span {
+    position: relative;
+    display: block;
+    margin-right: 15px;
+  }
+  #content_input {
+    background: $off-white;
+    outline: none;
+    display: block;
+    padding: 4px;
+    color: $metal1;
+    font-family: $font-slab;
+  }
+  .character_cutoff.exceeded {
+    color: $coral;
+  }
   .highlight_image {
     padding-left: 10px;
     padding-right: 10px;
@@ -115,9 +131,6 @@
     top:13px;
     font-size:12px;
   }
-  #content_input {
-    //color: $metal1;
-  }
   .remove_highlight {
     margin-right: 10px;
     position: relative;
@@ -125,11 +138,14 @@
     opacity: 0;
   }
   &.is-editing {
-    background: $lemon;
+    .background {
+      background: $lemon;
+    }
   }
 }
 
 #new_input_row {
+  z-index: 2; // to be on top of scroller for autocomplete
   > div:not(.row_text_time) {
     background: $lemon;
   }
@@ -149,17 +165,11 @@
       @include clear-input();
     }
   }
-  #content_input {
-    outline: none;
-  }
-  #character_cutoff {
-    padding-right:13px;
-    position:relative;
-    top:12px;
-    display:none;
-  }
   #content_input_text_test {
     height:auto;
     width:auto;
+  }
+  #character_cutoff {
+    display:none;
   }
 }

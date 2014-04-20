@@ -254,7 +254,7 @@ set_editor_search = function() {
       source: datums_people.ttAdapter(),
       limit: 5,
       templates: {
-        header: '<h3>People</h3>'
+        header: '<div class="tt-header">People</div>'
       }
     },
     {
@@ -262,7 +262,7 @@ set_editor_search = function() {
       source: datums_company.ttAdapter(),
       limit: 5,
       templates: {
-        header: '<h3>Companies</h3>'
+        header: '<div class="tt-header">Companies</div>'
       }
     }
   ).on('typeahead:selected', function(event, datum, name) {

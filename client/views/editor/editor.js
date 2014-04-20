@@ -37,12 +37,11 @@ Template.character_cutoff.helpers({
   current_char_counter: function() {
     return parseInt(Session.get('current_char_counter'));
   },
-  current_notes_color: function() {
+  current_char_class: function() {
     if (Session.get('current_char_counter') > MAX_CHARACTERS_IN_CONTENT) {
-      return '#EB1E2C';
-    } else {
-      return '#000000';
+      return 'exceeded';
     }
+    return '';
   },
   max_chars: function() {
     return MAX_CHARACTERS_IN_CONTENT;
