@@ -1,10 +1,9 @@
 <template name="shows_edit">
   <div class="col-md-1">
-    hello
   </div>
 
   <div class="col-md-10 white_text">
-    {{> quickForm collection="Shows" doc=edit_document id="shows_edit" type="update"}}
+    {{> quickForm collection="Shows" doc=edit_document id="shows_edit" type="update" omitFields="updated_at"}}
   </div>
 
   <div class="col-md-1">

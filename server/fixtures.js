@@ -204,4 +204,12 @@ Meteor.startup( function() {
     );
   }
 
+  // COMPANIES
+
+  if (Companies.find().count() == 0) {
+    var squarspace = make_company(
+      "Squarespace", "http://squarespace.com", "squarespace"
+    );
+  }
+
 });

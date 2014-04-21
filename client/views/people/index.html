@@ -1,6 +1,4 @@
-<template name="users_list">
-
-<b class="white_text">NOTE => edit is not functional at the moment</b>
+<template name="people_list">
 
   <div class="col-md-1">
   </div>
@@ -11,16 +9,16 @@
         <thead>
           <tr>
             <th>
-              ID
+              Name
             </th>
             <th>
-              Username
+              Twitter
             </th>
             <th>
-              Emails
+              Homepage
             </th>
             <th>
-              Roles
+              Confirmed
             </th>
             <th>
               Actions
@@ -28,9 +26,9 @@
           </tr>
         </thead>
         <tbody>
-          {{#each users}}
+          {{#each people}}
             <tr>
-              {{> user_entry}}
+              {{> person_entry}}
             </tr>
           {{/each}}
         </tbody>
@@ -42,25 +40,21 @@
   </div>
 </template>
 
-<template name="user_entry">
+<template name="person_entry">
     <td>
-      {{_id}}
+      {{first_name}} {{last_name}}
     </td>
     <td>
-      {{username}}
+      {{twitter}}
     </td>
     <td>
-      {{#each emails}}
-        {{address}}
-      {{/each}}
+      <a href="{{homepage}}">{{homepage}}</a>
     </td>
     <td>
-      {{#each roles}}
-        {{this}}
-      {{/each}}
+      {{confirmed}}
     </td>
     <td>
-      <a href="{{pathFor 'users_edit' id=_id}}">Edit</a> |
+      <a href="{{pathFor 'people_edit' id=_id}}">Edit</a> |
       <a href="#">Delete</a>
     </td>
 </template>
