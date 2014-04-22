@@ -1,9 +1,14 @@
 <template name="shows_list">
-
   <div class="col-md-1">
   </div>
-
   <div class="col-md-10 white_text">
+    
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input id="search-query" type="text" class="form-control" placeholder="Filter by Show name">
+      </div>
+    </form>
+
     <div class="table-responsive">
       <table class="table">
         <thead>
@@ -35,7 +40,6 @@
       </table>
     </div>
   </div>
-
   <div class="col-md-1">
   </div>
 </template>
