@@ -4,6 +4,10 @@
 
   <div class="col-md-10 white_text">
     {{> quickForm collection="Episodes" doc=edit_document id="episodes_edit" type="update" omitFields="updated_at"}}
+    <p>
+      <br>
+      <a href="{{pathFor 'episodes_list'}}">Back to Episodes</a>
+    </p>
   </div>
 
   <div class="col-md-1">

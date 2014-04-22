@@ -24,7 +24,7 @@ Companies = new Meteor.Collection('companies', {
       optional: true
     },
     sponsored_episodes: {
-      type: [Object],
+      type: [String],
       label: 'Sponsored Episodes',
       blackbox: true,
       optional: true
@@ -60,3 +60,16 @@ make_company = function(name, homepage, twitter, sponsored_episodes) {
   return Companies.insert({name:name, homepage:homepage,twitter:twitter,
                            sponsored_episodes:sponsored_episodes});
 }
+
+
+Companies.allow({
+  insert: function () {
+    return Roles.userIsInRole(Meteor.userId(), ['admin']);
+  },
+  remove: function () {
+    return Roles.userIsInRole(Meteor.userId(), ['admin']);
+  },
+  update: function () {
+    return Roles.userIsInRole(Meteor.userId(), ['admin']);
+  }
+});

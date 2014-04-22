@@ -219,3 +219,15 @@ make_trial_episode = function(number, show_route, editor_id) {
   }
   return episode_id
 };
+
+Episodes.allow({
+  insert: function () {
+    return Roles.userIsInRole(Meteor.userId(), ['admin']);
+  },
+  remove: function () {
+    return Roles.userIsInRole(Meteor.userId(), ['admin']);
+  },
+  update: function () {
+    return Roles.userIsInRole(Meteor.userId(), ['admin']);
+  }
+});
