@@ -12,3 +12,12 @@ Template.add_person_modal.helpers({
     }
   }
 });
+
+Template.remove_person_modal.helpers({
+  input_warning: function() {
+    return {
+      'title':'Remove Person',
+      'body':"Please remove any attributed highlights before removing a person"
+    }
+  }
+});

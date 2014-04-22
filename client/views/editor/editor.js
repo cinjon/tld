@@ -49,7 +49,6 @@ Template.character_cutoff.helpers({
 });
 
 Template.editor.created = function() {
-  Session.set('init_typeaheads', false);
   Session.set('editor_mode', 'draft');
   Session.set('current_char_counter', 0);
 }
@@ -62,7 +61,13 @@ Template.editor.events({
     Meteor.call(
       'remove_' + type, episode_id, person_id,
       function(error, result) {
-        reset_typeaheads(episode_id);
+        if (result['success']) {
+          reset_typeaheads(episode_id);
+        } else {
+          $('#remove_person_modal').modal(
+            {keyboard:true, show:true}
+          );
+        }
       }
     );
   },
@@ -415,9 +420,6 @@ reset_typeaheads = function(episode_id) {
   set_editor_search();
   if (episode_id) {
     set_people_typeahead(episode_id);
-  }
-  if (!Session.get('init_typeaheads')) {
-    Session.set('init_typeaheads', true);
   }
 }
 

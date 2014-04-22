@@ -58,6 +58,10 @@ Template.editor_new_input.created = function() {
   Session.set('highlight', new_highlight());
 }
 
+Template.editor_new_input.destroyed = function() {
+  Session.set('editor_new_input_rendered', false);
+}
+
 Template.editor_new_input.events({
   'keydown #content_input': function(e, tmpl) {
     var val = tmpl.$(e.target).text();
@@ -103,6 +107,10 @@ Template.editor_new_input.helpers({
     return Session.get('highlight')['_speaker_name'];
   },
 });
+
+Template.editor_new_input.rendered = function() {
+  Session.set('editor_new_input_rendered', true);
+}
 
 do_content_input = function(e, is_editing, tmpl, highlight) {
   var input = $(e.target);
@@ -202,13 +210,14 @@ var new_highlight = function() {
 }
 
 var set_css_new = function() {
+  $('#content_input').css('font-style', 'normal');
   hide_content_input();
   Session.set('current_char_counter', 0);
   set_start_time(false);
   $('#typeahead_input').show();
-  $('#speaker_input').typeahead('val', '');
-  $('#speaker_input').val('');
-  $('#speaker_input').focus();
+  var speaker = $('#speaker_input');
+  speaker.typeahead('val', '');
+  speaker.val('');
 }
 
 var set_css_time = function(tmpl, plain_text) {
@@ -354,7 +363,8 @@ var validate_time = function(new_time_string, old_time_secs) {
 }
 
 Deps.autorun(function() {
-  if (Session.get('episode_id_for_search') && !Session.get('init_typeaheads')) {
+  if (Session.get('editor_new_input_rendered') && Session.get('episode_id_for_search')) {
     reset_typeaheads(Session.get('episode_id_for_search'));
+    $('#speaker_input').focus();
   }
 })
