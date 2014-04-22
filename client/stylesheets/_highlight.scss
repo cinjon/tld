@@ -120,6 +120,7 @@
   .highlight_text {
     @include box-flex(1);
     padding: 13px 0;
+    word-wrap: break-word;
   }
   .highlight_type {
     font-weight: $font-weight-heavy;
