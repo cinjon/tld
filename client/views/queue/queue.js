@@ -42,7 +42,7 @@ Template.queue.helpers({
       shows: Shows.find({
         _id: {
           $in: Episodes.find({
-            postedited:false
+            published:false
           }).map(
             function(episode) {
               return episode.show_id;
