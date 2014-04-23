@@ -25,10 +25,11 @@ body {
       @include box(vertical);
     }
     .highlights-pane {
-      width: 500px; // flexbox width broken in firefox
+      @include box-flex(45);
+      // width: 500px; // flexbox width broken in firefox
     }
     .media-pane {
-      @include box-flex(1);
+      @include box-flex(55);
     }
     .scroller {
       @include box(vertical);
@@ -39,21 +40,21 @@ body {
 }
 
 // flexbox width broken in firefox
-@media (min-width: $screen-sm-min) {
-  .editor-container > .row .highlights-pane {
-    width: 500px;
-  }
-}
-@media (min-width: $screen-md-min) {
-  .editor-container > .row .highlights-pane {
-    width: 650px;
-  }
-}
-@media (min-width: $screen-lg-min) {
-  .editor-container > .row .highlights-pane {
-    width: 800px;
-  }
-}
+// @media (min-width: $screen-sm-min) {
+//   .editor-container > .row .highlights-pane {
+//     width: 500px;
+//   }
+// }
+// @media (min-width: $screen-md-min) {
+//   .editor-container > .row .highlights-pane {
+//     width: 650px;
+//   }
+// }
+// @media (min-width: $screen-lg-min) {
+//   .editor-container > .row .highlights-pane {
+//     width: 800px;
+//   }
+// }
 
 
 

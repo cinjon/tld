@@ -13,17 +13,17 @@ Template.add_person.events({
     }
   },
   'keyup .new_person_input': function(e, tmpl) {
-    var val = $(e.target).val().trim();
+    var name = $(e.target).val().trim();
     var type = this.id;
-    if (e.keyCode == 13 && val != '') {
-      if (val.split(' ').length < 2) {
+    if (e.keyCode == 13 && name != '') {
+      if (name.split(' ').length < 2) {
         $('#add_person_modal').modal(
           {keyboard:true, show:true}
         );
       } else {
         var episode_id = this.episode_id;
         Meteor.call(
-          'new_' + type, val, episode_id, function(err, result) {
+          'new_' + type, name, episode_id, function(err, result) {
             reset_typeaheads(episode_id);
             toggle_add_person(true, type);
           }
