@@ -1,15 +1,12 @@
 <template name="editor_mode_publish">
   <div class="editor_mode_publish">
-    <div class="message metal_1_text" style="text-align:center; margin-top:10px">
-      {{message}}
-    </div>
     <div id="editor_stats">
       {{> editor_stats}}
     </div>
-    <div id="editor_summary" contenteditable="true" class="contenteditable">
+    <div id="editor_summary" contenteditable="true" class="contenteditable {{incomplete_summary}}">
       {{summary}}
     </div>
-    <div class="episode_people" style="margin-left:10px; margin-top:30px; margin-bottom:30px">
+    <div class="episode_people">
       {{#each hosts}}
       {{> editable_profile}}
       {{/each}}
@@ -17,7 +14,7 @@
       {{> editable_profile}}
       {{/each}}
     </div>
-    <button class="btn btn-block {{btn_type}}" id="set_postedited_true">
+    <button class="btn btn-block" id="set_postedited_true" {{disabled}}>
       {{title}} is Ready for Prime Time
     </button>
   </div>
@@ -48,6 +45,7 @@
 </template>
 
 <template name="editor_stats">
-  <!-- Links: {{num_links}}, -->
-  <!-- Quotes: {{num_quotes}}, -->
+  <p><span class="{{incomplete_title}}"><b>&quot;</b>{{title}}<b>&quot;</b></span></p>
+  <p>{{num_hosts}} Hosts, {{num_guests}} Guests / <span class="{{incomplete_people}}">{{num_people}} People</span></p>
+  <p>Chapters: <span class="{{incomplete_chapters}}">{{num_incomplete_chapters}} / {{num_chapters}}</span>, Links: <span class="{{incomplete_urls}}">{{num_incomplete_urls}} / {{num_urls}}</span></p>
 </template>

@@ -13,11 +13,6 @@ Template.editor_mode_publish.events({
       Meteor.call(
         'set_episode_summary', this._id, val,
         function(error, result) {
-          if (error) {
-            Session.set('message', 'Error: Server error. Please try again.');
-          } else {
-            Session.set('message', 'Success: Summary set.');
-          }
           target.blur();
         }
       );
@@ -27,15 +22,13 @@ Template.editor_mode_publish.events({
     }
   },
   'click #set_postedited_true': function(e, tmpl) {
-    var episode_id = this._id;
-    if (!this.postedited) {
+    var episode = this;
+    var episode_id = episode._id;
+    if (!episode.postedited && !is_editing_incomplete(episode)) {
       Meteor.call(
         'set_postedited_true', episode_id,
         function(error, result) {
-          if (error) {
-            Session.set('message', 'Error: Server error. Please try again.');
-          } else if (result && result['success']) {
-            Session.set('message', "Success: Thanks so much!.");
+          if (!error && result && result['success']) {
             Meteor.call('send_email', {
               to: 'admin@timelined.com',
               from: 'admin@timelined.com',
@@ -47,11 +40,16 @@ Template.editor_mode_publish.events({
               to: Meteor.user().emails[0].address,
               from: 'admin@timelined.com',
               subject: 'Editor Submission',
-              text: "Thanks so much for completeing this.",
+              text: "Thanks so much for completing this.",
               html: ''
             });
+            $('#set_postedited_success_modal').modal({
+              keyboard:true, show:true
+            })
           } else if (result && !result['success']) {
-            Session.set('message', result['message']);
+            $('#set_postedited_failure_modal').modal({
+              keyboard:true, show:true
+            })
           }
         }
       )
@@ -60,11 +58,12 @@ Template.editor_mode_publish.events({
 });
 
 Template.editor_mode_publish.helpers({
-  btn_type: function() {
-    if (this.postedited) {
-      return "btn-default";
+  disabled: function() {
+    var episode = this;
+    if (episode.postedited || is_editing_incomplete(episode)) {
+      return "disabled";
     } else {
-      return "btn-primary";
+      return "";
     }
   },
   guests: function() {
@@ -77,8 +76,10 @@ Template.editor_mode_publish.helpers({
       fields:{first_name:true, last_name:true, avatar:true, twitter:true}
     });
   },
-  message: function() {
-    return Session.get('message') || '';
+  incomplete_summary: function() {
+    if (!this.summary) {
+      return "incomplete";
+    }
   },
   summary: function() {
     return this.summary || summary_placeholder;
@@ -132,7 +133,7 @@ Template.editable_profile.events({
         Meteor.call('set_person_name', this._id, val);
         Session.set('is_editing_name', null);
       } else {
-        Session.set('message', validate[1]);
+        //TODO: do a modal warning
       }
     } else if (e.keyCode == 27) {
       e.preventDefault();
@@ -141,14 +142,64 @@ Template.editable_profile.events({
   },
 });
 
+Template.editor_stats.helpers({
+  incomplete_chapters: function() {
+    if (get_untitled_chapter_count() > 0) {
+      return "incomplete";
+    }
+  },
+  incomplete_people: function() {
+    if (this.hosts.length + this.guests.length == 0) {
+      return "incomplete";
+    }
+  },
+  incomplete_title: function() {
+    if (!this.title) {
+      return "incomplete";
+    }
+  },
+  incomplete_urls: function() {
+    if (get_incomplete_links_count() > 0) {
+      return "incomplete";
+    }
+  },
+  num_incomplete_chapters: function() {
+    return get_untitled_chapter_count();
+  },
+  num_incomplete_urls: function() {
+    return get_incomplete_links_count();
+  },
+  num_chapters: function() {
+    return this.chapters.length;
+  },
+  num_guests: function() {
+    return this.guests.length;
+  },
+  num_hosts: function() {
+    return this.hosts.length;
+  },
+  num_people: function() {
+    return this.hosts.length + this.guests.length;
+  },
+  num_urls: function() {
+    return Highlights.find({_id:{$in:this.highlights}, type:"link"}).count();
+  },
+  title: function() {
+    return this.title || editor_title_placeholder;
+  }
+});
+
+var is_editing_incomplete = function(episode) {
+  return !episode.summary || !episode.title || (episode.hosts.length + episode.guests.length == 0) || get_incomplete_links_count() > 0 || get_untitled_chapter_count() > 0;
+}
+
 var publish_results = function(episode_id, user_id)  {
   var message = "";
 
-  var chapters = Chapters.find({episode_id:episode_id}, {sort:{start_time:1}}).fetch();
-  chapters.forEach(function(chapter) {
+  Chapters.find({episode_id:episode_id}, {sort:{start_time:1}}).forEach(function(chapter) {
     message += "<p>" + chapter.title + "</p>"
-    var highlights = Highlights.find({chapter_id:chapter_id}, {sort:{start_time:1}}).fetch();
-    highlights.forEach(function(highlight) {
+    var highlights =
+    Highlights.find({chapter_id:chapter._id}, {sort:{start_time:1}}).forEach(function(highlight) {
       message += "<p>" + highlight.text + "</p>";
       message += "<hr>";
     });

@@ -1,5 +1,5 @@
 MAX_CHARACTERS_IN_CONTENT = 140;
-var title_placeholder = "Title Me Please"
+editor_title_placeholder = "Title Me Please"
 
 Template.add_person.events({
   'click button': function(e, tmpl) {
@@ -16,7 +16,7 @@ Template.add_person.events({
     var val = $(e.target).val().trim();
     var type = this.id;
     if (e.keyCode == 13 && val != '') {
-      if (name.split(' ').length < 2) {
+      if (val.split(' ').length < 2) {
         $('#add_person_modal').modal(
           {keyboard:true, show:true}
         );
@@ -74,20 +74,15 @@ Template.editor.events({
   'keydown .episode_title': function(e, tmpl) {
     var target = tmpl.$(e.target);
     var val = target.text().trim();
-    var title = this.episode.title || title_placeholder;
+    var title = this.episode.title || editor_title_placeholder;
     if (e.keyCode == 13) {
       e.preventDefault();
     }
 
-    if (e.keyCode == 13 && val != '' && val != title_placeholder) {
+    if (e.keyCode == 13 && val != '' && val != editor_title_placeholder) {
       Meteor.call(
         'set_episode_title', this.episode._id, val,
         function(error, result) {
-          if (error) {
-            Session.set('message', 'Error: Server error. Please try again.');
-          } else {
-            Session.set('message', 'Success: Title set.');
-          }
           target.blur();
         }
       );
@@ -116,7 +111,7 @@ Template.editor.helpers({
     }
   },
   episode_title: function() {
-    var title = title_placeholder;
+    var title = editor_title_placeholder;
     var episode = this.episode;
     if (episode && episode.title) {
       title = episode.title;
@@ -382,11 +377,8 @@ var get_all_people = function(episode_id) {
   return data;
 }
 
-var get_cuepoints = function(highlight_ids) {
-  Highlights.find({_id:{$in:highlight_ids}}, {start_time:true});
-}
-
-var get_incomplete_links_count = function() {
+get_incomplete_links_count = function() {
+  //TODO: cache
   var episode_id = Session.get('episode_id_for_search');
   if (!episode_id) {
     return 0;
@@ -402,7 +394,8 @@ var get_incomplete_links_count = function() {
   return count;
 }
 
-var get_untitled_chapter_count = function() {
+get_untitled_chapter_count = function() {
+  //TODO: cache
   var episode_id = Session.get('episode_id_for_search');
   if (!episode_id) {
     return 0;

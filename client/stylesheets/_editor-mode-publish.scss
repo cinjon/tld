@@ -2,14 +2,24 @@
   margin-top: -10px;
   background: $cream1;
   margin-left: $text-time-width;
+  .incomplete {
+    color:$coral;
+  }
   #editor_stats {
-    padding-top:20px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     font-family: $font-lato;
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-heavy;
     color: $metal1;
+    .editor_stat {
+      .incomplete {
+        color:$coral;
+      }
+    }
   }
   #editor_summary {
-    height: 75px;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 40px;
@@ -17,10 +27,13 @@
     padding: 10px;
     text-align: center;
     border-radius:3px;
-    border: 1px dashed $ash1
+    border: 1px dashed $ash1;
   }
   .episode_people {
-    margin-left:10px;
+    margin-left:40px;
+    margin-right:40px;
+    margin-top:30px;
+    margin-bottom:30px;
     .small_person_display {
       .details {
         .editable_profile {
