@@ -1,0 +1,14 @@
+.navbar {
+  .account-buttons {
+    float: right;
+    li {
+      display: inline-block;
+      list-style: none;
+      line-height: 50px;
+      a {
+        color: $ash1;
+        padding: 6px;
+      }
+    }
+  }
+}

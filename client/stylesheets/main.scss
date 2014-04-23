@@ -2,7 +2,8 @@
 @import "bourbon"; // bourbon, only include necessary libraries
 
 @import "forms"; // mixins/styles for forms
-@import "layout"; // nav bar view
+@import "layout"; // footer
+@import "nav"; // nav bar view
 @import "editor"; // overall editor view
 @import "home"; //home and onboarding views
 @import "viewer"; // overall viewer view
@@ -17,5 +18,7 @@
 
 @import "split-pane";
 @import "video-js"; // video player
+
+@import "sign-in"; // sign in/up page
 
 @import "style"; // legacy code to be refactored
