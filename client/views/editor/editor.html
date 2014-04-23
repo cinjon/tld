@@ -15,63 +15,64 @@
 </template>
 
 <template name="editor">
-  <div class="editor-container container">
-    <div class="row">
-      <div class="media-pane">
-        <div class="row">
-          <p class="show_title">{{show_title}}</p>
-        </div>
-        <div class="row contenteditable episode_title" contenteditable="true">
-          <b>{{episode_title}}</b>
-        </div>
-        <div class="row episode_people">
-          {{#each hosts}}
-          <div class="person-wrap">
-            {{> small_person_display}}
-            <a class="remove_person" type="host">&times;</a>
-          </div>
-          {{/each}}
-          {{> add_person add_host}}
-        </div>
-        <div class="row episode_people">
-          {{#each guests}}
-          <div class="person-wrap">
-            {{> small_person_display}}
-            <a class="remove_person" type="guest">&times;</a>
-          </div>
-          {{/each}}
-          {{> add_person add_guest}}
-        </div>
-        <div class="player-wrap row">
-          {{#if has_episode}}
-          {{> player player_data}}
-          {{/if}}
-        </div>
+  <div class="editor-container">
+
+    <div class="media-pane">
+      <div class="row">
+        <p class="show_title">{{show_title}}</p>
       </div>
-      <div class="highlights-pane">
-        <div class="background"></div>
-        <div class="row header">
-          <div class="col-sm-4">
-            {{> editor_header_box header_draft}}
-          </div>
-          <div class="col-sm-4">
-            {{> editor_header_box header_review}}
-          </div>
-          <div class="col-sm-4">
-            {{> editor_header_box header_publish}}
-          </div>
+      <div class="row contenteditable episode_title" contenteditable="true">
+        <b>{{episode_title}}</b>
+      </div>
+      <div class="row episode_people">
+        {{#each hosts}}
+        <div class="person-wrap">
+          {{> small_person_display}}
+          <a class="remove_person" type="host">&times;</a>
         </div>
-        {{#if is_editor_mode "draft"}}
-        {{> editor_mode_draft episode}}
-        {{/if}}
-        {{#if is_editor_mode "review"}}
-        {{> editor_mode_review episode}}
-        {{/if}}
-        {{#if is_editor_mode "publish"}}
-        {{> editor_mode_publish episode}}
+        {{/each}}
+        {{> add_person add_host}}
+      </div>
+      <div class="row episode_people">
+        {{#each guests}}
+        <div class="person-wrap">
+          {{> small_person_display}}
+          <a class="remove_person" type="guest">&times;</a>
+        </div>
+        {{/each}}
+        {{> add_person add_guest}}
+      </div>
+      <div class="player-wrap row">
+        {{#if has_episode}}
+        {{> player player_data}}
         {{/if}}
       </div>
     </div>
+
+    <div class="highlights-pane">
+      <div class="background"></div>
+      <div class="row header">
+        <div class="col-sm-4">
+          {{> editor_header_box header_draft}}
+        </div>
+        <div class="col-sm-4">
+          {{> editor_header_box header_review}}
+        </div>
+        <div class="col-sm-4">
+          {{> editor_header_box header_publish}}
+        </div>
+      </div>
+      {{#if is_editor_mode "draft"}}
+      {{> editor_mode_draft episode}}
+      {{/if}}
+      {{#if is_editor_mode "review"}}
+      {{> editor_mode_review episode}}
+      {{/if}}
+      {{#if is_editor_mode "publish"}}
+      {{> editor_mode_publish episode}}
+      {{/if}}
+    </div>
+
   </div>
   <div id="content_input_text_test" style="display:none; height:auto; width:auto;"></div>
   {{> add_person_modal}}

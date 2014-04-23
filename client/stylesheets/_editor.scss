@@ -1,71 +1,45 @@
 $text-time-width: 65px;
 
-// TODO: perhaps rename episode viewer, not really just about the editor
-
-// overall layout of editing interface
-// TODO: perhaps restrain to only editing/viewing style interface?
-html, body {
-  height: 100%;
-  width: 100%;
-}
-body {
-  @include box(vertical);
-}
 .editor-container {
-  @include box-flex(1);
-  @include box(vertical);
-  > .row {
-    @include box-flex(1);
-    @include box();
-    margin: 0;
-    .highlights-pane, .media-pane {
-      position: relative;
-      float: none;
-      padding: 0;
-      @include box(vertical);
-    }
-    .highlights-pane {
-      @include box-flex(45);
-      // width: 500px; // flexbox width broken in firefox
-    }
-    .media-pane {
-      @include box-flex(55);
-    }
+  .media-pane {
+    padding: 15px 30px 0;
+  }
+  .highlights-pane {
+    position: fixed;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    @include box(vertical);
     .scroller {
-      @include box(vertical);
-      overflow-y: scroll;
+      overflow: scroll;
       @include box-flex(1);
     }
   }
 }
-
-// flexbox width broken in firefox
-// @media (min-width: $screen-sm-min) {
-//   .editor-container > .row .highlights-pane {
-//     width: 500px;
-//   }
-// }
-// @media (min-width: $screen-md-min) {
-//   .editor-container > .row .highlights-pane {
-//     width: 650px;
-//   }
-// }
-// @media (min-width: $screen-lg-min) {
-//   .editor-container > .row .highlights-pane {
-//     width: 800px;
-//   }
-// }
-
+@mixin highlights-pane-setup($width) {
+  .editor-container {
+    .media-pane {
+      margin-right: $width;
+    }
+    .highlights-pane {
+      width: $width;
+    }
+  }
+}
+@media (min-width: $screen-sm-min) {
+  @include highlights-pane-setup(500px);
+}
+@media (min-width: $screen-md-min) {
+  @include highlights-pane-setup(650px);
+}
+@media (min-width: $screen-lg-min) {
+  @include highlights-pane-setup(800px);
+}
 
 
 
 // overall editor container
 .editor-container {
-  min-height: 700px;
-  width: 100%; // full screen it!
-  margin-right: 0;
-  padding-right: 0;
-  padding-left: 30px;
   .show_title, .episode_title {
     color: $off-white;
     font-weight: $font-weight-light;
@@ -90,6 +64,7 @@ body {
     .header {
       padding-left: $text-time-width;
       margin: 0;
+      z-index: 3; //get arrow in front
       .editing-stage {
         font-weight: $font-weight-heavy;
         .btn {
