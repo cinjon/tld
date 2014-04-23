@@ -24,6 +24,8 @@ Template.on_boarding.helpers({
         _id: {
           $in: Episodes.find({
             trial:true, editor_id:Meteor.userId()
+          }, {
+            fields:{show_id:true}
           }).map(
             function(episode) {
               return episode.show_id;

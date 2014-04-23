@@ -149,7 +149,7 @@ Template.editor_stats.helpers({
     }
   },
   incomplete_people: function() {
-    if (this.hosts.length + this.guests.length == 0) {
+    if (safe_length(this.guests) + safe_length(this.hosts) == 0) {
       return "incomplete";
     }
   },
@@ -170,16 +170,16 @@ Template.editor_stats.helpers({
     return get_incomplete_links_count();
   },
   num_chapters: function() {
-    return this.chapters.length;
+    return safe_length(this.chapters);
   },
   num_guests: function() {
-    return this.guests.length;
+    return safe_length(this.guests);
   },
   num_hosts: function() {
-    return this.hosts.length;
+    return safe_length(this.hosts);
   },
   num_people: function() {
-    return this.hosts.length + this.guests.length;
+    return safe_length(this.guests) + safe_length(this.hosts);
   },
   num_urls: function() {
     return Highlights.find({_id:{$in:this.highlights}, type:"link"}).count();
@@ -207,6 +207,13 @@ var publish_results = function(episode_id, user_id)  {
   });
 
   return message;
+}
+
+var safe_length = function(arr) {
+  if (arr) {
+    return arr.length;
+  }
+  return 0;
 }
 
 var validate_name = function(name) {

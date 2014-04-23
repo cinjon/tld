@@ -8,15 +8,15 @@
     </div>
     {{/unless}}
     <div class="row">
-        {{#if currentUser}}
-          {{#if signed_legal}}
-            {{> queue_helper trial_data}}
-          {{else}}
-            {{> legal_agreement}}
-          {{/if}}
+      {{#if currentUser}}
+        {{#if signed_legal}}
+        {{> queue_helper trial_data}}
         {{else}}
-          {{> entrySignIn}}
+        {{> legal_agreement}}
         {{/if}}
+      {{else}}
+        {{> entrySignIn}}
+      {{/if}}
     </div>
   </div>
 </template>

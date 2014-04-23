@@ -194,13 +194,13 @@ make_episode = function(type, format, title, number, storage_key,
   }
 };
 
-make_trial_episode = function(number, show_route, editor_id) {
+make_trial_episode = function(storage_key, editor_id) {
   if (!editor_id) {
     return;
   }
 
   if (Meteor.server) {
-    var episode = Episodes.findOne({number:number, show_route:show_route});
+    var episode = Episodes.findOne({storage_key:storage_key});
     delete episode['_id'];
     delete episode['created_at'];
     delete episode['updated_at'];
