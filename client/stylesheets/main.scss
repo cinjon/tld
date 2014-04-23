@@ -1,7 +1,9 @@
 @import "bootstrap"; // bootstrap, automatically includes local _variables.scss
 @import "bourbon"; // bourbon, only include necessary libraries
+@import "typo"; // typography
 
 @import "forms"; // mixins/styles for forms
+@import "tables"; // styling for tables
 @import "layout"; // footer
 @import "nav"; // nav bar view
 @import "editor"; // overall editor view
@@ -14,6 +16,7 @@
 @import "editor-mode-publish"; // publish mode view
 @import "highlight"; // highlights: links, comments, stories
 @import "people"; // person viewers
+@import "queue"; // queue page
 @import "admin";
 
 @import "split-pane";

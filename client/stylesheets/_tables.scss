@@ -1,0 +1,6 @@
+// dark background table
+.table.table-inverse {
+   > tbody > tr > td, > thead > tr > th {
+     border-color: $metal1;
+   }
+}

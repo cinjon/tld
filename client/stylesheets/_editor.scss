@@ -42,9 +42,7 @@ $text-time-width: 65px;
 .editor-container {
   .show_title, .episode_title {
     color: $off-white;
-    font-weight: $font-weight-light;
-    font-size: 30px;
-    margin-bottom: 20px;
+    @include h1-style();
     // should be open sans?
   }
   .episode_title {

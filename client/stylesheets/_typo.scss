@@ -1,0 +1,8 @@
+@mixin h1-style() {
+  font-weight: $font-weight-light;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+h1 {
+  @include h1-style();
+}
