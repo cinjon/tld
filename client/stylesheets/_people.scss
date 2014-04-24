@@ -31,3 +31,10 @@
     }
   }
 }
+
+
+.twitter-prefix {
+  &:before {
+    content: "@";
+  }
+}

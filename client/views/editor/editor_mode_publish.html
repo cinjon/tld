@@ -28,18 +28,8 @@
     <span class="picture-placeholder"></span>
     {{/if}}
     <div class="details">
-      {{#if is_editing_name}}
-      <input id="set_name" value="{{capitalize first_name}} {{capitalize last_name}}">
-      {{else}}
-      <p class="name editable_profile">{{capitalize first_name}} {{capitalize last_name}}</p>
-      {{/if}}
-      {{#if is_editing_twitter}}
-      @<input id="set_twitter" value="{{twitter}}">
-      {{else}}
-      <p class="twitter editable_profile">
-        @{{twitter}}
-      </p>
-      {{/if}}
+      <p class="name editable_profile" contenteditable="true" id="set_name">{{capitalize first_name}} {{capitalize last_name}}</p>
+      <p class="twitter editable_profile twitter-prefix" contenteditable="true" id="set_twitter">{{twitter}}</p>
     </div>
   </span>
 </template>

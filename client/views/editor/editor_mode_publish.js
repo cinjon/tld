@@ -99,45 +99,53 @@ Template.editable_profile.helpers({
 })
 
 Template.editable_profile.events({
-  'click .editable_profile': function(e, tmpl) {
-    var classes = $(e.target).attr('class');
-    if (classes.indexOf('name') > -1) {
-      Session.set('is_editing_name', this._id);
-      Session.set('is_editing_twitter', null);
-    } else if (classes.indexOf('twitter') > -1) {
-      Session.set('is_editing_twitter', this._id);
-      Session.set('is_editing_name', null);
+  'keydown': function(e, tmpl) {
+    if (e.keyCode == 13) {
+      e.preventDefault(); // no line breaks allowed
     }
   },
-  'keyup #set_twitter': function(e, tmpl) {
+  'keyup #set_twitter, blur #set_twitter': function(e, tmpl) {
     var input = $(e.target);
-    var val = input.val().trim();
-    if (e.keyCode == 13) {
+    var val = input.text().trim();
+    if (e.keyCode == 13 || e.type == "focusout") {
       e.preventDefault();
       if (val != '') {
         Meteor.call('set_person_twitter', this._id, val);
-        Session.set('is_editing_twitter', null);
-      } else if (e.keyCode == 27) {
-        e.preventDefault();
-        Session.set('is_editing_twitter', null);
-      }
-    }
-  },
-  'keyup #set_name': function(e, tmpl) {
-    var input = $(e.target);
-    var val = input.val().trim();
-    if (e.keyCode == 13) {
-      e.preventDefault();
-      var validate = validate_name(val);
-      if (validate[0]) {
-        Meteor.call('set_person_name', this._id, val);
-        Session.set('is_editing_name', null);
-      } else {
-        //TODO: do a modal warning
       }
     } else if (e.keyCode == 27) {
       e.preventDefault();
-      Session.set('is_editing_name', null);
+      // restore original
+      input.text(this.twitter);
+    }
+  },
+  'keyup #set_name, blur #set_name': function(e, tmpl) {
+    var input = $(e.target);
+    var val = input.text().trim();
+    var validate = validate_name(val);
+    if (validate[0] && input.hasClass("tooltip-active")) {
+      input.tooltip("destroy");
+      input.removeClass("tooltip-active");
+    }
+    if (e.keyCode == 13 || e.type == "focusout") {
+      e.preventDefault();
+      if (validate[0]) {
+        Meteor.call('set_person_name', this._id, val);
+      } else {
+        // only add tooltip once
+        if (!input.hasClass("tooltip-active")) {
+          input.addClass("tooltip-active");
+          input.tooltip({
+            placement: "bottom",
+            title: validate[1],
+            trigger: "focus"
+          });
+          input.tooltip("show");
+        }
+      }
+    } else if (e.keyCode == 27) {
+      e.preventDefault();
+      // restore original name
+      input.text(this.first_name + " " + this.last_name);
     }
   },
 });

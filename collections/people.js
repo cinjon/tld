@@ -99,7 +99,8 @@ make_person = function(first_name, last_name, twitter, homepage,
 
 if (Meteor.server) {
   wrapped_twitter_get = Async.wrap(twitter, 'get');
-
+  // TODO: account for if this crashes due to rate limit exceeded on Twitter's end
+  // TODO: account for when the twitter id is invalid
   twitter_avatar_url = function(name) {
     if (!name) {
       return;
