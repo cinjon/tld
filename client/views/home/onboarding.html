@@ -2,39 +2,29 @@
   <div class="container">
     {{#unless signed_legal}}
     <div class="row">
-      <div class="col-sm-10 col-sm-offset-1 welcome_message">
+      <div id="welcome" class="col-sm-10 col-sm-offset-1">
+        <h1>Welcome to the Team</h1>
         {{> on_boarding_welcome}}
       </div>
     </div>
     {{/unless}}
-    <div class="row">
-      {{#if currentUser}}
-        {{#if signed_legal}}
-        {{> queue_helper trial_data}}
-        {{else}}
-        {{> legal_agreement}}
-        {{/if}}
-      {{else}}
-        {{> entrySignIn}}
-      {{/if}}
-    </div>
+
+    {{#if signed_legal}}
+    {{> queue_helper trial_data}}
+    {{/if}}
   </div>
 </template>
 
+<!-- style="font-family: 'Roboto Slab', Menlo, Monaco, Consolas, 'Courier New', monospace;"> -->
 <template name="on_boarding_welcome">
-  <h3>So I hear you want to Timeline?</h3>
-  <p>Timeline me like one of your french girls.</p>
-</template>
-
-<template name="legal_agreement">
-  <div class="col-sm-10 col-sm-offset-1">
-    <div class="row" id="terms">
-      <p class="padded_text">
-        Legal Goes here
-      </p>
-    </div>
-    <div class="row">
-      <button type="button" class="btn btn-primary btn-block" id="set_agree_to_terms">By clicking this big blue button, you agree to the above terms.</button>
-    </div>
-  </div>
+  <p class="welcome_message">Greetings from Timelined. We need a few signature before we can get you started. This will be really quick we promise.</p>
+  <ul class="welcome_message">
+    <li>
+      The first document is the agreement we use for our Editors. It's mostly for compensation and describes our relationship, which we hope you'll agree is going to be fantastic.
+    </li>
+    <li>
+      The second document is an IRS form called a W9. We're required to have it on file before we can pay you. You'll need to enter your name, address and SSN before digitally signing and dating.
+    </li>
+  </ul>
+  <p class="welcome_message">You can find and sign both of these documents <a href="https://www.hellosign.com/s/334cd7d0">here</a>. Please read both of them carefully before signing. If you have any questions about either one, <a href="mailto:admin@timelined.com?subject=Editor Documents">let us know</a>. We look forward to working with you!</p>
 </template>

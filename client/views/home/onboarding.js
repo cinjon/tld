@@ -5,12 +5,6 @@ Deps.autorun(function() {
   Meteor.subscribe('trial_shows', Meteor.userId());
 });
 
-Template.legal_agreement.events({
-  'click #set_agree_to_terms': function(e, tmpl) {
-    Meteor.call('set_agree_to_terms', Meteor.userId());
-  }
-});
-
 Template.on_boarding.helpers({
   signed_legal: function() {
     var user = Meteor.users.findOne({_id:Meteor.userId()}, {fields:{signed_editor_legal:true}});
