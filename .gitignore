@@ -44,3 +44,5 @@ Thumbs.db
 
 # Project Specific #
 ####################
+dump
+meteor-dump.sh
