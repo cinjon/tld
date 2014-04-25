@@ -35,8 +35,11 @@ UI.registerHelper("prettify_date", function(date) {
   return new Date(date).toDateString('yyyy-MM-dd')
 });
 
-UI.registerHelper("s3", function(storage_key, format) {
-  if (storage_key && format) {
+UI.registerHelper("s3", function(storage_key, format, url) {
+  //url is episode.feed.url
+  if (url && format == 'youtube') {
+    return url;
+  } else if (storage_key && format) {
     return "http://s3.amazonaws.com/timelined/audio/" + storage_key + "." + format;
   } else {
     return null;

@@ -62,7 +62,10 @@ var dispose_video = function() {
 
 var load_video = function(seconds, highlights) {
   videojs(
-    "#player", {"controls":true, "preload":"auto", "autoplay":false},
+    "#player",
+    {
+      "controls":true, "preload":"auto", "autoplay":false, "techOrder": ["youtube", "html5", "flash"]
+    },
     function() {
       $('.vjs-big-play-button').css("margin-top", "-1.33em"); //to fix the play button, may not actually be consistent
       $('.vjs-fullscreen-control').css("visibility", "hidden");

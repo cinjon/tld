@@ -48,6 +48,7 @@ Template.viewer.helpers({
       storage_key: this.episode.storage_key,
       format: this.episode.format,
       type: this.episode.type,
+      url: this.episode.feed.url,
       seconds: 0,
       highlights: Highlights.find({_id:{$in:this.episode.highlights}}, {
         start_time:true, chapter_id:true, reactive:false}).fetch()

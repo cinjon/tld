@@ -166,6 +166,7 @@ Template.editor.helpers({
       storage_key: this.episode.storage_key,
       format: this.episode.format,
       type: this.episode.type,
+      url: this.episode.feed.url,
       seconds: 0
     }
   },
