@@ -18,6 +18,7 @@ LIMIT = 1
 
 MODE = "dev"
 # MODE = "prod"
+# MODE = "staging"
 
 if MODE == "dev"
   mongo_client = MongoClient.new("localhost", 3001)
@@ -156,6 +157,9 @@ def upload_file( keyname )
   folder = episode_type( keyname )
   if MODE == "prod"
     %x{s3cmd put #{WORKING + keyname} s3://timelined/#{folder}/#{keyname}}
+  end
+  if MODE == "staging"
+    %x{s3cmd put #{WORKING + keyname} s3://timelined-staging/#{folder}/#{keyname}}
   end
   puts "Upload complete..."
 end

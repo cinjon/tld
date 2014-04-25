@@ -35,12 +35,16 @@ UI.registerHelper("prettify_date", function(date) {
   return new Date(date).toDateString('yyyy-MM-dd')
 });
 
-UI.registerHelper("s3", function(storage_key, format, url) {
+UI.registerHelper("s3", function(storage_key, format, type, url) {
   //url is episode.feed.url
   if (url && format == 'youtube') {
     return url;
-  } else if (storage_key && format) {
-    return "http://s3.amazonaws.com/timelined/audio/" + storage_key + "." + format;
+  } else if (storage_key && type && format) {
+    if (Meteor.settings && Meteor.settings.public.stage_mode == true) {
+      return "http://s3.amazonaws.com/timelined-staging/" + type + "/" + storage_key + "." + format;
+    } else {
+      return "http://s3.amazonaws.com/timelined/" + type + "/" + storage_key + "." + format;
+    }
   } else {
     return null;
   }
