@@ -205,12 +205,12 @@ Template.editor_highlight.events({
   'click .highlight_content': function(e, tmpl) {
     Session.set('is_editing_highlight_content', this._id);
     Session.set('is_editing_highlight_url', false);
-    //TODO: focus the element after this happens
+    //TODO: focus the element after this happens ... can't do it immediately after
   },
   'click .highlight_url': function(e, tmpl) {
     Session.set('is_editing_highlight_url', this._id);
     Session.set('is_editing_highlight_content', false);
-    //TODO: focus the element after this happens
+    //TODO: focus the element after this happens ... can't do it immediately after
   },
   'click .remove_highlight': function(e, tmpl) {
     Meteor.call('remove_highlight', this._id);

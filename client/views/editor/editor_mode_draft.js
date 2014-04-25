@@ -71,7 +71,6 @@ Template.editor_new_input.events({
       set_highlight_type('normal');
       set_highlight_speaker(null);
       set_css_new();
-      return;
     }
   },
   'keyup #content_input': function(e, tmpl) {
@@ -214,10 +213,12 @@ var set_css_new = function() {
   hide_content_input();
   Session.set('current_char_counter', 0);
   set_start_time(false);
+  $('#new_input_dot').show()
   $('#typeahead_input').show();
   var speaker = $('#speaker_input');
   speaker.typeahead('val', '');
   speaker.val('');
+  speaker.focus();
 }
 
 var set_css_time = function(tmpl, plain_text) {
@@ -346,6 +347,7 @@ var set_start_time = function(now) {
 
 var show_content_input = function() {
   $('#typeahead_input').hide();
+  $('#new_input_dot').hide();
   $('#speaker_name').show();
   $('#content_input_span').show();
   $('#content_input').focus();

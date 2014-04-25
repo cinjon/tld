@@ -151,7 +151,7 @@
     background: $lemon;
   }
   #new_input_dot {
-    padding: 12px 16px 0;
+    padding: 12px 0px 0px 16px;
     .fa {
       font-size: 1.5em;
     }
@@ -172,5 +172,8 @@
   }
   #character_cutoff {
     display:none;
+  }
+  .highlight_text {
+    padding-left:16px;
   }
 }
