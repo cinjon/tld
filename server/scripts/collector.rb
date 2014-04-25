@@ -16,8 +16,8 @@ LIMIT = 1
 
 # setup mongo connection
 
-# MODE = "dev"
-MODE = "prod"
+MODE = "dev"
+# MODE = "prod"
 
 if MODE == "dev"
   mongo_client = MongoClient.new("localhost", 3001)
@@ -29,6 +29,8 @@ end
 
 shows = db["shows"]
 episodes = db["episodes"]
+chapters = db["chapters"]
+
 
 
 # METHODS
@@ -86,7 +88,25 @@ def length_in_seconds(filename)
   end
 end
 
-def put_episode_in_mongo(entry, filename, show_id, show_route, episodes)
+def put_chapter_in_mongo(episode_id, chapters)
+  puts "Putting chapter in Mongo..."
+  chapter = {
+    :_id => generate_meteor_id,
+    :title => "Introduction",
+    :first => true,
+    :episode_id => episode_id,
+    :editor_id => 'autogen',
+    :start_time => 0,
+    :highlights => {},
+    :next_chapter_id => '',
+    :created_at => Time.now,
+    :updated_at => Time.now
+  }
+  chapter_id = chapters.insert(chapter)
+  return chapter_id
+end
+
+def put_episode_in_mongo(entry, filename, show_id, show_route, episodes, chapters)
   puts "Putting #{entry['title']} in Mongo..."
   key = %x{md5sum #{WORKING + filename}}
   episode = {
@@ -101,6 +121,7 @@ def put_episode_in_mongo(entry, filename, show_id, show_route, episodes)
     :edited => false,
     :postedited => false,
     :published => false,
+    :chapters => [],
     :created_at => Time.now,
     :updated_at => Time.now,
     :feed => {}
@@ -108,7 +129,10 @@ def put_episode_in_mongo(entry, filename, show_id, show_route, episodes)
   entry.each do |key, value|
     episode[:feed]["#{key}"] = value
   end
+  chapter_id = put_chapter_in_mongo(episode[:_id], chapters)
+  episode[:chapters][0] = chapter_id
   id = episodes.insert(episode)
+  #TODO: remove chapter if episode insert fails
   puts "Episode inserted with id [#{id}]..."
 end
 
@@ -123,7 +147,9 @@ end
 def upload_file( keyname )
   puts "Uploading #{keyname} to S3 please be patient..."
   folder = episode_type( keyname )
-  %x{s3cmd put #{WORKING + keyname} s3://timelined/#{folder}/#{keyname}}
+  if MODE == "prod"
+    %x{s3cmd put #{WORKING + keyname} s3://timelined/#{folder}/#{keyname}}
+  end
   puts "Upload complete..."
 end
 
@@ -153,7 +179,7 @@ all_shows.each do |show|
       count = count + 1
       if count <= LIMIT
         filename = download_file(entry, count)
-        put_episode_in_mongo(entry, filename, show['_id'], show['route'], episodes)
+        put_episode_in_mongo(entry, filename, show['_id'], show['route'], episodes, chapters)
         keyname = rename_file( filename )
         upload_file(keyname)
         cleanup(keyname)

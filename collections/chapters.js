@@ -25,7 +25,7 @@ Chapters = new Meteor.Collection('chapters', {
     },
     episode_id: {
       type: String,
-      label: 'Editor ID'
+      label: 'Episode ID'
     },
     editor_id: {
       type: String,
