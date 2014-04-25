@@ -25,7 +25,10 @@ if MODE == "dev"
   db = mongo_client.db("meteor")
 elsif MODE == "prod"
   mongo_client = MongoClient.new("localhost", 27017)
-  db = mongo_client.db("meteor")
+  db = mongo_client.db("timelined")
+elsif MODE == "staging"
+  mongo_client = MongoClient.new("localhost", 27017)
+  db = mongo_client.db("timelined")
 end
 
 shows = db["shows"]
@@ -140,7 +143,11 @@ def put_episode_in_mongo(entry, filename, show_id, show_route, episodes, chapter
   chapter_id = put_chapter_in_mongo(episode[:_id], chapters)
   episode[:chapters][0] = chapter_id
   id = episodes.insert(episode)
-  #TODO: remove chapter if episode insert fails
+  unless id
+    chapters.remove(:_id => chapter_id)
+    puts "Episode insert failed removing chapter..."
+    return
+  end
   puts "Episode inserted with id [#{id}]..."
 end
 
