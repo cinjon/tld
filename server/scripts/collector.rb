@@ -134,8 +134,7 @@ def put_episode_in_mongo(entry, filename, show_id, show_route, episodes, chapter
     :updated_at => Time.now,
     :published => false,
     :summary => nil,
-    # NOTE: pulling trial out because queue looks for field not set
-    # :trial => false,
+    :trial => false,
     :feed => {}
   }
   entry.each do |key, value|

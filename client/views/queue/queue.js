@@ -23,7 +23,7 @@ Template.queue_helper.helpers({
     } else {
       var episodes = Episodes.find({
         show_id: show_id,
-        trial: {$exists:false}
+        trial: false
       });
     }
     return episodes.map(function(episode) {

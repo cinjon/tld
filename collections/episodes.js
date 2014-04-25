@@ -144,8 +144,7 @@ Episodes = new Meteor.Collection('episodes', {
       label: 'Published flag'
     },
     trial: {
-      type: Boolean,
-      optional: true
+      type: Boolean
     },
     summary: {
       type: String,
@@ -168,7 +167,7 @@ make_episode = function(type, format, title, number, storage_key,
                         show_route, show_id, hosts, guests,
                         chapters, highlights, postedited,
                         editor_id, length_in_seconds, created_at,
-                        published, feed_title, feed_url, feed_published,
+                        published, trial, feed_title, feed_url, feed_published,
                         feed_summary, feed_entry_id, feed_enclosure_url) {
   created_at = created_at || (new Date()).getTime();
   chapters = chapters || [];
@@ -181,11 +180,12 @@ make_episode = function(type, format, title, number, storage_key,
      hosts:hosts, guests:guests, chapters:chapters, highlights:highlights,
      postedited:postedited, editor_id:editor_id,
      length_in_seconds:length_in_seconds, created_at:created_at,
-     published:published, feed: {
+     published:published, trial:trial,
+     feed: {
        url:feed_url, title:feed_title, published:feed_published,
        summary:feed_summary, entry_id:feed_entry_id,
        enclosure_url:feed_enclosure_url
-     }
+      }
     }
   );
   if (chapters.length == 0) {
