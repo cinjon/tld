@@ -60,7 +60,8 @@ Episodes = new Meteor.Collection('episodes', {
     },
     number: {
       type: Number,
-      label: 'Episode Number'
+      label: 'Episode Number',
+      optional: true
     },
     storage_key: {
       type: String,
