@@ -204,12 +204,14 @@ make_trial_episode = function(storage_key, editor_id) {
     delete episode['_id'];
     delete episode['created_at'];
     delete episode['updated_at'];
+    delete episode['edited'];
     episode.trial = true;
     episode.postedited = false;
     episode.chapters = [];
     episode.highlights = [];
     episode.guests = [];
     episode.editor_id = editor_id;
+    episode.number = episode.number || -1; //if it's not in there, then it's set to null;
 
     var episode_id = Episodes.insert(episode);
     var chapter_id = make_chapter(

@@ -17,12 +17,16 @@ Template.admin.destroyed = function() {
 Template.admin.helpers({
   color: function() {
     var part = Session.get('message').slice(0,1);
-    if (part == 'S') {
+    if (part == 'S') { //*S*uccess
       return 'green';
-    } else if (part == 'E') {
+    } else if (part == 'E') { //*E*rror
       return 'red';
     }
     return '';
+  },
+  has_signed_agreement: function() {
+    var user = Session.get('user_searched');
+    return user && Meteor.users.findOne({_id:user._id}, {signed_editor_legal:true}).signed_editor_legal;
   },
   has_user: function() {
     return Session.get('user_searched');
@@ -71,6 +75,28 @@ Template.admin.events({
             Session.set('message', 'Success: ' + name + ' is now not an editor');
           } else {
             Session.set('message', 'Success: ' + name + ' is now an editor');
+          }
+        }
+      }
+    );
+  },
+  'click #set_editor_agreement': function(e, tmpl) {
+    var user = Session.get('user_searched');
+    var name = user.username;
+    if (!user) {
+      Session.set('message', 'Error: Find a user pls');
+      return;
+    }
+
+    var has_agreed = user.signed_editor_legal;
+    Meteor.call(
+      'set_agree_to_terms', user._id, has_agreed,
+      function(error, result) {
+        if (!error) {
+          if (has_agreed) {
+            Session.set('message', 'Success: ' + name + ' revoked agreement');
+          } else {
+            Session.set('message', 'Success: ' + name + ' agreed');
           }
         }
       }

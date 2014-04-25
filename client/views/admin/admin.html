@@ -44,6 +44,17 @@
         </button>
         {{/if}}
       </div>
+      {{#if is_editor_trial}}
+      <div class="admin_left">
+        <button type="button" class="btn btn-primary" id="set_editor_agreement">
+        {{#if has_signed_agreement}}
+          Revoke Legal
+        {{else}}
+          Sign Legal
+        {{/if}}
+        </button>
+      </div>
+      {{/if}}
     </div>
   </div>
 </template>
