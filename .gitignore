@@ -46,3 +46,4 @@ Thumbs.db
 ####################
 dump
 meteor-dump.sh
+server/deploy/mup.json
