@@ -102,7 +102,7 @@ def put_chapter_in_mongo(episode_id, chapters)
     :editor_id => 'autogen',
     :start_time => 0,
     :highlights => [],
-    :next_chapter_id => '',
+    :next_chapter_id => nil,
     :created_at => Time.now,
     :updated_at => Time.now
   }
@@ -118,7 +118,7 @@ def put_episode_in_mongo(entry, filename, show_id, show_route, episodes, chapter
     :type => episode_type(filename),
     :format => format(filename),
     :title => entry['title'],
-    :route => "",
+    :route => nil,
     :number => -1,
     :storage_key => key.split[0],
     :show_route => show_route,
@@ -128,13 +128,14 @@ def put_episode_in_mongo(entry, filename, show_id, show_route, episodes, chapter
     :chapters => [],
     :highlights => [],
     :postedited => false,
-    :editor_id => "",
+    :editor_id => nil,
     :length_in_seconds => length_in_seconds(filename),
     :created_at => Time.now,
     :updated_at => Time.now,
     :published => false,
-    :summary => "",
-    :trial => false,
+    :summary => nil,
+    # NOTE: pulling trial out because queue looks for field not set
+    # :trial => false,
     :feed => {}
   }
   entry.each do |key, value|

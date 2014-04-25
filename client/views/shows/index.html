@@ -2,7 +2,7 @@
   <div class="col-md-1">
   </div>
   <div class="col-md-10 white_text">
-    
+
     <form class="navbar-form navbar-left" role="search">
       <div class="form-group">
         <input id="search-query" type="text" class="form-control" placeholder="Filter by Show name">
@@ -55,9 +55,10 @@
       <a href="{{homepage}}">{{homepage}}</a>
     </td>
     <td>
-      {{feed_checked_at}}
+      {{prettify_date feed_checked_at}}
     </td>
     <td>
+      <a href="pathFor episodes_list route">Episodes</a> |
       <a href="{{pathFor 'shows_edit'}}">Edit</a> |
       <a href="#">Delete</a>
     </td>
