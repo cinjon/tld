@@ -37,6 +37,7 @@ chapters = db["chapters"]
 
 
 
+
 # METHODS
 
 def cleanup(keyname)
@@ -62,17 +63,31 @@ def download_file(entry, count)
 end
 
 def episode_type(filename)
+  if filename == "youtube"
+    return "video"
+  end
   extension = File.extname(filename)
   if extension == ".mp3"
     return "audio"
   end
-
   if extension == ".mp4"
     return "video"
   end
 end
 
+def feed_type(url)
+  url = URI(url)
+  if url.host =~ /youtube.com/
+    return "youtube"
+  else
+    return "podcast"
+  end
+end
+
 def format(filename)
+  if filename == "youtube"
+    return "youtube"
+  end
   extension = File.extname(filename)
   extension[0] = ''
   return extension
@@ -86,10 +101,22 @@ def generate_meteor_id(length=17)
 end
 
 def length_in_seconds(filename)
-  Mp3Info.open(WORKING + filename) do |mp3|
-    l = mp3.length
-    return l.round
+  if filename == "youtube"
+    return 0
+  else
+    Mp3Info.open(WORKING + filename) do |mp3|
+      l = mp3.length
+      return l.round
+    end
   end
+end
+
+def podcast(entry, count, show, episodes, chapters)
+  filename = download_file(entry, count)
+  put_episode_in_mongo(entry, filename, show, episodes, chapters)
+  keyname = rename_file(filename)
+  upload_file(keyname)
+  cleanup(keyname)
 end
 
 def put_chapter_in_mongo(episode_id, chapters)
@@ -110,9 +137,15 @@ def put_chapter_in_mongo(episode_id, chapters)
   return chapter_id
 end
 
-def put_episode_in_mongo(entry, filename, show_id, show_route, episodes, chapters)
+def put_episode_in_mongo(entry, filename, show, episodes, chapters)
   puts "Putting #{entry['title']} in Mongo..."
-  key = %x{md5sum #{WORKING + filename}}
+  if filename == 'youtube'
+    path = URI(entry.entry_id).path
+    key = path.split('/').last
+  else
+    key = %x{md5sum #{WORKING + filename}}
+    key = key.split[0]
+  end
   episode = {
     :_id => generate_meteor_id,
     :type => episode_type(filename),
@@ -120,9 +153,9 @@ def put_episode_in_mongo(entry, filename, show_id, show_route, episodes, chapter
     :title => entry['title'],
     :route => nil,
     :number => -1,
-    :storage_key => key.split[0],
-    :show_route => show_route,
-    :show_id => show_id,
+    :storage_key => key,
+    :show_route => show['route'],
+    :show_id => show['_id'],
     :hosts => [],
     :guests => [],
     :chapters => [],
@@ -171,9 +204,14 @@ def upload_file( keyname )
   puts "Upload complete..."
 end
 
+def youtube(entry, count, show, episodes, chapters)
+  put_episode_in_mongo(entry, "youtube", show, episodes, chapters)
+end
+
+
+
 
 # MAIN
-
 
 all_shows = shows.find
 puts "Getting shows from Mongo..."
@@ -190,17 +228,17 @@ all_shows.each do |show|
   count = 0
   feed.entries.each do |entry|
     #TODO: see if there are any new items since the last show item in mongo
-    if episodes.find_one("feed.entry_id" => entry["entry_id"])
-      # already have it
+    if episodes.find_one("feed.entry_id" => entry.entry_id)
       puts "already in database: " + entry.url
     else
-      count = count + 1
+      count += 1
       if count <= LIMIT
-        filename = download_file(entry, count)
-        put_episode_in_mongo(entry, filename, show['_id'], show['route'], episodes, chapters)
-        keyname = rename_file( filename )
-        upload_file(keyname)
-        cleanup(keyname)
+        content = feed_type(entry.url)
+        if content == 'youtube'
+          youtube(entry, count, show, episodes, chapters)
+        elsif content == 'podcast'
+          podcast(entry, count, show, episodes, chapters)
+        end
       end
     end
   end

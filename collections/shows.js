@@ -69,7 +69,8 @@ Shows = new Meteor.Collection('shows', {
       },
       feed_checked_at: {
         type: Date,
-        label: 'Feed last checked at'
+        label: 'Feed last checked at',
+        optional: true
       }
   })
 });

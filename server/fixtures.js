@@ -120,6 +120,15 @@ Meteor.startup( function() {
       feed_checked_at: timestamp
     });
 
+    var foundation_id = Shows.insert({
+      name: "Foundation",
+      homepage: "http://foundation.bz/",
+      feed: "http://gdata.youtube.com/feeds/base/users/kevinrose/uploads?format=5",
+      description: "Kevin Rose interviews entrepreneurs.",
+      artwork: "http://jsndev.net/wp-content/uploads/2011/01/foundation-podcast.jpeg",
+      feed_checked_at: timestamp
+    });
+
   }
 
   // EPISODES
