@@ -135,7 +135,7 @@ Meteor.publish('trial_shows', function(user_id) {
   return Shows.find({
     _id: {
       $in: Episodes.find(
-        {trial:true, editor_id:user_id}).map(
+        {trial:true, editor_id:user_id}, {fields:{show_id:true}}).map(
           function(episode) {
             return episode.show_id;
           }
