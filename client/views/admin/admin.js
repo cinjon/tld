@@ -2,6 +2,15 @@ Deps.autorun(function() {
   if (Roles.userIsInRole(Meteor.userId(), ['admin']) && Meteor.users.find().count() > 1) {
     set_user_typeahead();
   }
+  if (Session.get('user_searched')) {
+    var user = Session.get('user_searched');
+    Meteor.subscribe(
+      'editor_legal_agreement', user._id,
+      function() {
+        Session.set('user_searched', Meteor.users.findOne({_id:user._id}))
+      }
+    )
+  }
 });
 
 Template.admin.created = function() {

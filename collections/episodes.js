@@ -190,7 +190,7 @@ make_episode = function(type, format, title, number, storage_key,
   );
   if (chapters.length == 0) {
     var chapter_id = make_chapter(
-      'Introduction', true, episode_id, editor_id, 0, highlights, null);
+      'Introduction', true, episode_id, editor_id, 0, highlights, null, false);
     Episodes.update({_id:episode_id}, {$addToSet:{chapters:chapter_id}});
   }
 };
@@ -202,6 +202,9 @@ make_trial_episode = function(storage_key, editor_id) {
 
   if (Meteor.server) {
     var episode = Episodes.findOne({storage_key:storage_key});
+    if (!episode) {
+      return;
+    }
     delete episode['_id'];
     delete episode['created_at'];
     delete episode['updated_at'];
