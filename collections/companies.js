@@ -3,10 +3,13 @@
 //   name: string,
 //   homepage: url,
 //   twitter: url,
+//   confirmed: boolean, // Means that editors can't change this company's twitter/names
+//   avatar: url,
 //   sponsored_episodes: array of sponsored episodes (episode_ids),
 //   created_at: date,
 //   updated_at: date
 // }
+
 Companies = new Meteor.Collection('companies', {
   schema: new SimpleSchema({
     name: {
@@ -22,6 +25,23 @@ Companies = new Meteor.Collection('companies', {
       type: String,
       label: 'Twitter',
       optional: true
+    },
+    confirmed: {
+      type: Boolean,
+      label: 'Confirmed'
+    },
+    avatar: {
+      type: String,
+      label: 'Avatar',
+      autoValue: function() {
+        if (this.field("twitter").value !== null && Meteor.server) {
+          return twitter_avatar_url(this.field("twitter").value);
+        } else if (Meteor.server) {
+          return twitter_avatar_url("timelinedhq");
+        }
+      },
+      denyInsert: false,
+      optional:true
     },
     sponsored_episodes: {
       type: [String],
@@ -55,10 +75,27 @@ Companies = new Meteor.Collection('companies', {
   })
 });
 
-make_company = function(name, homepage, twitter, sponsored_episodes) {
+make_company = function(name, homepage, twitter, sponsored_episodes, confirmed) {
   sponsored_episodes = sponsored_episodes || [];
-  return Companies.insert({name:name, homepage:homepage,twitter:twitter,
-                           sponsored_episodes:sponsored_episodes});
+
+  var regex = new RegExp(['^', name, '$'].join(''), 'i');
+  var company = Companies.findOne({name:regex});
+  if (company) {
+    Companies.update(
+      {
+        _id:company._id
+      }, {
+        $addToSet: {sponsored_episodes: {$each: sponsored_episodes}}
+      }
+    )
+    return company.id;
+  } else {
+    if (!confirmed) {
+      confirmed = false;
+    }
+    return Companies.insert({name:name, homepage:homepage,twitter:twitter,
+                             sponsored_episodes:sponsored_episodes, confirmed:confirmed});
+  }
 }
 
 
