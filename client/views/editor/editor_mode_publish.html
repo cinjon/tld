@@ -13,6 +13,9 @@
       {{#each guests}}
       {{> editable_profile}}
       {{/each}}
+      {{#each sponsors}}
+      {{> editable_profile}}
+      {{/each}}
     </div>
     <button class="btn btn-block" id="set_postedited_true" {{disabled}}>
       {{title}} is Ready for Prime Time
@@ -28,7 +31,7 @@
     <span class="picture-placeholder"></span>
     {{/if}}
     <div class="details">
-      <p class="name editable_profile" contenteditable="true" id="set_name">{{capitalize first_name}} {{capitalize last_name}}</p>
+      <p class="name editable_profile" contenteditable="true" id="set_name">{{name}}</p>
       <p class="twitter editable_profile twitter-prefix" contenteditable="true" id="set_twitter">{{twitter}}</p>
     </div>
   </span>

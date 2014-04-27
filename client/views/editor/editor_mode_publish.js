@@ -81,22 +81,15 @@ Template.editor_mode_publish.helpers({
       return "incomplete";
     }
   },
+  sponsors: function() {
+    return Companies.find({sponsored_episodes:this._id, confirmed:false}, {
+      fields:{name:true, avatar:true, twitter:true}
+    });
+  },
   summary: function() {
     return this.summary || summary_placeholder;
   }
 });
-
-Template.editable_profile.helpers({
-  has_avatar: function() {
-    return this.avatar && this.avatar != '';
-  },
-  is_editing_name: function() {
-    return Session.get('is_editing_name') == this._id;
-  },
-  is_editing_twitter: function() {
-    return Session.get('is_editing_twitter') == this._id;
-  }
-})
 
 Template.editable_profile.events({
   'keydown': function(e, tmpl) {
@@ -110,7 +103,11 @@ Template.editable_profile.events({
     if (e.keyCode == 13 || e.type == "focusout") {
       e.preventDefault();
       if (val != '') {
-        Meteor.call('set_person_twitter', this._id, val);
+        if (this.name) {
+          Meteor.call('set_twitter_company', this._id, val);
+        } else {
+          Meteor.call('set_twitter_person', this._id, val);
+        }
       }
     } else if (e.keyCode == 27) {
       e.preventDefault();
@@ -121,15 +118,20 @@ Template.editable_profile.events({
   'keyup #set_name, blur #set_name': function(e, tmpl) {
     var input = $(e.target);
     var val = input.text().trim();
-    var validate = validate_name(val);
+    var validate = validate_name(val, this.name == null);
     if (validate[0] && input.hasClass("tooltip-active")) {
       input.tooltip("destroy");
       input.removeClass("tooltip-active");
     }
-    if (e.keyCode == 13 || e.type == "focusout") {
+    if (e.keyCode == 13) {
       e.preventDefault();
-      if (validate[0]) {
-        Meteor.call('set_person_name', this._id, val);
+      if (validate[0] == 'person') {
+        Meteor.call('set_name_person', this._id, val);
+        $(e.target).blur();
+      } else if (validate[0] == 'company') {
+        Meteor.call('set_name_company', this._id, val, function() {
+          $(e.target).blur();
+        });
       } else {
         // only add tooltip once
         if (!input.hasClass("tooltip-active")) {
@@ -142,13 +144,36 @@ Template.editable_profile.events({
           input.tooltip("show");
         }
       }
-    } else if (e.keyCode == 27) {
+    } else if (e.keyCode == 27 || e.type == "focusout") {
       e.preventDefault();
       // restore original name
-      input.text(this.first_name + " " + this.last_name);
+      if (this.name) {
+        input.text(this.name);
+      } else {
+        input.text(this.first_name + " " + this.last_name);
+      }
     }
   },
 });
+
+Template.editable_profile.helpers({
+  has_avatar: function() {
+    return this.avatar && this.avatar != '';
+  },
+  is_editing_name: function() {
+    return Session.get('is_editing_name') == this._id;
+  },
+  is_editing_twitter: function() {
+    return Session.get('is_editing_twitter') == this._id;
+  },
+  name: function() {
+    if (this.name) {
+      return this.name;
+    } else {
+      return capitalize(this.first_name) + ' ' + capitalize(this.last_name);
+    }
+  }
+})
 
 Template.editor_stats.helpers({
   incomplete_chapters: function() {
@@ -224,15 +249,21 @@ var safe_length = function(arr) {
   return 0;
 }
 
-var validate_name = function(name) {
+var validate_name = function(name, is_person) {
   if (name == '') {
     return [false, "Please enter a name"];
   }
+
+  if (!is_person) {
+    return ['company', null];
+  }
+
   var parts = name.split(' ');
   if (parts.length == 1) {
     return [false, "Please enter a first and last name"];
   } else if (parts.length > 2) {
     return [false, "Please enter only two names"];
   }
-  return [true, null];
+
+  return ['person', null];
 }

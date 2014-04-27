@@ -1,10 +1,10 @@
-<template name="add_person">
-  <button class="add-person-btn btn btn-dotted" id="add_{{id}}_button" type="button">
+<template name="add_entity">
+  <button class="add-entity-btn btn btn-dotted" id="add_{{id}}_button" type="button">
     <span class="plus">+</span> {{capitalize id}}
   </button>
 
-  <span id="new_person_input_span_{{id}}" class="new_person_input_wrap" style="display:none;">
-    <input id="new_person_input_{{id}}" class="form-control new_person_input" type="text" placeholder="Enter {{capitalize id}} Name">
+  <span id="new_entity_input_span_{{id}}" class="new_entity_input_wrap" style="display:none;">
+    <input id="new_entity_input_{{id}}" class="form-control new_entity_input" type="text" placeholder="Enter {{capitalize id}} Name">
   </span>
 </template>
 
@@ -16,7 +16,6 @@
 
 <template name="editor">
   <div class="editor-container">
-
     <div class="media-pane">
       <div class="row">
         <p class="show_title">{{show_title}}</p>
@@ -24,23 +23,32 @@
       <div class="row contenteditable episode_title" contenteditable="true">
         <b>{{episode_title}}</b>
       </div>
-      <div class="row episode_people">
+      <div class="row episode_entities">
         {{#each hosts}}
-        <div class="person-wrap">
+        <div class="entity-wrap">
           {{> small_person_display}}
-          <a class="remove_person" type="host">&times;</a>
+          <a class="remove_entity" type="host">&times;</a>
         </div>
         {{/each}}
-        {{> add_person add_host}}
+        {{> add_entity add_host}}
       </div>
-      <div class="row episode_people">
+      <div class="row episode_entities">
         {{#each guests}}
-        <div class="person-wrap">
+        <div class="entity-wrap">
           {{> small_person_display}}
-          <a class="remove_person" type="guest">&times;</a>
+          <a class="remove_entity" type="guest">&times;</a>
         </div>
         {{/each}}
-        {{> add_person add_guest}}
+        {{> add_entity add_guest}}
+      </div>
+      <div class="row episode_entities">
+        {{#each sponsors}}
+        <div class="entity-wrap">
+          {{> small_person_display}}
+          <a class="remove_entity" type="sponsor">&times;</a>
+        </div>
+        {{/each}}
+        {{> add_entity add_sponsor}}
       </div>
       <div class="player-wrap row">
         {{#if has_episode}}
@@ -76,7 +84,7 @@
   </div>
   <div id="content_input_text_test" style="display:none; height:auto; width:auto;"></div>
   {{> add_person_modal}}
-  {{> remove_person_modal}}
+  {{> remove_entity_modal}}
   {{> set_postedited_success_modal}}
   {{> set_postedited_failure_modal}}
 </template>

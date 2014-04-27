@@ -13,6 +13,12 @@ Meteor.publish('chapters_from_episode_route', function(episode_route) {
   });
 });
 
+Meteor.publish('companies_from_episode', function(episode_id) {
+  return Companies.find({sponsored_episodes:episode_id}, {
+    fields:{name:true, twitter:true, avatar:true, sponsored_episodes:true, confirmed:true}
+  });
+});
+
 Meteor.publish('companies_list', function () {
   return Companies.find();
 })

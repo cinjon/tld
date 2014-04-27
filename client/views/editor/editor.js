@@ -1,22 +1,22 @@
 MAX_CHARACTERS_IN_CONTENT = 140;
 editor_title_placeholder = "Title Me Please"
 
-Template.add_person.events({
+Template.add_entity.events({
   'click button': function(e, tmpl) {
-    toggle_add_person(false, this.id)
+    toggle_add_entity(false, this.id)
   },
-  'keydown .new_person_input': function(e, tmpl) {
+  'keydown .new_entity_input': function(e, tmpl) {
     var val = $(e.target).val();
     if (e.keyCode == 8 && val == '') {
       e.preventDefault();
-      toggle_add_person(true, this.id);
+      toggle_add_entity(true, this.id);
     }
   },
-  'keyup .new_person_input': function(e, tmpl) {
+  'keyup .new_entity_input': function(e, tmpl) {
     var name = $(e.target).val().trim();
     var type = this.id;
     if (e.keyCode == 13 && name != '') {
-      if (name.split(' ').length < 2) {
+      if ((this.id == 'host' || this.id == 'guest') && name.split(' ').length < 2) {
         $('#add_person_modal').modal(
           {keyboard:true, show:true}
         );
@@ -25,7 +25,7 @@ Template.add_person.events({
         Meteor.call(
           'new_' + type, name, episode_id, function(err, result) {
             reset_typeaheads(episode_id);
-            toggle_add_person(true, type);
+            toggle_add_entity(true, type);
           }
         );
       }
@@ -54,17 +54,17 @@ Template.editor.created = function() {
 }
 
 Template.editor.events({
-  'click .remove_person': function(e, tmpl) {
+  'click .remove_entity': function(e, tmpl) {
     var type = $(e.target).closest('a').attr('type');
     var episode_id = this.episode_id
-    var person_id = this._id;
+    var entity_id = this._id;
     Meteor.call(
-      'remove_' + type, episode_id, person_id,
+      'remove_' + type, episode_id, entity_id,
       function(error, result) {
         if (result['success']) {
           reset_typeaheads(episode_id);
         } else {
-          $('#remove_person_modal').modal(
+          $('#remove_entity_modal').modal(
             {keyboard:true, show:true}
           );
         }
@@ -95,20 +95,13 @@ Template.editor.events({
 
 Template.editor.helpers({
   add_guest: function() {
-    if (this.episode) {
-      return {
-        id:'guest',
-        episode_id:this.episode._id
-      }
-    }
+    return add_entity_helper(this.episode, 'guest');
   },
   add_host: function() {
-    if (this.episode) {
-      return {
-        id:'host',
-        episode_id:this.episode._id
-      }
-    }
+    return add_entity_helper(this.episode, 'host');
+  },
+  add_sponsor: function() {
+    return add_entity_helper(this.episode, 'sponsor');
   },
   episode_title: function() {
     var title = editor_title_placeholder;
@@ -170,6 +163,18 @@ Template.editor.helpers({
       seconds: 0
     }
   },
+  sponsors: function() {
+    var episode = this.episode;
+    if (!episode) {
+      return [];
+    }
+    var id = episode._id;
+    console.log(Companies.find({sponsored_episodes:id}).fetch())
+    return Companies.find({sponsored_episodes:id}).map(function(company) {
+      company.episode_id = id;
+      return company;
+    });
+  }
 });
 
 Template.editor.rendered = function(){
@@ -311,7 +316,11 @@ Template.small_person_display.helpers({
     return this.twitter && this.twitter != '';
   },
   name: function() {
-    return capitalize(this.first_name) + ' ' + capitalize(this.last_name);
+    if (this.name) {
+      return capitalize(this.name);
+    } else {
+      return capitalize(this.first_name) + ' ' + capitalize(this.last_name);
+    }
   },
 });
 
@@ -321,10 +330,20 @@ Template.small_picture.helpers({
   }
 });
 
+var add_entity_helper = function(episode, type) {
+  if (episode) {
+    return {
+      id:type,
+      episode_id:episode._id
+    }
+  }
+}
+
 var destroy_typeaheads = function() {
   $('#speaker_input').typeahead('destroy','NoCached')
-  $('#new_person_input_guest').typeahead('destroy','NoCached');
-  $('#new_person_input_host').typeahead('destroy','NoCached');
+  $('#new_entity_input_guest').typeahead('destroy','NoCached');
+  $('#new_entity_input_host').typeahead('destroy','NoCached');
+  $('#new_entity_input_sponsor').typeahead('destroy','NoCached');
 };
 
 var fit_content_text_to_row = function(tmpl) {
@@ -349,6 +368,12 @@ var fit_content_text_to_row = function(tmpl) {
     char_slice -= 3;
   }
   */
+}
+
+var get_all_companies = function(episode_id) {
+  return Companies.find({}, {fields:{name:true, _id:true}}).fetch().map(function(company) {
+    return {value:company.name, id:company._id, type:'sponsor', episode_id:episode_id}
+  });
 }
 
 var get_all_people = function(episode_id) {
@@ -408,13 +433,13 @@ reset_typeaheads = function(episode_id) {
   destroy_typeaheads();
   set_editor_search();
   if (episode_id) {
-    set_people_typeahead(episode_id);
+    set_entity_typeaheads(episode_id);
   }
 }
 
-var _set_people_typeahead = function(type, datums) {
+var _set_entity_typeahead = function(type, datums) {
   datums.initialize();
-  $('#new_person_input_' + type).typeahead(
+  $('#new_entity_input_' + type).typeahead(
     {
       highlight: true
     },
@@ -429,38 +454,47 @@ var _set_people_typeahead = function(type, datums) {
       'add_' + type, datum.episode_id, datum.id,
       function(error, result) {
         reset_typeaheads(datum.episode_id);
-        toggle_add_person(true, type);
+        toggle_add_entity(true, type);
       }
     );
   })
 }
 
-var set_people_typeahead = function(episode_id) {
+var set_entity_typeaheads = function(episode_id) {
   var data = get_all_people(episode_id);
   if (data.length == 0) {
     return;
   }
 
-  _set_people_typeahead('guest', new Bloodhound({
+  _set_entity_typeahead('guest', new Bloodhound({
     datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     local: data
   }))
-  _set_people_typeahead('host', new Bloodhound({
+  _set_entity_typeahead('host', new Bloodhound({
     datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     local: data
+  }))
+  _set_entity_typeahead('sponsor', new Bloodhound({
+    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: get_all_companies(episode_id)
   }))
 }
 
-var toggle_add_person = function(button, type) {
+var toggle_add_entity = function(button, entity_type) {
+  var add_id = '#add_' + entity_type + '_button';
+  var span_id = '#new_entity_input_span_' + entity_type;
+  var input_id = '#new_entity_input_' + entity_type;
+
   if (button) {
-    $('#add_' + type + '_button').show();
-    $('#new_person_input_span_' + type).hide();
-    $('#new_person_input_' + type).val('');
+    $(add_id).show();
+    $(span_id).hide();
+    $(input_id).val('');
   } else {
-    $('#add_' + type + '_button').hide();
-    $('#new_person_input_span_' + type).show();
-    $('#new_person_input_' + type).focus();
+    $(add_id).hide();
+    $(span_id).show();
+    $(input_id).focus();
   }
 }

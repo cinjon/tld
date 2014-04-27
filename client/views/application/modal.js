@@ -7,17 +7,15 @@ Template._small_modal.helpers({
 Template.add_person_modal.helpers({
   input_warning: function() {
     return {
-      'title':'Add Person',
       'body':'Please include a first and last name'
     }
   }
 });
 
-Template.remove_person_modal.helpers({
+Template.remove_entity_modal.helpers({
   input_warning: function() {
     return {
-      'title':'Remove Person',
-      'body':"Please remove any attributed highlights before removing a person"
+      'body':"Please delete any attributed highlights before removing a person or sponsor"
     }
   }
 });
@@ -25,7 +23,6 @@ Template.remove_person_modal.helpers({
 Template.set_postedited_success_modal.helpers({
   input_warning: function() {
     return {
-      'title':'Submitted Edits',
       'body':'Success - thanks so much. Note that any further changes will require you to re-submit.'
     }
   }
