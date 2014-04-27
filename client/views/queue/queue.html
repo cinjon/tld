@@ -62,7 +62,11 @@
 </template>
 
 <template name="queue">
-  {{> queue_helper queue_data}}
+  {{#if isInRole 'editor'}}
+  {{> queue_helper editor_queue_data}}
+  {{else}}
+  {{> queue_helper trial_queue_data}}
+  {{/if}}
 </template>
 
 <template name="editor_permissions_button">
