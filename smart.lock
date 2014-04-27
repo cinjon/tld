@@ -37,8 +37,8 @@
       },
       "autoform": {
         "git": "https://github.com/aldeed/meteor-autoform.git",
-        "tag": "v0.6.2",
-        "commit": "032bc8180adca7c40a7d518f994ee07ef54d0100"
+        "tag": "v0.7.2",
+        "commit": "5d3265ab2607949ca776a45411ce11072413546d"
       },
       "bootstrap3-sass": {
         "git": "https://github.com/reywood/meteor-bootstrap3-sass.git",
@@ -87,8 +87,8 @@
       },
       "moment": {
         "git": "https://github.com/acreeger/meteor-moment.git",
-        "tag": "v2.5.1",
-        "commit": "8c9bc5d3fc96705057737cb9743d555417f6e551"
+        "tag": "v2.6.0",
+        "commit": "26156df681750fd6e6ed77043eef32b6653ebbdf"
       },
       "scss": {
         "git": "https://github.com/fourseven/meteor-scss.git",
