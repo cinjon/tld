@@ -58,6 +58,16 @@ Meteor.publish('episode_from_route', function(episode_route) {
   });
 });
 
+Meteor.publish('episodes_by_editor', function(user_id) {
+  return Episodes.find({editor_id:user_id, trial:false}, {
+    fields: {
+      title:true, show_route:true, hosts:true, guests:true,
+      chapters:true, highlights:true, postedited:true, length_in_seconds:true,
+      updated_at:true, published:true, trial:true, editor_id:true, claimed_at:true
+    }
+  });
+});
+
 Meteor.publish('episodes_from_show', function (route) {
   return Episodes.find({show_route: route});
 })

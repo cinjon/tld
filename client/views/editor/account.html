@@ -1,0 +1,42 @@
+<template name="editor_account">
+  <div class="account-container">
+    {{> editor_account_episodes claimed_episodes}}
+    {{> editor_account_episodes completed_episodes}}
+    {{> editor_account_episodes published_episodes}}
+  </div>
+</template>
+
+<template name="editor_account_episodes">
+  <div class="episodes">
+    <h5>{{title}} - {{count}}</h5>
+    {{#each episodes}}
+    {{> episode_statistics}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="episode_statistics">
+  <div class="editor_account_episode">
+    <div class="episode_title left">
+      <b><a href="{{pathFor 'editor' route=show_route episode_id=_id}}">{{title}}</a></b>
+    </div>
+
+    {{#if ../claimed}}
+    <div class="right {{claimed_time_ticker_color}}" style="margin-left:15px">
+      {{claimed_time_ticker}}
+    </div>
+    {{else}}
+    <div class="right" style="margin-left:15px">
+      Completed: {{prettify_date postedited_at}}
+    </div>
+    {{/if}}
+
+    <div class="right" style="margin-left:15px">
+      Length: {{format_seconds_to_clock length_in_seconds}}
+    </div>
+
+    <ul class="clear">
+      <li>With {{obj_number_of "guests"}} guests, {{obj_number_of "hosts"}} hosts, and {{obj_number_of "highlights"}} highlights in {{obj_number_of "chapters"}} chapters</li>
+    </ul>
+  </div>
+</template>
