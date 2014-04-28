@@ -1,0 +1,24 @@
+.account-container {
+  .episodes {
+    overflow-y: scroll;
+    min-height:162px;
+    padding: 20px;
+    background: $cream1;
+    color: $ash1;
+    font-family:$font-lato;
+    .editor_account_episode {
+      margin-top:25px;
+      padding: 10px;
+      font-size: 16px;
+      background: transparent;
+      border: 2px dashed $ash1;
+      .episode_title {
+        font-weight: $font-weight-heavy;
+        font-size: 20px;
+      }
+      &:hover {
+        border-color: $mint;
+      }
+    }
+  }
+}
