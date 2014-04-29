@@ -51,7 +51,13 @@ Template.viewer.helpers({
       url: this.episode.feed.url,
       seconds: 0,
       highlights: Highlights.find({_id:{$in:this.episode.highlights}}, {
-        start_time:true, chapter_id:true, reactive:false}).fetch()
+        fields:{start_time:true, chapter_id:true},
+        reactive:false
+      }).fetch(),
+      chapters: Chapters.find({_id:{$in:this.episode.chapters}}, {
+        fields:{start_time:true, title:true},
+        reactive:false
+      })
     }
   },
 });

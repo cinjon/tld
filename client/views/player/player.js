@@ -1,14 +1,14 @@
 var player = null;
 var default_marker_setting = {
   markerStyle: {
-    'width':'1px',
-    'background-color': 'red'
-  }
+    'width':'8px',
+    'background-color': 'orange'
+  },
 }
 
 Template.player.rendered = function() {
   if (this.data) {
-    load_video(this.data.seconds, this.data.highlights);
+    load_video(this.data.seconds, this.data.highlights, this.data.chapters);
   }
 
   Meteor.Keybindings.add({
@@ -60,7 +60,7 @@ var dispose_video = function() {
   Session.set('player_time', null);
 };
 
-var load_video = function(seconds, highlights) {
+var load_video = function(seconds, highlights, chapters) {
   videojs(
     "#player",
     {
@@ -87,7 +87,9 @@ var load_video = function(seconds, highlights) {
       highlights.forEach(function(highlight) {
         add_highlight_cuepoint(highlight);
       });
-      set_markers(highlights);
+    }
+    if (chapters) {
+      set_markers(chapters);
     }
 
     Session.set('player_loaded', true);
@@ -115,12 +117,12 @@ var player_toggle = function () {
   return;
 }
 
-var set_markers = function(highlights, setting) {
+var set_markers = function(chapters, setting) {
   setting = setting || default_marker_setting;
   player.markers({
     setting: setting,
-    marker_breaks: highlights.map(function(highlight) {return highlight.start_time}),
-    marker_text: highlights.map(function(highlight) {return text_limit(highlight.text, 20)})
+    marker_breaks: chapters.map(function(chapter) {return chapter.start_time}),
+    marker_text: chapters.map(function(chapter) {return text_limit(chapter.title, 20)})
   });
 }
 
