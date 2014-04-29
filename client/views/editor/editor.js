@@ -111,6 +111,12 @@ Template.editor.helpers({
     }
     return title;
   },
+  feed_summary: function() {
+    var episode = this.episode;
+    if (episode && episode.feed && episode.feed.summary) {
+      return episode.feed.summary;
+    }
+  },
   guests: function() {
     var episode = this.episode;
     if (!episode) {
@@ -160,7 +166,8 @@ Template.editor.helpers({
       format: this.episode.format,
       type: this.episode.type,
       url: this.episode.feed.url,
-      seconds: 0
+      seconds: 0,
+      height: "300px"
     }
   },
   sponsors: function() {
@@ -169,7 +176,6 @@ Template.editor.helpers({
       return [];
     }
     var id = episode._id;
-    console.log(Companies.find({sponsored_episodes:id}).fetch())
     return Companies.find({sponsored_episodes:id}).map(function(company) {
       company.episode_id = id;
       return company;

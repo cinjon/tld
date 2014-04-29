@@ -1,5 +1,5 @@
 <template name="player">
-  <video id="player" class="video-js vjs-default-skin vjs-big-play-centered" width="auto" height="360px">
+  <video id="player" class="video-js vjs-default-skin vjs-big-play-centered" width="auto" height="{{height}}">
     <source src="{{s3 storage_key format type url}}" type="{{type}}/{{format}}">
   </video>
 </template>

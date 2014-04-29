@@ -57,7 +57,8 @@ Template.viewer.helpers({
       chapters: Chapters.find({_id:{$in:this.episode.chapters}}, {
         fields:{start_time:true, title:true},
         reactive:false
-      })
+      }),
+      height: "360px"
     }
   },
 });
