@@ -13,7 +13,9 @@
 //   chapters: array of chapters,
 //   highlights: array of highlights,
 //   postedited: boolean,
+//   postedited_at: date, //when it was last postedited
 //   editor_id: string,
+//   claimed_previously_by: string //for keeping track of timing
 //   claimed_at: date, //when it was claimed by current editor
 //   length_in_seconds: number,
 //   created_at: date,
@@ -107,6 +109,19 @@ Episodes = new Meteor.Collection('episodes', {
         }
       }
     },
+    postedited_at: {
+      type: Date,
+      label: 'Last postedited time',
+      autoValue: function() {
+        var postedited_field = this.field('postedited');
+        if (postedited_field.isSet && postedited_field.value) {
+          return new Date();
+        } else if (this.isInsert) {
+          return null;
+        }
+      },
+      optional: true
+    },
     editor_id: {
       type: String,
       label: 'Editor ID',
@@ -191,7 +206,6 @@ make_episode = function(type, format, title, number, storage_key,
                         editor_id, length_in_seconds, created_at,
                         published, trial, feed_title, feed_url, feed_published,
                         feed_summary, feed_entry_id, feed_enclosure_url) {
-  created_at = created_at || (new Date()).getTime();
   chapters = chapters || [];
   highlights = highlights || [];
   guests = guests || [];
