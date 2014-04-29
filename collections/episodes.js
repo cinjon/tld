@@ -14,6 +14,7 @@
 //   highlights: array of highlights,
 //   postedited: boolean,
 //   editor_id: string,
+//   claimed_at: date, //when it was claimed by current editor
 //   length_in_seconds: number,
 //   created_at: date,
 //   updated_at: date,
@@ -109,6 +110,27 @@ Episodes = new Meteor.Collection('episodes', {
     editor_id: {
       type: String,
       label: 'Editor ID',
+      optional: true
+    },
+    claimed_at: {
+      type: Date,
+      label: 'Date when current editor claimed episode',
+      autoValue: function() {
+        if (this.isInsert) {
+          return null;
+        }
+      },
+      optional: true
+    },
+    claimed_previously_by: {
+      //So that editors can't toggle the claim button to start the clock at 0
+      type: String,
+      label: 'User_id of the person who claimed this before the current editor_id',
+      autoValue: function() {
+        if (this.isInsert) {
+          return null;
+        }
+      },
       optional: true
     },
     length_in_seconds: {
