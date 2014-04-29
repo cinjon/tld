@@ -24,31 +24,31 @@
         <b>{{episode_title}}</b>
       </div>
       <div class="row episode_entities">
+        {{> add_entity add_host}}
         {{#each hosts}}
         <div class="entity-wrap">
           {{> small_person_display}}
           <a class="remove_entity" type="host">&times;</a>
         </div>
         {{/each}}
-        {{> add_entity add_host}}
       </div>
       <div class="row episode_entities">
+        {{> add_entity add_guest}}
         {{#each guests}}
         <div class="entity-wrap">
           {{> small_person_display}}
           <a class="remove_entity" type="guest">&times;</a>
         </div>
         {{/each}}
-        {{> add_entity add_guest}}
       </div>
       <div class="row episode_entities">
+        {{> add_entity add_sponsor}}
         {{#each sponsors}}
         <div class="entity-wrap">
           {{> small_person_display}}
           <a class="remove_entity" type="sponsor">&times;</a>
         </div>
         {{/each}}
-        {{> add_entity add_sponsor}}
       </div>
       <div class="player-wrap row">
         {{#if has_episode}}
