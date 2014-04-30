@@ -12,7 +12,8 @@
       "npm": {},
       "accounts-entry": {},
       "mailgun": {},
-      "bourbon": {}
+      "bourbon": {},
+      "cron-tick": {}
     },
     "packages": {
       "iron-router": {
@@ -27,8 +28,8 @@
       },
       "typeahead": {
         "git": "https://github.com/sergeyt/meteor-typeahead.git",
-        "tag": "v0.0.7",
-        "commit": "23ddb660cf7430c76b37b0dc08ec73001624428d"
+        "tag": "v0.0.8",
+        "commit": "3e83afe7bd3ba47a801cb7fec2bff4678aefd5dc"
       },
       "font-awesome": {
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
@@ -37,8 +38,8 @@
       },
       "autoform": {
         "git": "https://github.com/aldeed/meteor-autoform.git",
-        "tag": "v0.7.2",
-        "commit": "5d3265ab2607949ca776a45411ce11072413546d"
+        "tag": "v0.8.0",
+        "commit": "54a820a4a561e7f49d6fbc05d24b75c3d8d2e9be"
       },
       "bootstrap3-sass": {
         "git": "https://github.com/reywood/meteor-bootstrap3-sass.git",
@@ -57,8 +58,8 @@
       },
       "accounts-entry": {
         "git": "https://github.com/Differential/accounts-entry.git",
-        "tag": "v0.7.2",
-        "commit": "cda8617139b5edd79a52023986bfecb48e4b9dc4"
+        "tag": "v0.7.3",
+        "commit": "7facaa045d3720eeeba3420c28e48d5709188fe3"
       },
       "mailgun": {
         "git": "https://github.com/cunneen/meteor-mailgun.git",
@@ -69,6 +70,11 @@
         "git": "https://github.com/chicagogrooves/meteor-bourbon.git",
         "tag": "v3.1.8.1",
         "commit": "b55f0968fe7d4a2886898cd8e81394de066a3ae1"
+      },
+      "cron-tick": {
+        "git": "https://github.com/tmeasday/meteor-cron.git",
+        "tag": "v0.0.4",
+        "commit": "44cff9116af510fe53704fdeeff57c444ceb75ba"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
@@ -95,15 +101,10 @@
         "tag": "v0.8.4",
         "commit": "11af0da643944d241fe7d173af76162c4b670dee"
       },
-      "just-i18n": {
-        "git": "https://github.com/subhog/meteor-just-i18n.git",
-        "tag": "v0.2.4",
-        "commit": "91decfcf5b3b5e67f202a67658350b862330bf3d"
-      },
       "accounts-t9n": {
         "git": "https://github.com/softwarerero/meteor-accounts-t9n.git",
-        "tag": "v0.0.3",
-        "commit": "d1710f979d6955459d9ce0374df81d22c3c6a6ab"
+        "tag": "v0.0.5",
+        "commit": "ad9539a8818049d5d9fa050d8b2a1f62706483b1"
       }
     }
   }
