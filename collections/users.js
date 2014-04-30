@@ -16,39 +16,31 @@
 
 
 UsersCollection = new Meteor.Collection('UsersCollection', {
-  schema: {
+  schema: new SimpleSchema({
     username:{
       type: String,
-      label: 'Username',
       optional: true
     },
     emails: {
-      type: [Object],
-      label: 'Email',
+      type: Array,
+      optional: true
     },
-    'emails.$.address': {
-      type: String,
-      label: "Address"
-    },
-    'emails.$.verified': {
-      type: Boolean,
-      label: "Verified"
+    'emails.$': {
+      type: Object,
+      blackbox: true
     },
     roles: {
       type: [String],
-      label: "Roles",
       blackbox: true,
       optional: true
     },
     profile: {
-      type: [Object],
-      label: "Profile",
+      type: Object,
       blackbox: true,
       optional: true
     },
     services: {
-      type: [Object],
-      label: "Services",
+      type: Object,
       optional: true,
       blackbox: true
     },
@@ -75,7 +67,7 @@ UsersCollection = new Meteor.Collection('UsersCollection', {
       denyInsert: true,
       optional: true
     }
-  }
+  })
 });
 
 UsersCollection.allow({
