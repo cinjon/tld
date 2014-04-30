@@ -228,17 +228,14 @@ var is_editing_incomplete = function(episode) {
 
 var publish_results = function(episode_id, user_id)  {
   var message = "";
-
   Chapters.find({episode_id:episode_id}, {sort:{start_time:1}}).forEach(function(chapter) {
     message += "<p>" + chapter.title + "</p>"
-    var highlights =
     Highlights.find({chapter_id:chapter._id}, {sort:{start_time:1}}).forEach(function(highlight) {
       message += "<p>" + highlight.text + "</p>";
       message += "<hr>";
     });
     message += "<hr>";
   });
-
   return message;
 }
 
