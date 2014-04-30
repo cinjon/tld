@@ -53,7 +53,24 @@ Template.chapter_layout.helpers({
 })
 
 Template.editor_make_chapter.events({
+  'mouseover .row_text_time .chapter_divider': function(e, tmpl) {
+    var elem = $(e.currentTarget);
+    // only add tooltip once
+    if (!elem.hasClass("tooltip-active")) {
+      elem.addClass("tooltip-active");
+      elem.tooltip({
+        placement: "right",
+        trigger: "hover"
+      });
+      elem.tooltip("show");
+    }
+  },
   'click .row_text_time': function(e, tmpl) {
+    var tooltip_elem = $(e.currentTarget).find('.chapter_divider');
+    if (tooltip_elem.hasClass("tooltip-active")) {
+      tooltip_elem.tooltip("destroy");
+      tooltip_elem.removeClass("tooltip-active");
+    }
     Meteor.call(
       'new_chapter', this.chapter_id, this.start_time, Meteor.userId()
     )
