@@ -12,13 +12,13 @@ Template.player.rendered = function() {
   }
 
   Meteor.Keybindings.add({
-    'esc': function() {
+    'shift+↓/shift+↑': function() {
       player_toggle();
     },
-    'shift+,': function () {
+    'shift+←': function () {
       player_skip("back");
      },
-    'shift+.': function () {
+    'shift+→': function () {
       player_skip("forward");
     }
   });
@@ -97,6 +97,9 @@ var load_video = function(seconds, highlights, chapters) {
 };
 
 var player_skip = function(direction, amount) {
+  if (document.activeElement.tagName == 'INPUT') {
+    return;
+  }
   amount = amount || 5;
   time = videojs("#player").currentTime();
   if ( direction == 'back' )
