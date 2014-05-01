@@ -13,10 +13,11 @@
 // services: an Object containing data used by particular login services.
 // For example, its reset field contains tokens used by forgot password links,
 // and its resume field contains tokens used to keep you logged in between sessions.
+//
+// signed_editor_legal: boolean
 
 
-UsersCollection = new Meteor.Collection('UsersCollection', {
-  schema: new SimpleSchema({
+UsersSchema = new SimpleSchema({
     username:{
       type: String,
       optional: true
@@ -44,6 +45,10 @@ UsersCollection = new Meteor.Collection('UsersCollection', {
       optional: true,
       blackbox: true
     },
+    signed_editor_legal: {
+      type: Boolean,
+      optional: true
+    },
     createdAt: {
       type: Date,
         autoValue: function() {
@@ -67,17 +72,18 @@ UsersCollection = new Meteor.Collection('UsersCollection', {
       denyInsert: true,
       optional: true
     }
-  })
 });
 
-UsersCollection.allow({
-  insert: function () {
-    return Roles.userIsInRole(Meteor.userId(), ['admin']);
-  },
-  remove: function () {
-    return Roles.userIsInRole(Meteor.userId(), ['admin']);
-  },
-  update: function () {
-    return Roles.userIsInRole(Meteor.userId(), ['admin']);
-  }
-});
+Meteor.users.attachSchema(UsersSchema);
+
+// UsersCollection.allow({
+//   insert: function () {
+//     return Roles.userIsInRole(Meteor.userId(), ['admin']);
+//   },
+//   remove: function () {
+//     return Roles.userIsInRole(Meteor.userId(), ['admin']);
+//   },
+//   update: function () {
+//     return Roles.userIsInRole(Meteor.userId(), ['admin']);
+//   }
+// });
