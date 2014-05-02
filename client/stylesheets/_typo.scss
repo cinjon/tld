@@ -6,3 +6,8 @@
 h1 {
   @include h1-style();
 }
+
+.container-dark {
+  margin-top: 50px;
+  color: $cream1;
+}
