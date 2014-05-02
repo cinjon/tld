@@ -1,4 +1,4 @@
-Template.shows_list.helpers({
+Template.episodes_list.helpers({
   settings: function () {
     return {
         rowsPerPage: 30,
@@ -11,31 +11,35 @@ Template.shows_list.helpers({
                     label: 'ID',
                   },
                   {
-                    key: 'name',
-                    label: 'Name',
+                    key: 'title',
+                    label: 'Title',
                     fn: function (value, object) {
-                      var edit_url = "shows/" + object.route + "/edit";
+                      var edit_url = "/" + object.show_route + "/episodes/" + object._id + "/edit";
                       return new Spacebars.SafeString("<a href="+edit_url+">"+value+"</a>");
                     }
                   },
                   {
-                    key: 'homepage',
-                    label: 'Homepage'
+                    key: 'number',
+                    label: "Number"
                   },
                   {
-                    key: 'feed_checked_at',
-                    label: 'Feed Check',
-                    fn: function (value) {
-                      return new Date(value).toDateString('yyyy-MM-dd')
-                    }
+                    key: 'show_route',
+                    label: 'Show'
+                  },
+                  {
+                    key: 'storage_key',
+                    label: 'S3 Key'
+                  },
+                  {
+                    key: 'published',
+                    label: 'Published?'
                   },
                   {
                     key: 'action',
                     label: 'Action',
                     fn: function (value, object) {
-                      var episodes_url = object.route + "/episodes";
                       var destroy_url = "#";
-                      return new Spacebars.SafeString("<a href="+episodes_url+">Episodes</a> | <a href="+destroy_url+">X</a>");
+                      return new Spacebars.SafeString("<a href="+destroy_url+">X</a>");
                      }
                   }
                 ]

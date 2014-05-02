@@ -1,72 +1,11 @@
 <template name="episodes_list">
 
-    <div class="col-md-1">
-    </div>
+<div class="col-md-1">
+</div>
+<div class="col-md-10 black_text">
+  {{> reactiveTable collection=episodes settings=settings}}
+</div>
+<div class="col-md-1">
+</div>
 
-    <div class="col-md-10 white_text">
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>
-                ID
-              </th>
-              <th>
-                Title
-              </th>
-              <th>
-                #
-              </th>
-              <th>
-                S3 key
-              </th>
-              <th>
-                Show
-              </th>
-              <th>
-                Published?
-              </th>
-              <th>
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each episodes}}
-              <tr>
-                {{> episode_entry}}
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="col-md-1">
-    </div>
-</template>
-
-<template name="episode_entry">
-    <td>
-      {{_id}}
-    </td>
-    <td>
-      {{title}}
-    </td>
-    <td>
-      {{number}}
-    </td>
-    <td>
-      {{storage_key}}
-    </td>
-    <td>
-      {{show_route}}
-    </td>
-    <td>
-      {{published}}
-    </td>
-    <td>
-      <a href="{{pathFor 'episodes_edit' show_route=show_route id=_id}}">Edit</a> |
-      <a href="#">Delete</a>
-    </td>
 </template>
