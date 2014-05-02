@@ -1,65 +1,9 @@
 <template name="shows_list">
-  <div class="col-md-1">
-  </div>
-  <div class="col-md-10 white_text">
-
-    <form class="navbar-form navbar-left" role="search">
-      <div class="form-group">
-        <input id="search-query" type="text" class="form-control" placeholder="Filter by Show name">
-      </div>
-    </form>
-
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>
-              ID
-            </th>
-            <th>
-              Name
-            </th>
-            <th>
-              Homepage
-            </th>
-            <th>
-              Feed Check
-            </th>
-            <th>
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each shows}}
-            <tr>
-              {{> show_entry}}
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
+    <div class="col-md-1">
     </div>
-  </div>
+    <div class="col-md-10 black_text">
+      {{> reactiveTable collection=shows settings=settings}}
+    </div>
   <div class="col-md-1">
   </div>
-</template>
-
-<template name="show_entry">
-    <td>
-      {{_id}}
-    </td>
-    <td>
-      {{name}}
-    </td>
-    <td>
-      <a href="{{homepage}}">{{homepage}}</a>
-    </td>
-    <td>
-      {{prettify_date feed_checked_at}}
-    </td>
-    <td>
-      <a href="pathFor episodes_list route">Episodes</a> |
-      <a href="{{pathFor 'shows_edit'}}">Edit</a> |
-      <a href="#">Delete</a>
-    </td>
 </template>
