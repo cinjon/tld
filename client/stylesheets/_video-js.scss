@@ -20,7 +20,7 @@ $base-font-size: 10px;
 $touch-device-font-size: 15px;
 
 // The main font color controls the color of the text and the icons (font icons)
-$main-font-color: $cream2; //#CCCCCC; // e.g. rgb(255, 255, 255) or #ffffff
+$main-font-color: fade-out($white, .2); //#CCCCCC; // e.g. rgb(255, 255, 255) or #ffffff
 
 // The default color of control backgrounds is mostly black but with a little
 // bit of blue so it can still be seen on all black video frames, which are
@@ -356,6 +356,7 @@ $ie8screen: "\0screen";
   padding: 0;
   height: 3.0em;
   width: 4em;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* FontAwsome button icons */
@@ -552,7 +553,7 @@ $ie8screen: "\0screen";
   font-family: $font-lato;
 }
 
-.vjs-default-skin .vjs-current-time { float: left; font-weight: $font-weight-heavy; }
+.vjs-default-skin .vjs-current-time { float: left; color: $white; font-weight: $font-weight-heavy; }
 .vjs-default-skin .vjs-duration { float: left; opacity: .8; }
 /* Remaining time is in the HTML, but not included in default design */
 .vjs-default-skin .vjs-remaining-time { display: none; float: left; opacity: .8; }

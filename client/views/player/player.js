@@ -93,6 +93,18 @@ var load_video = function(seconds, highlights, chapters) {
     }
 
     Session.set('player_loaded', true);
+
+    player.on("pause", function(e){
+      var parent = $(e.target).closest(".video-wrap");
+      parent.addClass("vjs-paused");
+      parent.removeClass("vjs-playing");
+    });
+
+    player.on("play", function(e){
+      var parent = $(e.target).closest(".video-wrap");
+      parent.removeClass("vjs-paused");
+      parent.addClass("vjs-playing");
+    });
   });
 };
 

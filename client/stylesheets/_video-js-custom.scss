@@ -1,0 +1,31 @@
+// wrapper for video-js
+.video-wrap {
+  position: relative;
+  .summary {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    background: fade-out($smoke3, .3);
+    color: $cream1;
+    .summary-inner {
+      padding:20px;
+      line-height: 1.4;
+      font-size: 18px;
+      overflow: scroll;
+    }
+  }
+  .video-js {
+    z-index: 1; // on top
+  }
+  // while paused
+  &.vjs-paused {
+    .video-js {
+      background-color: transparent;
+    }
+    .vjs-tech {
+      opacity: 0;
+    }
+  }
+}
