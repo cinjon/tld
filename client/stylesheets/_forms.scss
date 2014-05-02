@@ -26,8 +26,22 @@
   @include dotted-style();
 }
 
+
 // Twitter Typeahead
 .tt-dropdown-menu {
+  @extend .dropdown-menu;
+}
+
+// .tt-suggestion > p {
+//   @extend .dropdown-menu > li > a;
+//   &:hover,
+//   &:focus {
+//     @extend .dropdown-menu > .active > a;
+//   }
+// }
+.tt-dropdown-menu {
+  background: $cream1;
+  border: 1px solid $cream2;
   border-radius: 0;
   box-shadow: none;
   padding: 0;
@@ -36,6 +50,15 @@
 }
 .tt-suggestion.tt-cursor {
   background-color: $mint;
+}
+.tt-suggestion > p {
+  display: block;
+  padding: 6px 20px;
+  clear: both;
+  line-height: 1.5;
+  white-space: nowrap;
+  cursor: pointer;
+  margin: 0;
 }
 .tt-header {
   padding: 8px 20px 3px;
