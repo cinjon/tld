@@ -11,6 +11,7 @@
     "accounts-entry": {},
     "mailgun": {},
     "bourbon": {},
-    "cron-tick": {}
+    "cron-tick": {},
+    "reactive-table": {}
   }
 }
