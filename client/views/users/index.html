@@ -1,66 +1,12 @@
 <template name="users_list">
 
-<b class="white_text">NOTE => edit is not functional at the moment</b>
-
   <div class="col-md-1">
   </div>
 
-  <div class="col-md-10 white_text">
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>
-              ID
-            </th>
-            <th>
-              Username
-            </th>
-            <th>
-              Emails
-            </th>
-            <th>
-              Roles
-            </th>
-            <th>
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each users}}
-            <tr>
-              {{> user_entry}}
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+  <div class="col-md-10 black_text">
+    {{> reactiveTable collection=users settings=settings}}
   </div>
 
   <div class="col-md-1">
   </div>
-</template>
-
-<template name="user_entry">
-    <td>
-      {{_id}}
-    </td>
-    <td>
-      {{username}}
-    </td>
-    <td>
-      {{#each emails}}
-        {{address}}
-      {{/each}}
-    </td>
-    <td>
-      {{#each roles}}
-        {{this}}
-      {{/each}}
-    </td>
-    <td>
-      <a href="{{pathFor 'users_edit' id=_id}}">Edit</a> |
-      <a href="#">Delete</a>
-    </td>
 </template>
