@@ -3,58 +3,10 @@
   <div class="col-md-1">
   </div>
 
-  <div class="col-md-10 white_text">
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>
-              Name
-            </th>
-            <th>
-              Twitter
-            </th>
-            <th>
-              Homepage
-            </th>
-            <th>
-              Confirmed
-            </th>
-            <th>
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each people}}
-            <tr>
-              {{> person_entry}}
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+  <div class="col-md-10 black_text">
+    {{> reactiveTable collection=people settings=settings}}
   </div>
 
   <div class="col-md-1">
   </div>
-</template>
-
-<template name="person_entry">
-    <td>
-      {{first_name}} {{last_name}}
-    </td>
-    <td>
-      {{twitter}}
-    </td>
-    <td>
-      <a href="{{homepage}}">{{homepage}}</a>
-    </td>
-    <td>
-      {{confirmed}}
-    </td>
-    <td>
-      <a href="{{pathFor 'people_edit' id=_id}}">Edit</a> |
-      <a href="#">Delete</a>
-    </td>
 </template>
