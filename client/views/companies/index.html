@@ -3,58 +3,10 @@
   <div class="col-md-1">
   </div>
 
-  <div class="col-md-10 white_text">
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>
-              ID
-            </th>
-            <th>
-              Name
-            </th>
-            <th>
-              Homepage
-            </th>
-            <th>
-              Twitter
-            </th>
-            <th>
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each companies}}
-            <tr>
-              {{> company_entry}}
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+  <div class="col-md-10 black_text">
+    {{> reactiveTable collection=companies settings=settings}}
   </div>
 
   <div class="col-md-1">
   </div>
-</template>
-
-<template name="company_entry">
-    <td>
-      {{_id}}
-    </td>
-    <td>
-      {{name}}
-    </td>
-    <td>
-      <a href="{{homepage}}">{{homepage}}</a>
-    </td>
-    <td>
-      {{Twitter}}
-    </td>
-    <td>
-      <a href="{{pathFor 'companies_edit' id=_id}}">Edit</a> |
-      <a href="#">Delete</a>
-    </td>
 </template>

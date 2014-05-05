@@ -1,4 +1,4 @@
-Template.users_list.helpers({
+Template.companies_list.helpers({
   settings: function () {
     return {
         rowsPerPage: 30,
@@ -11,23 +11,20 @@ Template.users_list.helpers({
                     label: 'ID'
                   },
                   {
-                    key: 'username',
-                    label: 'Username',
+                    key: 'name',
+                    label: 'Name',
                     fn: function (value, object) {
-                      var edit_url = "/users/" + object._id + "/edit";
+                      var edit_url = "/companies/" + object._id + "/edit";
                       return new Spacebars.SafeString("<a href="+edit_url+">"+value+"</a>")
                     }
                   },
                   {
-                    key: 'emails',
-                    label: 'Email',
-                    fn: function (value, object) {
-                      return object.emails[0].address;
-                    }
+                    key: 'homepage',
+                    label: 'Homepage'
                   },
                   {
-                    key: 'roles',
-                    label: 'Roles'
+                    key: 'twitter',
+                    label: 'Twitter'
                   },
                   {
                     key: 'action',
