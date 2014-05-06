@@ -11,5 +11,9 @@ AccountsEntry.config({
   homeRoute: '/',
   dashboardRoute: '/',
   profileRoute: '/',
-  showSignupCode: false
+  showSignupCode: false,
+  templates: {
+    entrySignIn: 'tlEntrySignIn',
+    entrySignUp: 'tlEntrySignUp'
+  }
 });
