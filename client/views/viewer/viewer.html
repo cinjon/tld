@@ -41,6 +41,12 @@
   </div>
 </template>
 
+<template name="viewer_bookmark">
+  <span class="right">
+    <i class="{{bookmark_class}}" style="font-size:1.7em; padding: 13px 10px 13px 5px"></i>
+  </span>
+</template>
+
 <template name="viewer_chapter">
   <div class="chapter_box">
     <div class="chapter_inner">
@@ -92,7 +98,7 @@
       {{/if}}
     </span>
   </div>
-  <i class="fa fa-bookmark-o right" style="font-size:1.7em; padding: 13px 10px 13px 5px"></i>
+  {{> viewer_bookmark}}
 </template>
 
 <template name="viewer_marker">

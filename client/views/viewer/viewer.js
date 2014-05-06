@@ -63,6 +63,23 @@ Template.viewer.helpers({
   },
 });
 
+Template.viewer_bookmark.events({
+  'click i': function() {
+    Meteor.call('set_bookmark', Meteor.userId(), this._id);
+  }
+});
+
+Template.viewer_bookmark.helpers({
+  bookmark_class: function() {
+    var bookmark = Bookmarks.findOne({user_id:Meteor.userId(), highlight_id:this._id});
+    if (bookmark && !bookmark.deleted) {
+      return "fa fa-bookmark mint_text";
+    } else {
+      return "fa fa-bookmark-o";
+    }
+  }
+});
+
 Template.viewer_chapter.helpers({
   cue_color: function() {
     if (Session.get('current_highlight_cue') == this._id) {

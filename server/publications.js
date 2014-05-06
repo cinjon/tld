@@ -1,5 +1,13 @@
 // Meteor.publish definitions
 
+Meteor.publish('bookmarks_from_episode_route_and_user_id', function(episode_route, user_id) {
+  var episode = Episodes.findOne({route:episode_route});
+  if (!episode) {
+    return [];
+  }
+  return Bookmarks.find({highlight_id:{$in:episode.highlights}, user_id:user_id});
+});
+
 Meteor.publish('chapters_from_episode', function(episode_id) {
   return Chapters.find({episode_id:episode_id}, {
     fields:{created_at:false, updated_at:false}
@@ -7,8 +15,11 @@ Meteor.publish('chapters_from_episode', function(episode_id) {
 });
 
 Meteor.publish('chapters_from_episode_route', function(episode_route) {
-  var episode_id = Episodes.findOne({route:episode_route})._id;
-  return Chapters.find({episode_id:episode_id}, {
+  var episode = Episodes.findOne({route:episode_route});
+  if (!episode) {
+    return [];
+  }
+  return Chapters.find({episode_id:episode._id}, {
     fields:{created_at:false, updated_at:false}
   });
 });
@@ -79,8 +90,11 @@ Meteor.publish('highlights_from_episode', function(episode_id) {
 });
 
 Meteor.publish('highlights_from_episode_route', function(episode_route) {
-  var episode_id = Episodes.findOne({route:episode_route})._id;
-  return Highlights.find({episode_id:episode_id}, {
+  var episode = Episodes.findOne({route:episode_route});
+  if (!episode) {
+    return [];
+  }
+  return Highlights.find({episode_id:episode._id}, {
     fields:{editor_id:false, created_at:false, updated_at:false}
   });
 });
