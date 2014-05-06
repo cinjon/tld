@@ -3,7 +3,10 @@ Meteor.startup(function() {
     signupCode: null,
     wrapLinks: true,
     homeRoute: '/',
-    dashboardRoute: '/'
+    dashboardRoute: '/',
+    signInTemplate: 'tlEntrySignIn',
+    signUpTemplate: 'tlEntrySignUp'
+
   });
 
   // AccountsEntry.config({
