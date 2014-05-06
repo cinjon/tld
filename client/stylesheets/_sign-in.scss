@@ -1,3 +1,9 @@
+.container-signin, .container-signup {
+  .entry {
+    border-radius: 0;
+    background: $cream1;
+  }
+}
 #signIn, #signUp {
   .btn.submit {
     width: 50%;
