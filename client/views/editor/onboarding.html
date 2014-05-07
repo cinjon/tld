@@ -1,31 +1,19 @@
 <template name="on_boarding">
   <div class="container container-full-height">
-    {{#if currentUser}}
-      {{#unless signed_legal}}
-      <div class="row">
-        <div id="welcome" class="col-sm-10 col-sm-offset-1">
-          <h1>Welcome to the Team</h1>
-          {{> on_boarding_welcome}}
-        </div>
+    <div class="row">
+      <div id="welcome" class="col-sm-10 col-sm-offset-1">
+        <h1>Welcome to the Team</h1>
+        <p class="welcome_message">Greetings from Timelined. We need a few signature before we can get you started. This will be really quick we promise.</p>
+        <ul class="welcome_message">
+          <li>
+            The first document is the agreement we use for our Editors. It's mostly for compensation and describes our relationship, which we hope you'll agree is going to be fantastic.
+          </li>
+          <li>
+            The second document is an IRS form called a W9. We're required to have it on file before we can pay you. You'll need to enter your name, address and SSN before digitally signing and dating.
+          </li>
+        </ul>
+        <p class="welcome_message">You can find and sign both of these documents <a href="https://www.hellosign.com/s/334cd7d0">here</a>. Please read both of them carefully before signing. If you have any questions about either one, <a href="mailto:admin@timelined.com?subject=Editor Documents">let us know</a>. We look forward to working with you!</p>
       </div>
-      {{/unless}}
-
-    {{else}}
-    {{> tlEntrySignIn}}
-    {{/if}}
+    </div>
   </div>
-</template>
-
-<!-- style="font-family: 'Roboto Slab', Menlo, Monaco, Consolas, 'Courier New', monospace;"> -->
-<template name="on_boarding_welcome">
-  <p class="welcome_message">Greetings from Timelined. We need a few signature before we can get you started. This will be really quick we promise.</p>
-  <ul class="welcome_message">
-    <li>
-      The first document is the agreement we use for our Editors. It's mostly for compensation and describes our relationship, which we hope you'll agree is going to be fantastic.
-    </li>
-    <li>
-      The second document is an IRS form called a W9. We're required to have it on file before we can pay you. You'll need to enter your name, address and SSN before digitally signing and dating.
-    </li>
-  </ul>
-  <p class="welcome_message">You can find and sign both of these documents <a href="https://www.hellosign.com/s/334cd7d0">here</a>. Please read both of them carefully before signing. If you have any questions about either one, <a href="mailto:admin@timelined.com?subject=Editor Documents">let us know</a>. We look forward to working with you!</p>
 </template>
