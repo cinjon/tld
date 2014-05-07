@@ -3,6 +3,9 @@
     border-radius: 0;
     background: $cream1;
   }
+  .email-option .line-thru:before {
+    background: $cream1;
+  }
 }
 #signIn, #signUp {
   .btn.submit {
