@@ -1,15 +1,18 @@
 <template name="about">
 <div class="container container-full-height container-about container-dark">
   <p>
-    <h1>About Timelined</h1>
+    <h1>Timelined: The Player that Loves Show Notes</h1>
   </p>
 
   <p>
-    <h3>Cinjon Resnick</h3>
+    <a href="https://twitter.com/timelinedhq"><img src="../../../../images/twitter_32.png"></a>
   </p>
 
-  <p>
-    <h3>Matt Tanase</h3>
-  </p>
+  {{> profile_picture matt}}
+  {{> profile_picture cinjon}}
 </div>
+</template>
+
+<template name="profile_picture">
+  <img src="../../../../images/{{name}}.jpg">
 </template>
