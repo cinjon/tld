@@ -24,6 +24,7 @@ Template.editor_mode_publish.events({
   'click #set_postedited_true': function(e, tmpl) {
     var episode = this;
     var episode_id = episode._id;
+    var user = Meteor.user();
     if (!episode.postedited && !is_editing_incomplete(episode)) {
       Meteor.call(
         'set_postedited_true', episode_id,
@@ -32,17 +33,21 @@ Template.editor_mode_publish.events({
             Meteor.call('send_email', {
               to: 'admin@timelined.com',
               from: 'admin@timelined.com',
-              subject: 'Episode submission from ' + Meteor.user().emails[0].address,
+              subject: 'Episode submission from ' + user.emails[0].address,
               text: "",
               html: publish_results(episode_id, Meteor.userId())
             });
             Meteor.call('send_email', {
-              to: Meteor.user().emails[0].address,
+              to: user.emails[0].address,
               from: 'admin@timelined.com',
               subject: 'Editor Submission',
               text: "Thanks so much for completing this.",
               html: ''
             });
+            Meteor.call(
+              'send_slack_notification', 'robots',
+              {text:'Published episode: ' + user.username + ' (' + user._id + ') published episode ' + episode_id});
+
             $('#set_postedited_success_modal').modal({
               keyboard:true, show:true
             })

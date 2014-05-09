@@ -7,10 +7,30 @@ if (Meteor.user() && !Meteor.user().signed_editor_legal) {
 // EVENTS
 Template.queue_helper.events({
   'click .claim_episode': function(e, tmpl) {
-    Meteor.call('claim_episode', this._id, Meteor.userId());
+    var user = Meteor.user();
+    var episode_id = this._id;
+    Meteor.call(
+      'claim_episode', episode_id, user._id,
+      function(error, result) {
+        if (!error) {
+          Meteor.call('send_slack_notification', 'robots',
+                      {text:'Claimed episode: ' + user.username + ' (' + user._id + ') claimed episode ' + episode_id})
+        }
+      }
+    );
   },
   'click .unclaim_episode': function(e, tmpl) {
-    Meteor.call('unclaim_episode', this._id, Meteor.userId());
+    var user = Meteor.user();
+    var episode_id = this._id;
+    Meteor.call(
+      'unclaim_episode', episode_id, user._id,
+      function(error, result) {
+        if (!error) {
+          Meteor.call('send_slack_notification', 'robots',
+                      {text:'Unclaimed episode: ' + user.username + ' (' + user._id + ') unclaimed episode ' + episode_id})
+        }
+      }
+    )
   },
 });
 
