@@ -31,17 +31,17 @@ Template.editor_mode_publish.events({
         function(error, result) {
           if (!error && result && result['success']) {
             Meteor.call('send_email', {
-              to: 'admin@timelined.com',
-              from: 'admin@timelined.com',
+              to: 'support@timelined.com',
+              from: 'support@timelined.com',
               subject: 'Episode submission from ' + user.emails[0].address,
               text: "",
               html: publish_results(episode_id, Meteor.userId())
             });
             Meteor.call('send_email', {
               to: user.emails[0].address,
-              from: 'admin@timelined.com',
-              subject: 'Editor Submission',
-              text: "Thanks so much for completing this.",
+              from: 'support@timelined.com',
+              subject: 'Timelined Episode Submission Received',
+              text: "Thanks so much for completing this. We've received your episode submission and will review it. If there are any issues, we'll be in touch.\n\nSincerely, \nTimelined Support\n",
               html: ''
             });
             Meteor.call(

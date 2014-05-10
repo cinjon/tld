@@ -44,14 +44,15 @@ if (CRON_RUNNING) {
     send_email_episode_warnings(episode_by_editor_id);
   })
 }
+
 var add_job = function(cron, num_intervals, job) {
   cron.addJob(num_intervals, job);
-}
+};
 
 var hours_ago = function(num_hours, now) {
   now = now || (new Date()).getTime();
   return now - num_hours * hours_ms;
-}
+};
 
 var send_email_episode_warnings = function(episodes_dict) {
   //episodes_dict is a dict of user_id:[episode objects]
@@ -60,18 +61,20 @@ var send_email_episode_warnings = function(episodes_dict) {
     var episodes = episodes_dict[user_id];
 
     var message = "";
-    message += "<p>Sir " + user.username + "</p>";
-    message += "<p>Please note that the following episodes will soon be returned to the queue. We'd love for you to complete them, so here's a six hour warning.</p>"
+    message += "<p>Greetings " + user.username + "</p>";
+    message += "<p>Please note that the following episodes will soon be returned to the queue. We'd love for you to complete them, so here's a six hour warning. If it's not completed by then, your work will be lost.</p>";
 
-    message += "<ul>"
+    message += "<ul>";
     episodes.forEach(function(episode) {
-      //TODO: how do we get the pathFor for episode url here?"
-      message += "<li><a href=#>" + episode.title + "</a></li>"
+      url = "http://www.timelined.com/editor/" + episode.show_route + "/" + episode._id;
+      message += "<li><a href='" + url + "'>" + episode.title + "</a></li>";
     });
-    message += "</ul>"
+    message += "</ul>";
 
-    var mail_fields = {'to':user.emails[0]['address'], 'from':'admin@timelined.com',
-                       'subject':'Dearest Editor - Six Hour Warning',
+    message += "<p>Sincerely,<br>Timelined Support</p>";
+
+    var mail_fields = {'to':user.emails[0]['address'], 'from':'support@timelined.com',
+                       'subject':'Dearest Editor - Six Hour Warning from Timelined',
                        'text':"", 'html':message}
     Meteor.call('send_email', mail_fields);
   }
