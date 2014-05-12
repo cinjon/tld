@@ -346,36 +346,22 @@ var add_entity_helper = function(episode, type) {
   }
 }
 
+var add_entity_to_episode = function(entity_type, episode_id, entity_id) {
+  Meteor.call(
+    'add_' + entity_type, episode_id, entity_id,
+    function(error, result) {
+      reset_typeaheads(episode_id);
+      toggle_add_entity(true, entity_type);
+    }
+  );
+}
+
 var destroy_typeaheads = function() {
   $('#speaker_input').typeahead('destroy','NoCached')
   $('#new_entity_input_guest').typeahead('destroy','NoCached');
   $('#new_entity_input_host').typeahead('destroy','NoCached');
   $('#new_entity_input_sponsor').typeahead('destroy','NoCached');
 };
-
-var fit_content_text_to_row = function(tmpl) {
-  //Reduces the size of the text to fit the row
-  //TODO: currently does not work and causes an infinite loop that crashes the tab
-
-  /*
-  var text = this.data.text;
-  var char_slice = 57;
-  var row_width = this.$('.row').width();
-  var highlight_image_width = this.$('.highlight_image').outerWidth();
-  var highlight_type_width = this.$('.highlight_type').outerWidth();
-  var highlight_content_width = this.$('.highlight_content').width();
-  var available_width = row_width - highlight_image_width - highlight_type_width;
-  while(highlight_content_width > available_width) {
-    text = text.slice(0,char_slice) + '...'
-    if (text.slice(0,1) == '"') {
-      text += '"'
-    }
-    this.$('.highlight_content').text(text);
-    highlight_content_width = this.$('.highlight_content').width();
-    char_slice -= 3;
-  }
-  */
-}
 
 var get_all_companies = function(episode_id) {
   return Companies.find({}, {fields:{name:true, _id:true}}).fetch().map(function(company) {
@@ -457,14 +443,10 @@ var _set_entity_typeahead = function(type, datums) {
     }
   ).on('typeahead:selected', function(event, datum, name) {
     //TODO: bug here with this bieng called multiple times.
-    Meteor.call(
-      'add_' + type, datum.episode_id, datum.id,
-      function(error, result) {
-        reset_typeaheads(datum.episode_id);
-        toggle_add_entity(true, type);
-      }
-    );
-  })
+    add_entity_to_episode(type, datum.episode_id, datum.id);
+  }).on('typeahead:autocompleted', function(event, datum, name) {
+    add_entity_to_episode(type, datum.episode_id, datum.id);
+  });
 }
 
 var set_entity_typeaheads = function(episode_id) {

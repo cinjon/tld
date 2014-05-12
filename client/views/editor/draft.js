@@ -280,6 +280,8 @@ set_editor_search = function() {
     }
   ).on('typeahead:selected', function(event, datum, name) {
     do_typeahead_type_of_highlight(datum);
+  }).on('typeahead:autocompleted', function(event, datum, name) {
+    do_typeahead_type_of_highlight(datum);
   });
 }
 
