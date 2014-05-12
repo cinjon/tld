@@ -41,7 +41,7 @@ Template.editor_mode_publish.events({
               to: user.emails[0].address,
               from: 'support@timelined.com',
               subject: 'Timelined Episode Submission Received',
-              text: "Thanks so much for completing this. We've received your episode submission and will review it. If there are any issues, we'll be in touch.\n\nSincerely, \nTimelined Support\n",
+              text: "Thanks so much for completing this. We've received your episode submission and will review it. If there are any change requests, we'll be in touch.\n\nSincerely, \nTimelined Support\n",
               html: ''
             });
             Meteor.call(
