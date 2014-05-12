@@ -6,11 +6,11 @@ Meteor.startup( function() {
 
 AccountsEntry.config({
   privacyUrl: '/privacy-policy',
-  termsUrl: '/terms-of-use',
+  termsUrl: '/terms-of-service',
   passwordSignupFields: 'USERNAME_AND_EMAIL',
   homeRoute: '/',
   dashboardRoute: '/',
-  profileRoute: '/',
+  profileRoute: '/profile',
   showSignupCode: false,
   signInTemplate: 'tlEntrySignIn',
   signUpTemplate: 'tlEntrySignUp'
