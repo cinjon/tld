@@ -42,7 +42,8 @@ Template.chapter_layout.helpers({
     var highlights = this.highlights;
     var index = 1;
     return Highlights.find({_id:{$in:highlights}}, {sort:{start_time:1}}).map(function(highlight) {
-      highlight.last = (index == highlights.length);
+      highlight.is_review = true; //For showing timestamp instead of remove button
+      highlight.last = (index == highlights.length); //For not letting chapters get created after this
       index += 1;
       return highlight;
     });

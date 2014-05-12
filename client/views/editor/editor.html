@@ -153,11 +153,15 @@
     </div>
     {{/if}}
   </div>
+  {{#if is_review}}
+  {{> editor_highlight_time}}
+  {{else}}
   <div class="remove_highlight_wrap">
     <button class="btn btn-default btn-xs remove_highlight">
       <i class="fa fa-times"></i>
     </button>
   </div>
+  {{/if}}
 </template>
 
 <template name="small_person_display">
