@@ -218,10 +218,12 @@ Template.editor_highlight.events({
   'click .highlight_content': function(e, tmpl) {
     Session.set('is_editing_highlight_content', this._id);
     Session.set('is_editing_highlight_url', false);
+    set_player_current_time(this.start_time);
   },
   'click .highlight_url': function(e, tmpl) {
     Session.set('is_editing_highlight_url', this._id);
     Session.set('is_editing_highlight_content', false);
+    set_player_current_time(this.start_time);
   },
   'click .remove_highlight': function(e, tmpl) {
     Meteor.call('remove_highlight', this._id);

@@ -148,3 +148,9 @@ get_player_duration = function() {
 set_timeupdate = function(doFunc) {
   player.on('timeupdate', doFunc)
 }
+
+set_player_current_time = function(seconds) {
+  if (seconds) {
+    player.currentTime(seconds);
+  }
+}
