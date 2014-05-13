@@ -149,12 +149,13 @@ def put_episode_in_mongo(entry, filename, show, episodes, chapters)
     key = %x{md5sum #{WORKING + filename}}
     key = key.split[0]
   end
+  title = scrub_title(entry['title'], episodes)
   episode = {
     :_id => generate_meteor_id,
     :type => episode_type(filename),
     :format => format(filename),
-    :title => entry['title'].gsub(/[^0-9a-z ]/i, ''),
-    :route => entry['title'].gsub(/[^0-9a-z ]/i, '').gsub(' ', '-'),
+    :title => title,
+    :route => title.gsub(' ', '-'),
     :number => -1,
     :storage_key => key,
     :show_route => show['route'],
@@ -196,6 +197,21 @@ def rename_file( filename )
   File.rename(WORKING + filename, WORKING + keyname)
   puts "Renaming #{filename} to #{keyname}..."
   return keyname
+end
+
+def scrub_title(title, episodes)
+  title = title.downcase.gsub(/[^0-9a-z ]/i, '')
+  title = unique_title(title, episodes)
+  return title
+end
+
+def unique_title(title, episodes, count=1)
+  if episodes.find_one("title" => title )
+    title += " #{count}"
+    count += 1
+    unique_title(title, episodes, count)
+  end
+  return title
 end
 
 def upload_file( keyname )
