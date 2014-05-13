@@ -77,6 +77,9 @@ var load_video = function(seconds, highlights, chapters) {
     player = this;
     player.play();
     player.pause();
+    window.setTimeout(function() {
+      player.trigger("timeupdate"); // get actual duration to show
+    }, 500);
 
     set_timeupdate(function() {
       Session.set('player_time', Math.floor(player.currentTime()));
