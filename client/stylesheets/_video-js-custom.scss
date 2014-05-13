@@ -9,11 +9,11 @@
     bottom: 10px;
     background: fade-out($smoke3, .3);
     color: $cream1;
+    overflow: hidden;
     .summary-inner {
       padding:20px;
       line-height: 1.4;
       font-size: 18px;
-      overflow: scroll;
     }
   }
   .video-js {
