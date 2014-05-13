@@ -6,6 +6,7 @@ require 'open-uri'
 require 'fileutils'
 require 'mp3info'
 require 'awesome_print'
+require 'youtube_it'
 require 'mongo'
 include Mongo
 
@@ -16,7 +17,7 @@ LIMIT = 1
 
 # setup mongo connection
 
-MODE = "dev"
+# MODE = "dev"
 # MODE = "prod"
 # MODE = "staging"
 
@@ -100,9 +101,11 @@ def generate_meteor_id(length=17)
   return value
 end
 
-def length_in_seconds(filename)
+def length_in_seconds(filename, key)
   if filename == "youtube"
-    return 0
+    youtube_client = YouTubeIt::Client.new(:dev_key => "AIzaSyAoi9jAbPNAiYGb_NYqr0icQqUCrbjpNJg")
+    video = youtube_client.video_by(key)
+    return video.duration || 0
   else
     Mp3Info.open(WORKING + filename) do |mp3|
       l = mp3.length
@@ -165,7 +168,7 @@ def put_episode_in_mongo(entry, filename, show, episodes, chapters)
     :claimed_at => nil,
     :claimed_previously_by => nil,
     :editor_id => nil,
-    :length_in_seconds => length_in_seconds(filename),
+    :length_in_seconds => length_in_seconds(filename, key),
     :created_at => Time.now,
     :updated_at => Time.now,
     :published => false,
