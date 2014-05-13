@@ -233,10 +233,22 @@ var is_editing_incomplete = function(episode) {
 
 var publish_results = function(episode_id, user_id)  {
   var message = "";
+  episode = Episodes.findOne({_id: episode_id});
+  message += "<p>SUMMARY: " + episode.summary + "</p>";
   Chapters.find({episode_id:episode_id}, {sort:{start_time:1}}).forEach(function(chapter) {
-    message += "<p>" + chapter.title + "</p>"
+    message += "<p>CHAPTER: " + chapter.title + "</p>";
     Highlights.find({chapter_id:chapter._id}, {sort:{start_time:1}}).forEach(function(highlight) {
-      message += "<p>" + highlight.text + "</p>";
+      message += "<p>" + highlight.start_time + " - ";
+      if (highlight.person_id) {
+        person = People.findOne({_id: highlight.person_id});
+        message += person.first_name + " " + person.last_name + ": ";
+      } else if (highlight.company_id) {
+        company = Companies.findOne({_id: highlight.company_id});
+        message += company.name + ": ";
+      } else if (highlight.url) {
+        message += highlight.url + " - ";
+      }
+      message += highlight.text + "</p>";
       message += "<hr>";
     });
     message += "<hr>";
