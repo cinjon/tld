@@ -1,6 +1,6 @@
 <template name="player">
   <div class="video-wrap vjs-paused">
-    <video id="player" class="video-js vjs-default-skin vjs-big-play-centered" data-type="{{type}}" width="auto" height="{{height}}" preload="auto">
+    <video id="player" class="video-js vjs-default-skin vjs-big-play-centered" data-type="{{type}}" width="auto" height="{{height}}">
       <source src="{{s3 storage_key format type url}}" type="{{type}}/{{format}}">
     </video>
     <div class="summary"><div class="summary-inner">{{summary}}</div></div>

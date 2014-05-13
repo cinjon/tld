@@ -28,4 +28,26 @@
       opacity: 0;
     }
   }
+
+  // forward/back
+  .vjs-play-control {
+    margin: 0 3em;
+    width: 4em;
+  }
+  .vjs-rewind-control, .vjs-forward-control {
+    width: 3em;
+    cursor: pointer;
+    position: absolute;
+    &:before {
+      font-family: FontAwesome;
+      content: "\f0e2"; // rotate left
+    }
+  }
+  .vjs-forward-control {
+    left: 7em;
+    &:before {
+      content: "\f01e"; // rotate right
+    }
+  }
+
 }

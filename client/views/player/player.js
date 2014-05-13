@@ -108,6 +108,49 @@ var load_video = function(seconds, highlights, chapters) {
       parent.removeClass("vjs-paused");
       parent.addClass("vjs-playing");
     });
+
+    // add forward/back
+    videojs.SkipButton = videojs.Button.extend({
+      init: function(player, options) {
+        videojs.Button.call(this, player, options);
+        this.on("click", this.onClick);
+      }
+    });
+
+    videojs.SkipButton.prototype.onClick = function(e) {
+      var now = player.currentTime();
+      if ($(e.target).hasClass("vjs-forward-control")) {
+        now += 15;
+      } else {
+        now -= 15;
+      }
+      if (now < 0) {
+        now = 0;
+      }
+      if (now > player.duration()) {
+        now = player.duration();
+      }
+      player.currentTime(now);
+    }
+
+    var rewind = new videojs.SkipButton(player, {
+      el: videojs.Component.prototype.createEl(null, {
+        className: "vjs-control vjs-rewind-control",
+        innerHTML: "<div class='vjs-control-content'><div class='vjs-control-text'>Rewind</div></div>",
+        role: "button"
+      })
+    });
+    player.controlBar.addChild(rewind);
+
+    var forward = new videojs.SkipButton(player, {
+      el: videojs.Component.prototype.createEl(null, {
+        className: "vjs-control vjs-forward-control",
+        innerHTML: "<div class='vjs-control-content'><div class='vjs-control-text'>Forward</div></div>",
+        role: "button"
+      })
+    });
+    player.controlBar.addChild(forward);
+
   });
 };
 
