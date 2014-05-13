@@ -22,6 +22,9 @@
                   Length
                 </th>
                 <th>
+                  Payment
+                </th>
+                <th>
                   Date
                 </th>
                 <th></th>
@@ -43,6 +46,9 @@
                 </td>
                 <td>
                   {{format_seconds_to_clock length_in_seconds}}
+                </td>
+                <td>
+                  {{format_payment_amount length_in_seconds}}
                 </td>
                 <td>
                   {{prettify_date published}}

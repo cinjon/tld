@@ -18,6 +18,10 @@ UI.registerHelper("episode_is_unclaimed", function(editor_id) {
   return editor_id == null;
 });
 
+UI.registerHelper("format_payment_amount", function(seconds) {
+  return format_payment_amount(seconds);
+});
+
 UI.registerHelper("format_seconds_to_clock", function(seconds) {
   //assumes seconds >= 0, formats into 01:12:42 format
   return format_seconds_to_clock(seconds);
@@ -83,6 +87,13 @@ var _format_time_part = function(time) {
     return time.toString();
   }
 };
+
+var format_payment_amount = function (seconds) {
+  // payment amount = $15/hour = .004167 dollars per second
+  var rate = .004167;
+  var amount = (rate * seconds).toFixed(2);
+  return "$" + amount.toString();
+}
 
 var format_seconds_to_clock = function(seconds) {
   var hours = Math.floor(seconds / 3600);
