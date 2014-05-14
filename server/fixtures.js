@@ -123,6 +123,15 @@ Meteor.startup( function() {
       feed_checked_at: timestamp
     });
 
+    var randomshow_id = Shows.insert({
+      name: "The Random Show",
+      homepage: "http://fourhourworkweek.com/category/random/",
+      feed: "http://www.squealingrat.org/random/feed/",
+      description: "A show hosted by Kevin Rose and Tim Ferriss, and edited by Glenn McElhose.",
+      artwork: "http://a4.mzstatic.com/us/r30/Podcasts/v4/b5/1e/9b/b51e9bfe-5be5-288e-1e42-e5834b0078d0/mza_3104052315344185788.170x170-75.jpg",
+      feed_checked_at: timestamp
+    });
+
   }
 
   // EPISODES
@@ -204,6 +213,14 @@ Meteor.startup( function() {
 
     var john_siracusa = make_person(
       "john", "siracusa", "siracusa", "http://hypercritical.co/", [], [], true
+    );
+
+    var kevin_rose = make_person(
+      "kevin", "rose", "kevinrose", "http://about.me/kevinrose", [], [], true
+    );
+
+    var tim_ferriss = make_person(
+      "tim", "ferriss", "tferriss", "http://fourhourworkweek.com", [], [], true
     );
   }
 
