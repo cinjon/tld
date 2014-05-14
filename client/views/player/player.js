@@ -1,10 +1,14 @@
 var player = null;
 var default_marker_setting = {
   markerStyle: {
-    'width':'8px',
-    'background-color': 'orange'
+    'width':'4px',
+    'background-color': '#df5445' // coral
   },
-}
+  markerTip: {
+    default_text: "",
+    show_colon: false
+  }
+};
 
 Template.player.rendered = function() {
   if (this.data) {
@@ -42,7 +46,7 @@ var _add_cuepoint = function(namespace, start, end, onStart, onEnd, params) {
 
 var add_highlight_cuepoint = function(highlight) {
   _add_cuepoint(
-    "highlight", highlight.start_time, highlight.start_time + 15,
+    "highlight", highlight.start_time, highlight.start_time + 5,
     function(params) {
       Session.set('current_chapter_cue', params.chapter_id);
       Session.set('current_highlight_cue', params.id)
@@ -118,19 +122,11 @@ var load_video = function(seconds, highlights, chapters) {
     });
 
     videojs.SkipButton.prototype.onClick = function(e) {
-      var now = player.currentTime();
+      var direction = "back";
       if ($(e.target).hasClass("vjs-forward-control")) {
-        now += 15;
-      } else {
-        now -= 15;
+        direction = "forward";
       }
-      if (now < 0) {
-        now = 0;
-      }
-      if (now > player.duration()) {
-        now = player.duration();
-      }
-      player.currentTime(now);
+      player_skip(direction, 15);
     }
 
     var rewind = new videojs.SkipButton(player, {
@@ -159,13 +155,20 @@ var player_skip = function(direction, amount) {
     return;
   }
   amount = amount || 5;
-  time = videojs("#player").currentTime();
-  if ( direction == 'back' )
-  {
-    videojs("#player").currentTime(time - amount);
+  var player = videojs("#player");
+  var now = player.currentTime();
+  if (direction === "back") {
+    now -= amount;
   } else {
-    videojs("#player").currentTime(time + amount);
+    now += amount;
   }
+  if (now < 0) {
+    now = 0;
+  }
+  if (now > player.duration()) {
+    now = player.duration();
+  }
+  player.currentTime(now);
   return;
 };
 
@@ -180,10 +183,16 @@ var player_toggle = function () {
 
 var set_markers = function(chapters, setting) {
   setting = setting || default_marker_setting;
+  var breaks = [];
+  var texts = [];
+  chapters.forEach(function(chapter) {
+    breaks.push(chapter.start_time);
+    texts.push(text_limit(chapter.title, 20));
+  });
   player.markers({
     setting: setting,
-    marker_breaks: chapters.map(function(chapter) {return chapter.start_time}),
-    marker_text: chapters.map(function(chapter) {return text_limit(chapter.title, 20)})
+    marker_breaks: breaks,
+    marker_text: texts
   });
 }
 
