@@ -49,6 +49,7 @@ Template.viewer.helpers({
       format: this.episode.format,
       type: this.episode.type,
       url: this.episode.feed.url,
+      summary: this.episode.summary,
       seconds: 0,
       highlights: Highlights.find({_id:{$in:this.episode.highlights}}, {
         fields:{start_time:true, chapter_id:true},
