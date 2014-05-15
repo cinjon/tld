@@ -30,7 +30,8 @@
 
   //configure environmental
   "env": {
-    "ROOT_URL": "http://timelined.com"
+    "ROOT_URL": "http://timelined.com",
+    "DISABLE_WEBSOCKETS": "1"
   },
 
   //meteor-up checks if the app comes online just after the deployment
