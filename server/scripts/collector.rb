@@ -180,6 +180,12 @@ def put_episode_in_mongo(entry, filename, show, episodes, chapters)
   entry.each do |key, value|
     episode[:feed]["#{key}"] = value
   end
+
+  # youtube specifc stuff here, will refactor this when we get more data
+  if episode.format == 'youtube'
+    episode[:feed][:summary] = youtube_summary(key)
+  end
+
   chapter_id = put_chapter_in_mongo(episode[:_id], chapters)
   episode[:chapters][0] = chapter_id
   id = episodes.insert(episode)
@@ -228,6 +234,12 @@ end
 
 def youtube(entry, count, show, episodes, chapters)
   put_episode_in_mongo(entry, "youtube", show, episodes, chapters)
+end
+
+def youtube_summary(key)
+  youtube_client = YouTubeIt::Client.new(:dev_key => "AIzaSyAoi9jAbPNAiYGb_NYqr0icQqUCrbjpNJg")
+  video = youtube_client.video_by(key)
+  return video.description || ""
 end
 
 
