@@ -13,7 +13,7 @@ Template.queue_helper.events({
       'claim_episode', episode_id, user._id,
       function(error, result) {
         if (!error) {
-          Meteor.call('send_slack_notification', 'robots',
+          Meteor.call('send_slack_notification', 'editors',
                       {text:'Claimed episode: ' + user.username + ' (' + user._id + ') claimed episode ' + episode_id})
         }
       }
@@ -26,7 +26,7 @@ Template.queue_helper.events({
       'unclaim_episode', episode_id, user._id,
       function(error, result) {
         if (!error) {
-          Meteor.call('send_slack_notification', 'robots',
+          Meteor.call('send_slack_notification', 'editors',
                       {text:'Unclaimed episode: ' + user.username + ' (' + user._id + ') unclaimed episode ' + episode_id})
         }
       }
