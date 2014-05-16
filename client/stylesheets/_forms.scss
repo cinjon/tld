@@ -14,6 +14,12 @@
   }
 }
 
+@mixin dotted-style-nonwhite() {
+  background: transparent;
+  border: 2px dashed $ash1;
+  color: $ash1;
+}
+
 @mixin dotted-input() {
   color: $white;
   &:focus {
