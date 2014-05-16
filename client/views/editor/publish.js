@@ -105,18 +105,16 @@ Template.editable_profile.events({
   'keyup #set_twitter, blur #set_twitter': function(e, tmpl) {
     var input = $(e.target);
     var val = input.text().trim();
-    if (e.keyCode == 13 || e.type == "focusout") {
-      e.preventDefault();
-      if (val != '') {
-        if (this.name) {
-          Meteor.call('set_twitter_company', this._id, val);
-        } else {
-          Meteor.call('set_twitter_person', this._id, val);
-        }
+    if ((e.keyCode == 13 || e.type == "focusout") && this.twitter != '' && this.twitter != val) {
+      if (this.name) {
+        Meteor.call('set_twitter_company', this._id, val);
+      } else {
+        Meteor.call('set_twitter_person', this._id, val);
       }
-    } else if (e.keyCode == 27) {
+      input.text(val);
+      input.blur();
+    } else if (e.keyCode == 27) { // restore original
       e.preventDefault();
-      // restore original
       input.text(this.twitter);
     }
   },
