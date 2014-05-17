@@ -5,6 +5,7 @@ require 'feedjira'
 require 'open-uri'
 require 'fileutils'
 require 'mp3info'
+require 'mp4info'
 require 'awesome_print'
 require 'youtube_it'
 require 'mongo'
@@ -102,15 +103,22 @@ def generate_meteor_id(length=17)
 end
 
 def length_in_seconds(filename, key)
-  if filename == "youtube"
+  file_format = format(filename)
+  if file_format == "youtube"
     youtube_client = YouTubeIt::Client.new(:dev_key => "AIzaSyAoi9jAbPNAiYGb_NYqr0icQqUCrbjpNJg")
     video = youtube_client.video_by(key)
     return video.duration || 0
-  else
+  elsif file_format == "mp4"
+    Mp4Info.open(WORKING + filename) do |mp4|
+      return mp4.secs || 0
+    end
+  elsif file_format == "mp3"
     Mp3Info.open(WORKING + filename) do |mp3|
       l = mp3.length
-      return l.round
+      return l.round || 0
     end
+  else
+    return 0
   end
 end
 
@@ -182,7 +190,7 @@ def put_episode_in_mongo(entry, filename, show, episodes, chapters)
   end
 
   # youtube specifc stuff here, will refactor this when we get more data
-  if episode.format == 'youtube'
+  if episode[:format] == 'youtube'
     episode[:feed][:summary] = youtube_summary(key)
   end
 
