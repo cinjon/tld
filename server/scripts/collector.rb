@@ -107,7 +107,7 @@ def length_in_seconds(filename, key)
     youtube_client = YouTubeIt::Client.new(:dev_key => "AIzaSyAoi9jAbPNAiYGb_NYqr0icQqUCrbjpNJg")
     video = youtube_client.video_by(key)
     return video.duration || 0
-  elsif file_format == "mp3" || "mp4"
+  elsif file_format == "mp3" || file_format == "mp4"
     info = AudioInfo.open(WORKING + filename)
     return info.length || 0
   else
