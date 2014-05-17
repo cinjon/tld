@@ -4,8 +4,7 @@ require 'rubygems'
 require 'feedjira'
 require 'open-uri'
 require 'fileutils'
-require 'mp3info'
-require 'mp4info'
+require 'audioinfo'
 require 'awesome_print'
 require 'youtube_it'
 require 'mongo'
@@ -108,15 +107,9 @@ def length_in_seconds(filename, key)
     youtube_client = YouTubeIt::Client.new(:dev_key => "AIzaSyAoi9jAbPNAiYGb_NYqr0icQqUCrbjpNJg")
     video = youtube_client.video_by(key)
     return video.duration || 0
-  elsif file_format == "mp4"
-    Mp4Info.open(WORKING + filename) do |mp4|
-      return mp4.secs || 0
-    end
-  elsif file_format == "mp3"
-    Mp3Info.open(WORKING + filename) do |mp3|
-      l = mp3.length
-      return l.round || 0
-    end
+  elsif file_format == "mp3" || "mp4"
+    info = AudioInfo.open(WORKING + filename)
+    return info.length || 0
   else
     return 0
   end
