@@ -115,6 +115,18 @@ def length_in_seconds(filename, key)
   end
 end
 
+def make_episode_route(title)
+  # Takes a title and produces a route:
+  # Strips away all chars not in [\d, \w, -]
+  # Joins all "words" with dashes
+  # "#86: A talk with Cue, a device for smartphone-connected lab tests" -->
+  # "86-a-talk-with-cue-a-device-for-smartphone-connected-lab-tests"
+  stripped_title_parts = title.downcase.strip.gsub('.', '-').gsub(/[^0-9a-z\-/i, '').split
+  filtered_title_parts = stripped_title_parts.select{ |word| word != '' }
+  return filtered_title_parts.join('-')
+end
+
+
 def podcast(entry, count, show, episodes, chapters)
   filename = download_file(entry, count)
   put_episode_in_mongo(entry, filename, show, episodes, chapters)
@@ -150,7 +162,10 @@ def put_episode_in_mongo(entry, filename, show, episodes, chapters)
     key = %x{md5sum #{WORKING + filename}}
     key = key.split[0]
   end
-  title = scrub_title(entry['title'], episodes)
+
+  title = set_title_count(entry['title'], episodes)
+  route = make_episode_route(title)
+
   episode = {
     :_id => generate_meteor_id,
     :type => episode_type(filename),
@@ -206,17 +221,14 @@ def rename_file( filename )
   return keyname
 end
 
-def scrub_title(title, episodes)
-  title = title.downcase.gsub(/[^0-9a-z ]/i, '')
-  title = unique_title(title, episodes)
-  return title
-end
-
-def unique_title(title, episodes, count=1)
-  if episodes.find_one("title" => title )
+def set_title_count(title, episodes)
+  # If there is more than one episode with this title, then add a # on the end to signify that
+  # This comes into play in two cases:
+  # A. We have an episode without a show that needs distinction from another episode
+  # B. We have a show that doesn't like to give us episodes. So we make up an order to show users
+  count = episodes.find("title" => title).count()
+  if count > 0
     title += " #{count}"
-    count += 1
-    unique_title(title, episodes, count)
   end
   return title
 end
