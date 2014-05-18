@@ -12,6 +12,7 @@
     "mailgun": {},
     "bourbon": {},
     "cron-tick": {},
-    "reactive-table": {}
+    "reactive-table": {},
+    "apm": {}
   }
 }
