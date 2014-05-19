@@ -8,26 +8,26 @@ if (Meteor.user() && !Meteor.user().signed_editor_legal) {
 Template.queue_helper.events({
   'click .claim_episode': function(e, tmpl) {
     var user = Meteor.user();
-    var episode_id = this._id;
+    var episode= Episodes.findOne({_id:this._id});
     Meteor.call(
-      'claim_episode', episode_id, user._id,
+      'claim_episode', episode._id, user._id,
       function(error, result) {
         if (!error) {
           Meteor.call('send_slack_notification', 'editors',
-                      {text:'Claimed episode: ' + user.username + ' (' + user._id + ') claimed episode ' + episode_id})
+                      {text:'Claimed: ' + user.username + ' is working on ' + episode.route})
         }
       }
     );
   },
   'click .unclaim_episode': function(e, tmpl) {
     var user = Meteor.user();
-    var episode_id = this._id;
+    var episode = Episodes.findOne({_id:this._id});
     Meteor.call(
-      'unclaim_episode', episode_id, user._id,
+      'unclaim_episode', episode._id, user._id,
       function(error, result) {
         if (!error) {
           Meteor.call('send_slack_notification', 'editors',
-                      {text:'Unclaimed episode: ' + user.username + ' (' + user._id + ') unclaimed episode ' + episode_id})
+                      {text:'Unclaimed: ' + user.username + ' is done with ' + episode.route})
         }
       }
     )

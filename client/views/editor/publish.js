@@ -46,7 +46,7 @@ Template.editor_mode_publish.events({
             });
             Meteor.call(
               'send_slack_notification', 'editors',
-              {text:'Published episode: ' + user.username + ' (' + user._id + ') published episode ' + episode_id});
+              {text:'Published: ' + user.username + ' published episode ' + episode_id});
 
             $('#set_postedited_success_modal').modal({
               keyboard:true, show:true
