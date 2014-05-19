@@ -3,6 +3,7 @@
 //   name: string,
 //   homepage: url,
 //   feed: url,      // for RSS imports
+//   feed_active: boolean,
 //   description: string,
 //   created_at: date,
 //   updated_at: date,
@@ -23,6 +24,13 @@ Shows = new Meteor.Collection('shows', {
       feed: {
         type: String,
         label: 'RSS Feed Link'
+      },
+      feed_active: {
+        type: Boolean,
+        label: 'Feed Active',
+        autoValue: function () {
+          return true;
+        }
       },
       description: {
         type: String,

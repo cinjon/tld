@@ -28,6 +28,7 @@ Meteor.startup( function() {
       name: "Back to Work",
       homepage: "http://5by5.tv/b2w",
       feed: "http://feeds.5by5.tv/b2w",
+      feed_active: true,
       description: "Back to Work is an award winning talk show with Merlin Mann and Dan Benjamin discussing productivity, communication, work, barriers, constraints, tools, and more.",
       artwork: "http://icebox.5by5.tv/images/broadcasts/19/cover_quarter.jpg",
       feed_checked_at: timestamp
@@ -37,6 +38,7 @@ Meteor.startup( function() {
       name: "Nerdist",
       homepage: "http://www.nerdist.com/podcast/nerdist/",
       feed: "http://nerdist.libsyn.com/rss",
+      feed_active: true,
       description: "I am Chris Hardwick. I am on TV a lot and have a blog at nerdist.com. This podcast is basically just me talking about stuff and things with my two nerdy friends Jonah Ray and Matt Mira, and usually someone more famous than all of us. Occasionally we swear because that is fun. I hope you like it, but if you don't I'm sure you will not hesitate to unfurl your rage in the 'reviews' section because that's how the Internet works.",
       artwork: "http://www.nerdist.com/wp-content/uploads/2011/10/nerdistpodcastv2.png",
       feed_checked_at: timestamp
@@ -46,6 +48,7 @@ Meteor.startup( function() {
       name: "WTF with Marc Maron",
       homepage: "http://www.wtfpod.com/podcast",
       feed: "http://wtfpod.libsyn.com/rss",
+      feed_active: true,
       description: "Comedian Marc Maron is tackling the most complex philosophical question of our day - WTF? He'll get to the bottom of it with help from comedian friends, celebrity guests and the voices in his own head.",
       artwork: "https://pbs.twimg.com/profile_images/423276205/Marc_Avatar.jpg",
       feed_checked_at: timestamp
@@ -55,6 +58,7 @@ Meteor.startup( function() {
       name: "The Joe Rogan Experience",
       homepage: "http://podcasts.joerogan.net/",
       feed: "http://joeroganexp.joerogan.libsynpro.com/rss",
+      feed_active: true,
       description: "The Joe Rogan Experience podcast is a long form conversation hosted by comedian, UFC color commentator, and actor Joe Rogan with friends and guests that have included comedians, actors, musicians, MMA instructors and commentators, authors, artists, and porn stars.",
       artwork: "http://upload.wikimedia.org/wikipedia/en/6/60/The_Joe_Rogan_Experience.jpg",
       feed_checked_at: timestamp
@@ -64,6 +68,7 @@ Meteor.startup( function() {
       name: "Quit!",
       homepage: "http://5by5.tv/quit",
       feed: "http://feeds.5by5.tv/quit",
+      feed_active: true,
       description: "Ever quit a job? Ever redefined yourself within one? Ever started something and won big ... or failed? QUIT! is a call-in show helping people sort out their lives, reevaluate their options, kick their crummy jobs, and start something awesome. Call in live at 512-518-5714 or leave a voicemail at 512-222-8141.",
       artwork: "http://icebox.5by5.tv/images/broadcasts/44/cover_quarter.jpg",
       feed_checked_at: timestamp
@@ -73,6 +78,7 @@ Meteor.startup( function() {
       name: "The Talk Show",
       homepage: "http://www.muleradio.net/thetalkshow/",
       feed: "http://feeds.muleradio.net/thetalkshow",
+      feed_active: true,
       description: "Sort of like the director’s commentary track for Daring Fireball.",
       artwork: "http://www.muleradio.net/images/shows/thetalkshow/hero.jpg",
       feed_checked_at: timestamp
@@ -82,6 +88,7 @@ Meteor.startup( function() {
       name: "The NextMarket Podcast",
       homepage: "http://nextmarket.co/pages/podcast",
       feed: "http://feeds.feedburner.com/soundcloud/JEcj",
+      feed_active: true,
       description: "The NextMarket podcast features Michael Wolf's conversations with some of the biggest and most interesting names in tech, media and podcasting.",
       artwork: "http://www.launchpaddigitalmedia.com/images/podcast/300x300/NextMarket-Podcast-Logo-300-by-300.jpg",
       feed_checked_at: timestamp
@@ -91,6 +98,7 @@ Meteor.startup( function() {
       name: "a16z Podcast",
       homepage: "http://a16z.com/tag/podcast/",
       feed: "http://feeds.soundcloud.com/users/soundcloud:users:62921190/sounds.rss",
+      feed_active: true,
       description: "Podcast by a16z.",
       artwork: "https://i1.sndcdn.com/avatars-000073120599-46q7im-t500x500.jpg?77d7a69",
       feed_checked_at: timestamp
@@ -100,6 +108,7 @@ Meteor.startup( function() {
       name: "Accidental Tech Podcast",
       homepage: "http://atp.fm/",
       feed: "http://atp.fm/episodes?format=rss",
+      feed_active: true,
       description: "Three nerds discussing tech, Apple, programming, and loosely related matters.",
       artwork: "http://a3.mzstatic.com/us/r30/Podcasts6/v4/45/be/74/45be745d-c0ce-ecc0-d27a-acecbd8b735d/mza_2368113117096256823.170x170-75.jpg",
       feed_checked_at: timestamp
@@ -109,6 +118,7 @@ Meteor.startup( function() {
       name: "The Tim Ferriss Show",
       homepage: "http://fourhourworkweek.com/category/the-tim-ferriss-show/",
       feed: "http://feeds.feedburner.com/thetimferrissshow",
+      feed_active: true,
       description: "Tim Ferriss is a self-experimenter and bestselling author, best known for The 4-Hour Workweek, which has been translated into 40+ languages. Newsweek calls him 'the world's best human guinea pig', and The New York Times calls him 'a cross between Jack Welch and a Buddhist monk.' In this show, he deconstructs world-class performers from eclectic areas (investing, chess, pro sports, etc.), digging deep to find the tools, tactics, and tricks that listeners can use.",
       artwork: "http://fhww.files.wordpress.com/2014/04/timferrissshowart-500x500.jpg",
       feed_checked_at: timestamp
@@ -118,6 +128,7 @@ Meteor.startup( function() {
       name: "Foundation",
       homepage: "http://foundation.bz/",
       feed: "http://gdata.youtube.com/feeds/base/users/kevinrose/uploads?format=5",
+      feed_active: true,
       description: "Kevin Rose interviews entrepreneurs.",
       artwork: "http://jsndev.net/wp-content/uploads/2011/01/foundation-podcast.jpeg",
       feed_checked_at: timestamp
@@ -127,6 +138,7 @@ Meteor.startup( function() {
       name: "The Random Show",
       homepage: "http://fourhourworkweek.com/category/random/",
       feed: "http://www.squealingrat.org/random/feed/",
+      feed_active: true,
       description: "A show hosted by Kevin Rose and Tim Ferriss, and edited by Glenn McElhose.",
       artwork: "http://a4.mzstatic.com/us/r30/Podcasts/v4/b5/1e/9b/b51e9bfe-5be5-288e-1e42-e5834b0078d0/mza_3104052315344185788.170x170-75.jpg",
       feed_checked_at: timestamp

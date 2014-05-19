@@ -84,6 +84,9 @@ def episode_type(filename)
   if extension == ".mp4"
     return "video"
   end
+  if extension == ".m4a"
+    return "audio"
+  end
 end
 
 def feed_type(url)
@@ -254,7 +257,7 @@ end
 
 # MAIN
 
-all_shows = shows.find
+all_shows = shows.find("feed_active" => true)
 puts "Getting shows from Mongo..."
 all_shows.each do |show|
   puts "Working on #{show["name"]}..."
