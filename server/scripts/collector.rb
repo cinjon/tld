@@ -110,10 +110,10 @@ end
 def generate_episode_route(title, episodes)
   # allow alphanumerics, '-', ' ', '_' chars to stay
   # this might grow to handle more special chars like '&'
-  title = title.downcase.gsub(/[^0-9a-z-_ ]/i, '')
+  title = title.downcase.strip.gsub(/[^0-9a-z-_ ]/i, '').gsub("\n", '')
   title = ensure_unique_route(title, episodes)
   # replace ' ' and '_' with '-'
-  route = title.gsub(/[ _]/, '-')
+  route = title.gsub(/[ _]/, '-').squeeze('-')
   return route
 end
 
