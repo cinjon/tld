@@ -18,7 +18,7 @@
 <template name="episode_statistics">
   <div class="editor_account_episode">
     <div class="episode_title left">
-      <b><a href="{{pathFor 'editor' route=show_route episode_id=_id}}">{{title}}</a></b>
+      <b><a href="{{pathFor 'editor' show_route=show_route episode_route=route}}">{{title}}</a></b>
     </div>
 
     {{#if ../claimed}}
