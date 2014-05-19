@@ -3,7 +3,7 @@
 //   name: string,
 //   homepage: url,
 //   feed: url,      // for RSS imports
-//   feed_active: boolean,
+//   feed_active: boolean, // tells collector.rb if this is ok to crawl
 //   description: string,
 //   created_at: date,
 //   updated_at: date,

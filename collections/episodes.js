@@ -1,7 +1,7 @@
 // Episodes
 // {
 //   type: string,    // audio or video
-//   format: string,   // encoding format: mp3, mp4, avi
+//   format: string,   // encoding format: mp3, mp4, avi, m4a
 //   title: string,  // if defined
 //   route: string, // url slug
 //   number: number, // for podcast episode #s
