@@ -18,6 +18,16 @@ UI.registerHelper("episode_is_unclaimed", function(editor_id) {
   return editor_id == null;
 });
 
+UI.registerHelper("format_for_videojs", function (type, format) {
+  var combo = "";
+  if (type == "audio" && format == "m4a") {
+    combo = "audio/mp4";
+  } else {
+    combo = type + "/" + format;
+  }
+  return combo
+});
+
 UI.registerHelper("format_payment_amount", function(seconds) {
   return format_payment_amount(seconds);
 });
@@ -40,7 +50,7 @@ UI.registerHelper("obj_number_of", function(key) {
     return this[key].length;
   }
   return "<error>"
-})
+});
 
 UI.registerHelper("prettify_date", function(date) {
   return new Date(date).toDateString('yyyy-MM-dd')
