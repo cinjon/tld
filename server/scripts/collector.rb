@@ -134,8 +134,6 @@ def length_in_seconds(filename, key)
     # this should handle mp3, mp4 and m4a
     info = AudioInfo.open(WORKING + filename)
     return info.length || 0
-  else
-    return 0
   end
 end
 
@@ -181,7 +179,7 @@ def put_episode_in_mongo(entry, filename, show, episodes, chapters)
     :type => episode_type(filename),
     :format => format(filename),
     :title => entry['title'],
-    :route => generate_episode_route(entry['title'], episodes)
+    :route => generate_episode_route(entry['title'], episodes),
     :number => -1,
     :storage_key => key,
     :show_route => show['route'],
