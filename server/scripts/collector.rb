@@ -17,7 +17,7 @@ LIMIT = 1
 
 # setup mongo connection
 
-# MODE = "dev"
+MODE = "dev"
 # MODE = "prod"
 # MODE = "staging"
 
@@ -89,14 +89,7 @@ def episode_type(filename)
   end
 end
 
-def feed_type(url)
-  url = URI(url)
-  if url.host =~ /youtube.com/
-    return "youtube"
-  else
-    return "podcast"
-  end
-end
+
 
 def format(filename)
   if filename == "youtube"
@@ -110,7 +103,7 @@ end
 def generate_episode_route(title, episodes)
   # allow alphanumerics, '-', ' ', '_' chars to stay
   # this might grow to handle more special chars like '&'
-  title = title.downcase.strip.gsub(/[^0-9a-z-_ ]/i, '').gsub("\n", '')
+  title = title.downcase.strip.gsub(/[^0-9a-z\-_ ]/i, '').gsub("\n", '')
   title = ensure_unique_route(title, episodes)
   # replace ' ' and '_' with '-'
   route = title.gsub(/[ _]/, '-').squeeze('-')
@@ -144,6 +137,28 @@ def podcast(entry, count, show, episodes, chapters)
   keyname = rename_file(filename)
   upload_file(keyname)
   cleanup(keyname)
+end
+
+def process_feed(feed, show, episodes, chapters)
+  count = 0
+  feed.entries.each do |entry|
+    #TODO: see if there are any new items since the last show item in mongo
+    if episodes.find_one("feed.entry_id" => entry.entry_id)
+      puts "already in database: " + entry.url
+    else
+      count += 1
+      process_feed_type(entry, count, show, episodes, chapters) if count <= LIMIT
+    end
+  end
+end
+
+def process_feed_type(entry, count, show, episodes, chapters)
+  url = URI(entry.url)
+  if url.host =~ /youtube.com/
+    youtube(entry, count, show, episodes, chapters)
+  else
+    podcast(entry, count, show, episodes, chapters)
+  end
 end
 
 def put_chapter_in_mongo(episode_id, chapters)
@@ -254,6 +269,7 @@ end
 
 
 
+
 # MAIN
 
 all_shows = shows.find("feed_active" => true)
@@ -262,28 +278,9 @@ all_shows.each do |show|
   puts "Working on #{show["name"]}..."
   #TODO: make sure this works properly
   most_recent = episodes.find("show_id" => show["_id"]).sort("feed.published" => :desc)
-  most_recent.each do |e|
-    puts e["title"]
-  end
-
+  most_recent.each {|e| puts e["title"]}
   puts "Getting feed..."
-  feed = Feedjira::Feed.fetch_and_parse(show["feed"])
-  count = 0
-  feed.entries.each do |entry|
-    #TODO: see if there are any new items since the last show item in mongo
-    if episodes.find_one("feed.entry_id" => entry.entry_id)
-      puts "already in database: " + entry.url
-    else
-      count += 1
-      if count <= LIMIT
-        content = feed_type(entry.url)
-        if content == 'youtube'
-          youtube(entry, count, show, episodes, chapters)
-        elsif content == 'podcast'
-          podcast(entry, count, show, episodes, chapters)
-        end
-      end
-    end
-  end
-
+  success_callback = lambda { |url, feed| process_feed(feed, show, episodes, chapters) }
+  failure_callback = lambda { |curl, err| puts curl, err }
+  feed = Feedjira::Feed.fetch_and_parse show["feed"], on_success: success_callback, on_failure: failure_callback
 end
