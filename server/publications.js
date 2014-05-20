@@ -148,7 +148,7 @@ Meteor.publish('shows_with_unpublished_episodes', function() {
   return Shows.find({
     _id: {
       $in: Episodes.find(
-        {published: false}).map(
+        {published: false, hidden: false}).map(
           function(episode) {
             return episode.show_id;
           }
@@ -175,7 +175,10 @@ Meteor.publish('trial_shows', function(user_id) {
 });
 
 Meteor.publish('unpublished_episodes', function() {
-  return Episodes.find({published: false});
+  return Episodes.find({
+    published: false,
+    hidden: false,
+  });
 });
 
 Meteor.publish('users_list', function () {
