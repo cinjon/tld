@@ -59,13 +59,13 @@ Meteor.publish('editor_legal_agreement', function(user_id) {
 
 Meteor.publish('episode_from_id', function(episode_id) {
   return Episodes.find({_id:episode_id}, {
-    fields:{length_in_seconds:false, created_at:false, updated_at:false}
+    fields:{created_at:false, updated_at:false}
   });
 });
 
 Meteor.publish('episode_from_route', function(episode_route) {
   return Episodes.find({route:episode_route}, {
-    fields:{length_in_seconds:false, created_at:false, updated_at:false}
+    fields:{created_at:false, updated_at:false}
   });
 });
 

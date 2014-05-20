@@ -53,14 +53,7 @@ Episodes = new Meteor.Collection('episodes', {
     },
     route: {
       type: String,
-      label: 'Route',
-      autoValue: function() {
-        var title_field = this.field('title');
-        if (title_field.isSet) {
-          var count = Episodes.find({title:title_field.value}).count();
-          return make_name_route(title_field.value, count);
-        }
-      }
+      label: 'Route'
     },
     number: {
       type: Number,
@@ -209,7 +202,7 @@ Episodes = new Meteor.Collection('episodes', {
 });
 
 make_episode = function(type, format, title, number, storage_key,
-                        show_route, show_id, hosts, guests,
+                        show_route, route, show_id, hosts, guests,
                         chapters, highlights, postedited,
                         editor_id, length_in_seconds, created_at,
                         published, trial, feed_title, feed_url, feed_published,
@@ -220,7 +213,7 @@ make_episode = function(type, format, title, number, storage_key,
   hosts = hosts || [];
   var episode_id = Episodes.insert(
     {type:type, format:format, title:title, number:number,
-     storage_key:storage_key, show_route:show_route, show_id:show_id,
+     storage_key:storage_key, show_route:show_route, route:route, show_id:show_id,
      hosts:hosts, guests:guests, chapters:chapters, highlights:highlights,
      postedited:postedited, editor_id:editor_id,
      length_in_seconds:length_in_seconds, created_at:created_at,

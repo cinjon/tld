@@ -151,7 +151,7 @@ Meteor.startup( function() {
     var backtowork001 = make_episode(
       "audio", "mp3", "Back to Work 001",
       1, "c8b1b604524c39612ba0be3423ca4669",
-      'back-to-work', backtowork_id, [], [],
+      'back-to-work', "back-to-work-001", backtowork_id, [], [],
       [], [], false, null, 5368, timestamp, false, false,
       'Back to Work 001', 'http://5by5.tv/b2w/1',
       'Tue, 18 Jan 2011 20:00:00 GMT',
@@ -163,7 +163,7 @@ Meteor.startup( function() {
     var backtowork002 = make_episode(
       "audio", "mp3", "Back to Work 002",
       2, "118d07e7ac1adfdc6cd8b97400001a87",
-      'back-to-work', backtowork_id, [], [],
+      'back-to-work', 'back-to-work-002', backtowork_id, [], [],
       [], [], false, null, 4122, timestamp, false, false,
       'Back to Work 002', 'http://5by5.tv/b2w/2',
       'Tue, 25 Jan 2011 19:00:00 GMT',
@@ -175,7 +175,7 @@ Meteor.startup( function() {
     var nerdist = make_episode(
       "audio", "mp3", "Moby",
       457, "bde5a8980a18df163c1f80618bdbd6d6",
-      'nerdist', nerdist_id, [], [],
+      'nerdist', 'moby', nerdist_id, [], [],
       [], [], false, null, 4770, timestamp, false, false,
       'Moby', 'http://www.nerdist.com/2013/12/nerdist-podcast-moby/',
       'Mon, 23 Dec 2013 09:30:00 +0000',
