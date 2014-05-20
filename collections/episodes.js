@@ -23,6 +23,7 @@
 //   published: boolean,
 //   summary: string,
 //   trial: boolean,
+//   hidden: boolean,        // default false, used to ignore episodes
 //   feed:
     // data from rss feed, this can vary depending on how much info is provided
     // these 6 are fairly standard
@@ -182,6 +183,13 @@ Episodes = new Meteor.Collection('episodes', {
     },
     trial: {
       type: Boolean
+    },
+    hidden: {
+      type: Boolean,
+      autoValue: function () {
+        return false;
+      },
+      optional: true
     },
     summary: {
       type: String,
