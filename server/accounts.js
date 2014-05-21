@@ -35,22 +35,25 @@ Meteor.startup(function() {
     }
     return user;
   });
-  // AccountsEntry.config({
-  //   privacyUrl: '/privacy-policy',
-  //   termsUrl: '/terms-of-use',
-  //   passwordSignupFields: 'USERNAME_AND_EMAIL',
-  //   homeRoute: '/',
-  //   dashboardRoute: '/',
-  //   profileRoute: '/',
-  //   showSignupCode: false,
-  //   templates: {
-  //     entrySignIn: 'tlEntrySignIn',
-  //     entrySignUp: 'tlEntrySignUp'
-  //   }
-  // });
 
 });
 
 var is_twitter_create_user = function(user) {
   return user && user.services && user.services.twitter;
 }
+
+
+
+// AccountsEntry.config({
+//   privacyUrl: '/privacy-policy',
+//   termsUrl: '/terms-of-use',
+//   passwordSignupFields: 'USERNAME_AND_EMAIL',
+//   homeRoute: '/',
+//   dashboardRoute: '/',
+//   profileRoute: '/',
+//   showSignupCode: false,
+//   templates: {
+//     entrySignIn: 'tlEntrySignIn',
+//     entrySignUp: 'tlEntrySignUp'
+//   }
+// });

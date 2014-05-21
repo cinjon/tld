@@ -1,6 +1,6 @@
 Template.profile.events({
-  'click reset_password_email': function(e, tmpl) {
-    Accounts.sendResetPasswordEmail(Meteor.userId()); //does this work --> sent me an email verification, not a password reset
+  'click #reset_password_email': function(e, tmpl) {
+    Meteor.call('reset_password', Meteor.userId());
   },
   'click #update_email': function(e, tmpl) {
     var password = tmpl.$('#email_password').val();
