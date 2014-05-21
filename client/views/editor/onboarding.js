@@ -25,9 +25,7 @@ Template.on_boarding.helpers({
   },
   not_email: function() {
     var user = Meteor.user();
-    var not_email = !user || !user.emails || user.emails.length == 0 || !('address' in user.emails[0])
-    console.log(not_email);
-    return true;
+    return !user || !user.emails || user.emails.length == 0 || !('address' in user.emails[0]);
   },
   username: function() {
     var user = Meteor.user();
