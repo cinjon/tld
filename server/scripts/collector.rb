@@ -10,16 +10,25 @@ require 'youtube_it'
 require 'mongo'
 include Mongo
 
-#GLOBALS
+# GLOBALS
 
 WORKING = "/var/podcasts/tmp/"
 LIMIT = 1
+MODE = "dev"
+
+
+# check runtime environment
+
+hostname = `hostname`.chomp
+if hostname == "tlproduction"
+  MODE = "prod"
+elsif hostname == "tlstaging"
+  MODE = "staging"
+end
+
+puts "***\nMODE: " + MODE + "\n***\n"
 
 # setup mongo connection
-
-MODE = "dev"
-# MODE = "prod"
-# MODE = "staging"
 
 if MODE == "dev"
   mongo_client = MongoClient.new("localhost", 3001)
