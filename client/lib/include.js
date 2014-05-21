@@ -1,3 +1,24 @@
+check_password = function(password, callback) {
+  /*
+     For use with verifying that this is the current user taking the action
+     An example is the /profile change_email action
+     taken from: http://stackoverflow.com/questions/18214496/verify-user-password-in-meteor
+  */
+  var request, srp;
+  srp = new Package.srp.SRP.Client(password);
+  request = srp.startExchange();
+  request.user = {
+    id: Meteor.userId()
+  };
+  return Meteor.apply('beginPasswordExchange', [request], function(err, result) {
+    var response;
+    response = srp.respondToChallenge(result);
+    return Meteor.apply('checkPassword', [response], function(err, result) {
+      return callback(err, result);
+    });
+  });
+};
+
 session_var_increment = function(key, num) {
   //Assumes Session.get(key) is a number value
   //num can be a negative number as well
