@@ -177,7 +177,8 @@ Meteor.publish('trial_shows', function(user_id) {
 Meteor.publish('unpublished_episodes', function() {
   return Episodes.find({
     published: false,
-    hidden: false,
+    hidden: false},
+    { sort: {"feed.published": -1}
   });
 });
 
