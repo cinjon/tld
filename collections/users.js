@@ -18,60 +18,74 @@
 
 
 UsersSchema = new SimpleSchema({
-    username:{
-      type: String,
-      optional: true
-    },
-    emails: {
-      type: Array,
-      optional: true
-    },
-    'emails.$': {
-      type: Object,
-      blackbox: true
-    },
-    roles: {
-      type: [String],
-      blackbox: true,
-      optional: true
-    },
-    profile: {
-      type: Object,
-      blackbox: true,
-      optional: true
-    },
-    services: {
-      type: Object,
-      optional: true,
-      blackbox: true
-    },
-    signed_editor_legal: {
-      type: Boolean,
-      optional: true
-    },
-    createdAt: {
-      type: Date,
-        autoValue: function() {
-          if (this.isInsert) {
-            return new Date;
-          } else if (this.isUpsert) {
-            return {$setOnInsert: new Date};
-          } else {
-            this.unset();
-          }
-        },
-        denyUpdate: true
-    },
-    updatedAt: {
-      type: Date,
-      autoValue: function() {
-        if (this.isUpdate) {
-          return new Date();
-        }
-      },
-      denyInsert: false,
-      optional: true
+  completed_trial: {
+    type: Boolean,
+    optional: true,
+    autoValue: function() {
+      if (this.isInsert) {
+        return false;
+      }
     }
+  },
+  createdAt: {
+    type: Date,
+    autoValue: function() {
+      if (this.isInsert) {
+        return new Date;
+      } else if (this.isUpsert) {
+        return {$setOnInsert: new Date};
+      } else {
+        this.unset();
+      }
+    },
+    denyUpdate: true
+  },
+  emails: {
+    type: Array,
+    optional: true
+  },
+  'emails.$': {
+    type: Object,
+    blackbox: true
+  },
+  profile: {
+    type: Object,
+    blackbox: true,
+    optional: true
+  },
+  roles: {
+    type: [String],
+    blackbox: true,
+    optional: true
+  },
+  services: {
+    type: Object,
+    optional: true,
+    blackbox: true
+  },
+  signed_editor_legal: {
+    type: Boolean,
+    optional: true,
+    autoValue: function() {
+      if (this.isInsert) {
+        return false;
+      }
+    }
+  },
+  updatedAt: {
+    type: Date,
+    autoValue: function() {
+      if (this.isUpdate) {
+        return new Date();
+      }
+    },
+    denyInsert: false,
+      optional: true
+  },
+  username:{
+    type: String,
+    optional: true
+  }
 });
 
 Meteor.users.attachSchema(UsersSchema);

@@ -246,6 +246,7 @@ make_trial_episode = function(storage_key, editor_id) {
     delete episode['created_at'];
     delete episode['updated_at'];
     delete episode['edited'];
+    episode.route = episode['route'] + '-' + editor_id + '-trial';
     episode.trial = true;
     episode.postedited = false;
     episode.chapters = [];
