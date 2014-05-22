@@ -2,15 +2,6 @@ Deps.autorun(function() {
   if (Roles.userIsInRole(Meteor.userId(), ['admin']) && Meteor.users.find().count() > 1) {
     set_user_typeahead();
   }
-  if (Session.get('user_searched')) {
-    var user = Session.get('user_searched');
-    Meteor.subscribe(
-      'editor_legal_agreement', user._id,
-      function() {
-        Session.set('user_searched', Meteor.users.findOne({_id:user._id}))
-      }
-    )
-  }
 });
 
 Template.admin.created = function() {
@@ -33,6 +24,11 @@ Template.admin.helpers({
     }
     return '';
   },
+  has_completed_trial: function() {
+    var user = Session.get('user_searched');
+    console.log(Meteor.users.findOne({_id:user._id}, {completed_trial:true}).completed_trial);
+    return user && Meteor.users.findOne({_id:user._id}, {completed_trial:true}).completed_trial;
+  },
   has_signed_agreement: function() {
     var user = Session.get('user_searched');
     return user && Meteor.users.findOne({_id:user._id}, {signed_editor_legal:true}).signed_editor_legal;
@@ -44,13 +40,6 @@ Template.admin.helpers({
     var user = Session.get('user_searched');
     if (user) {
       return Roles.userIsInRole(user._id, ['editor']);
-    }
-    return false;
-  },
-  is_editor_trial: function() {
-    var user = Session.get('user_searched');
-    if (user) {
-      return Roles.userIsInRole(user._id, ['trial_editor']);
     }
     return false;
   },
@@ -102,6 +91,8 @@ Template.admin.events({
       'set_agree_to_terms', user._id, has_agreed,
       function(error, result) {
         if (!error) {
+          user.signed_editor_legal = !has_agreed;
+          Session.set('user_searched', user);
           if (has_agreed) {
             Session.set('message', 'Success: ' + name + ' revoked agreement');
           } else {
@@ -111,7 +102,7 @@ Template.admin.events({
       }
     );
   },
-  'click #set_editor_trial': function(e, tmpl) {
+  'click #set_completed_trial': function(e, tmpl) {
     var user = Session.get('user_searched');
     var name = user.username;
     if (!user) {
@@ -119,15 +110,17 @@ Template.admin.events({
       return;
     }
 
-    var is_editor = Roles.userIsInRole(user._id, ['trial_editor']);
+    var has_completed_trial = user.completed_trial;
     Meteor.call(
-      'set_editor_trial', user._id, is_editor,
+      'set_completed_trial', user._id, has_completed_trial,
       function(error, result) {
         if (!error) {
-          if (is_editor) {
-            Session.set('message', 'Success: ' + name + ' is now not a trial editor');
+          user.completed_trial = !has_completed_trial
+          Session.set('user_searched', user);
+          if (has_completed_trial) {
+            Session.set('message', 'Success: ' + name + ' now has not completed the trial');
           } else {
-            Session.set('message', 'Success: ' + name + ' is now a trial editor');
+            Session.set('message', 'Success: ' + name + ' now has completed the trial');
           }
         }
       }

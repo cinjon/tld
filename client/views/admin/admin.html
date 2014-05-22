@@ -6,7 +6,7 @@
     <div class="row">
       <div class="admin_left">
         <p class="title message">
-          Adjust [Trial] Editor Status
+          Adjust Editor Status
         </p>
       </div>
       <div class="admin_left">
@@ -22,38 +22,34 @@
           {{username}}
         </span>
       </div>
-      <div class="admin_left">
-        {{#if has_user}}
-        <button type="button" class="btn btn-primary" id="set_editor">
-          {{#if is_editor}}
-          Revoke Editor Status
-          {{else}}
-          Make Editor
-          {{/if}}
-        </button>
-        {{/if}}
-      </div>
-      <div class="admin_left">
-        {{#if has_user}}
-        <button type="button" class="btn btn-primary" id="set_editor_trial">
-          {{#if is_editor_trial}}
-          Revoke Trial Editor Status
-          {{else}}
-          Make Trial Editor
-          {{/if}}
-        </button>
-        {{/if}}
-      </div>
-      {{#if is_editor_trial}}
-      <div class="admin_left">
-        <button type="button" class="btn btn-primary" id="set_editor_agreement">
-        {{#if has_signed_agreement}}
-          Revoke Legal
-        {{else}}
-          Sign Legal
-        {{/if}}
-        </button>
-      </div>
+      {{#if has_user}}
+        <div class="admin_left">
+          <button type="button" class="btn btn-primary" id="set_editor">
+            {{#if is_editor}}
+            Revoke Editorship
+            {{else}}
+            Make Editor
+            {{/if}}
+          </button>
+        </div>
+        <div class="admin_left">
+          <button type="button" class="btn btn-primary" id="set_completed_trial">
+            {{#if has_completed_trial}}
+            Revoke Completed Trial
+            {{else}}
+            Completed Trial
+            {{/if}}
+          </button>
+        </div>
+        <div class="admin_left">
+          <button type="button" class="btn btn-primary" id="set_editor_agreement">
+            {{#if has_signed_agreement}}
+            Revoke Legal
+            {{else}}
+            Signed Legal
+            {{/if}}
+          </button>
+        </div>
       {{/if}}
     </div>
   </div>
