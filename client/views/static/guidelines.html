@@ -1,9 +1,11 @@
 <template name="guidelines">
-<div class="container container-full-height container-light container-guidelines">
+  <div class="container container-full-height container-light container-guidelines">
+    {{> guidelines_markdown}}
+  </div>
+</template>
 
+<template name="guidelines_markdown">
 {{#markdown}}
-
-
 
 #Timelined Editor Guidelines
 
@@ -331,8 +333,5 @@ Lastly you'll see the hosts, guest and sponsors. If the Twitter handle is set, t
 
 You're finished! Click the title at the bottom of the right pane to submit the episode for review. We'll look over your submission and be in touch with any change requests. If we accept your newly timelined episode, your hours will be logged and added to your next editor payment.
 
-
-
 {{/markdown}}
-</div>
 </template>

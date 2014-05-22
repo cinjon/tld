@@ -1,10 +1,45 @@
+<!--
+     /new-editor:
+
+     trial_boarding template is what will be displayed while the editor-to-be attempts a trial.
+     It's basically the guidelines with a link to the queue and a prompt that we need their email.
+
+     post_trial_boarding template is where we send editors after they've completed the trial to how we like.
+     it probably won't be used in the near future other than if they return to /new-editor after being certified
+-->
+
 <template name="on_boarding">
+  {{#if not_email}}
+  <div class="container container-full-height">
+    <div class="row">
+      <div id="welcome" class="col-sm-10 col-sm-offset-1">
+        <span class="welcome-message">
+          <p class="email-text">Hi there. We're so glad you made it here. To get started, we need your email to contact you. Please enter it here:</p>
+          <span class="new-entity-input-wrap">
+            <input id="set_user_email" class="form-control new-entity-input" placeholder="{{username}}'s email">
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  {{> email_validation_warning_modal}}
+  {{> email_exists_warning_modal}}
+  {{else}}
+    {{#if completed_trial}}
+      {{> post_trial_boarding}}
+    {{else}}
+      {{> trial_boarding}}
+    {{/if}}
+  {{/if}}
+</template>
+
+<template name="post_trial_boarding">
   <div class="container container-full-height">
     <div class="row">
       <div id="welcome" class="col-sm-10 col-sm-offset-1">
         <h1>Welcome to the Team</h1>
-        <p class="welcome_message">Greetings from Timelined. We need a few signature before we can get you started. This will be really quick we promise.</p>
-        <ul class="welcome_message">
+        <p class="welcome-message">Greetings from Timelined. We need a few signature before we can get you going as an editor. This will be really quick we promise.</p>
+        <ul class="welcome-message">
           <li>
             The first document is the agreement we use for our Editors. It's mostly for compensation and describes our relationship, which we hope you'll agree is going to be fantastic.
           </li>
@@ -12,25 +47,28 @@
             The second document is an IRS form called a W9. We're required to have it on file before we can pay you. You'll need to enter your name, address and SSN before digitally signing and dating.
           </li>
         </ul>
-        <p class="welcome_message">You can find and sign both of these documents <a href="https://www.hellosign.com/s/334cd7d0">here</a>. Please read both of them carefully before signing. If you have any questions about either one, <a href="mailto:admin@timelined.com?subject=Editor Documents">let us know</a>.
+        <p class="welcome-message">You can find and sign both of these documents <a href="https://www.hellosign.com/s/334cd7d0">here</a>. Please read both of them carefully before signing. If you have any questions about either one, <a href="mailto:admin@timelined.com?subject=Editor Documents">let us know</a>.
         </p>
-        {{#if not_email}}
-        <span class="welcome_message">
-          <span class="email_text">We also need your email as a way to contact you. Please enter it here:</span>
-          <span class="new_entity_input_wrap">
-            <input id="set_user_email" class="form-control new_entity_input" placeholder="{{username}}'s email">
-          </span>
-          <div id="user_email" class="email_text">{{email}}</div>
-        </span>
-        {{else}}
-        <p class="welcome_message">
+        <p class="welcome-message">
           We look forward to working with you!
         </p>
-        {{/if}}
       </div>
     </div>
   </div>
-  {{> email_validation_warning_modal}}
-  {{> email_exists_warning_modal}}
-  {{> email_success_modal}}
+</template>
+
+<template name="trial_boarding">
+  <div class="container container-light container-guidelines">
+    <div id="welcome" class="expanded-welcome">
+      <h1>So you want to be a Timeliner?</h1>
+      <div class="col-sm-10 col-sm-offset-1">
+        <p class="trial-boarding-text">We'd love to have you on board. We've written some guidelines below on what we're trying to achieve.</p>
+        <p class="trial-boarding-text">Take a look, and if you feel up for the challenge, go ahead and do a trial episode at <a href="{{pathFor 'queue'}}">your personal queue</a>.</p>
+      </div>
+    </div>
+    <hr class="style-one">
+    <div class="guidelines-scroll">
+      {{> guidelines_markdown}}
+    </div>
+  </div>
 </template>

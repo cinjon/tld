@@ -3,16 +3,20 @@
   color:$ash1;
   font-weight:$font-weight-medium;
   font-family:$font-lato;
-  .welcome_message {
+  .welcome-message {
     margin-top:20px;
     margin-bottom:20px;
     font-size:15px;
-    .new_entity_input_wrap {
+    .new-entity-input-wrap {
       vertical-align: top;
+      text-align: center;
+      width: 100%;
+      padding-top: 25px;
+      padding-bottom: 75px;
       display: inline-block;
       float: left;
       margin-right: 10px;
-      .new_entity_input {
+      .new-entity-input {
         @include dotted-style-nonwhite();
         width: 225px;
         display: inline-block;
@@ -20,16 +24,25 @@
         margin-bottom: 10px;
       }
     }
-    .email_text {
-      float:left;
-      margin-right:10px;
-      position:relative;
-      top:6px;
-      height:20px;
-      overflow:hidden;
-    }
-    #user_email {
-      width:225px;
+    .email-text {
+      padding-left: 75px;
+      padding-right: 75px;
+      padding-top: 75px;
+      height: 125px;
+      font-size: 20px;
+      text-align: center;
     }
   }
+  .trial-boarding-text {
+    font-size:20px;
+  }
+}
+
+.expanded-welcome {
+  height:120px;
+}
+
+.guidelines-scroll {
+  height: 800px;
+  overflow: scroll;
 }

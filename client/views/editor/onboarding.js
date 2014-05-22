@@ -24,12 +24,15 @@ Template.on_boarding.events({
 });
 
 Template.on_boarding.helpers({
+  completed_trial: function() {
+    var user = Meteor.user();
+    return user && user.completed_trial;
+  },
   email: function() {
     return $('#set_user_email').val();
   },
   not_email: function() {
-    var user = Meteor.user();
-    return !user || !user.emails || user.emails.length == 0 || !('address' in user.emails[0]);
+    return !has_email(Meteor.user());
   },
   username: function() {
     var user = Meteor.user();
