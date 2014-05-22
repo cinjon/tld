@@ -41,6 +41,11 @@ Meteor.methods({
     });
   },
   send_slack_notification: function(channel, payload) {
+    if (!Meteor.settings.public || Meteor.settings.public.prod_mode != true) {
+      // stop slack notification from appearing while in dev/staging mode
+      return;
+    }
+
     this.unblock();
 
     var url = null;
