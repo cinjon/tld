@@ -31,6 +31,14 @@ Meteor.startup(function() {
               services: { twitter: { id: '2481973470', screenName: 'tld_ctr_2', accessToken: '', accessTokenSecret: '', profile_image_url: 'http://url.png', profile_image_url_https: 'https://url.png', lang: 'en'}}}
     */
 
+    Meteor.call('send_email', {
+      to: user.emails[0].address,
+      from: 'support@timelined.com',
+      subject: 'Timelined is going to rock your world, ' + user.username,
+      text: "We're excited to have you joining the Timelined Community. Should you have any questions or feedback, send us a note! \n\nSincerely, \nTimelined Support\nsupport@timelined.com",
+      html: ''
+    });
+
     if (is_twitter_create_user(user)) {
       user.profile = options.profile
       user.profile.profile_image_url = user.services.twitter.profile_image_url
@@ -45,6 +53,35 @@ Meteor.startup(function() {
 var is_twitter_create_user = function(user) {
   return user && user.services && user.services.twitter;
 }
+
+
+Accounts.emailTemplates.siteName = "Timelined";
+Accounts.emailTemplates.from = "Timelined Support <support@timelined.com>";
+
+// Accounts.emailTemplates.enrollAccount.subject = function (user) {
+//     return "Timelined is going to rock your world, " + user.usernmame;
+// };
+// Accounts.emailTemplates.enrollAccount.text = function (user, url) {
+//    return "Are you ready for Timelined? Click the link below to get started:\n\n"
+//      + url;
+// };
+
+Accounts.emailTemplates.verifyEmail.subject = function (user) {
+    return "Timelined is confirming your email address, " + user.username;
+};
+Accounts.emailTemplates.verifyEmail.text = function (user, url) {
+   return "Do us a favor? Click the link below to confirm your new address:\n\n"
+     + url;
+};
+
+Accounts.emailTemplates.resetPassword.subject = function (user) {
+    return "Timelined has reset your password, " + user.username;
+};
+Accounts.emailTemplates.resetPassword.text = function (user, url) {
+   return "Don't worry, it happens to the best of us. Click the link below to reset your password:\n\n"
+     + url;
+};
+
 
 
 
