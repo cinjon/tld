@@ -6,7 +6,6 @@ Meteor.startup(function() {
     dashboardRoute: '/',
     signInTemplate: 'tlEntrySignIn',
     signUpTemplate: 'tlEntrySignUp'
-
   });
 
   Accounts.config({
@@ -31,20 +30,28 @@ Meteor.startup(function() {
               services: { twitter: { id: '2481973470', screenName: 'tld_ctr_2', accessToken: '', accessTokenSecret: '', profile_image_url: 'http://url.png', profile_image_url_https: 'https://url.png', lang: 'en'}}}
     */
 
-    Meteor.call('send_email', {
-      to: user.emails[0].address,
-      from: 'support@timelined.com',
-      subject: 'Timelined is going to rock your world, ' + user.username,
-      text: "We're excited to have you joining the Timelined Community. Should you have any questions or feedback, send us a note! \n\nSincerely, \nTimelined Support\nsupport@timelined.com",
-      html: ''
-    });
-
     if (is_twitter_create_user(user)) {
       user.profile = options.profile
       user.profile.profile_image_url = user.services.twitter.profile_image_url
       user.profile.profile_image_url_https = user.services.twitter.profile_image_url_https
       user.username = user.services.twitter.screenName;
+    } else { //Twitter signups won't have an email.
+      Meteor.call('send_email', {
+        to: user.emails[0].address,
+        from: 'support@timelined.com',
+        subject: 'Timelined is going to rock your world, ' + user.username,
+        text: "We're excited to have you joining the Timelined Community. Should you have any questions or feedback, send us a note! \n\nSincerely, \nTimelined Support\nsupport@timelined.com",
+        html: ''
+      });
     }
+
+    /*
+      Make trial episodes here. Another place could be when they first access the new-editor page
+      One [small] negative with putting it here is that nothing in fixtures gets the treatment.
+      One positive with putting it here is that people won't get turned off when the inspiration to try the trial strikes them.
+    */
+    Meteor.call('make_trial_episodes', user._id);
+
     return user;
   });
 
