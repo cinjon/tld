@@ -45,6 +45,10 @@ UI.registerHelper("is_regular_user", function() {
   return Meteor.userId() && !Roles.userIsInRole(Meteor.userId(), ['admin', 'editor']);
 });
 
+UI.registerHelper("layout_title", function() {
+  return "Timelined";
+});
+
 UI.registerHelper("obj_number_of", function(key) {
   if (this && this[key]) {
     return this[key].length;
