@@ -14,7 +14,7 @@ Template.shows_list.helpers({
                     key: 'name',
                     label: 'Name',
                     fn: function (value, object) {
-                      var edit_url = object.route + "/edit";
+                      var edit_url = "shows/" + object.route + "/edit";
                       return new Spacebars.SafeString("<a href="+edit_url+">"+value+"</a>");
                     }
                   },

@@ -14,7 +14,7 @@ Template.episodes_list.helpers({
                     key: 'title',
                     label: 'Title',
                     fn: function (value, object) {
-                      var edit_url = "/" + object.show_route + "/" + object.route + "/edit";
+                      var edit_url = "/episodes/" + object.route + "/edit";
                       return new Spacebars.SafeString("<a href="+edit_url+">"+value+"</a>");
                     }
                   },
