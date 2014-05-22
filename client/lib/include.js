@@ -13,7 +13,7 @@ check_password = function(password, callback) {
   return Meteor.apply('beginPasswordExchange', [request], function(err, result) {
     var response;
     response = srp.respondToChallenge(result);
-    return Meteor.apply('checkPassword', [response], function(err, result) {
+    return Meteor.apply('check_password', [response], function(err, result) {
       return callback(err, result);
     });
   });

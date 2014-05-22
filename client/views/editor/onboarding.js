@@ -11,6 +11,10 @@ Template.on_boarding.events({
           $('#email_success_modal').modal(
             {keyboard:true, show:true}
           );
+        } else if (result == 'exists') {
+          $('#email_exists_warning_modal').modal(
+            {keyboard:true, show:true}
+          );
         }
       });
     } else {
