@@ -8,6 +8,11 @@ Meteor.methods({
     var serialized = Accounts._getAccountData(this.connection.id, 'srpChallenge');
     return serialized && serialized.M === options.M;
   },
+  reset_password: function(user_id) {
+    if (Meteor.isServer) {
+      Accounts.sendResetPasswordEmail(user_id);
+    };
+  },
   send_email: function(fields) {
     // Let other method calls from the same client start running,
     // without waiting for the email sending to complete.
