@@ -69,7 +69,7 @@ UsersSchema = new SimpleSchema({
           return new Date();
         }
       },
-      denyInsert: true,
+      denyInsert: false,
       optional: true
     }
 });
