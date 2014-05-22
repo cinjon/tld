@@ -9,6 +9,10 @@ Meteor.startup(function() {
 
   });
 
+  Accounts.config({
+    sendVerificationEmail: true
+  });
+
   Accounts.loginServiceConfiguration.remove({
     service: 'twitter'
   });
