@@ -109,6 +109,9 @@ Template.editor.helpers({
     if (episode && episode.title) {
       title = episode.title;
     }
+    if (episode && episode.trial) {
+      title += ' - Trial';
+    }
     return title;
   },
   feed_summary: function() {
