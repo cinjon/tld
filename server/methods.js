@@ -8,6 +8,17 @@ Meteor.methods({
     var serialized = Accounts._getAccountData(this.connection.id, 'srpChallenge');
     return serialized && serialized.M === options.M;
   },
+  make_trial_episodes: function(user_id) {
+    this.unblock();
+
+    //TODO: (matt) --> Insert storage keys for the episodes we want to use.
+    trial_storage_keys = [
+      "bde5a8980a18df163c1f80618bdbd6d6", "a0cff3545784833322864eec71e1e389"
+    ];
+    trial_storage_keys.forEach(function(storage_key) {
+      make_trial_episode(storage_key, user_id);
+    });
+  },
   reset_password: function(user_id) {
     if (Meteor.isServer) {
       Accounts.sendResetPasswordEmail(user_id);

@@ -30,6 +30,16 @@ Meteor.publish('companies_from_episode', function(episode_id) {
   });
 });
 
+Meteor.publish('companies_from_episode_route', function(episode_route) {
+  var episode = Episodes.findOne({route:episode_route});
+  if (!episode) {
+    return [];
+  }
+  return Companies.find({sponsored_episodes:episode._id}, {
+    fields:{name:true, twitter:true, avatar:true, sponsored_episodes:true, confirmed:true}
+  });
+});
+
 Meteor.publish('companies_list', function () {
   return Companies.find();
 })
@@ -51,6 +61,10 @@ Meteor.publish('company_names_from_episode', function(episode_id) {
 Meteor.publish('company_names_from_episode_route', function(episode_route) {
   var episode_id = Episodes.findOne({route:episode_route})._id;
   return Companies.find({sponsored_episodes:episode_id}, {fields:{name:true}});
+});
+
+Meteor.publish('editor_completed_trial', function(user_id) {
+  return Meteor.users.find({_id:user_id}, {fields:{completed_trial:true}});
 });
 
 Meteor.publish('editor_legal_agreement', function(user_id) {
@@ -148,7 +162,7 @@ Meteor.publish('shows_with_unpublished_episodes', function() {
   return Shows.find({
     _id: {
       $in: Episodes.find(
-        {published: false, hidden: false}).map(
+        {published: false, hidden: false, trial: false}).map(
           function(episode) {
             return episode.show_id;
           }
@@ -177,8 +191,10 @@ Meteor.publish('trial_shows', function(user_id) {
 Meteor.publish('unpublished_episodes', function() {
   return Episodes.find({
     published: false,
-    hidden: false},
-    { sort: {"feed.published": -1}
+    hidden: false,
+    trial: false
+  }, {
+    sort: {"feed.published": -1}
   });
 });
 
@@ -196,6 +212,6 @@ Meteor.publish('user_roles', function(user_id) {
 
 Meteor.publish('usernames_and_roles', function() {
   return Meteor.users.find({}, {
-    fields:{username:true, roles:true}
+    fields:{username:true, roles:true, completed_trial:true, signed_editor_legal:true}
   });
 });
