@@ -29,9 +29,11 @@
                 <th>
                   Length
                 </th>
+                {{#if not_trial}}
                 <th>
                   Payment
                 </th>
+                {{/if}}
                 <th>
                   Date
                 </th>
@@ -59,9 +61,11 @@
                 <td>
                   {{format_seconds_to_clock length_in_seconds}}
                 </td>
+                {{#if not_trial}}
                 <td>
                   {{format_payment_amount length_in_seconds}}
                 </td>
+                {{/if}}
                 <td>
                   {{prettify_date published}}
                 </td>

@@ -50,6 +50,9 @@ Template.queue_helper.helpers({
       return episode;
     });
   },
+  not_trial: function() {
+    return !this.trial;
+  },
   published: function() {
     return this.feed.published;
   },
@@ -81,6 +84,7 @@ var _queue_data = function(criteria) {
     }).map(function(show) {
       show.trial = criteria['trial']
       return show;
-    })
+    }),
+    trial: criteria['trial']
   }
 }
