@@ -52,7 +52,12 @@ Highlights = new Meteor.Collection('highlights', {
     url: {
       type: String,
       label: 'URL',
-      optional: true
+      optional: true,
+      autoValue: function () {
+        if (this.value != null) {
+          return highlight_url_scrub(this.value);
+        }
+      }
     },
     created_at: {
       type: Date,
