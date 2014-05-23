@@ -1,9 +1,3 @@
-Meteor.subscribe('editor_legal_agreement', Meteor.userId());
-if (Meteor.user() && !Meteor.user().signed_editor_legal) {
-  Meteor.subscribe('trial_episodes', Meteor.userId());
-  Meteor.subscribe('trial_shows', Meteor.userId());
-}
-
 // EVENTS
 Template.queue_helper.events({
   'click .claim_episode': function(e, tmpl) {
@@ -35,7 +29,6 @@ Template.queue_helper.events({
 });
 
 // HELPERS
-
 Template.queue_helper.helpers({
   episodes: function() {
     var show_name = this.name;
@@ -86,7 +79,7 @@ var _queue_data = function(criteria) {
         )
       }
     }).map(function(show) {
-      show.trial = false;
+      show.trial = criteria['trial']
       return show;
     })
   }

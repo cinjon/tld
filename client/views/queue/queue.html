@@ -1,3 +1,11 @@
+<template name="queue">
+  {{#if isInRole 'editor'}}
+    {{> queue_helper editor_queue_data}}
+  {{else}}
+    {{> queue_helper trial_queue_data}}
+  {{/if}}
+</template>
+
 <template name="queue_helper">
   <div class="container container-queue container-full-height">
     <div class="row">
@@ -39,7 +47,11 @@
                 </td>
                 <td>
                   {{#if editor_is_current_user editor_id }}
-                  <a href="{{pathFor 'editor' show_route=show_route episode_route=route}}">{{capitalize title}}</a>
+                    {{#if trial}}
+                    <a href="{{pathFor 'editor' show_route=show_route episode_route=route}}">{{capitalize title}}</a>
+                    {{else}}
+                    <a href="{{pathFor 'editor' show_route=show_route episode_route=route}}">{{capitalize title}}</a>
+                    {{/if}}
                   {{else}}
                   {{capitalize title}}
                   {{/if}}
@@ -65,14 +77,6 @@
       </div>
     </div>
   </div>
-</template>
-
-<template name="queue">
-  {{#if isInRole 'editor'}}
-  {{> queue_helper editor_queue_data}}
-  {{else}}
-  {{> queue_helper trial_queue_data}}
-  {{/if}}
 </template>
 
 <template name="editor_permissions_button">
