@@ -8,11 +8,7 @@
 
 // NOTE: this is not a collection and not stored in Mongo
 
-
-Schema = {};
-
-
-Schema.contact = new SimpleSchema({
+contactSchema = new SimpleSchema({
   name: {
     type: String,
     max: 50

@@ -32,7 +32,7 @@ Meteor.methods({
 
     if ('name' in fields && 'email' in fields && 'message' in fields) {
       //Result of using Autoform in /static/contact
-      check(fields, Schema.contact);
+      check(fields, contactSchema);
       _to = 'support@timelined.com';
       _from = fields.email;
       _subject = "Timelined Contact - Message From " + fields.name,
