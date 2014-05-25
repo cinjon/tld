@@ -17,7 +17,9 @@
 // signed_editor_legal: boolean
 
 
-UsersSchema = new SimpleSchema({
+
+
+userSchema = new SimpleSchema({
   completed_trial: {
     type: Boolean,
     optional: true,
@@ -41,18 +43,25 @@ UsersSchema = new SimpleSchema({
     denyUpdate: true
   },
   emails: {
-    type: Array,
+    type: [Object],
     optional: true
   },
-  'emails.$': {
-    type: Object,
-    blackbox: true
-  },
+  "emails.$.address": {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
+    },
+  "emails.$.verified": {
+    type: Boolean
+    },
   profile: {
     type: Object,
     blackbox: true,
     optional: true
   },
+  // profile: {
+  //   type: userProfileSchema,
+  //   optional: true
+  // },
   roles: {
     type: [String],
     blackbox: true,
@@ -88,7 +97,50 @@ UsersSchema = new SimpleSchema({
   }
 });
 
-Meteor.users.attachSchema(UsersSchema);
+
+
+Meteor.users.attachSchema(userSchema);
+
+
+// userProfileSchema = new SimpleSchema({
+//     firstName: {
+//         type: String,
+//         regEx: /^[a-zA-Z-]{2,25}$/,
+//         optional: true
+//     },
+//     lastName: {
+//         type: String,
+//         regEx: /^[a-zA-Z]{2,25}$/,
+//         optional: true
+//     },
+//     birthday: {
+//         type: Date,
+//         optional: true
+//     },
+//     gender: {
+//         type: String,
+//         allowedValues: ['Male', 'Female'],
+//         optional: true
+//     },
+//     organization : {
+//         type: String,
+//         regEx: /^[a-z0-9A-z .]{3,30}$/,
+//         optional: true
+//     },
+//     website: {
+//         type: String,
+//         regEx: SimpleSchema.RegEx.Url,
+//         optional: true
+//     },
+//     bio: {
+//         type: String,
+//         optional: true
+//     },
+//     // country: {
+//     //     type: Schemas.UserCountry,
+//     //     optional: true
+//     // }
+// });
 
 // UsersCollection.allow({
 //   insert: function () {
