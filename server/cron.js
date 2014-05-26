@@ -4,13 +4,17 @@ var min_ms = 60000;
 var hour_ms = min_ms * 60;
 var cron_minute_interval = new Cron(min_ms);
 var cron_hour_interval = new Cron(hour_ms);
+var hours_to_complete_episode = 36;
+var hour_send_claim_warning_email = hours_to_complete_episode - 6;
 
 if (CRON_RUNNING) {
   // unclaim expired jobs
   add_job(cron_hour_interval, 1, function() {
     var now = (new Date()).getTime();
     Episodes.update({
-      claimed_at:{$exists:true, $lte:hours_ago(24, now), $gt:hours_ago(25, now)},
+      claimed_at:{$exists:true,
+                  $lte:hours_ago(hours_to_complete_episode, now),
+                  $gt:hours_ago(hours_to_complete_episode + 1, now)},
       editor_id:{$ne:null},
       trial:false
     }, {
@@ -26,7 +30,9 @@ if (CRON_RUNNING) {
     var episodes_by_editor_id = {};
     //TODO: refactor with aggregate instead
     Episodes.find({
-      claimed_at:{$exists:true, $lte:hours_ago(17, now), $gt:hours_ago(18, now)},
+      claimed_at:{$exists:true,
+                  $lte:hours_ago(hour_send_claim_warning_email - 1, now),
+                  $gt:hours_ago(hour_send_claim_warning_email, now)},
       editor_id:{$ne:null},
       trial:false
     }, {
