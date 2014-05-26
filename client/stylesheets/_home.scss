@@ -1,17 +1,80 @@
 .container {
   .home-top-intro {
     height: 300px;
+    color: $off-white;
+    border-bottom: 2px solid;
+    margin-bottom: 15px;
+    .search_entity_input_wrap {
+      vertical-align: top;
+      display: inline-block;
+     .search_entity_input {
+        @include dotted-input();
+        @include dotted-style();
+        width: 300px;
+        display: inline-block;
+        vertical-align: top;
+      }
+    }
   }
   .home-display {
     background-color: $ash1;
-    .home-left-pane {
-      background-color: $cream1;
-      float: left;
-      width: 75%;
-    }
-    .home-right-pane {
-      background-color: $off-white;
-      float: left;
+    background-color: $cream1;
+    .home-episode {
+      min-height: 76px;
+      color: $off-white;
+      background-color: $smoke2;
+      .home-buttons {
+        background-color: #222;
+        height: 76px;
+        .fa {
+          position:relative;
+          top: 18px;
+          left: 25%;
+          font-size: 40px;
+          cursor: pointer;
+        }
+      }
+      .episode-info {
+        height: 23px;
+        font-size: 16px;
+        margin-bottom: 2px;
+        .show-title {
+          float: left;
+          margin-right: 10px;
+          width: 15%;
+        }
+        .episode-title {
+          float: left;
+          color: $ash1;
+          font-family: $font-slab;
+          width: 80%;
+        }
+      }
+      .episode-summary {
+        height: 30px;
+        color: $ash1;
+        font-family: $font-slab;
+        font-size: 16px;
+        display: inline-block;
+        .vertical-center-aligned {
+          display: table-cell;
+          height: 30px;
+          vertical-align: middle;
+        }
+      }
+      .episode-people {
+        height: 16px;
+        font-size: 12px;
+        .home-person {
+          float:left;
+          margin-right: 15px;
+        }
+      }
+      .date-time {
+        float: right;
+        margin-left: 10px;
+        color: $off-white;
+      }
     }
   }
 }

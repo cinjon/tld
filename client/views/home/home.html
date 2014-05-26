@@ -1,3 +1,70 @@
 <template name="home">
+  <div class="container container-full-height">
+    <div class="home-top-intro">
+      <div class="home-top-message">
+        <h1>Welcome to Timelined, the best way to discover and share content</h1>
+        <h4>There is a world of media full of insights you care about. We make them easy to find so you don't have to.</h4>
+      </div>
+      <div class="home-top-tools">
+        {{> home_search}}
+        {{> home_filter}}
+      </div>
+    </div>
+    <div class="home-display">
+      <div class="home-left-pane">
+        {{#each episodes}}
+          {{> home_episode}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>
 
+<template name="home_episode">
+  <div class="home-episode">
+    <div class="col-md-1 home-buttons">
+      <i id="show_chapters" class="fa fa-toggle-{{toggle_direction}}"></i>
+    </div>
+    <div class="col-md-10">
+      <div class="episode-info">
+        <span class="show-title ellipsis">
+          {{show_title}}
+        </span>
+        <span class="episode-title ellipsis">
+          {{episode_title}}
+        </span>
+      </div>
+      <div class="episode-summary">
+        <span class="vertical-center-aligned">
+          {{summary}}
+        </span>
+      </div>
+      <div class="episode-people">
+        {{#each people}}
+        <span class="home-person">
+          {{capitalize first_name}} {{capitalize last_name}}
+        </span>
+        {{/each}}
+        <span class="date-time">
+          {{format_seconds_to_clock length_in_seconds}}
+        </span>
+        <span class="date-time">
+          {{prettify_date published_date}}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-1 home-buttons">
+      <i id="play_episode" class="fa fa-play-circle-o fa-inverse"></i>
+    </div>
+  </div>
+</template>
+
+<template name="home_filter">
+
+</template>
+
+<template name="home_search">
+  <span class="search_entity_input_wrap">
+    <input class="form-control search_entity_input" type="text" placeholder="Search shows or people">
+  </span>
 </template>

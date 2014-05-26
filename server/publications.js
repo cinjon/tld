@@ -150,12 +150,29 @@ Meteor.publish('person_from_id', function (id) {
   return People.find({_id: id});
 })
 
+Meteor.publish('published_episodes', function() {
+  return Episodes.find({published:true, trial:false});
+});
+
 Meteor.publish('show_from_route', function(route) {
   return Shows.find({route:route});
 });
 
 Meteor.publish('shows_list', function() {
   return Shows.find();
+});
+
+Meteor.publish('shows_with_published_episodes', function() {
+  return Shows.find({
+    _id: {
+      $in: Episodes.find(
+        {published: true, trial:false}).map(
+          function(episode) {
+            return episode.show_id;
+          }
+        )
+    }
+  });
 });
 
 Meteor.publish('shows_with_unpublished_episodes', function() {
