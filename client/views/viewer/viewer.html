@@ -50,7 +50,9 @@
 <template name="viewer_chapter">
   <div class="chapter_box">
     <div class="chapter_inner">
+      {{#if ../published}}
       <i class="fa fa-share-square right" style="font-size:1.5em"></i>
+      {{/if}}
       <div class="chapter_title contenteditable">
         {{index}}. {{title}}
       </div>
@@ -98,7 +100,9 @@
       {{/if}}
     </span>
   </div>
+  {{#if ../../published}}
   {{> viewer_bookmark}}
+  {{/if}}
 </template>
 
 <template name="viewer_marker">
