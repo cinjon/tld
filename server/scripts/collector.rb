@@ -202,7 +202,7 @@ def put_episode_in_mongo(entry, filename, show, episodes, chapters)
     :_id => generate_meteor_id,
     :type => episode_type(filename),
     :format => format(filename),
-    :title => title_scrub(entry['title']),
+    :title => title_scrub(entry, show),
     :route => generate_episode_route(entry['title'], episodes),
     :number => -1,
     :storage_key => key,
