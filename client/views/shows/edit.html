@@ -3,7 +3,7 @@
   </div>
 
   <div class="col-md-10 white_text">
-    {{> quickForm collection="Shows" doc=edit_document id="shows_edit" type="update" omitFields="updated_at"}}
+    {{> quickForm collection="Shows" doc=edit_document id="shows_edit" type="update" omitFields="created_at, updated_at, feed_checked_at"}}
     <p>
       <br>
       <a href="{{pathFor 'shows_list'}}">Back to Shows</a>
@@ -11,5 +11,7 @@
   </div>
 
   <div class="col-md-1">
+    <br>
+    {{> afDeleteButton collection="Shows" doc=edit_document}}
   </div>
 </template>

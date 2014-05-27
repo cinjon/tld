@@ -34,8 +34,7 @@ Template.shows_list.helpers({
                     label: 'Action',
                     fn: function (value, object) {
                       var episodes_url = object.route + "/episodes";
-                      var destroy_url = "#";
-                      return new Spacebars.SafeString("<a href="+episodes_url+">Episodes</a> | <a href="+destroy_url+">X</a>");
+                      return new Spacebars.SafeString("<a href="+episodes_url+">Episodes</a>");
                      }
                   }
                 ]
