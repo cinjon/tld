@@ -95,7 +95,11 @@ Meteor.publish('episodes_by_editor', function(user_id) {
 
 Meteor.publish('episodes_from_show', function (route) {
   return Episodes.find({show_route: route});
-})
+});
+
+Meteor.publish('episodes_postedited_pending_publication', function () {
+  return Episodes.find({postedited: true, published: false});
+});
 
 Meteor.publish('highlights_from_episode', function(episode_id) {
   return Highlights.find({episode_id:episode_id}, {

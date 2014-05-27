@@ -1,56 +1,17 @@
 <template name="admin">
-  <div class="container container-full-height">
-    <div class="row message" style="text-align:center; margin-bottom:30px; margin-top:10px;">
-      {{message}}
-    </div>
-    <div class="row">
-      <div class="admin_left">
-        <p class="title message">
-          Adjust Editor Status
-        </p>
-      </div>
-      <div class="admin_left">
-        <form class="form-search form-horizontal">
-          <div class="input-append">
-            <input id="search_users_field" type="text" class="form-control editor_search_input" placeholder="Search by UserName">
-            <button type="button" class="btn"><i class="fa fa-search"></i></button>
-          </div>
-        </form>
-      </div>
-      <div class="admin_left">
-        <span class="title message">
-          {{username}}
-        </span>
-      </div>
-      {{#if has_user}}
-        <div class="admin_left">
-          <button type="button" class="btn btn-primary" id="set_editor">
-            {{#if is_editor}}
-            Revoke Editorship
-            {{else}}
-            Make Editor
-            {{/if}}
-          </button>
-        </div>
-        <div class="admin_left">
-          <button type="button" class="btn btn-primary" id="set_completed_trial">
-            {{#if has_completed_trial}}
-            Revoke Completed Trial
-            {{else}}
-            Completed Trial
-            {{/if}}
-          </button>
-        </div>
-        <div class="admin_left">
-          <button type="button" class="btn btn-primary" id="set_editor_agreement">
-            {{#if has_signed_agreement}}
-            Revoke Legal
-            {{else}}
-            Signed Legal
-            {{/if}}
-          </button>
-        </div>
-      {{/if}}
-    </div>
+  <div class="container container-full-height container-light">
+    <h1>Admin Page</h1>
+    <ul>
+      <h3>Collections</h3>
+      <li><a href="{{pathFor 'companies_list'}}">Companies</a></li>
+      <li><a href="{{pathFor 'people_list'}}">People</a></li>
+      <li><a href="{{pathFor 'shows_list'}}">Shows</a></li>
+      <li><a href="{{pathFor 'users_list'}}">Users</a></li>
+    </ul>
+    <br>
+    <ul>
+      <h3>Actions</h3>
+      <li><a href="{{pathFor 'episodes_postedited'}}">Postedited & pending publication</a></li>
+    </ul>
   </div>
 </template>
