@@ -26,14 +26,6 @@ Template.people_list.helpers({
                   {
                     key: 'confirmed',
                     label: 'Confirmed?'
-                  },
-                  {
-                    key: 'action',
-                    label: 'Action',
-                    fn: function (value, object) {
-                      var destroy_url = "#";
-                      return new Spacebars.SafeString("<a href="+destroy_url+">X</a>");
-                     }
                   }
                 ]
     };

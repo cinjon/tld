@@ -7,10 +7,6 @@ Template.shows_list.helpers({
         showNavigation: 'auto',
         fields: [
                   {
-                    key: '_id',
-                    label: 'ID',
-                  },
-                  {
                     key: 'name',
                     label: 'Name',
                     fn: function (value, object) {
