@@ -10,6 +10,7 @@ SLACK_URL=https://timelined.slack.com/services/hooks/incoming-webhook?token=$TOK
 curl -X POST --data "$PAYLOAD" $SLACK_URL
 
 cd /root/deploy/timelined
+git stash
 git pull
 mrt update
 cd ./server/scripts/deploy
