@@ -33,14 +33,6 @@ Template.episodes_list.helpers({
                   {
                     key: 'published',
                     label: 'Published?'
-                  },
-                  {
-                    key: 'action',
-                    label: 'Action',
-                    fn: function (value, object) {
-                      var destroy_url = "#";
-                      return new Spacebars.SafeString("<a href="+destroy_url+">X</a>");
-                     }
                   }
                 ]
     };

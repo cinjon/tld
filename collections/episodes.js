@@ -92,30 +92,6 @@ Episodes = new Meteor.Collection('episodes', {
       label: 'Highlights',
       optional: true
     },
-    postedited: {
-      type: Boolean,
-      label: 'Postedit flag',
-      autoValue: function() {
-        if (this.isSet) {
-          return this.value;
-        } else if (this.isInsert || this.isUpdate) {
-          return false;
-        }
-      }
-    },
-    postedited_at: {
-      type: Date,
-      label: 'Last postedited time',
-      autoValue: function() {
-        var postedited_field = this.field('postedited');
-        if (postedited_field.isSet && postedited_field.value) {
-          return new Date();
-        } else if (this.isInsert) {
-          return null;
-        }
-      },
-      optional: true
-    },
     editor_id: {
       type: String,
       label: 'Editor ID',
@@ -169,6 +145,30 @@ Episodes = new Meteor.Collection('episodes', {
       },
       denyInsert: true,
       optional: true
+    },
+    postedited_at: {
+      type: Date,
+      label: 'Last postedited time',
+      autoValue: function() {
+        var postedited_field = this.field('postedited');
+        if (postedited_field.isSet && postedited_field.value) {
+          return new Date();
+        } else if (this.isInsert) {
+          return null;
+        }
+      },
+      optional: true
+    },
+    postedited: {
+      type: Boolean,
+      label: 'Postedit flag',
+      autoValue: function() {
+        if (this.isSet) {
+          return this.value;
+        } else if (this.isInsert || this.isUpdate) {
+          return false;
+        }
+      }
     },
     published: {
       type: Boolean,
