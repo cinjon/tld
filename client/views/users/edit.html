@@ -3,7 +3,7 @@
   </div>
 
   <div class="col-md-10 white_text">
-    {{> quickForm schema=userEditSchema doc=edit_document id="users_edit" type="method" meteormethod="update_user" omitFields="created_at, updated_at, services"}}
+    {{> quickForm schema=userEditSchema doc=edit_document id="users_edit" type="method" meteormethod="update_user_form" omitFields="createdAt, updatedAt, profile, services"}}
     <p>
       <br>
       <a href="{{pathFor 'users_list'}}">Back to Users</a>

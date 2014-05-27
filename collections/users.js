@@ -20,27 +20,13 @@
 
 
 userSchema = new SimpleSchema({
-  completed_trial: {
-    type: Boolean,
-    optional: true,
-    autoValue: function() {
-      if (this.isInsert) {
-        return false;
-      }
-    }
+  _id: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
   },
-  createdAt: {
-    type: Date,
-    autoValue: function() {
-      if (this.isInsert) {
-        return new Date;
-      } else if (this.isUpsert) {
-        return {$setOnInsert: new Date};
-      } else {
-        this.unset();
-      }
-    },
-    denyUpdate: true
+  username:{
+    type: String,
+    optional: true
   },
   emails: {
     type: [Object],
@@ -72,14 +58,26 @@ userSchema = new SimpleSchema({
     optional: true,
     blackbox: true
   },
+  completed_trial: {
+    type: Boolean,
+    optional: true
+  },
   signed_editor_legal: {
     type: Boolean,
-    optional: true,
+    optional: true
+  },
+  createdAt: {
+    type: Date,
     autoValue: function() {
       if (this.isInsert) {
-        return false;
+        return new Date;
+      } else if (this.isUpsert) {
+        return {$setOnInsert: new Date};
+      } else {
+        this.unset();
       }
-    }
+    },
+    denyUpdate: true
   },
   updatedAt: {
     type: Date,
@@ -90,10 +88,6 @@ userSchema = new SimpleSchema({
     },
     denyInsert: false,
       optional: true
-  },
-  username:{
-    type: String,
-    optional: true
   }
 });
 
@@ -142,14 +136,14 @@ Meteor.users.attachSchema(userSchema);
 //     // }
 // });
 
-// UsersCollection.allow({
-//   insert: function () {
-//     return Roles.userIsInRole(Meteor.userId(), ['admin']);
-//   },
-//   remove: function () {
-//     return Roles.userIsInRole(Meteor.userId(), ['admin']);
-//   },
-//   update: function () {
-//     return Roles.userIsInRole(Meteor.userId(), ['admin']);
-//   }
-// });
+Meteor.users.allow({
+  insert: function () {
+    return Roles.userIsInRole(Meteor.userId(), ['admin']);
+  },
+  remove: function () {
+    return Roles.userIsInRole(Meteor.userId(), ['admin']);
+  },
+  update: function () {
+    return Roles.userIsInRole(Meteor.userId(), ['admin']);
+  }
+});
