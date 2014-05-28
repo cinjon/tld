@@ -26,8 +26,6 @@ Meteor.methods({
     };
   },
   send_email: function(fields) {
-    // TODO: (In an actual application, you'd need to be careful to limit the emails that a client could send, to prevent your server from being used as a relay by spammers.)
-
     var _to, _from, _subject, _text, _html, _reply_to;
 
     if ('name' in fields && 'email' in fields && 'message' in fields) {
