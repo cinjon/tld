@@ -64,21 +64,13 @@ Template.viewer.helpers({
   },
 });
 
-Template.viewer_bookmark.events({
-  'click i': function() {
-    Meteor.call('set_bookmark', Meteor.userId(), this._id);
-  }
-});
-
-Template.viewer_bookmark.helpers({
-  bookmark_class: function() {
-    var bookmark = Bookmarks.findOne({user_id:Meteor.userId(), highlight_id:this._id});
-    if (bookmark && !bookmark.deleted) {
-      return "fa fa-bookmark mint_text";
-    } else {
-      return "fa fa-bookmark-o";
-    }
-  }
+Template.viewer_chapter.events({
+  'mouseleave .chapter_box': function(e, tmpl) {
+    tmpl.$('.chapter_inner .fa').css('visibility', 'hidden');
+  },
+  'mouseenter .chapter_box': function(e, tmpl) {
+    tmpl.$('.chapter_inner .fa').css('visibility', 'visible');
+  },
 });
 
 Template.viewer_chapter.helpers({
@@ -99,7 +91,33 @@ Template.viewer_chapter.helpers({
   },
 });
 
+Template.viewer_highlight.events({
+  'click .set-bookmark': function() {
+    Meteor.call('set_bookmark', Meteor.userId(), this._id);
+  },
+  'mouseleave .highlight-wrap': function(e, tmpl) {
+    tmpl.$('.bookmark .fa').css('visibility', 'hidden');
+  },
+  'mouseenter .highlight-wrap': function(e, tmpl) {
+    tmpl.$('.bookmark .fa').css('visibility', 'visible');
+  }
+})
+
 Template.viewer_highlight.helpers({
+  bookmark_class: function() {
+    var bookmark = Bookmarks.findOne({user_id:Meteor.userId(), highlight_id:this._id});
+    if (bookmark && !bookmark.deleted) {
+      return "fa fa-bookmark mint_text set-bookmark";
+    } else {
+      return "fa fa-bookmark-o set-bookmark";
+    }
+  },
+  bookmark_permanence: function() {
+    var bookmark = Bookmarks.findOne({user_id:Meteor.userId(), highlight_id:this._id});
+    if (bookmark && !bookmark.deleted) {
+      return "-permanent";
+    }
+  },
   company: function() {
     var company = Companies.findOne({_id:this.company_id});
     company.type = 'company';

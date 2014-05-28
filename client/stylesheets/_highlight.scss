@@ -19,6 +19,13 @@
     border-top: 1px solid $cream1;
     padding: 10px;
     position: relative;
+    .chapter-share {
+      width: 1.5em;
+      .fa {
+        font-size: 1.5em;
+        visibility: hidden;
+      }
+    }
   }
   .chapter_title {
     text-align: center;
@@ -50,6 +57,17 @@
   &.highlight-wrap-time {
     .background {
       left: $text-time-width;
+    }
+  }
+  .bookmark, .bookmark-permanent {
+    .fa {
+      font-size:1.7em;
+      padding: 13px 10px 13px 5px;
+    }
+  }
+  .bookmark {
+    .fa {
+      visibility: hidden;
     }
   }
   .row_text_time {

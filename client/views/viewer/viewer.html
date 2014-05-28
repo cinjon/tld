@@ -41,17 +41,13 @@
   </div>
 </template>
 
-<template name="viewer_bookmark">
-  <span class="right">
-    <i class="{{bookmark_class}}" style="font-size:1.7em; padding: 13px 10px 13px 5px"></i>
-  </span>
-</template>
-
 <template name="viewer_chapter">
   <div class="chapter_box">
     <div class="chapter_inner">
       {{#if ../published}}
-      <i class="fa fa-share-square right" style="font-size:1.5em"></i>
+      <span class="chapter-share">
+        <i class="fa fa-share-square right"></i>
+      </span>
       {{/if}}
       <div class="chapter_title contenteditable">
         {{index}}. {{title}}
@@ -61,11 +57,7 @@
 
   <div class="highlights">
     {{#each highlights}}
-    <div class="highlight-wrap highlight-wrap-time">
-      <div class="background"></div>
-      {{> viewer_marker}}
-      {{> viewer_highlight}}
-    </div>
+    {{> viewer_highlight}}
     {{/each}}
   </div>
 </template>
@@ -79,30 +71,37 @@
 </template>
 
 <template name="viewer_highlight">
-  {{#if has_company}}
-  {{> small_picture company}}
-  {{/if}}
-  {{#if has_person}}
-  {{> small_picture person}}
-  {{/if}}
-  {{#if has_link}}
-  {{> small_picture link}}
-  {{/if}}
-  <div class="highlight_text">
-    <span class="highlight_type">
-      {{text_limit type_title 18}}
-    </span>
-    <span class="highlight_content">
-      {{#if has_link}}
+  <div class="highlight-wrap highlight-wrap-time">
+    <div class="background"></div>
+    {{> viewer_marker}}
+
+    {{#if has_company}}
+    {{> small_picture company}}
+    {{/if}}
+    {{#if has_person}}
+    {{> small_picture person}}
+    {{/if}}
+    {{#if has_link}}
+    {{> small_picture link}}
+    {{/if}}
+    <div class="highlight_text">
+      <span class="highlight_type">
+        {{text_limit type_title 18}}
+      </span>
+      <span class="highlight_content">
+        {{#if has_link}}
         <a href="{{url}}">{{text}}</a>
-      {{else}}
+        {{else}}
         {{text}}
-      {{/if}}
+        {{/if}}
+      </span>
+    </div>
+    {{#if ../../published}}
+    <span class="bookmark{{bookmark_permanence}} right">
+      <i class="{{bookmark_class}}"></i>
     </span>
+    {{/if}}
   </div>
-  {{#if ../../published}}
-  {{> viewer_bookmark}}
-  {{/if}}
 </template>
 
 <template name="viewer_marker">
