@@ -29,7 +29,7 @@ Highlights = new Meteor.Collection('highlights', {
     chapter_id: {
       type: String,
       label: 'Chapter ID',
-      optional:true //TODO: talk about this.
+      optional: true
     },
     start_time: {
       type: Number,
