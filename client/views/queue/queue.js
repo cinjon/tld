@@ -6,7 +6,7 @@ Template.queue_helper.events({
     Meteor.call(
       'claim_episode', episode._id, user._id,
       function(error, result) {
-        if (!error) {
+        if (!error && result) {
           Meteor.call('send_slack_notification', 'editors',
                       {text:'Claimed: ' + user.username + ' is working on ' + episode.route})
         }

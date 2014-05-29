@@ -86,19 +86,19 @@
 <template name="editor_permissions_button">
   {{#if episode_is_postedited _id editor_id}}
   <button class="btn btn-success btn-xs btn-block btn-no-click">Waiting Publishing</button>
+
   {{else}}
+    {{#if episode_is_unclaimed editor_id }}
+    <button class="btn btn-primary btn-xs btn-block claim_episode">Claim Episode</button>
+    {{/if}}
 
-  {{#if episode_is_unclaimed editor_id }}
-  <button class="btn btn-primary btn-xs btn-block claim_episode">Claim Episode</button>
-  {{/if}}
+    {{#if episode_is_claimed editor_id _id}}
+    <button class="btn btn-default btn-xs btn-block btn-no-click">Episode Claimed</button>
+    {{/if}}
 
-  {{#if episode_is_claimed editor_id _id}}
-  <button class="btn btn-default btn-xs btn-block btn-no-click">Episode Claimed</button>
-  {{/if}}
-
-  {{#if editor_is_current_user editor_id _id }}
-  <button class="btn btn-warning btn-xs btn-block unclaim_episode">Unclaim Episode</button>
-  {{/if}}
+    {{#if editor_is_current_user editor_id _id }}
+    <button class="btn btn-warning btn-xs btn-block unclaim_episode">Unclaim Episode</button>
+    {{/if}}
 
   {{/if}}
 </template>
