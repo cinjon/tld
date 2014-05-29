@@ -10,6 +10,7 @@
 //   show_id: string,
 //   hosts: array of hosts,   // should include person_id
 //   guests: array of guests, // should include person_id
+//   sponsors: array of sponsors,
 //   chapters: array of chapters,
 //   highlights: array of highlights,
 //   postedited: boolean,
@@ -80,6 +81,11 @@ Episodes = new Meteor.Collection('episodes', {
     guests: {
       type: [String],
       label: 'Guests',
+      optional: true
+    },
+    sponsors: {
+      type: [String],
+      label: 'Sponsors',
       optional: true
     },
     chapters: {
@@ -211,13 +217,14 @@ make_episode = function(type, format, title, number, storage_key,
   highlights = highlights || [];
   guests = guests || [];
   hosts = hosts || [];
+  sponsors = [];
   var episode_id = Episodes.insert(
     {type:type, format:format, title:title, number:number,
      storage_key:storage_key, show_route:show_route, route:route, show_id:show_id,
      hosts:hosts, guests:guests, chapters:chapters, highlights:highlights,
      postedited:postedited, editor_id:editor_id,
      length_in_seconds:length_in_seconds, created_at:created_at,
-     published:published, trial:trial,
+     published:published, trial:trial, sponsors:sponsors,
      feed: {
        url:feed_url, title:feed_title, published:feed_published,
        summary:feed_summary, entry_id:feed_entry_id,
@@ -252,6 +259,7 @@ make_trial_episode = function(storage_key, editor_id) {
     episode.chapters = [];
     episode.highlights = [];
     episode.guests = [];
+    episode.sponsors = [];
     episode.editor_id = editor_id;
     episode.number = episode.number || -1; //if it's not in there, then it's set to null;
 

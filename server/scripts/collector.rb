@@ -210,6 +210,7 @@ def put_episode_in_mongo(entry, filename, show, episodes, chapters)
     :show_id => show['_id'],
     :hosts => [],
     :guests => [],
+    :sponsors => [],
     :chapters => [],
     :highlights => [],
     :postedited => false,

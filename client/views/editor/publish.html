@@ -38,7 +38,8 @@
 </template>
 
 <template name="editor_stats">
-  <p>Does the title include an episode number and is it descriptive: <span class="{{incomplete_title}}"><b>&quot;</b>{{title}}<b>&quot;</b></span></p>
+  <p><b>&quot;</b>{{title}}<b>&quot;</b></p>
+  <p>Is the sponsor count correct: {{num_sponsors}} Sponsors</p>
   <p>Are the host and guest counts correct: {{num_hosts}} Hosts, {{num_guests}} Guests / <span class="{{incomplete_people}}">{{num_people}} People</span></p>
   <p>Are the chapters named and the links linked: Chapters: <span class="{{incomplete_chapters}}">{{num_incomplete_chapters}} / {{num_chapters}}</span>, Links: <span class="{{incomplete_urls}}">{{num_incomplete_urls}} / {{num_urls}}</span></p>
 </template>

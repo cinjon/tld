@@ -189,11 +189,6 @@ Template.editor_stats.helpers({
       return "incomplete";
     }
   },
-  incomplete_title: function() {
-    if (!this.title) {
-      return "incomplete";
-    }
-  },
   incomplete_urls: function() {
     if (get_incomplete_links_count() > 0) {
       return "incomplete";
@@ -216,6 +211,9 @@ Template.editor_stats.helpers({
   },
   num_people: function() {
     return safe_length(this.guests) + safe_length(this.hosts);
+  },
+  num_sponsors: function() {
+    return safe_length(this.sponsors);
   },
   num_urls: function() {
     return Highlights.find({_id:{$in:this.highlights}, type:"link"}).count();
