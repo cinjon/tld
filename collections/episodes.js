@@ -59,7 +59,13 @@ Episodes = new Meteor.Collection('episodes', {
     number: {
       type: Number,
       label: 'Episode Number',
-      optional: true
+      autoValue: function() {
+        if (this.isSet) {
+          return this.value;
+        } else if (this.isInsert || this.isUpdate) {
+          return -1;
+        }
+      }
     },
     storage_key: {
       type: String,
