@@ -54,8 +54,12 @@ Template.queue_helper.helpers({
     return !this.trial;
   },
   published: function() {
-    return this.feed.published;
-  },
+    if (this.feed != null) {
+      return this.feed.published;
+    } else {
+      return this.created_at;
+    }
+  }
 });
 
 Template.queue.helpers({
