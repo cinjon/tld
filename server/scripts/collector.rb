@@ -98,8 +98,6 @@ def episode_type(filename)
   end
 end
 
-
-
 def format(filename)
   if filename == "youtube"
     return "youtube"
@@ -284,8 +282,6 @@ def youtube_summary(key)
   video = youtube_client.video_by(key)
   return video.description || ""
 end
-
-
 
 
 
