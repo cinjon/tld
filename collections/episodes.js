@@ -101,27 +101,20 @@ Episodes = new Meteor.Collection('episodes', {
     editor_id: {
       type: String,
       label: 'Editor ID',
+      denyInsert: true,
       optional: true
     },
     claimed_at: {
       type: Date,
       label: 'Date when current editor claimed episode',
-      autoValue: function() {
-        if (this.isInsert) {
-          return null;
-        }
-      },
+      denyInsert: true,
       optional: true
     },
     claimed_previously_by: {
       //So that editors can't toggle the claim button to start the clock at 0
       type: String,
       label: 'User_id of the person who claimed this before the current editor_id',
-      autoValue: function() {
-        if (this.isInsert) {
-          return null;
-        }
-      },
+      denyInsert: true,
       optional: true
     },
     length_in_seconds: {
@@ -163,6 +156,7 @@ Episodes = new Meteor.Collection('episodes', {
           return null;
         }
       },
+      denyInsert: true,
       optional: true
     },
     postedited: {
@@ -178,31 +172,46 @@ Episodes = new Meteor.Collection('episodes', {
     },
     published: {
       type: Boolean,
-      label: 'Published flag'
+      label: 'Published flag',
+      autoValue: function() {
+        if (this.isSet) {
+          return this.value;
+        } else if (this.isInsert || this.isUpdate) {
+          return false;
+        }
+      }
     },
     trial: {
-      type: Boolean
+      type: Boolean,
+      label: 'Trial Episode',
+      autoValue: function() {
+        if (this.isSet) {
+          return this.value;
+        } else if (this.isInsert || this.isUpdate) {
+          return false;
+        }
+      }
     },
     hidden: {
       type: Boolean,
-      autoValue: function () {
-        return false;
-      },
-      optional: true
+      autoValue: function() {
+        if (this.isSet) {
+          return this.value;
+        } else if (this.isInsert || this.isUpdate) {
+          return false;
+        }
+      }
     },
     summary: {
       type: String,
-      autoValue: function() {
-        if (this.isInsert) {
-          return null;
-        }
-      },
+      denyInsert: true,
       optional: true
     },
     feed: {
       type: Object,
       label: 'Feed data (varying fields)',
-      blackbox: true
+      blackbox: true,
+      optional: true
     }
   })
 });
@@ -269,7 +278,7 @@ make_trial_episode = function(storage_key, editor_id) {
     People.update({_id:{$in:episode.hosts}}, {$addToSet:{hosts:episode_id}}, {multi:true});
     Episodes.update({_id:episode_id}, {$addToSet:{chapters:chapter_id}});
   }
-  return episode_id
+  return episode_id;
 };
 
 Episodes.allow({
