@@ -14,7 +14,8 @@
       "bourbon": {},
       "cron-tick": {},
       "reactive-table": {},
-      "apm": {}
+      "apm": {},
+      "collection-hooks": {}
     },
     "packages": {
       "iron-router": {
@@ -81,6 +82,11 @@
         "git": "https://github.com/arunoda/meteor-apm-client.git",
         "tag": "v1.4.4",
         "commit": "36f2f9775178621e9798d14c99baf24c06cc43c0"
+      },
+      "collection-hooks": {
+        "git": "https://github.com/matb33/meteor-collection-hooks.git",
+        "tag": "v0.6.7",
+        "commit": "f1d2ac629864edda09df6c955fa5ff3df26f739c"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
