@@ -156,7 +156,6 @@ Episodes = new Meteor.Collection('episodes', {
           return null;
         }
       },
-      denyInsert: true,
       optional: true
     },
     postedited: {
@@ -243,7 +242,7 @@ make_episode = function(type, format, title, number, storage_key,
   );
   if (chapters.length == 0) {
     var chapter_id = make_chapter(
-      'Introduction', true, episode_id, editor_id, 0, highlights, null, false);
+      'Introduction', true, episode_id, editor_id, 0, highlights, null);
     Episodes.update({_id:episode_id}, {$addToSet:{chapters:chapter_id}});
   }
 };
