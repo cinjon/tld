@@ -4,12 +4,17 @@
   </div>
   <div class="col-md-10 container-light">
     <p>
+      <h2>New Episode</h2>
+    </p>
+    <p>
       Show Route will be: <b>{{route}}</b>
     </p>
     <p>
       Show ID will be: <b>{{_id}}</b>
     </p>
-    {{> quickForm collection="Episodes" id="episodes_new" type="insert"}}
+    <p>
+      {{> quickForm collection="Episodes" id="episodes_new" type="insert" omitFields="created_at, hosts, guests, sponsors, highlights, feed"}}
+    </p>
   </div>
 
   <div class="col-md-1">

@@ -2,7 +2,10 @@
   <div class="col-md-1">
   </div>
   <div class="col-md-10 container-light">
-    {{> quickForm collection="Shows" id="show_new" type="insert"}}
+    <h2>New Show</h2>
+    <p>
+      {{> quickForm collection="Shows" id="show_new" type="insert" omitFields="created_at, feed_checked_at"}}
+    </p>
   </div>
   <div class="col-md-1">
   </div>
