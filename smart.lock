@@ -39,8 +39,8 @@
       },
       "autoform": {
         "git": "https://github.com/aldeed/meteor-autoform.git",
-        "tag": "v0.9.0",
-        "commit": "0841eb4ed0f7dd9801d9c234921647609cad44ba"
+        "tag": "v0.10.0",
+        "commit": "4b298a025679a7e51892a884c11301c1d6bf19b3"
       },
       "bootstrap3-sass": {
         "git": "https://github.com/reywood/meteor-bootstrap3-sass.git",
@@ -79,8 +79,8 @@
       },
       "apm": {
         "git": "https://github.com/arunoda/meteor-apm-client.git",
-        "tag": "v1.4.3",
-        "commit": "547c695b67a1b32b56f6a9790bd68ee0a014a8f0"
+        "tag": "v1.4.4",
+        "commit": "36f2f9775178621e9798d14c99baf24c06cc43c0"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
