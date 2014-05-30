@@ -29,8 +29,12 @@ Shows = new Meteor.Collection('shows', {
       feed_active: {
         type: Boolean,
         label: 'Feed Active',
-        autoValue: function () {
-          return true;
+        autoValue: function() {
+          if (this.isSet) {
+            return this.value;
+          } else if (this.isInsert || this.isUpdate) {
+            return true;
+          }
         }
       },
       description: {
