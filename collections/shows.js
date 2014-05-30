@@ -23,7 +23,8 @@ Shows = new Meteor.Collection('shows', {
       },
       feed: {
         type: String,
-        label: 'RSS Feed Link'
+        label: 'RSS Feed Link',
+        optional: true
       },
       feed_active: {
         type: Boolean,
