@@ -1,9 +1,10 @@
 <template name="home">
   <div class="container container-full-height">
-    <div class="home-top-intro">
+    <div id="home-top-intro">
       <div class="home-top-message">
-        <h1>Welcome to Timelined, the best way to discover and share content</h1>
-        <h4>There is a world of media full of insights you care about. We make them easy to find so you don't have to.</h4>
+        <h1 class="home-title">Welcome to Timelined, the best way to discover and share content.</h1>
+        <p class="home-sub-title">There is a world of media full of insights you care about.</p>
+        <p class="home-sub-title">We do the hard work watching them all so you don't have to.</p>
       </div>
       <div class="home-top-tools">
         {{> home_search}}
@@ -65,6 +66,6 @@
 
 <template name="home_search">
   <span class="search_entity_input_wrap">
-    <input class="form-control search_entity_input" type="text" placeholder="Search shows or people">
+    <input id="home_search_typeahead" class="form-control search_entity_input" type="text" placeholder="Search shows or people">
   </span>
 </template>

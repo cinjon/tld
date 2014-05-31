@@ -1,18 +1,32 @@
 .container {
-  .home-top-intro {
+  #home-top-intro {
     height: 300px;
     color: $off-white;
     border-bottom: 2px solid;
     margin-bottom: 15px;
-    .search_entity_input_wrap {
-      vertical-align: top;
-      display: inline-block;
-     .search_entity_input {
-        @include dotted-input();
-        @include dotted-style();
-        width: 300px;
-        display: inline-block;
+    .home-title {
+      font-size: 32px;
+      font-weight: 600;
+      padding: 20px 0;
+    }
+    .home-sub-title {
+      font-size: 22px;
+      font-weight: 100;
+    }
+    .home-top-tools {
+      padding-top: 20px;
+      .search_entity_input_wrap {
         vertical-align: top;
+        display: inline-block;
+       .search_entity_input {
+          @include dotted-input();
+          @include dotted-style();
+          width: 500px;
+          height: 50px;
+          font-size: 22px;
+          display: inline-block;
+          vertical-align: top;
+        }
       }
     }
   }
