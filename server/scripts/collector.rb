@@ -232,6 +232,7 @@ def put_episode_in_mongo(entry, filename, show, episodes, chapters)
   # youtube specifc stuff here, will refactor this when we get more data
   if episode[:format] == 'youtube'
     episode[:feed][:summary] = youtube_summary(key)
+    episode[:hidden] = true if episode[:length_in_seconds] < 900
   end
 
   chapter_id = put_chapter_in_mongo(episode[:_id], chapters)
