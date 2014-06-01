@@ -99,17 +99,9 @@
 <template name="editor_header_box">
   <div class="editing-stage editing-stage-{{key}} row">
     {{#if is_editor_mode key}}
-    <div class="arrow_box">
-      <button class="active btn btn-block">
-        <span class="title">{{title}}</span>
-        <span class="title">{{num_reviews}}</span>
-      </button>
-    </div>
+    {{> arrow_box box_info}}
     {{else}}
-    <button class="btn btn-block">
-      <span class="title">{{title}}</span>
-      <span class="title">{{num_reviews}}</span>
-    </button>
+    {{> button_box box_info}}
     {{/if}}
   </div>
 </template>

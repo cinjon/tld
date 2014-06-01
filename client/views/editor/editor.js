@@ -204,14 +204,11 @@ Template.editor_header_box.events({
 });
 
 Template.editor_header_box.helpers({
-  num_reviews: function() {
-    if (this.key == 'review') {
-      var count = get_untitled_chapter_count() + get_incomplete_links_count();
-      if (count > 0) {
-        return '(' + count.toString() + ')';
-      } else {
-        return '';
-      }
+  box_info: function() {
+    return {
+      key: this.key,
+      num_reviews: get_num_reviews(this.key),
+      title: this.title
     }
   }
 });
@@ -404,6 +401,17 @@ get_incomplete_links_count = function() {
     }
   });
   return count;
+}
+
+get_num_reviews = function(key) {
+  var num_reviews = null;
+  if (key == 'review') {
+    var count = get_untitled_chapter_count() + get_incomplete_links_count();
+    if (count > 0) {
+      num_reviews = '(' + count.toString() + ')';
+    }
+  }
+  return num_reviews;
 }
 
 get_untitled_chapter_count = function() {

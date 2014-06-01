@@ -1,93 +1,174 @@
 .container {
   #home-top-intro {
-    height: 300px;
+    height: 220px;
     color: $off-white;
-    border-bottom: 2px solid;
-    margin-bottom: 15px;
+    margin-bottom: 50px;
     .home-title {
       font-size: 32px;
       font-weight: 600;
-      padding: 20px 0;
+      padding: 25px 0;
     }
-    .home-sub-title {
-      font-size: 22px;
-      font-weight: 100;
-    }
-    .home-top-tools {
-      padding-top: 20px;
-      .search_entity_input_wrap {
-        vertical-align: top;
-        display: inline-block;
-       .search_entity_input {
-          @include dotted-input();
-          @include dotted-style();
-          width: 500px;
-          height: 50px;
+    #home-sub-title {
+      .home-top-message {
+        width:50%;
+        float:left;
+        .home-sub-title-text {
           font-size: 22px;
-          display: inline-block;
+          font-weight: 100;
+        }
+      }
+      #home-top-search {
+        width:50%;
+        float:left;
+        position:relative;
+        top:10px;
+        left:30px;
+        .search_entity_input_wrap {
           vertical-align: top;
+          display: inline-block;
+         .search_entity_input {
+            @include dotted-input();
+            @include dotted-style();
+            width: 500px;
+            height: 60px;
+            font-size: 22px;
+            display: inline-block;
+            vertical-align: top;
+          }
+        }
+        .tt-dropdown-menu {
+          width:100%
         }
       }
     }
   }
   .home-display {
-    background-color: $ash1;
-    background-color: $cream1;
+    .header {
+      z-index: 3; //get arrow in front
+      margin-left: 0px;
+
+      .home-stage {
+        font-weight: $font-weight-heavy;
+        .btn {
+          height: 70px;
+          background: $white;
+          border-radius: 0;
+          font-weight: $font-weight-heavy;
+          text-transform: uppercase;
+          border-right: 1px solid $cream1;
+        }
+        .title {
+          text-align: center;
+          font-size: 16px;
+          letter-spacing: 2px;
+        }
+        .arrow_box {
+          position: relative;
+        }
+        @mixin home-stage-for-key($color) {
+          color: $cream2; //$color;
+          .active { //.btn
+            background: $color;
+            color: $white;
+            border-color: transparent;
+          }
+          .arrow_box:after {
+            top: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: fade_out($color, 1);
+            border-top-color: $color;
+            border-width: 7px 10px;
+            margin-left: -10px;
+            z-index: 1;
+          }
+        }
+        &.home-stage-you {
+          @include home-stage-for-key($mint);
+        }
+        &.home-stage-popular {
+          @include home-stage-for-key($mint);
+        }
+        &.home-stage-recent {
+          @include home-stage-for-key($mint);
+        }
+      }
+    }
     .home-episode {
-      min-height: 76px;
+      min-height: 90px;
       color: $off-white;
       background-color: $smoke2;
-      .home-buttons {
+      .episode-buttons {
         background-color: #222;
-        height: 76px;
-        .fa {
+        padding: 10px;
+        height: 90px;
+        .show_button {
           position:relative;
-          top: 18px;
-          left: 25%;
-          font-size: 40px;
+          top: 15px;
+          left: 20px;
+          font-size: 20px;
           cursor: pointer;
+          .fa-play {
+            left:2px;
+          }
+        }
+        .active {
+          color: $mint;
+        }
+        .chapter_number {
+          text-align: center;
+          position: absolute;
         }
       }
       .episode-info {
-        height: 23px;
+        padding: 10px;
+        height: 90px;
         font-size: 16px;
         margin-bottom: 2px;
-        .show-title {
-          float: left;
-          margin-right: 10px;
-          width: 15%;
+        .episode-titles {
+          height: 22px;
+          .show-title {
+            float: left;
+            margin-right: 10px;
+            width: 15%;
+          }
+          .episode-title {
+            float: left;
+            color: $ash1;
+            font-family: $font-slab;
+            width: 80%;
+          }
         }
-        .episode-title {
-          float: left;
+        .episode-summary {
+          height: 30px;
           color: $ash1;
           font-family: $font-slab;
-          width: 80%;
+          font-size: 16px;
+          display: inline-block;
+          .vertical-center-aligned {
+            display: table-cell;
+            height: 30px;
+            vertical-align: middle;
+          }
         }
-      }
-      .episode-summary {
-        height: 30px;
-        color: $ash1;
-        font-family: $font-slab;
-        font-size: 16px;
-        display: inline-block;
-        .vertical-center-aligned {
-          display: table-cell;
-          height: 30px;
-          vertical-align: middle;
+        .episode-people {
+          height: 17px;
+          font-size: 12px;
+          .home-person {
+            float:left;
+            margin-right: 15px;
+          }
         }
-      }
-      .episode-people {
-        height: 16px;
-        font-size: 12px;
-        .home-person {
-          float:left;
-          margin-right: 15px;
+        .date-time {
+          float: right;
+          margin-left: 10px;
+          color: $off-white;
         }
-      }
-      .date-time {
-        float: right;
-        margin-left: 10px;
-        color: $off-white;
       }
     }
   }

@@ -1,33 +1,48 @@
 <template name="home">
   <div class="container container-full-height">
     <div id="home-top-intro">
-      <div class="home-top-message">
-        <h1 class="home-title">Welcome to Timelined, the best way to discover and share content.</h1>
-        <p class="home-sub-title">There is a world of media full of insights you care about.</p>
-        <p class="home-sub-title">We do the hard work watching them all so you don't have to.</p>
-      </div>
-      <div class="home-top-tools">
-        {{> home_search}}
-        {{> home_filter}}
+      <h1 class="home-title">Welcome to Timelined, the best way to discover and share content.</h1>
+      <div id="home-sub-title">
+        <div class="home-top-message">
+          <p class="home-sub-title-text">There is a world of media full of insights you care about.</p>
+          <p class="home-sub-title-text">We do the hard work watching them all so you don't have to.</p>
+        </div>
+        <div id="home-top-search">
+          {{> home_search}}
+        </div>
       </div>
     </div>
     <div class="home-display">
-      <div class="home-left-pane">
-        {{#each episodes}}
-          {{> home_episode}}
-        {{/each}}
+      <div class="row header">
+        <div class="col-md-2">
+          {{> home_header_box header_recent}}
+        </div>
+        <div class="col-md-2">
+          {{> home_header_box header_popular}}
+        </div>
+        {{#if has_subscriptions}}
+        <div class="col-md-2">
+          {{> home_header_box header_you}}
+        </div>
+        {{/if}}
       </div>
+      {{#each episodes}}
+      {{> home_episode}}
+      {{/each}}
     </div>
   </div>
 </template>
 
 <template name="home_episode">
   <div class="home-episode">
-    <div class="col-md-1 home-buttons">
-      <i id="show_chapters" class="fa fa-toggle-{{toggle_direction}}"></i>
+    <div class="col-md-1 episode-buttons">
+      <div class="fa-stack fa-lg show_button play_episode">
+        <i class="fa fa-circle-thin fa-inverse fa-stack-2x"></i>
+        <i class="fa fa-play fa-inverse fa-stack-1x"></i>
+      </div>
     </div>
-    <div class="col-md-10">
-      <div class="episode-info">
+    <div class="col-md-10 episode-info">
+      <div class="episode-titles">
         <span class="show-title ellipsis">
           {{show_title}}
         </span>
@@ -54,14 +69,23 @@
         </span>
       </div>
     </div>
-    <div class="col-md-1 home-buttons">
-      <i id="play_episode" class="fa fa-play-circle-o fa-inverse"></i>
+    <div class="col-md-1 episode-buttons">
+      <div class="fa-stack fa-lg show_button">
+        <i class="{{show_chapters_class}}"></i>
+        <div class="fa fa-stack-1x">{{num_chapters}}</div>
+      </div>
     </div>
   </div>
 </template>
 
-<template name="home_filter">
-
+<template name="home_header_box">
+  <div class="home-stage home-stage-{{key}} row">
+    {{#if is_home_display key}}
+    {{> arrow_box box_info}}
+    {{else}}
+    {{> button_box box_info}}
+    {{/if}}
+  </div>
 </template>
 
 <template name="home_search">
