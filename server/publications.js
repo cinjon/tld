@@ -155,7 +155,13 @@ Meteor.publish('person_from_id', function (id) {
 })
 
 Meteor.publish('published_episodes', function() {
-  return Episodes.find({published:true, trial:false});
+  return Episodes.find({published:true, trial:false}, {
+    fields: {
+      published:true, trial:true, hosts:true, guests:true,
+      chapters:true, title:true, show_id:true, feed:true,
+      summary:true, length_in_seconds:true
+    }
+  });
 });
 
 Meteor.publish('show_from_route', function(route) {
@@ -175,6 +181,10 @@ Meteor.publish('shows_with_published_episodes', function() {
             return episode.show_id;
           }
         )
+    }
+  }, {
+    fields: {
+      name: true
     }
   });
 });

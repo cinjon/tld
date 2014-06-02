@@ -33,6 +33,29 @@
   </div>
 </template>
 
+<template name="home_chapter">
+  <!-- Include the title in an <a>, with the start_time on the right.
+       On hover, show a button to play and one to show the highlights -->
+  <div class="home-chapter col-md-10 col-md-offset-1">
+    <div class="row">
+      <div class="episode-title ellipsis">
+        {{index}}. {{title}}
+      </div>
+      <div class="fa-stack play_episode">
+        <i class="fa fa-circle-thin fa-inverse fa-stack-2x"></i>
+        <i class="fa fa-play fa-inverse fa-stack-1x"></i>
+      </div>
+      <div class="fa-stack show_highlights">
+        <i class="{{show_highlights_class}}"></i>
+        <div class="fa fa-stack-1x">{{num_highlights}}</div>
+      </div>
+      <span class="date-time">
+        {{format_seconds_to_clock start_time}}
+      </span>
+    </div>
+  </div>
+</template>
+
 <template name="home_episode">
   <div class="home-episode">
     <div class="col-md-1 episode-buttons">
@@ -76,6 +99,11 @@
       </div>
     </div>
   </div>
+  {{#if show_chapters}}
+  {{#each chapters}}
+  {{> home_chapter}}
+  {{/each}}
+  {{/if}}
 </template>
 
 <template name="home_header_box">

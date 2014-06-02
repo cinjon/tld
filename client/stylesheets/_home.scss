@@ -46,7 +46,6 @@
     .header {
       z-index: 3; //get arrow in front
       margin-left: 0px;
-
       .home-stage {
         font-weight: $font-weight-heavy;
         .btn {
@@ -169,6 +168,39 @@
           margin-left: 10px;
           color: $off-white;
         }
+      }
+    }
+    .home-chapter {
+      clear: both;
+      border: 1px solid #777;
+      padding: 10px 25px;
+      color: $off-white;
+      .fa-stack {
+        float: right;
+        .fa-play {
+          top: -1px;
+          left: 1px;
+        }
+        .fa-stack-1x {
+          position:relative;
+          top: -1px;
+        }
+      }
+      .show_highlights {
+        margin-right: 10px;
+        top: -1px;
+      }
+      .date-time {
+        float: right;
+        margin-right: 10px;
+        position: relative;
+        top: 3px;
+        font-size: 12px;
+      }
+      .episode-title {
+        float:left;
+        font-size: 18px;
+        margin-right: 5px;
       }
     }
   }

@@ -2,6 +2,7 @@ var home_reactivity = new ReactiveDict;
 
 Template.home.created = function() {
   home_reactivity.set('show_chapters', null);
+  home_reactivity.set('show_highlights', null);
   home_reactivity.set('home_display', 'recent');
 }
 
@@ -30,8 +31,22 @@ Template.home.helpers({
   },
 });
 
+Template.home_chapter.helpers({
+  num_highlights: function() {
+    return this.highlights.length;
+  },
+  show_highlights_class: function() {
+    var css_class = "fa fa-comment-o fa-inverse fa-stack-2x";
+    if (home_reactivity.equals('show_highlights', this._id)) {
+      return css_class + " active";
+    } else {
+      return css_class;
+    }
+  },
+})
+
 Template.home_episode.events({
-  'click .oplay_episode': function(e, tmpl) {
+  'click .play_episode': function(e, tmpl) {
     //Play this episode;
   },
   'click .show_button': function(e, tmpl) {
@@ -44,6 +59,14 @@ Template.home_episode.events({
 });
 
 Template.home_episode.helpers({
+  chapters: function() {
+    var index = 1;
+    return Chapters.find({_id:{$in:this.chapters}}).map(function(chapter) {
+      chapter.index = index;
+      index += 1;
+      return chapter;
+    });
+  },
   episode_title: function() {
     var title = this.title;
     var show = Shows.findOne({_id:this.show_id});
@@ -66,6 +89,9 @@ Template.home_episode.helpers({
   published_date: function() {
     return this.feed.published;
   },
+  show_chapters: function() {
+    return home_reactivity.equals('show_chapters', this._id);
+  },
   show_chapters_class: function() {
     var css_class = "fa fa-comment-o fa-stack-2x";
     if (home_reactivity.equals('show_chapters', this._id)) {
@@ -86,6 +112,7 @@ Template.home_episode.helpers({
 
 Template.home_header_box.events({
   'click button': function(e, tmpl) {
+    console.log('what');
     home_reactivity.set('home_display', this.key);
   }
 });
@@ -193,4 +220,7 @@ Deps.autorun(function() {
     home_reactivity.set('home_search_count', People.find().count() + Shows.find().count());
     reset_home_search_typeahead();
   }
+
+  Meteor.subscribe('chapters_from_episode', home_reactivity.get('show_chapters'));
+  Meteor.subscribe('highlights_from_episode', home_reactivity.get('show_chapters'));
 });
