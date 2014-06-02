@@ -14,8 +14,8 @@
       "bourbon": {},
       "cron-tick": {},
       "reactive-table": {},
-      "apm": {},
-      "collection-hooks": {}
+      "collection-hooks": {},
+      "kadira": {}
     },
     "packages": {
       "iron-router": {
@@ -75,18 +75,18 @@
       },
       "reactive-table": {
         "git": "https://github.com/ecohealthalliance/reactive-table.git",
-        "tag": "v0.3.11",
-        "commit": "9ec88b8bcded8ced97cc8736f3d2ecbe3e7b926d"
-      },
-      "apm": {
-        "git": "https://github.com/arunoda/meteor-apm-client.git",
-        "tag": "v1.4.4",
-        "commit": "36f2f9775178621e9798d14c99baf24c06cc43c0"
+        "tag": "v0.3.13",
+        "commit": "4ac599148eddfe05aa7732d64a2d7b6fb1b601dd"
       },
       "collection-hooks": {
         "git": "https://github.com/matb33/meteor-collection-hooks.git",
         "tag": "v0.6.7",
         "commit": "f1d2ac629864edda09df6c955fa5ff3df26f739c"
+      },
+      "kadira": {
+        "git": "https://github.com/meteorhacks/kadira.git",
+        "tag": "v2.1.1",
+        "commit": "d15bb5299c898d2534b9f0d3ab07daf266a8928a"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
@@ -100,8 +100,8 @@
       },
       "collection2": {
         "git": "https://github.com/aldeed/meteor-collection2.git",
-        "tag": "v0.3.11",
-        "commit": "7e970671305657678e8508d8107d5e6c5e158559"
+        "tag": "v0.4.0",
+        "commit": "5648f7c53ee98f3ac8fbe82a55e6fd78fc67cfbc"
       },
       "moment": {
         "git": "https://github.com/acreeger/meteor-moment.git",

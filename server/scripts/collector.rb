@@ -1,14 +1,26 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require 'feedjira'
-require 'open-uri'
-require 'fileutils'
 require 'audioinfo'
 require 'awesome_print'
-require 'youtube_it'
+require 'feedjira'
+require 'fileutils'
 require 'mongo'
+require 'open-uri'
+require 'optparse'
+require 'youtube_it'
 include Mongo
+
+
+# OPTIONS
+
+# options = {}
+# OptionParser.new do |opts|
+#   opts.banner = "Usage: collector.rb [options]"
+#
+#   opts.on('--new_episodes', 'Get new episodes only') { |v| options[:new_episodes] = true}
+#   opts.on('--verbose', 'Verbose output') { |v| options[:verbose] = true }
+#
+# end.parse!
 
 # GLOBALS
 

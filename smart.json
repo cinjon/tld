@@ -12,7 +12,7 @@
     "bourbon": {},
     "cron-tick": {},
     "reactive-table": {},
-    "apm": {},
-    "collection-hooks": {}
+    "collection-hooks": {},
+    "kadira": {}
   }
 }
