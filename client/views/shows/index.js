@@ -21,8 +21,12 @@ Template.shows_list.helpers({
                   {
                     key: 'feed_checked_at',
                     label: 'Feed Check',
-                    fn: function (value) {
-                      return new Date(value).toDateString('yyyy-MM-dd')
+                    fn: function (value, object) {
+                      if (object.feed_active) {
+                        return new Date(value).toDateString('yyyy-MM-dd');
+                      } else {
+                        return "Inactive";
+                      }
                     }
                   },
                   {
