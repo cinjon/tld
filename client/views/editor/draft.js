@@ -340,7 +340,7 @@ var set_start_time = function(now) {
   if (!now) {
     session_var_set_obj('highlight', ['start_time'], [null]);
   } else {
-    if (Meteor.settings && Meteor.settings.public.dev_mode) {
+    if (Meteor.settings.public && Meteor.settings.public.dev_mode) {
       session_var_set_obj('highlight', ['start_time'],
                           [Math.floor(Math.random()*3000) + 1]);
     } else {

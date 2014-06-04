@@ -11,7 +11,7 @@ Meteor.methods({
   make_trial_episodes: function(user_id) {
     this.unblock();
 
-    if (Meteor.settings && Meteor.settings.public.stage_mode == true) {
+    if (Meteor.settings.public && Meteor.settings.public.stage_mode == true) {
       trial_storage_keys = [
         "8eb6930c0391a0052e941cfc1e78aa7e", "659732606d989b7869c1e90dc8e1a469",
         "8fb865b62dc6dcaf3b0390f8ded8aa5a", "8ff9850b83eae81a9559d0a19ff30749"

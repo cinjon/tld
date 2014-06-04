@@ -31,9 +31,9 @@ Meteor.startup(function() {
     */
 
     if (is_twitter_create_user(user)) {
-      user.profile = options.profile
-      user.profile.profile_image_url = user.services.twitter.profile_image_url
-      user.profile.profile_image_url_https = user.services.twitter.profile_image_url_https
+      user.profile = options.profile;
+      user.profile.profile_image_url = user.services.twitter.profile_image_url;
+      user.profile.profile_image_url_https = user.services.twitter.profile_image_url_https;
       user.username = user.services.twitter.screenName;
     } else { //Twitter signups won't have an email.
       Meteor.call('send_email', {
