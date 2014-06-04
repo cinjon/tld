@@ -50,8 +50,10 @@ Meteor.startup(function() {
       One [small] negative with putting it here is that nothing in fixtures gets the treatment.
       One positive with putting it here is that people won't get turned off when the inspiration to try the trial strikes them.
     */
-    Meteor.call('make_trial_episodes', user._id);
 
+    console.log("before make_trial");
+    Meteor.call('make_trial_episodes', user._id);
+    console.log("after make_trial");
     return user;
   });
 

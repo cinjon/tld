@@ -9,6 +9,7 @@ Meteor.methods({
     return serialized && serialized.M === options.M;
   },
   make_trial_episodes: function(user_id) {
+    console.log("starting make_trial");
     this.unblock();
 
     if (Meteor.settings.public && Meteor.settings.public.stage_mode == true) {
@@ -22,10 +23,11 @@ Meteor.methods({
         "8ff9850b83eae81a9559d0a19ff30749", "8fb865b62dc6dcaf3b0390f8ded8aa5a"
       ];
     }
-
+    console.log("middle of make_trial");
     trial_storage_keys.forEach(function(storage_key) {
       make_trial_episode(storage_key, user_id);
     });
+    console.log("end of make_trial");
   },
   reset_password: function(user_id) {
     if (Meteor.isServer) {
