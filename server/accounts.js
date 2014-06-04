@@ -51,9 +51,7 @@ Meteor.startup(function() {
       One positive with putting it here is that people won't get turned off when the inspiration to try the trial strikes them.
     */
 
-    console.log("before make_trial");
     Meteor.call('make_trial_episodes', user._id);
-    console.log("after make_trial");
     return user;
   });
 

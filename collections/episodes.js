@@ -107,20 +107,17 @@ Episodes = new Meteor.Collection('episodes', {
     editor_id: {
       type: String,
       label: 'Editor ID',
-      denyInsert: true,
       optional: true
     },
     claimed_at: {
       type: Date,
       label: 'Date when current editor claimed episode',
-      denyInsert: true,
       optional: true
     },
     claimed_previously_by: {
       //So that editors can't toggle the claim button to start the clock at 0
       type: String,
       label: 'User_id of the person who claimed this before the current editor_id',
-      denyInsert: true,
       optional: true
     },
     length_in_seconds: {
