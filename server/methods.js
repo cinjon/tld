@@ -11,10 +11,9 @@ Meteor.methods({
   make_trial_episodes: function(user_id) {
     this.unblock();
 
-    //TODO: (matt) --> Insert storage keys for the episodes we want to use.
     trial_storage_keys = [
-      "aa0cce0e8fc9903af13111fa10306d20", "b719ca8cf99dca1ab939faebe2d72cb2",
-      "fba0c73b701d541d30390b1fc8ffc75b", "7e7062c1037e89f4f7fb862f74c15c29"
+      "c95e29aa57a75300187631e89b913564", "ec5a8fc2cd1e25801ef6aa3c5b77ee9a",
+      "8ff9850b83eae81a9559d0a19ff30749", "8fb865b62dc6dcaf3b0390f8ded8aa5a"
     ];
     trial_storage_keys.forEach(function(storage_key) {
       make_trial_episode(storage_key, user_id);

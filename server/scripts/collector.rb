@@ -11,14 +11,18 @@ require 'youtube_it'
 include Mongo
 
 
+#TODO have option to do a single show
+#TODO option to do only new episodes
+
 # OPTIONS
 
 # options = {}
 # OptionParser.new do |opts|
 #   opts.banner = "Usage: collector.rb [options]"
 #
-#   opts.on('--new_episodes', 'Get new episodes only') { |v| options[:new_episodes] = true}
+#   opts.on('--new', 'Get new episodes only') { |v| options[:new] = true}
 #   opts.on('--verbose', 'Verbose output') { |v| options[:verbose] = true }
+#   opts.on('--show', String, 'Get a single show by show route') { |v| options[:show] = v }
 #
 # end.parse!
 
