@@ -30,8 +30,6 @@ include Mongo
 
 WORKING = "/var/podcasts/tmp/"
 LIMIT = 1
-MODE = "dev"
-
 
 # check runtime environment
 
@@ -40,6 +38,8 @@ if hostname == "tlproduction"
   MODE = "prod"
 elsif hostname == "tlstaging"
   MODE = "staging"
+else
+  MODE = "dev"
 end
 
 puts "***\nMODE: " + MODE + "\n***\n"
