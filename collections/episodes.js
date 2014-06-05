@@ -206,7 +206,6 @@ Episodes = new Meteor.Collection('episodes', {
     },
     summary: {
       type: String,
-      denyInsert: true,
       optional: true
     },
     feed: {
