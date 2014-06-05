@@ -19,9 +19,10 @@ Meteor.methods({
     } else {
       trial_storage_keys = [
         "c95e29aa57a75300187631e89b913564", "ec5a8fc2cd1e25801ef6aa3c5b77ee9a",
-        "8ff9850b83eae81a9559d0a19ff30749", "8fb865b62dc6dcaf3b0390f8ded8aa5a"
+        "8fb865b62dc6dcaf3b0390f8ded8aa5a", "8ff9850b83eae81a9559d0a19ff30749"
       ];
-    }
+    };
+    
     trial_storage_keys.forEach(function(storage_key) {
       make_trial_episode(storage_key, user_id);
     });

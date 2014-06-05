@@ -37,9 +37,9 @@ People = new Meteor.Collection('people', {
     avatar: {
       type: String,
       autoValue: function() {
-        if (this.field("twitter").value !== null && Meteor.server) {
+        if (this.field("twitter").value !== null && Meteor.isServer) {
           return twitter_avatar_url(this.field("twitter").value);
-        } else if (Meteor.server) {
+        } else if (Meteor.isServer) {
           return twitter_avatar_url("timelinedhq");
         }
       },

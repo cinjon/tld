@@ -186,13 +186,7 @@ Episodes = new Meteor.Collection('episodes', {
     trial: {
       type: Boolean,
       label: 'Trial Episode',
-      autoValue: function() {
-        if (this.isSet) {
-          return this.value;
-        } else if (this.isInsert || this.isUpdate) {
-          return false;
-        }
-      }
+      optional: true
     },
     hidden: {
       type: Boolean,
@@ -254,7 +248,7 @@ make_trial_episode = function(storage_key, editor_id) {
     return;
   }
 
-  if (Meteor.server) {
+  if (Meteor.isServer) {
     var episode = Episodes.findOne({storage_key:storage_key});
     if (!episode) {
       return;
