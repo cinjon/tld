@@ -10,3 +10,7 @@ Episodes.after.insert( function (userId, doc) {
     console.log("Chapter insertion failed for this episode.");
   }
 });
+
+Meteor.users.after.insert( function (userId, doc) {
+  Meteor.call('make_trial_episodes', doc._id);
+});

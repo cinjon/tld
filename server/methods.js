@@ -11,18 +11,18 @@ Meteor.methods({
   make_trial_episodes: function(user_id) {
     this.unblock();
 
-    if (Meteor.settings.public && Meteor.settings.public.stage_mode == true) {
-      trial_storage_keys = [
-        "8eb6930c0391a0052e941cfc1e78aa7e", "659732606d989b7869c1e90dc8e1a469",
-        "8fb865b62dc6dcaf3b0390f8ded8aa5a", "8ff9850b83eae81a9559d0a19ff30749"
-      ];
-    } else {
+    if (Meteor.settings.public && Meteor.settings.public.prod_mode == true) {
       trial_storage_keys = [
         "c95e29aa57a75300187631e89b913564", "ec5a8fc2cd1e25801ef6aa3c5b77ee9a",
         "8fb865b62dc6dcaf3b0390f8ded8aa5a", "8ff9850b83eae81a9559d0a19ff30749"
       ];
-    };
-    
+    } else {
+      // dev or staging mode, storage_key data from fixtures.js
+      trial_storage_keys = [
+        "c8b1b604524c39612ba0be3423ca4669", "bde5a8980a18df163c1f80618bdbd6d6"
+      ];
+    }
+
     trial_storage_keys.forEach(function(storage_key) {
       make_trial_episode(storage_key, user_id);
     });

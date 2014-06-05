@@ -43,15 +43,8 @@ Meteor.startup(function() {
         text: "We're excited to have you joining the Timelined Community. Should you have any questions or feedback, send us a note! \n\nSincerely, \nTimelined Support\nsupport@timelined.com",
         html: ''
       });
-    }
+    };
 
-    /*
-      Make trial episodes here. Another place could be when they first access the new-editor page
-      One [small] negative with putting it here is that nothing in fixtures gets the treatment.
-      One positive with putting it here is that people won't get turned off when the inspiration to try the trial strikes them.
-    */
-
-    Meteor.call('make_trial_episodes', user._id);
     return user;
   });
 
