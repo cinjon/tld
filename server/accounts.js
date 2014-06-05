@@ -67,19 +67,21 @@ Accounts.emailTemplates.from = "Timelined Support <support@timelined.com>";
 // };
 
 Accounts.emailTemplates.verifyEmail.subject = function (user) {
-    return "Timelined is confirming your email address, " + user.username;
+    return "Timelined is confirming your email address, " + capitalize(user.username);
 };
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-   return "Do us a favor? Click the link below to confirm your new address:\n\n"
-     + url;
+   return "Do us a favor? Click the link below to confirm your address:\n\n" +
+     url +
+     "\n\nSincerely,\nThe Timelined Team\nsupport@timelined.com";
 };
 
 Accounts.emailTemplates.resetPassword.subject = function (user) {
-    return "Timelined has reset your password, " + user.username;
+    return "Timelined has reset your password, " + capitalize(user.username);
 };
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
-   return "Don't worry, it happens to the best of us. Click the link below to reset your password:\n\n"
-     + url;
+   return "Don't worry, it happens to the best of us. Click the link below to reset your password:\n\n" +
+    url +
+    "\n\nSincerely,\nThe Timelined Team\nsupport@timelined.com";
 };
 
 
