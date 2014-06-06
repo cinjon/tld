@@ -58,12 +58,12 @@ userSchema = new SimpleSchema({
   },
   received_trial_email: {
     type: Boolean,
-    optional: true,
-    autoValue: function() {
-      if (this.isInsert) {
-        return false;
-      }
-    }
+    optional: true
+    // autoValue: function() {
+    //   if (this.isInsert) {
+    //     return false;
+    //   }
+    // }
   },
   completed_trial: {
     type: Boolean,
