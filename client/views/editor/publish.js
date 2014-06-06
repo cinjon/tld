@@ -46,7 +46,7 @@ Template.editor_mode_publish.events({
               to: user.emails[0].address,
               from: 'Timelined Support <support@timelined.com>',
               subject: 'Timelined has received episode: ' + episode.title,
-              text: "Greetings" + capitalize(user.username) + ",\n\n" +
+              text: "Greetings" + user.username + ",\n\n" +
               "Thank you for submitting this episode. We'll review it shortly and be in touch with " +
               "any change requests or a publication note. \n\nSincerely,\nThe Timelined Team\nsupport@timelined.com",
               html: ''
