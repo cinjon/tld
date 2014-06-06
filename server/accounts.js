@@ -22,23 +22,23 @@ Meteor.startup(function() {
     secret: 'WBuy28o6fv3FJfdVwSWN0KBAztdCemFTFoDgm9ghltZ0NmcT2s',
   });
 
-  // Accounts.onCreateUser(function(options, user) {
-  //   /*
-  //   For Twitter,
-  //     options: { profile: { name: 'name'}},
-  //     user: { createdAt: Wed May 07 2014 14:05:48 GMT+0200 (CEST), _id: 'gtp6SXtDjdbL5Mjuh',
-  //             services: { twitter: { id: '2481973470', screenName: 'tld_ctr_2', accessToken: '', accessTokenSecret: '', profile_image_url: 'http://url.png', profile_image_url_https: 'https://url.png', lang: 'en'}}}
-  //   */
-  //
-  //   if (is_twitter_create_user(user)) {
-  //     user.profile = options.profile;
-  //     user.profile.profile_image_url = user.services.twitter.profile_image_url;
-  //     user.profile.profile_image_url_https = user.services.twitter.profile_image_url_https;
-  //     user.username = user.services.twitter.screenName;
-  //   };
-  //
-  //   return user;
-  // });
+  Accounts.onCreateUser(function(options, user) {
+    /*
+    For Twitter,
+      options: { profile: { name: 'name'}},
+      user: { createdAt: Wed May 07 2014 14:05:48 GMT+0200 (CEST), _id: 'gtp6SXtDjdbL5Mjuh',
+              services: { twitter: { id: '2481973470', screenName: 'tld_ctr_2', accessToken: '', accessTokenSecret: '', profile_image_url: 'http://url.png', profile_image_url_https: 'https://url.png', lang: 'en'}}}
+    */
+
+    if (is_twitter_create_user(user)) {
+      user.profile = options.profile;
+      user.profile.profile_image_url = user.services.twitter.profile_image_url;
+      user.profile.profile_image_url_https = user.services.twitter.profile_image_url_https;
+      user.username = user.services.twitter.screenName;
+    };
+
+    return user;
+  });
 
 });
 
