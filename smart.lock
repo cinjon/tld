@@ -40,8 +40,8 @@
       },
       "autoform": {
         "git": "https://github.com/aldeed/meteor-autoform.git",
-        "tag": "v0.10.0",
-        "commit": "4b298a025679a7e51892a884c11301c1d6bf19b3"
+        "tag": "v0.11.0",
+        "commit": "efdffcdf836a45c50c39696ede15399177ccb9fa"
       },
       "bootstrap3-sass": {
         "git": "https://github.com/reywood/meteor-bootstrap3-sass.git",
@@ -85,8 +85,8 @@
       },
       "kadira": {
         "git": "https://github.com/meteorhacks/kadira.git",
-        "tag": "v2.1.3",
-        "commit": "ebf969395e6a834a790b9899cd8538dfc9f665f8"
+        "tag": "v2.1.4",
+        "commit": "c564bcd390af097af890a18ee4d4df7bdbc659dc"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
