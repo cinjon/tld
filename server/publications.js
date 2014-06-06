@@ -237,6 +237,10 @@ Meteor.publish('user_from_id', function (user_id) {
   return Meteor.users.find({_id: user_id});
 });
 
+Meteor.publish('user_received_email', function(user_id) {
+  return Meteor.users.find({_id:user_id}, {fields:{received_trial_email:true}});
+});
+
 Meteor.publish('user_roles', function(user_id) {
   return Meteor.users.find({_id:user_id}, {fields:{roles:true}});
 });
