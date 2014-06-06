@@ -236,11 +236,6 @@ make_episode = function(type, format, title, number, storage_key,
       }
     }
   );
-  if (chapters.length == 0) {
-    var chapter_id = make_chapter(
-      'Introduction', true, episode_id, editor_id, 0, highlights, null);
-    Episodes.update({_id:episode_id}, {$addToSet:{chapters:chapter_id}});
-  }
 };
 
 make_trial_episode = function(storage_key, editor_id) {
@@ -268,9 +263,7 @@ make_trial_episode = function(storage_key, editor_id) {
     episode.number = episode.number || -1; //if it's not in there, then it's set to null;
 
     var episode_id = Episodes.insert(episode);
-    var chapter_id = make_chapter('Introduction', true, episode_id, editor_id, 0, [], null);
     People.update({_id:{$in:episode.hosts}}, {$addToSet:{hosts:episode_id}}, {multi:true});
-    Episodes.update({_id:episode_id}, {$addToSet:{chapters:chapter_id}});
   }
   return episode_id;
 };

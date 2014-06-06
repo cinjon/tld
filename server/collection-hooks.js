@@ -3,7 +3,7 @@
 
 
 Episodes.after.insert( function (userId, doc) {
-  var chapter_id = make_chapter('Introduction', true, this._id, null, 0, [], null);
+  var chapter_id = make_chapter('Introduction', true, this._id, 'autogen', 0, [], null);
   if (chapter_id) {
     Episodes.update({_id:this._id}, {$addToSet:{chapters:chapter_id}});
   } else {
