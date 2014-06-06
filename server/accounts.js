@@ -36,16 +36,16 @@ Meteor.startup(function() {
       user.profile.profile_image_url_https = user.services.twitter.profile_image_url_https;
       user.username = user.services.twitter.screenName;
     } else { //Twitter signups won't have an email.
-      var time = new Date().toISOString().substr(0, 19);
-      var hhmmss = time.match(/\T(.*)/)[1];
       Meteor.call('send_email', {
         to: user.emails[0].address,
-        from: 'support@timelined.com',
-        subject: '[' + hhmmss + ']' + ' Timelined welcomes you, ' + capitalize(user.username),
+        from: 'Timelined Support <support@timelined.com>',
+        subject: 'Timelined welcomes you, ' + capitalize(user.username),
+        
         text: "We're excited to have you joining the Timelined Community. \
-          Should you have any questions or feedback, send us a note, we'd love to hear from you. \
-          \n\nSincerely, \nThe Timelined Team\nsupport@timelined.com \
-          \n\n PS - Is there something you'd like to see timelined? Let us know!",
+        Should you have any questions or feedback, send us a note, we'd love to hear from you. \
+        \n\nSincerely, \nThe Timelined Team\nsupport@timelined.com \
+        \n\n PS - Is there something you'd like to see timelined? Let us know!",
+
         html: ''
       });
     };

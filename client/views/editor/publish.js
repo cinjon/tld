@@ -32,14 +32,14 @@ Template.editor_mode_publish.events({
           if (!error && result && result['success']) {
             Meteor.call('send_email', {
               to: 'support@timelined.com',
-              from: 'support@timelined.com',
+              from: 'Timelined Support <support@timelined.com>',
               subject: 'Episode submission from ' + user.emails[0].address,
               text: "",
               html: publish_results(episode_id, Meteor.userId())
             });
             Meteor.call('send_email', {
               to: user.emails[0].address,
-              from: 'support@timelined.com',
+              from: 'Timelined Support <support@timelined.com>',
               subject: 'Timelined has received episode: ' + episode.title,
               text: user.username + ",\n\n" +
               "Thank you for submitting this episode. We'll review it shortly and be in touch with \
