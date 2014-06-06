@@ -9,8 +9,6 @@ Meteor.methods({
     return serialized && serialized.M === options.M;
   },
   make_trial_episodes: function(user_id) {
-    this.unblock();
-
     if (Meteor.settings.public && Meteor.settings.public.prod_mode == true) {
       trial_storage_keys = [
         "c95e29aa57a75300187631e89b913564", "ec5a8fc2cd1e25801ef6aa3c5b77ee9a",
@@ -26,12 +24,20 @@ Meteor.methods({
     trial_storage_keys.forEach(function(storage_key) {
       make_trial_episode(storage_key, user_id);
     });
-
+  },
+  send_made_trial_email: function(user_id) {
     var user = Meteor.users.findOne({_id: user_id});
+    if (!user.emails[0].address) {
+      console.log('Make Trial Episode aborting: user does not have an email address.');
+      return;
+    } else {
+      Meteor.users.update({_id:user_id}, {$set:{received_trial_email:true}});
+    }
+
     Meteor.call("send_email", {
       to: user.emails[0].address,
       from: 'Timelined Support <support@timelined.com>',
-      subject: "Timelined has sent you a trial episode, " + capitalize(user.username),
+      subject: "Timelined has sent you a trial episode, " + user.username,
       text: '',
       html: "Greetings Timelined editor-in-waiting, <br> \
       <p>Thank you for your patience. Before you get started, here are a few things to keep in mind. \
@@ -47,7 +53,6 @@ Meteor.methods({
       we'll follow-up with instructions on timelining new episodes. Should you have any questions, please get in touch.</p>\
       <br><p>Sincerely,<br>The Timelined Team<br>support@timelined.com</p>"
     });
-
   },
   reset_password: function(user_id) {
     if (Meteor.isServer) {
@@ -55,6 +60,8 @@ Meteor.methods({
     };
   },
   send_email: function(fields) {
+    this.unblock();
+
     var _to, _from, _subject, _text, _html, _reply_to;
 
     if ('name' in fields && 'email' in fields && 'message' in fields) {
@@ -76,8 +83,6 @@ Meteor.methods({
       _html = fields.html || '';
       check([fields.to, fields.from, fields.subject, fields.text, fields.html], [String]);
     }
-
-    this.unblock();
 
     _reply_to = fields['reply_to'] || 'Timelined Support <support@timelined.com>'
 

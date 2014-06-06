@@ -15,9 +15,7 @@
 // and its resume field contains tokens used to keep you logged in between sessions.
 //
 // signed_editor_legal: boolean
-
-
-
+// received_trial_email: boolean
 
 userSchema = new SimpleSchema({
   _id: {
@@ -58,6 +56,15 @@ userSchema = new SimpleSchema({
     optional: true,
     blackbox: true
   },
+  received_trial_email: {
+    type: Boolean,
+    optional: true,
+    autoValue: function() {
+      if (this.isInsert) {
+        return false;
+      }
+    }
+  },
   completed_trial: {
     type: Boolean,
     optional: true
@@ -87,22 +94,18 @@ userSchema = new SimpleSchema({
       }
     },
     denyInsert: false,
-      optional: true
+    optional: true
   }
 });
 
-
-
 Meteor.users.attachSchema(userSchema);
-
 
 // userProfileSchema = new SimpleSchema({
 //     firstName: {
 //         type: String,
 //         regEx: /^[a-zA-Z-]{2,25}$/,
 //         optional: true
-//     },
-//     lastName: {
+//     },//     lastName: {
 //         type: String,
 //         regEx: /^[a-zA-Z]{2,25}$/,
 //         optional: true
