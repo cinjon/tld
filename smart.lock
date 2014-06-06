@@ -14,7 +14,6 @@
       "bourbon": {},
       "cron-tick": {},
       "reactive-table": {},
-      "collection-hooks": {},
       "kadira": {}
     },
     "packages": {
@@ -77,11 +76,6 @@
         "git": "https://github.com/ecohealthalliance/reactive-table.git",
         "tag": "v0.3.13",
         "commit": "4ac599148eddfe05aa7732d64a2d7b6fb1b601dd"
-      },
-      "collection-hooks": {
-        "git": "https://github.com/matb33/meteor-collection-hooks.git",
-        "tag": "v0.6.7",
-        "commit": "f1d2ac629864edda09df6c955fa5ff3df26f739c"
       },
       "kadira": {
         "git": "https://github.com/meteorhacks/kadira.git",

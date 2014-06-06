@@ -12,7 +12,6 @@
     "bourbon": {},
     "cron-tick": {},
     "reactive-table": {},
-    "collection-hooks": {},
     "kadira": {}
   }
 }
