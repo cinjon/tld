@@ -11,6 +11,22 @@ Episodes.after.insert( function (userId, doc) {
   }
 });
 
+// Episodes.after.update( function (userId, doc, fieldNames, modifier) {
+//   //TODO: send email after episode is pulished
+//   sub: Timelined has published episode TITLE
+//
+//   USERNAME,
+//
+//    Nice work on this episode, you can see it published here: LINK_TO_EPISODE.
+//
+//   LENGTH_OF_CONTENT hours has been added to your work total, feel free to start timelining a new episode.
+//
+//   SIGNOFF
+//
+//   PS - Payment is issued after 20 hours of submitted content and you will receive a notification email.
+//
+// });
+
 Meteor.users.after.insert( function (userId, doc) {
   Meteor.call('make_trial_episodes', doc._id);
 });

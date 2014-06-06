@@ -40,13 +40,15 @@ Template.editor_mode_publish.events({
             Meteor.call('send_email', {
               to: user.emails[0].address,
               from: 'support@timelined.com',
-              subject: 'Timelined Episode Submission Received',
-              text: "Thanks so much for completing this. We've received your episode submission and will review it. If there are any change requests, we'll be in touch.\n\nSincerely, \nTimelined Support\n",
+              subject: 'Timelined has received episode: ' + episode.title,
+              text: user.username + ",\n\n" +
+              "Thank you for submitting this episode. We'll review it shortly and be in touch with \
+              any change requests or a publication note. \n\nSincerely,\n The Timelined Team\nsuppot@timelined.com",
               html: ''
             });
             Meteor.call(
               'send_slack_notification', 'editors',
-              {text:'Published: ' + user.username + ' published episode ' + episode.route});
+              {text:'Submitted: ' + user.username + ' episode => ' + episode.route});
 
             $('#set_postedited_success_modal').modal({
               keyboard:true, show:true

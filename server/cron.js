@@ -68,7 +68,10 @@ var send_email_episode_warnings = function(episodes_dict) {
 
     var message = "";
     message += "<p>Greetings " + user.username + "</p>";
-    message += "<p>Please note that the following episodes will soon be returned to the queue. We'd love for you to complete them, so here's a six hour warning. If it's not completed by then, your work will be lost.</p>";
+    message += "<p>Please be aware that these episodes will soon be returned to the queue. \
+    We'd love for you to complete them, so htere's an 8-hour warning. If not completed by then, \
+    your work will be lost. If you're unable to complete these episodes, please goto the \
+    <a href='http://timelined.com/queue'>queue</a> and unclaim them.</p>";
 
     message += "<ul>";
     episodes.forEach(function(episode) {
@@ -77,10 +80,10 @@ var send_email_episode_warnings = function(episodes_dict) {
     });
     message += "</ul>";
 
-    message += "<p>Sincerely,<br>Timelined Support</p>";
+    message += "<p>Sincerely,<br>The Timelined Team<br>support@timelined.com</p>";
 
     var mail_fields = {'to':user.emails[0]['address'], 'from':'support@timelined.com',
-                       'subject':'Dearest Editor - Six Hour Warning from Timelined',
+                       'subject':'Timelined 8-hour episode warning',
                        'text':"", 'html':message}
     Meteor.call('send_email', mail_fields);
   }

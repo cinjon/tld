@@ -31,7 +31,7 @@ Meteor.methods({
     Meteor.call("send_email", {
       to: user.emails[0].address,
       from: 'support@timelined.com',
-      subject: capitalize(user.username) + ", here's a trial episode from Timelined",
+      subject: "Timelined has sent you a trial episode, " + capitalize(user.username),
       text: '',
       html: "Greetings Timelined editor-in-waiting, <br> \
       <p>Thank you for your patience. Before you get started, here are a few things to keep in mind. \
@@ -42,9 +42,9 @@ Meteor.methods({
       <a href='http://s3.amazonaws.com/timelined/video/75b2906cb146d9d0e4bec884846c00ec.mp4'>introductory screencast</a>. \
       Both  were designed to help you hit the ground running.</p> \
       <p><b><a href='http://timelined.com/queue'>Timelined Trial Episodes</a></b></p> \
-      <p>Remember, this is a trial and you will not be paid for timelining this episode. If you have minor errors,\
+      <p>Choose one of the four available episodes. Remember, this is a trial and you will not be paid for timelining it. If you have minor errors,\
       we may send feedback or give you the opportunity to timeline a second trial episode. If we like your work, \
-      we'll follow-up with instructions on timelining new episodes. As always, if you have any questions, please get in touch.</p>\
+      we'll follow-up with instructions on timelining new episodes. Should you have any questions, please get in touch.</p>\
       <br><p>Sincerely,<br>The Timelined Team<br>support@timelined.com</p>"
     });
 
