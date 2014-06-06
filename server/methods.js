@@ -30,7 +30,7 @@ Meteor.methods({
     var user = Meteor.users.findOne({_id: user_id});
     Meteor.call("send_email", {
       to: user.emails[0].address,
-      from: 'support@timelined.com',
+      from: 'Timelined Support <support@timelined.com>',
       subject: "Timelined has sent you a trial episode, " + capitalize(user.username),
       text: '',
       html: "Greetings Timelined editor-in-waiting, <br> \
@@ -60,7 +60,7 @@ Meteor.methods({
     if ('name' in fields && 'email' in fields && 'message' in fields) {
       //Result of using Autoform in /static/contact
       check(fields, contactSchema);
-      _to = 'support@timelined.com';
+      _to = 'Timelined Support <support@timelined.com>';
       _from = fields.email;
       _subject = "Timelined Contact - Message From " + fields.name,
       _text = "Name: " + fields.name + "\n\n--"
@@ -79,7 +79,7 @@ Meteor.methods({
 
     this.unblock();
 
-    _reply_to = fields['reply_to'] || 'support@timelined.com'
+    _reply_to = fields['reply_to'] || 'Timelined Support <support@timelined.com>'
 
     Email.send({
       to: _to,
