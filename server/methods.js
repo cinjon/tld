@@ -30,7 +30,7 @@ Meteor.methods({
     var user = Meteor.users.findOne({_id: user_id});
     Meteor.call("send_email", {
       to: user.emails[0].address,
-      from: 'Timelined Support <support@timelined.com>',
+      from: 'support@timelined.com',
       subject: "Timelined has sent you a trial episode, " + capitalize(user.username),
       text: '',
       html: "Greetings Timelined editor-in-waiting, <br> \
@@ -79,7 +79,7 @@ Meteor.methods({
 
     this.unblock();
 
-    _reply_to = fields['reply_to'] || 'Timelined Support <support@timelined.com>'
+    _reply_to = fields['reply_to'] || 'support@timelined.com'
 
     Email.send({
       to: _to,

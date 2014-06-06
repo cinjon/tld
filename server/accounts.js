@@ -38,7 +38,7 @@ Meteor.startup(function() {
     } else { //Twitter signups won't have an email.
       Meteor.call('send_email', {
         to: user.emails[0].address,
-        from: 'Timelined Support <support@timelined.com>',
+        from: 'support@timelined.com',
         subject: 'Timelined welcomes you, ' + capitalize(user.username),
         
         text: "We're excited to have you joining the Timelined Community. \
@@ -61,7 +61,7 @@ var is_twitter_create_user = function(user) {
 
 
 Accounts.emailTemplates.siteName = "Timelined";
-Accounts.emailTemplates.from = "Timelined Support <support@timelined.com>";
+Accounts.emailTemplates.from = "support@timelined.com";
 
 // Accounts.emailTemplates.enrollAccount.subject = function (user) {
 //     return "Timelined is going to rock your world, " + user.usernmame;

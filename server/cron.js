@@ -82,7 +82,7 @@ var send_email_episode_warnings = function(episodes_dict) {
 
     message += "<p>Sincerely,<br>The Timelined Team<br>support@timelined.com</p>";
 
-    var mail_fields = {'to':user.emails[0]['address'], 'from':'Timelined Support <support@timelined.com>',
+    var mail_fields = {'to':user.emails[0]['address'], 'from':'support@timelined.com',
                        'subject':'Timelined 8-hour episode warning',
                        'text':"", 'html':message}
     Meteor.call('send_email', mail_fields);
