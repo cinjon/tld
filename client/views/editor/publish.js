@@ -25,6 +25,11 @@ Template.editor_mode_publish.events({
     var episode = this;
     var episode_id = episode._id;
     var user = Meteor.user();
+    var trial_flag = "";
+    if (episode.trial) {
+      trial_flag = "TRIAL";
+    };
+
     if (!episode.postedited && !is_editing_incomplete(episode)) {
       Meteor.call(
         'set_postedited_true', episode_id,
@@ -33,7 +38,7 @@ Template.editor_mode_publish.events({
             Meteor.call('send_email', {
               to: 'support@timelined.com',
               from: 'Timelined Support <support@timelined.com>',
-              subject: 'Episode submission from ' + user.emails[0].address,
+              subject: trial_flag + 'Episode submission from ' + user.emails[0].address,
               text: "",
               html: publish_results(episode_id, Meteor.userId())
             });
@@ -41,9 +46,9 @@ Template.editor_mode_publish.events({
               to: user.emails[0].address,
               from: 'Timelined Support <support@timelined.com>',
               subject: 'Timelined has received episode: ' + episode.title,
-              text: user.username + ",\n\n" +
-              "Thank you for submitting this episode. We'll review it shortly and be in touch with \
-              any change requests or a publication note. \n\nSincerely,\n The Timelined Team\nsuppot@timelined.com",
+              text: "Greetings" + capitalize(user.username) + ",\n\n" +
+              "Thank you for submitting this episode. We'll review it shortly and be in touch with " +
+              "any change requests or a publication note. \n\nSincerely,\nThe Timelined Team\nsupport@timelined.com",
               html: ''
             });
             Meteor.call(
