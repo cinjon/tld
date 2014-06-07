@@ -73,9 +73,14 @@ userSchema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id
   },
   username:{
+    label: "Username",
     type: String,
-    regEx: /^[a-z0-9A-Z_]{3,15}$/,
-    optional: true
+    min: 1,
+    max: 20,
+    regEx: /^[a-z0-9A-Z_]+$/,
+    optional: true,
+    index: true,
+    unique: true
   },
   emails: {
     type: [Object],
@@ -83,11 +88,12 @@ userSchema = new SimpleSchema({
   },
   "emails.$.address": {
     type: String,
-    regEx: SimpleSchema.RegEx.Email
-    },
+    label: "Email",
+    regEx: SimpleSchema.RegEx.Email,
+  },
   "emails.$.verified": {
     type: Boolean
-    },
+  },
   // profile: {
   //   type: Object,
   //   blackbox: true,
@@ -147,6 +153,13 @@ userSchema = new SimpleSchema({
     denyInsert: false,
     optional: true
   }
+});
+
+userSchema.messages({
+  minString: "[label] must be at least [min] characters.",
+  maxString: "[label] cannot exceed [max] characters.",
+  notUnique: "Please choose a different [label]. That one is in use.",
+  regEx: "[label] failed validation."
 });
 
 Meteor.users.attachSchema(userSchema);
