@@ -29,20 +29,17 @@ Episodes.after.insert( function (userId, doc) {
 
 Meteor.users.after.insert( function (userId, doc) {
   // doc is user, kind of weird so want to remember that
-
-  Meteor.call('send_email', {
-    to: doc.emails[0].address,
-    from: 'Timelined Support <support@timelined.com>',
-    subject: 'Timelined welcomes you, ' + doc.username,
-
-    text: "We're excited to have you joining the Timelined Community. Should you have any questions or feedback, send us a note, we'd love to hear from you. \
+  if (doc.emails && doc.emails[0] && doc.emails[0].address) {
+    Meteor.call('send_email', {
+      to: doc.emails[0].address,
+      from: 'Timelined Support <support@timelined.com>',
+      subject: 'Timelined welcomes you, ' + doc.username,
+      text: "We're excited to have you joining the Timelined Community. Should you have any questions or feedback, send us a note, we'd love to hear from you. \
     \n\nSincerely, \nThe Timelined Team\nsupport@timelined.com \
     \n\nPS - Is there something you'd like to see timelined? Let us know!",
-
-    html: ''
-  });
+      html: ''
+    });
+  }
 
   Meteor.call('make_trial_episodes', doc._id);
-
-
 });
