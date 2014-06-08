@@ -45,7 +45,7 @@ Meteor.methods({
       Second, it's an interview. We'll review and critique the highlights you create for your trial episode. \
       Remember, we're looking for editors who can quickly timeline with simple and objective summaries, useful links, \
       interesting quotes and accurate timestamps. Be sure you've reviewed the <a href='http://timelined.com/guidelines'>Editor Guidelines</a> and watched our \
-      <a href='http://s3.amazonaws.com/timelined/video/75b2906cb146d9d0e4bec884846c00ec.mp4'>introductory screencast</a>. \
+      <a href='https://vimeo.com/97655214'>Editor screencast</a>. \
       Both  were designed to help you hit the ground running.</p> \
       <p><b><a href='http://timelined.com/queue'>Timelined Trial Episodes</a></b></p> \
       <p>Choose one of the four available episodes. Remember, this is a trial and you will not be paid for timelining it. If you have minor errors,\
