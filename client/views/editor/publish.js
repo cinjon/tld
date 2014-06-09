@@ -237,7 +237,7 @@ var is_editing_incomplete = function(episode) {
 var publish_results = function(episode_id, user_id)  {
   var message = "";
   episode = Episodes.findOne({_id: episode_id});
-  message += "<p>SUMMARY: " + episode.summary + "</p>";
+  message += "<p>SUMMARY: " + episode.summary + "</p><hr>";
   Chapters.find({episode_id:episode_id}, {sort:{start_time:1}}).forEach(function(chapter) {
     message += "<p>CHAPTER: " + chapter.title + "</p>";
     Highlights.find({chapter_id:chapter._id}, {sort:{start_time:1}}).forEach(function(highlight) {
@@ -252,7 +252,6 @@ var publish_results = function(episode_id, user_id)  {
         message += highlight.url + " - ";
       }
       message += highlight.text + "</p>";
-      message += "<br>";
     });
     message += "<hr>";
   });
