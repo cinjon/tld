@@ -109,7 +109,7 @@ var format_payment_amount = function (seconds) {
   return "$" + amount.toString();
 }
 
-var format_seconds_to_clock = function(seconds) {
+format_seconds_to_clock = function(seconds) {
   var hours = Math.floor(seconds / 3600);
   var minutes = Math.floor((seconds - (hours * 3600)) / 60);
   var secs = seconds - (hours * 3600) - (minutes * 60);

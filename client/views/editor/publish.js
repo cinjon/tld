@@ -27,7 +27,7 @@ Template.editor_mode_publish.events({
     var user = Meteor.user();
     var trial_flag = "";
     if (episode.trial) {
-      trial_flag = "TRIAL";
+      trial_flag = "TRIAL ";
     };
 
     if (!episode.postedited && !is_editing_incomplete(episode)) {
@@ -46,7 +46,7 @@ Template.editor_mode_publish.events({
               to: user.emails[0].address,
               from: 'Timelined Support <support@timelined.com>',
               subject: 'Timelined has received episode: ' + episode.title,
-              text: "Greetings" + user.username + ",\n\n" +
+              text: "Greetings " + user.username + ",\n\n" +
               "Thank you for submitting this episode. We'll review it shortly and be in touch with " +
               "any change requests or a publication note. \n\nSincerely,\nThe Timelined Team\nsupport@timelined.com",
               html: ''
@@ -241,7 +241,7 @@ var publish_results = function(episode_id, user_id)  {
   Chapters.find({episode_id:episode_id}, {sort:{start_time:1}}).forEach(function(chapter) {
     message += "<p>CHAPTER: " + chapter.title + "</p>";
     Highlights.find({chapter_id:chapter._id}, {sort:{start_time:1}}).forEach(function(highlight) {
-      message += "<p>" + highlight.start_time + " - ";
+      message += "<p>" + format_seconds_to_clock(highlight.start_time) + " - ";
       if (highlight.person_id) {
         person = People.findOne({_id: highlight.person_id});
         message += person.first_name + " " + person.last_name + ": ";
@@ -252,7 +252,7 @@ var publish_results = function(episode_id, user_id)  {
         message += highlight.url + " - ";
       }
       message += highlight.text + "</p>";
-      message += "<hr>";
+      message += "<br>";
     });
     message += "<hr>";
   });
