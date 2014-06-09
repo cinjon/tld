@@ -9,7 +9,7 @@ Meteor.methods({
     return serialized && serialized.M === options.M;
   },
   make_trial_episodes: function(user_id) {
-    if (Meteor.settings.public && Meteor.settings.public.prod_mode == true) {
+    if (Meteor.settings && Meteor.settings.public && Meteor.settings.public.prod_mode == true) {
       trial_storage_keys = [
         "c95e29aa57a75300187631e89b913564", "ec5a8fc2cd1e25801ef6aa3c5b77ee9a",
         "8fb865b62dc6dcaf3b0390f8ded8aa5a", "8ff9850b83eae81a9559d0a19ff30749"
