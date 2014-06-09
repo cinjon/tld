@@ -16,15 +16,17 @@ Template.queue_helper.events({
   'click .unclaim_episode': function(e, tmpl) {
     var user = Meteor.user();
     var episode = Episodes.findOne({_id:this._id});
-    Meteor.call(
-      'unclaim_episode', episode._id, user._id,
-      function(error, result) {
-        if (!error) {
-          Meteor.call('send_slack_notification', 'editors',
-                      {text:'Unclaimed: ' + user.username + ' is done with ' + episode.route})
+    if (!episode.trial) {
+      Meteor.call(
+        'unclaim_episode', episode._id, user._id,
+        function(error, result) {
+          if (!error) {
+            Meteor.call('send_slack_notification', 'editors',
+                        {text:'Unclaimed: ' + user.username + ' is done with ' + episode.route})
+          }
         }
-      }
-    )
+      )
+    }
   },
 });
 
