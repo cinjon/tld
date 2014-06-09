@@ -1,0 +1,30 @@
+.container-about {
+  #title {
+    text-align:center;
+  }
+  .profiles {
+    margin-top:50px;
+    text-align:center;
+    .about-profile {
+      width: 220px;
+      .about-picture-background {
+        height: 220px;
+        background: $metal2;
+        border: 1px solid;
+        border-radius: 10px;
+        border-color: $off-white;
+      }
+      .about-picture {
+        width: 202px;
+        height: 202px;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.vertical-helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}

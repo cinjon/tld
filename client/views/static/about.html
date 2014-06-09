@@ -1,18 +1,26 @@
 <template name="about">
-<div class="container container-full-height container-about container-dark">
-  <p>
-    <h1>Timelined: The Player that Loves Show Notes</h1>
-  </p>
+  <div class="container container-full-height container-about container-dark">
+    <h1 id="title">Timelined: The Player that Loves Show Notes</h1>
 
-  <p>
-    <a href="https://twitter.com/timelinedhq"><img src="../../../../images/twitter_32.png"></a>
-  </p>
-
-  {{> profile_picture matt}}
-  {{> profile_picture cinjon}}
-</div>
+    <div class="row profiles">
+      <div class="col-md-3 col-md-offset-3">
+        {{> about_profile cinjon}}
+      </div>
+      <div class="col-md-3">
+        {{> about_profile matt}}
+      </div>
+    </div>
+  </div>
 </template>
 
-<template name="profile_picture">
-  <img src="../../../../images/{{name}}.jpg">
+<template name="about_profile">
+  <div class="about-profile">
+    <div class="about-picture-background">
+      <span class="vertical-helper"></span>
+      <img class="about-picture" src="/images/{{image_key}}.jpg">
+    </div>
+    <div class="about-summary">
+      {{{blurb}}}
+    </div>
+  </div>
 </template>
