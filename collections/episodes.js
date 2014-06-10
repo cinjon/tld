@@ -244,7 +244,7 @@ make_trial_episode = function(storage_key, editor_id) {
   }
 
   if (Meteor.isServer) {
-    var episode = Episodes.findOne({storage_key:storage_key});
+    var episode = Episodes.findOne({storage_key:storage_key, trial:false});
     if (!episode) {
       return;
     }
