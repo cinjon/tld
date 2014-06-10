@@ -53,7 +53,8 @@ Template.editor_mode_publish.events({
             });
             Meteor.call(
               'send_slack_notification', 'editors',
-              {text:'Submitted: ' + user.username + ' episode => ' + episode.route});
+              {text:'Submitted: ' + user.username + ' episode => ' + episode.route + ' with url: https://timelined.com/preview/' + episode.show_route + '/' + episode.route}
+            );
 
             $('#set_postedited_success_modal').modal({
               keyboard:true, show:true
