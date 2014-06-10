@@ -238,6 +238,7 @@ var is_editing_incomplete = function(episode) {
 var publish_results = function(episode_id, user_id)  {
   var message = "";
   episode = Episodes.findOne({_id: episode_id});
+  message += "<p>Preview Link: https://timelined.com/preview/" + episode.show_route + '/' + episode.route + "</p>";
   message += "<p>SUMMARY: " + episode.summary + "</p><hr>";
   Chapters.find({episode_id:episode_id}, {sort:{start_time:1}}).forEach(function(chapter) {
     message += "<p>CHAPTER: " + chapter.title + "</p>";
