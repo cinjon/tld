@@ -15,8 +15,9 @@ Meteor.methods({
         "8fb865b62dc6dcaf3b0390f8ded8aa5a", "8ff9850b83eae81a9559d0a19ff30749"
       ];
     } else {
-      // dev or staging mode, storage_key data from fixtures.js
+      // dev or staging mode, storage_key data from fixtures.js, ... and from a little above too.
       trial_storage_keys = [
+        "c95e29aa57a75300187631e89b913564", "ec5a8fc2cd1e25801ef6aa3c5b77ee9a",
         "c8b1b604524c39612ba0be3423ca4669", "bde5a8980a18df163c1f80618bdbd6d6"
       ];
     }
