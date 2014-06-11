@@ -1,5 +1,6 @@
-MAX_CHARACTERS_IN_CONTENT = 140;
+editor_reactivity = new ReactiveDict;
 editor_title_placeholder = "Title Me Please"
+MAX_CHARACTERS = {'highlight_cutoff':140, 'summary_cutoff':280}
 
 Template.add_entity.events({
   'click button': function(e, tmpl) {
@@ -35,22 +36,23 @@ Template.add_entity.events({
 
 Template.character_cutoff.helpers({
   current_char_counter: function() {
-    return parseInt(Session.get('current_char_counter'));
+    return parseInt(editor_reactivity.get(this.char_counter_id));
   },
   current_char_class: function() {
-    if (Session.get('current_char_counter') > MAX_CHARACTERS_IN_CONTENT) {
+    if (editor_reactivity.get(this.char_counter_id) > MAX_CHARACTERS[this.char_counter_id]) {
       return 'exceeded';
     }
     return '';
   },
   max_chars: function() {
-    return MAX_CHARACTERS_IN_CONTENT;
+    return MAX_CHARACTERS[this.char_counter_id];
   }
 });
 
 Template.editor.created = function() {
   Session.set('editor_mode', 'draft');
-  Session.set('current_char_counter', 0);
+  editor_reactivity.set('highlight_cutoff', 0);
+  editor_reactivity.set('summary_cutoff', 0);
 }
 
 Template.editor.events({
@@ -259,6 +261,11 @@ Template.editor_highlight.helpers({
   font_style: function() {
     if (this.type == "quote") {
       return "font-style:italic;"
+    }
+  },
+  highlight_cutoff: function() {
+    return {
+      char_counter_id: 'highlight_cutoff'
     }
   },
   is_editing_highlight_content: function() {

@@ -3,8 +3,13 @@
     <div id="editor_stats">
       {{> editor_stats}}
     </div>
-    <div id="editor_summary" contenteditable="true" class="contenteditable {{incomplete_summary}}">
-      {{summary}}
+    <div class="editor_summary">
+      <div id="character_cutoff">
+        {{> character_cutoff summary_cutoff}}
+      </div>
+      <div id="editor_summary_content" contenteditable="true" class="contenteditable {{incomplete_summary}}">
+        {{summary}}
+      </div>
     </div>
     <div class="episode_people">
       {{#each hosts}}

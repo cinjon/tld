@@ -96,6 +96,11 @@ Template.editor_new_input.helpers({
   has_speaker_src: function() {
     return false;
   },
+  highlight_cutoff: function() {
+    return {
+      char_counter_id: 'highlight_cutoff'
+    }
+  },
   speaker_name: function() {
     return Session.get('highlight')['_speaker_name'];
   },
@@ -109,9 +114,9 @@ do_content_input = function(e, is_editing, tmpl, highlight) {
   var input = $(e.target);
   var val = input.text().trim();
   var length = val.length;
-  Session.set('current_char_counter', length);
+  editor_reactivity.set('highlight_cutoff', length);
 
-  if (length > MAX_CHARACTERS_IN_CONTENT) { //Check for it being way too long
+  if (length > MAX_CHARACTERS['highlight_cutoff']) { //Check for it being way too long
     e.preventDefault();
   } else if (e.shiftKey && e.keyCode == 222 && highlight.type == 'note' && val.slice(0,1) == '"') { //Quote in beginning
     if (is_editing) {
@@ -124,7 +129,7 @@ do_content_input = function(e, is_editing, tmpl, highlight) {
         }
       )
     }
-  } else if (e.keyCode == 13 && val != '' && length <= MAX_CHARACTERS_IN_CONTENT) { //Complete highlight
+  } else if (e.keyCode == 13 && val != '' && length <= MAX_CHARACTERS['highlight_cutoff']) { //Complete highlight
     if (is_editing && tmpl) {
       set_highlight_finished(val, tmpl.data.episode_id, tmpl);
     } else if (!is_editing) {
@@ -211,7 +216,7 @@ var new_highlight = function() {
 var set_css_new = function() {
   $('#content_input').css('font-style', 'normal');
   hide_content_input();
-  Session.set('current_char_counter', 0);
+  editor_reactivity.set('highlight_cutoff', 0);
   set_start_time(false);
   $('#new_input_dot').show()
   $('#typeahead_input').show();
