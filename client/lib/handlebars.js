@@ -94,14 +94,6 @@ var episode_is_postedited = function(episode_id) {
   return null;
 }
 
-var _format_time_part = function(time) {
-  if (time < 10) {
-    return "0" + time.toString();
-  } else {
-    return time.toString();
-  }
-};
-
 var format_payment_amount = function (seconds) {
   // payment amount = $15/hour = .004167 dollars per second
   var rate = .004167;
