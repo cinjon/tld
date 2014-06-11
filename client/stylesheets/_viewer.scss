@@ -73,6 +73,14 @@
       }
     }
     .chapters {
+      .public {
+        visibility: hidden;
+      }
+      .row_text_time {
+        font-size: 12px;
+        float: left;
+        display: inline-block;
+      }
       .highlight-wrap {
         .row_text_time {
           .chapter_divider {
@@ -88,17 +96,20 @@
               opacity: 1;
             }
           }
+          .plain_text_time {
+            color: #FFFDF8;
+          }
         }
         &:hover {
           .background {
             background: $cream2;
           }
           // TODO: remove for mobile
-          .remove_highlight {
-            opacity: 1;
-          }
           .chapter_divider {
             display: block
+          }
+          .public {
+            visibility: visible;
           }
         }
       }

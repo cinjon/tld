@@ -1,3 +1,5 @@
+var viewer_reactivity = new ReactiveDict;
+
 Template.viewer.helpers({
   chapters: function() {
     var episode = this.episode;
@@ -161,14 +163,4 @@ Template.viewer_highlight.helpers({
     }
     return '';
   },
-});
-
-Template.viewer_marker.helpers({
-  display: function() {
-    if (Session.get('current_highlight_cue') == this._id) {
-      return "display:block";
-    } else {
-      return "display:none";
-    }
-  }
 });

@@ -44,13 +44,24 @@
 <template name="viewer_chapter">
   <div class="chapter_box">
     <div class="chapter_inner">
+      {{#if ../preview}}
+      <div class="row_text_time">
+        {{format_seconds_to_clock start_time}}
+      </div>
+      {{else}}
+      <div class="row_text_time public">
+        {{format_seconds_to_clock start_time}}
+      </div>
+      {{/if}}
+
       {{#if ../published}}
       <span class="chapter-share">
         <i class="fa fa-share-square right"></i>
       </span>
       {{/if}}
+
       <div class="chapter_title">
-        {{format_seconds_to_clock start_time}} -- {{index}}. {{title}}
+        {{index}}. {{title}}
       </div>
     </div>
   </div>
@@ -107,8 +118,15 @@
 <template name="viewer_marker">
   <div class="row_text_time">
     <span class="highlight_time">
-      <span class="plain_text_time">{{format_seconds_to_clock start_time}}</span>
-      <input type="text" style="display:none" class="form-control edit_text_time dark-input" value="{{format_seconds_to_clock start_time}}">
+      {{#if ../../../preview}}
+      <span class="plain_text_time">
+        {{format_seconds_to_clock start_time}}
+      </span>
+      {{else}}
+      <span class="plain_text_time public">
+        {{format_seconds_to_clock start_time}}
+      </span>
+      {{/if}}
     </span>
   </div>
 </template>
