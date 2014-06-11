@@ -1,4 +1,11 @@
 .editor_mode_review {
+  .chapter_inner {
+    .row_text_time {
+      display: inline-block;
+      float:left;
+      color: $ash1;
+    }
+  }
   .highlight-wrap {
     .row_text_time {
       .chapter_divider {
