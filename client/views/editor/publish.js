@@ -30,6 +30,7 @@ Template.editor_mode_publish.events({
     var trial_flag = "";
     if (episode.trial) {
       trial_flag = "TRIAL ";
+      Meteor.call("set_completed_trial", user._id, true);
     };
 
     if (!episode.postedited && !is_editing_incomplete(episode)) {
@@ -39,7 +40,7 @@ Template.editor_mode_publish.events({
           if (!error && result && result['success']) {
             Meteor.call('send_email', {
               to: 'Timelined Support <support@timelined.com>',
-              from: 'Timelined Support <support@timelined.com>',
+              from: user.emails[0].address,
               subject: trial_flag + 'Episode submission from ' + user.emails[0].address,
               text: "",
               html: publish_results(episode_id, Meteor.userId())
