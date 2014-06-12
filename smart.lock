@@ -14,7 +14,8 @@
       "bourbon": {},
       "cron-tick": {},
       "reactive-table": {},
-      "kadira": {}
+      "kadira": {},
+      "collection-hooks": {}
     },
     "packages": {
       "iron-router": {
@@ -79,8 +80,13 @@
       },
       "kadira": {
         "git": "https://github.com/meteorhacks/kadira.git",
-        "tag": "v2.1.5",
-        "commit": "1d33f51a7228fc430fb1823276fcfeeb6f251255"
+        "tag": "v2.2.0",
+        "commit": "0f0f6b90a80f2be3980154977fe19f84cc535cf8"
+      },
+      "collection-hooks": {
+        "git": "https://github.com/matb33/meteor-collection-hooks.git",
+        "tag": "v0.7.0",
+        "commit": "20a6de81f3818f112bccf67b5e1d3db342cf0b18"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
