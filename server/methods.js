@@ -52,7 +52,8 @@ Meteor.methods({
       <p>Choose one of the four available episodes. Remember, this is a trial and you will not be paid for timelining it. If you have minor errors,\
       we may send feedback or give you the opportunity to timeline a second trial episode. If we like your work, \
       we'll follow-up with instructions on timelining new episodes. Should you have any questions, please get in touch.</p>\
-      <br><p>Sincerely,<br>The Timelined Team<br>support@timelined.com</p>"
+      <br><p>Sincerely,<br>The Timelined Team<br>support@timelined.com</p> \
+      <p>PS - Timelined only works with Chrome and Safari browsers</p>"
     });
   },
   reset_password: function(user_id) {
