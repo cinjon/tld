@@ -1,11 +1,11 @@
-var CRON_RUNNING = false;
+var CRON_RUNNING = true;
 
 var min_ms = 60000;
 var hour_ms = min_ms * 60;
 var cron_minute_interval = new Cron(min_ms);
 var cron_hour_interval = new Cron(hour_ms);
 var hours_to_complete_episode = 36;
-var hour_send_claim_warning_email = hours_to_complete_episode - 6;
+var hour_send_claim_warning_email = hours_to_complete_episode - 8;
 
 if (CRON_RUNNING) {
   // unclaim expired jobs
