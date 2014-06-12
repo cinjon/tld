@@ -83,6 +83,12 @@ Meteor.publish('episode_from_route', function(episode_route) {
   });
 });
 
+Meteor.publish('episode_trial_and_editor_from_route', function(episode_route) {
+  return Episodes.find({route: episode_route}, {
+    fields:{trial:true, editor_id:true}
+  });
+});
+
 Meteor.publish('episodes_by_editor', function(user_id) {
   return Episodes.find({editor_id:user_id, trial:false}, {
     fields: {
