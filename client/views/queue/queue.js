@@ -44,7 +44,9 @@ Template.queue_helper.helpers({
     } else {
       var episodes = Episodes.find({
         show_id: show_id,
-        trial: false
+        trial: false,
+        published: false,
+        hidden: false
       });
     }
     return episodes.map(function(episode) {
