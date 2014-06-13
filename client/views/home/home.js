@@ -61,6 +61,8 @@ Template.home_episode.events({
 Template.home_episode.helpers({
   chapters: function() {
     var index = 1;
+    console.log('chapt')
+    console.log(this)
     return Chapters.find({_id:{$in:this.chapters}}).map(function(chapter) {
       chapter.index = index;
       index += 1;
@@ -80,8 +82,10 @@ Template.home_episode.helpers({
     return this.chapters.length;
   },
   people: function() {
+    var guests = this.guests || [];
+    var hosts = this.hosts || [];
     return People.find({
-      $or:[{_id:{$in:this.hosts}}, {_id:{$in:this.guests}}]
+      $or:[{_id:{$in:hosts}}, {_id:{$in:guests}}]
     }, {
       fields:{first_name:true, last_name:true},
     });
@@ -112,7 +116,6 @@ Template.home_episode.helpers({
 
 Template.home_header_box.events({
   'click button': function(e, tmpl) {
-    console.log('what');
     home_reactivity.set('home_display', this.key);
   }
 });
