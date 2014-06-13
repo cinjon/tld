@@ -41,3 +41,28 @@ Template.companies_list.helpers({
     };
   }
 });
+
+Template.merge_companies.events({
+  'click #submit_merge_companies': function(e, tmpl) {
+    var company_a = tmpl.$('#company_a').val();
+    var company_b = tmpl.$('#company_b').val();
+    if (company_a == '' || company_b == '') {
+      return;
+    } else {
+      Meteor.call('merge_companies', null, null);
+    }
+  }
+});
+
+Template.merge_companies.helpers({
+  company_typeahead: function() {
+    return Companies.find().fetch().map(function(company) {
+      return company.name;
+    });
+  }
+})
+
+//How to get the id of the element?
+Template.merge_companies.rendered = function() {
+  Meteor.typeahead($('.typeahead'));
+}

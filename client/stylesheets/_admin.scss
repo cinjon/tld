@@ -6,3 +6,16 @@
 .reactive-table tr {
   cursor: pointer;
 }
+
+.merge_companies_text {
+  position:relative;
+  top:2px;
+  font-size:20px;
+  float:left
+}
+
+.merge_companies_input {
+  float:left;
+  margin-right:10px;
+  margin-left:10px;
+}

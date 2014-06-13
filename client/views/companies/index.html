@@ -1,9 +1,26 @@
 <template name="companies_list">
   <div class="container container-full-height container-light">
     {{> reactiveTable collection=companies settings=settings}}
-    <div>
-      <input class="form-control left" style="width:200px; margin-left:20px" id="merge_company_me" placeholder="Merge Company This"/>
-      <input class="form-control left" style="width:200px; margin-left:20px" id="merge_into_company" placeholder="Into Company That"/>
+    {{> merge_companies}}
+  </div>
+</template>
+
+<template name="merge_companies">
+  <div>
+    <div class="merge_companies_text">
+      Merge
+    </div>
+    <div class="merge_companies_input">
+      <input class="form-control typeahead" type="text" autocomplete="off" spellcheck="off" data-source="company_typeahead" id="company_a" placeholder="Company A"/>
+    </div>
+    <div class="merge_companies_text">
+      Into
+    </div>
+    <div class="merge_companies_input">
+      <input class="form-control typeahead" type="text" autocomplete="off" spellcheck="off" data-source="company_typeahead" id="company_b" placeholder="Company B"/>
+    </div>
+    <div class="merge_companies_input">
+      <button type="button" id="submit_merge_companies" class="btn btn-primary">Submit</button>
     </div>
   </div>
 </template>
