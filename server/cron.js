@@ -13,7 +13,7 @@ var add_job = function(cron, num_intervals, job) {
 
 var hours_ago = function(num_hours, now) {
   now = now || (new Date()).getTime();
-  return now - num_hours * hours_ms;
+  return now - num_hours * hour_ms;
 };
 
 var send_email_episode_warnings = function(episodes_dict) {
