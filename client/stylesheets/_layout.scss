@@ -27,4 +27,8 @@ footer {
   letter-spacing: 2px;
   font-size: 11px;
   height: $footer-height;
+  color: $gray-light;
+  a {
+    color: $gray-lighter;
+  }
 }
