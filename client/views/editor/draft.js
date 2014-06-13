@@ -13,22 +13,17 @@ Template.editor_highlight_time.events({
     if (e.keyCode == 13) {
       var val = validate_time($(e.target).val(), this.start_time);
       if (val) {
-        Meteor.call('set_start_time', this._id, val)
+        if (this.new_time) {
+          set_start_time(null, val);
+        } else {
+          Meteor.call('set_start_time', this._id, val);
+        }
       }
       set_css_time(tmpl, true);
     } else if (e.type == "focusout") {
       set_css_time(tmpl, true);
     }
   },
-});
-
-Template.editor_highlight_time.helpers({
-  edit_time: function() {
-    if (!this.new_time) {
-      return "edit_time";
-    }
-    return "new_time";
-  }
 });
 
 Template.editor_mode_draft.helpers({
@@ -84,7 +79,9 @@ Template.editor_new_input.events({
         'highlight', ['type', '_speaker_name'], ['link', 'Link']
       )
       show_content_input();
-      set_start_time(true);
+      if (!Session.get('highlight')['start_time']) {
+        set_start_time(true);
+      }
     }
   }
 });
@@ -158,7 +155,9 @@ do_content_input = function(e, is_editing, tmpl, highlight) {
 
 do_typeahead_type_of_highlight = function(datum) {
   set_highlight_speaker(datum.value, datum.type, datum.id);
-  set_start_time(true);
+  if (!Session.get('highlight')['start_time']) {
+    set_start_time(true);
+  }
   show_content_input();
 }
 
@@ -341,16 +340,17 @@ var set_highlight_type = function(style) {
   $('#content_input').css('font-style', style);
 }
 
-var set_start_time = function(now) {
-  if (!now) {
-    session_var_set_obj('highlight', ['start_time'], [null]);
+var set_start_time = function(now, time) {
+  if (time) {
+
+  } else if (!now) {
+    time = null;
   } else if (Meteor.settings && Meteor.settings.public && Meteor.settings.public.dev_mode) {
-    session_var_set_obj('highlight', ['start_time'],
-                        [Math.floor(Math.random()*3000) + 1]);
+    time = Math.floor(Math.random()*3000) + 1;
   } else {
-    session_var_set_obj('highlight', ['start_time'],
-                        [Math.max(Session.get('player_time') - 5, 0)]);
+    time = Math.max(Session.get('player_time') - 5, 0);
   }
+  session_var_set_obj('highlight', ['start_time'], [time]);
 }
 
 var show_content_input = function() {
@@ -365,7 +365,7 @@ var show_content_input = function() {
 var validate_time = function(new_time_string, old_time_secs) {
   var new_time_secs = format_clock_to_seconds(new_time_string);
   //include a check for it to be less than the duration of the video
-  if (new_time_secs && new_time_secs != old_time_secs && new_time_secs < get_player_duration()) {
+  if (new_time_secs && new_time_secs != old_time_secs && is_less_than_duration(new_time_secs)) {
     return new_time_secs;
   } else {
     return false;

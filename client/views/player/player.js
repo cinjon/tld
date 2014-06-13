@@ -200,6 +200,10 @@ get_player_duration = function() {
   return player.duration();
 }
 
+is_less_than_duration = function(time) {
+  return time < get_player_duration() || (Meteor.settings && Meteor.settings.public && Meteor.settings.public.dev_mode) //when no wifi...
+}
+
 set_timeupdate = function(doFunc) {
   player.on('timeupdate', doFunc)
 }
