@@ -103,8 +103,14 @@ Meteor.publish('episodes_from_show', function (route) {
   return Episodes.find({show_route: route, trial: false});
 });
 
-Meteor.publish('episodes_postedited_pending_publication', function () {
-  return Episodes.find({postedited: true, published: false});
+Meteor.publish('episodes_postedited_pending_publication', function() {
+  return Episodes.find({postedited:true, published:false}, {
+    fields:{title:true, show_route:true, postedited:true, published:true, editor_id:true}
+  });
+});
+
+Meteor.publish('episodes_postedited', function () {
+  return Episodes.find({postedited:true, trial:false});
 });
 
 Meteor.publish('highlights_from_episode', function(episode_id) {

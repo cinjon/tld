@@ -165,9 +165,10 @@ Episodes = new Meteor.Collection('episodes', {
       type: Boolean,
       label: 'Postedit flag',
       autoValue: function() {
+        var published_field = this.field('published');
         if (this.isSet) {
           return this.value;
-        } else if (this.isInsert || this.isUpdate) {
+        } else if (!published_field.isSet && (this.isInsert || this.isUpdate)) {
           return false;
         }
       }
