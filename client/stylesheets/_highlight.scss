@@ -42,6 +42,7 @@
   @include box();
   margin: 0;
   position: relative;
+  width: 100%;
   > *:not(.row_text_time) {
     position: relative;
     z-index: 1;
@@ -160,8 +161,13 @@
   }
 }
 
+.new_input_row_wrap {
+  height: 68px;
+}
+
 #new_input_row {
   z-index: 2; // to be on top of scroller for autocomplete
+  width: 100%;
   > div:not(.row_text_time) {
     background: $lemon;
   }
