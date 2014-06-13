@@ -85,6 +85,6 @@ if (CRON_RUNNING) {
       episodes_by_editor_id[editor_id].push(episode)
       });
 
-    send_email_episode_warnings(episode_by_editor_id);
+    send_email_episode_warnings(episodes_by_editor_id);
   })
 }
