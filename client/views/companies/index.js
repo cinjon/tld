@@ -1,3 +1,11 @@
+Template.companies_list.events({
+  'click .reactive-table tr': function (e, tmpl) {
+    if ($(e.target).attr('class') == 'delete_company') {
+      Meteor.call('delete_company', this._id);
+    }
+  }
+});
+
 Template.companies_list.helpers({
   settings: function () {
     return {
@@ -21,6 +29,13 @@ Template.companies_list.helpers({
         {
           key: 'twitter',
           label: 'Twitter'
+        },
+        {
+          key: 'deleteme',
+          label: 'Delete',
+          fn: function(value, object) {
+            return new Spacebars.SafeString("<a href=delete_company>Delete</a>");
+          }
         }
       ]
     };
