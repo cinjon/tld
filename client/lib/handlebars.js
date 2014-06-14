@@ -86,6 +86,15 @@ UI.registerHelper("text_limit_url", function(text, length) {
   return text_limit(text, length);
 });
 
+UI.registerHelper("title_case", function(text) {
+  //capitalize every word. later, be smarter with stuff like j.r. --> J.R.
+  if (text) {
+    return text.split(' ').map(function(part) {
+      return capitalize(part);
+    }).join(' ');
+  }
+});
+
 var episode_is_postedited = function(episode_id) {
   var episode = Episodes.findOne({_id:episode_id});
   if (episode) {
