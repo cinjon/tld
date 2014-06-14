@@ -41,6 +41,7 @@ Template.editor_mode_publish.events({
             Meteor.call('send_email', {
               to: 'Timelined Support <support@timelined.com>',
               from: user.emails[0].address,
+              reply_to: user.emails[0].address,
               subject: trial_flag + 'Episode submission from ' + user.emails[0].address,
               text: "",
               html: publish_results(episode_id, Meteor.userId())
