@@ -98,10 +98,17 @@
         }
       }
     }
+    .home-episodes {
+      border-bottom: 2px solid #222;
+    }
     .home-episode {
-      min-height: 90px;
       color: $off-white;
       background-color: $smoke2;
+      border-bottom: 2px solid #222;
+      clear:both;
+      .active {
+        color: $mint;
+      }
       .episode-buttons {
         background-color: #222;
         padding: 10px;
@@ -116,42 +123,38 @@
             left:2px;
           }
         }
-        .active {
-          color: $mint;
-        }
         .chapter_number {
           text-align: center;
           position: absolute;
         }
       }
       .episode-info {
-        padding: 10px;
+        padding: 5px 5px 0 5px;
         height: 90px;
         font-size: 16px;
-        margin-bottom: 2px;
         .episode-titles {
           height: 22px;
           .show-title {
             float: left;
             margin-right: 10px;
-            width: 15%;
+            width: 20%;
           }
           .episode-title {
             float: left;
             color: $ash1;
             font-family: $font-slab;
-            width: 80%;
+            width: 75%;
           }
         }
         .episode-summary {
-          height: 30px;
+          height: 40px;
           color: $ash1;
           font-family: $font-slab;
           font-size: 16px;
           display: inline-block;
           .vertical-center-aligned {
             display: table-cell;
-            height: 30px;
+            height: 40px;
             vertical-align: middle;
           }
         }
@@ -170,10 +173,24 @@
         }
       }
     }
+    .home-chapter, .home-highlight {
+      .date-time {
+        float: right;
+        margin-right: 16px;
+        position: relative;
+        top: 4px;
+        font-size: 12px;
+      }
+    }
     .home-chapter {
       clear: both;
-      border: 1px solid #777;
-      padding: 10px 25px;
+      border-top: 2px solid #222;
+      border-right: 2px solid #222;
+      border-left: 2px solid #222;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 25px;
+      padding-right: 36px;
       color: $off-white;
       .fa-stack {
         float: right;
@@ -187,20 +204,32 @@
         }
       }
       .show_highlights {
-        margin-right: 10px;
+        margin-right: 16px;
         top: -1px;
-      }
-      .date-time {
-        float: right;
-        margin-right: 10px;
-        position: relative;
-        top: 3px;
-        font-size: 12px;
+        cursor: pointer;
       }
       .episode-title {
         float:left;
         font-size: 18px;
         margin-right: 5px;
+      }
+    }
+    .home-highlight {
+      clear:both;
+      color: $off-white;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      .highlight-speaker {
+        float: left;
+        margin-right: 15px;
+        font-size: 16px;
+      }
+      .highlight-text {
+        float:left;
+        font-size: 16px;
+      }
+      .date-time {
+        margin-right: 6px;
       }
     }
   }

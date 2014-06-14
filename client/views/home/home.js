@@ -31,9 +31,26 @@ Template.home.helpers({
   },
 });
 
+Template.home_chapter.events({
+  'click .show_highlights': function(e, tmpl) {
+    if (home_reactivity.equals('show_highlights', this._id)) {
+      home_reactivity.set('show_highlights', null);
+    } else {
+      home_reactivity.set('show_highlights', this._id);
+    }
+  }
+});
+
 Template.home_chapter.helpers({
+  highlights: function() {
+    var highlights = this.highlights || [];
+    return Highlights.find({_id:{$in:highlights}}, {sort:{start_time:1}})
+  },
   num_highlights: function() {
     return this.highlights.length;
+  },
+  show_highlights: function() {
+    return home_reactivity.equals('show_highlights', this._id);
   },
   show_highlights_class: function() {
     var css_class = "fa fa-comment-o fa-inverse fa-stack-2x";
@@ -49,7 +66,7 @@ Template.home_episode.events({
   'click .play_episode': function(e, tmpl) {
     //Play this episode;
   },
-  'click .show_button': function(e, tmpl) {
+  'click .show_chapters': function(e, tmpl) {
     if (home_reactivity.equals('show_chapters', this._id)) {
       home_reactivity.set('show_chapters', null);
     } else {
@@ -61,13 +78,7 @@ Template.home_episode.events({
 Template.home_episode.helpers({
   chapters: function() {
     var index = 1;
-    console.log('chapt')
-    console.log(this)
-    return Chapters.find({_id:{$in:this.chapters}}).map(function(chapter) {
-      chapter.index = index;
-      index += 1;
-      return chapter;
-    });
+    return Chapters.find({_id:{$in:this.chapters}}, {sort:{start_time:1}})
   },
   episode_title: function() {
     var title = this.title;
@@ -130,6 +141,24 @@ Template.home_header_box.helpers({
   },
   is_home_display: function(key) {
     return home_reactivity.equals('home_display', this.key);
+  }
+});
+
+Template.home_highlight.helpers({
+  is_link: function() {
+    return this.url != null;
+  },
+  speaker: function() {
+    if (this.person_id) {
+      var person = People.findOne({_id:this.person_id});
+      return person.first_name + ' ' + person.last_name;
+    } else if (this.company_id) {
+      var company = Companies.findOne({_id:this.company_id});
+      return company.name;
+    }
+  },
+  url_text: function() {
+    return '<a href=' + this.url + '>' + this.text + '</a>';
   }
 });
 

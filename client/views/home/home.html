@@ -26,9 +26,11 @@
         </div>
         {{/if}}
       </div>
-      {{#each episodes}}
-      {{> home_episode}}
-      {{/each}}
+      <div class="home-episodes">
+        {{#each episodes}}
+        {{> home_episode}}
+        {{/each}}
+      </div>
     </div>
   </div>
 </template>
@@ -39,7 +41,7 @@
   <div class="home-chapter col-md-10 col-md-offset-1">
     <div class="row">
       <div class="episode-title ellipsis">
-        {{index}}. {{title}}
+        {{title}}
       </div>
       <div class="fa-stack play_episode">
         <i class="fa fa-circle-thin fa-inverse fa-stack-2x"></i>
@@ -54,6 +56,11 @@
       </span>
     </div>
   </div>
+  {{#if show_highlights}}
+  {{#each highlights}}
+  {{> home_highlight}}
+  {{/each}}
+  {{/if}}
 </template>
 
 <template name="home_episode">
@@ -78,7 +85,7 @@
           {{summary}}
         </span>
       </div>
-      <div class="episode-people">
+      <div class="episode-people ellipsis">
         {{#each people}}
         <span class="home-person">
           {{capitalize first_name}} {{capitalize last_name}}
@@ -93,7 +100,7 @@
       </div>
     </div>
     <div class="col-md-1 episode-buttons">
-      <div class="fa-stack fa-lg show_button">
+      <div class="fa-stack fa-lg show_button show_chapters">
         <i class="{{show_chapters_class}}"></i>
         <div class="fa fa-stack-1x">{{num_chapters}}</div>
       </div>
@@ -113,6 +120,29 @@
     {{else}}
     {{> button_box box_info}}
     {{/if}}
+  </div>
+</template>
+
+<template name="home_highlight">
+  <div class="home-highlight col-md-10 col-md-offset-1">
+    <div class="row">
+      {{#if is_link}}
+      <div class="highlight-text text-url">
+        {{{url_text}}}
+      </div>
+      {{else}}
+      <div class="highlight-speaker">
+        {{title_case speaker}}
+      </div>
+      <div class="highlight-text">
+        {{text}}
+      </div>
+      {{/if}}
+
+      <div class="date-time">
+        {{format_seconds_to_clock start_time}}
+      </div>
+    </div>
   </div>
 </template>
 
