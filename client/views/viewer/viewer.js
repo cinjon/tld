@@ -76,11 +76,6 @@ Template.viewer_chapter.events({
 });
 
 Template.viewer_chapter.helpers({
-  cue_color: function() {
-    if (Session.get('current_highlight_cue') == this._id) {
-      return 'lemon';
-    }
-  },
   highlights: function() {
     return Highlights.find({_id:{$in:this.highlights}}, {
       reactive:false, sort:{start_time:1}
@@ -124,11 +119,6 @@ Template.viewer_highlight.helpers({
     var company = Companies.findOne({_id:this.company_id});
     company.type = 'company';
     return company;
-  },
-  cue_color: function() {
-    if (Session.get('current_highlight_cue') == this._id) {
-      return 'lemon';
-    }
   },
   has_person: function() {
     return this.person_id != null;
