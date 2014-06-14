@@ -8,11 +8,9 @@
 </template>
 
 <template name="editor_mode_draft">
-  <div class="new_input_row_wrap">
-    <div id="new_input_row" class="highlight-wrap">
-      {{> editor_highlight_time new_time}}
-      {{> editor_new_input episode_id}}
-    </div>
+  <div id="new_input_row" class="highlight-wrap">
+    {{> editor_highlight_time new_time}}
+    {{> editor_new_input episode_id}}
   </div>
   <div class="editor_mode_draft scroller">
     {{#each highlights}}

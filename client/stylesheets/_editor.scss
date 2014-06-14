@@ -3,28 +3,16 @@ $text-time-width: 65px;
 .editor-container {
   .media-pane {
     padding: 15px 30px 0;
-    position: fixed;
-    top: 50px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: scroll;
   }
   .highlights-pane {
     position: fixed;
     top: 50px;
     right: 0;
     bottom: 0;
-    //@include box(vertical);
-    -webkit-display: flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column;
+    @include box(vertical);
     .scroller {
-      overflow-y: scroll;
-      //@include box-flex(1);
-      -webkit-flex: 1 1 auto;
-      flex: 1 1 auto;
+      overflow: scroll;
+      @include box-flex(1);
     }
   }
 }
@@ -79,7 +67,6 @@ $text-time-width: 65px;
       padding-left: $text-time-width;
       margin: 0;
       z-index: 3; //get arrow in front
-      height: 101px;
       .editing-stage {
         font-weight: $font-weight-heavy;
         .btn {
