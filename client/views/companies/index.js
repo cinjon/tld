@@ -19,6 +19,9 @@ Template.companies_list.events({
 });
 
 Template.companies_list.helpers({
+  companies: function() {
+    return Companies.find({}, {sort:{name:1}})
+  },
   settings: function () {
     return {
       rowsPerPage: 30,
