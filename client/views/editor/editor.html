@@ -1,10 +1,30 @@
+<template name="add_entity_input_guest">
+  <input id="new_entity_input_guest" class="form-control new_entity_input" type="text" placeholder="Enter Guest Name" spellcheck="off" autocomplete="off" data-limit="5" data-source="new_entity_input_guest_data" data-autocompleted="add_entity" data-selected="add_entity">
+</template>
+
+<template name="add_entity_input_host">
+  <input id="new_entity_input_host" class="form-control new_entity_input" type="text" placeholder="Enter Host Name" spellcheck="off" autocomplete="off" data-limit="5" data-source="new_entity_input_host_data" data-autocompleted="add_entity" data-selected="add_entity">
+</template>
+
+<template name="add_entity_input_sponsor">
+  <input id="new_entity_input_sponsor" class="form-control new_entity_input" type="text" placeholder="Enter Sponsor Name" spellcheck="off" autocomplete="off" data-limit="5" data-source="new_entity_input_sponsor_data" data-autocompleted="add_entity" data-selected="add_entity">
+</template>
+
 <template name="add_entity">
   <button class="add-entity-btn btn btn-dotted" id="add_{{id}}_button" type="button">
     <span class="plus">+</span> {{capitalize id}}
   </button>
 
   <span id="new_entity_input_span_{{id}}" class="new_entity_input_wrap" style="display:none;">
-    <input id="new_entity_input_{{id}}" class="form-control new_entity_input" type="text" placeholder="Enter {{capitalize id}} Name">
+    {{#if is_type "guest"}}
+    {{> add_entity_input_guest}}
+    {{/if}}
+    {{#if is_type "host"}}
+    {{> add_entity_input_host}}
+    {{/if}}
+    {{#if is_type "sponsor"}}
+    {{> add_entity_input_sponsor}}
+    {{/if}}
   </span>
 </template>
 

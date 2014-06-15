@@ -25,7 +25,6 @@ Template.add_entity.events({
         var episode_id = this.episode_id;
         Meteor.call(
           'new_' + type, name, episode_id, function(err, result) {
-            reset_typeaheads(episode_id);
             toggle_add_entity(true, type);
           }
         );
@@ -33,6 +32,51 @@ Template.add_entity.events({
     }
   },
 });
+
+Template.add_entity.helpers({
+  is_type: function(type) {
+    return this.id == type;
+  },
+});
+
+Template.add_entity_input_guest.helpers({
+  add_entity: function(event, datum, name) {
+    add_entity_to_episode('guest', datum.episode_id, datum.id);
+  },
+  new_entity_input_guest_data: function() {
+    return get_all_people(Session.get('episode_id_for_search'));
+  }
+})
+
+Template.add_entity_input_guest.rendered = function() {
+  Meteor.typeahead($('#new_entity_input_guest'));
+}
+
+Template.add_entity_input_host.helpers({
+  add_entity: function(event, datum, name) {
+    add_entity_to_episode('host', datum.episode_id, datum.id);
+  },
+  new_entity_input_host_data: function() {
+    return get_all_people(Session.get('episode_id_for_search'));
+  }
+})
+
+Template.add_entity_input_host.rendered = function() {
+  Meteor.typeahead($('#new_entity_input_host'));
+}
+
+Template.add_entity_input_sponsor.helpers({
+  add_entity: function(event, datum, name) {
+    add_entity_to_episode('sponsor', datum.episode_id, datum.id);
+  },
+  new_entity_input_sponsor_data: function() {
+    return get_all_companies(Session.get('episode_id_for_search'));
+  }
+})
+
+Template.add_entity_input_sponsor.rendered = function() {
+  Meteor.typeahead($('#new_entity_input_sponsor'));
+}
 
 Template.character_cutoff.helpers({
   current_char_counter: function() {
@@ -63,9 +107,7 @@ Template.editor.events({
     Meteor.call(
       'remove_' + type, episode_id, entity_id,
       function(error, result) {
-        if (result['success']) {
-          reset_typeaheads(episode_id);
-        } else {
+        if (!result['success']) {
           $('#remove_entity_modal').modal(
             {keyboard:true, show:true}
           );
@@ -190,7 +232,6 @@ Template.editor.helpers({
 });
 
 Template.editor.rendered = function(){
-  var me = this;
   $('body').tooltip({
       selector: '[data-toggle="tooltip"]'
   });
@@ -353,21 +394,16 @@ var add_entity_to_episode = function(entity_type, episode_id, entity_id) {
   Meteor.call(
     'add_' + entity_type, episode_id, entity_id,
     function(error, result) {
-      reset_typeaheads(episode_id);
       toggle_add_entity(true, entity_type);
     }
   );
 }
 
-var destroy_typeaheads = function() {
-  $('#speaker_input').typeahead('destroy','NoCached')
-  $('#new_entity_input_guest').typeahead('destroy','NoCached');
-  $('#new_entity_input_host').typeahead('destroy','NoCached');
-  $('#new_entity_input_sponsor').typeahead('destroy','NoCached');
-};
-
 var get_all_companies = function(episode_id) {
-  return Companies.find({}, {fields:{name:true, _id:true}}).fetch().map(function(company) {
+  var episode = Episodes.findOne({_id:episode_id});
+  return Companies.find({_id:{$nin:episode.sponsors}}, {
+    fields:{name:true, _id:true}
+  }).fetch().map(function(company) {
     return {value:company.name, id:company._id, type:'sponsor', episode_id:episode_id}
   });
 }
@@ -387,6 +423,7 @@ var get_all_people = function(episode_id) {
     {}, {fields:{first_name:true, last_name:true}}
   ).forEach(function(person) {
     if (hosts.indexOf(person._id) == -1 && guests.indexOf(person._id) == -1) {
+      //TODO: move to template with {{title_case name}}
       var name = capitalize(person.first_name) + ' ' + capitalize(person.last_name);
       data.push({value:name, id:person._id, type:'person', episode_id:episode_id});
     }
@@ -436,56 +473,6 @@ var reset_editor_session_vars = function() {
   Session.set('is_editing_highlight_url', null);
 }
 
-reset_typeaheads = function(episode_id) {
-  destroy_typeaheads();
-  set_editor_search();
-  if (episode_id) {
-    set_entity_typeaheads(episode_id);
-  }
-}
-
-var _set_entity_typeahead = function(type, datums) {
-  datums.initialize();
-  $('#new_entity_input_' + type).typeahead(
-    {
-      highlight: true
-    },
-    {
-      displayKey: 'value',
-      source: datums.ttAdapter(),
-      limit: 5,
-    }
-  ).on('typeahead:selected', function(event, datum, name) {
-    //TODO: bug here with this bieng called multiple times.
-    add_entity_to_episode(type, datum.episode_id, datum.id);
-  }).on('typeahead:autocompleted', function(event, datum, name) {
-    add_entity_to_episode(type, datum.episode_id, datum.id);
-  });
-}
-
-var set_entity_typeaheads = function(episode_id) {
-  var data = get_all_people(episode_id);
-  if (data.length == 0) {
-    return;
-  }
-
-  _set_entity_typeahead('guest', new Bloodhound({
-    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: data
-  }))
-  _set_entity_typeahead('host', new Bloodhound({
-    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: data
-  }))
-  _set_entity_typeahead('sponsor', new Bloodhound({
-    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: get_all_companies(episode_id)
-  }))
-}
-
 var toggle_add_entity = function(button, entity_type) {
   var add_id = '#add_' + entity_type + '_button';
   var span_id = '#new_entity_input_span_' + entity_type;
@@ -494,10 +481,10 @@ var toggle_add_entity = function(button, entity_type) {
   if (button) {
     $(add_id).show();
     $(span_id).hide();
-    $(input_id).val('');
   } else {
     $(add_id).hide();
     $(span_id).show();
+    $(input_id).val('');
     $(input_id).focus();
   }
 }

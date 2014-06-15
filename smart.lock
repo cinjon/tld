@@ -34,7 +34,7 @@
       "typeahead": {
         "git": "https://github.com/cinjon/meteor-typeahead",
         "branch": "master",
-        "commit": "329f1536282b69d7089b25448c86969df8203c47"
+        "commit": "9d44285a46334b40e5fb0267ade970b7d335fe20"
       },
       "font-awesome": {
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",

@@ -90,6 +90,9 @@ Template.editor_new_input.helpers({
   content: function() {
     return Session.get('highlight')['text'];
   },
+  do_highlight: function(event, datum, name) {
+    do_typeahead_type_of_highlight(datum);
+  },
   has_speaker_src: function() {
     return false;
   },
@@ -101,10 +104,29 @@ Template.editor_new_input.helpers({
   speaker_name: function() {
     return Session.get('highlight')['_speaker_name'];
   },
+  search_multiple_entities: function() {
+    return [
+      {
+        valueKey: 'value',
+        local: function() {
+          return get_selections_people();
+        },
+        header: '<div class="tt-header">People</div>'
+      },
+      {
+        valueKey: 'value',
+        local: function(){
+          return get_selections_companies();
+        },
+        header: '<div class="tt-header">Companies</div>',
+      }
+    ]
+  }
 });
 
 Template.editor_new_input.rendered = function() {
   Session.set('editor_new_input_rendered', true);
+  Meteor.typeahead($('.editor_search_input'));
 }
 
 do_content_input = function(e, is_editing, tmpl, highlight) {
@@ -174,7 +196,7 @@ var get_selections_companies = function() {
     sponsored_episodes:episode_id
   }, {
     fields:{name:true},
-  }).map(
+  }).fetch().map(
     function(company) {
       return {value:capitalize(company.name), id:company._id, type:'sponsor', episode_id:episode_id}
     }
@@ -186,7 +208,7 @@ var get_selections_people = function() {
     $or:[{hosts:episode_id}, {guests:episode_id}]
   }, {
     fields:{first_name:true, last_name:true},
-  }).map(
+  }).fetch().map(
     function(person) {
       var name = capitalize(person.first_name) + ' ' + capitalize(person.last_name);
       return {value:name, id:person._id, type:'person', episode_id:episode_id}
@@ -247,48 +269,6 @@ var set_css_time = function(tmpl, plain_text) {
   }
 }
 
-set_editor_search = function() {
-  var datums_company = new Bloodhound({
-  datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: get_selections_companies()
-  });
-  datums_company.initialize();
-
-  var datums_people = new Bloodhound({
-    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.value); },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: get_selections_people()
-  });
-  datums_people.initialize();
-
-  $('#speaker_input').typeahead(
-    {
-      highlight:true
-    },
-    {
-      displayKey: 'value',
-      source: datums_people.ttAdapter(),
-      limit: 5,
-      templates: {
-        header: '<div class="tt-header">People</div>'
-      }
-    },
-    {
-      displayKey: 'value',
-      source: datums_company.ttAdapter(),
-      limit: 5,
-      templates: {
-        header: '<div class="tt-header">Companies</div>'
-      }
-    }
-  ).on('typeahead:selected', function(event, datum, name) {
-    do_typeahead_type_of_highlight(datum);
-  }).on('typeahead:autocompleted', function(event, datum, name) {
-    do_typeahead_type_of_highlight(datum);
-  });
-}
-
 var set_highlight_finished = function(text, episode_id, tmpl) {
   session_var_set_obj('highlight', ['text', 'episode_id'], [text, episode_id]);
   var highlight = Session.get('highlight');
@@ -296,9 +276,6 @@ var set_highlight_finished = function(text, episode_id, tmpl) {
   Meteor.call(
     'add_highlight', highlight,
     function(error, result) {
-      if (type != 'link' && highlight['_speaker_name'] && !highlight['company_id'] && !highlight['person_id']) { //new company
-        reset_typeaheads();
-      }
       Session.set('highlight', new_highlight());
       set_css_new();
     }
@@ -374,7 +351,6 @@ var validate_time = function(new_time_string, old_time_secs) {
 
 Deps.autorun(function() {
   if (Session.get('editor_new_input_rendered') && Session.get('episode_id_for_search')) {
-    reset_typeaheads(Session.get('episode_id_for_search'));
     $('#speaker_input').focus();
   }
 })
