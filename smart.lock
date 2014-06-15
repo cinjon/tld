@@ -4,7 +4,10 @@
     "basePackages": {
       "iron-router": {},
       "roles": {},
-      "typeahead": {},
+      "typeahead": {
+        "git": "https://github.com/cinjon/meteor-typeahead",
+        "branch": "master"
+      },
       "font-awesome": {},
       "autoform": {},
       "bootstrap3-sass": {},
@@ -29,9 +32,9 @@
         "commit": "969b17fac5dfec66b6b12bfce4e37471d1a241d4"
       },
       "typeahead": {
-        "git": "https://github.com/sergeyt/meteor-typeahead.git",
-        "tag": "v0.0.9",
-        "commit": "6aa2228a7cc93e89e94520bd60f1af4e7542dfcf"
+        "git": "https://github.com/cinjon/meteor-typeahead",
+        "branch": "master",
+        "commit": "329f1536282b69d7089b25448c86969df8203c47"
       },
       "font-awesome": {
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
@@ -80,8 +83,8 @@
       },
       "kadira": {
         "git": "https://github.com/meteorhacks/kadira.git",
-        "tag": "v2.2.0",
-        "commit": "0f0f6b90a80f2be3980154977fe19f84cc535cf8"
+        "tag": "v2.3.0",
+        "commit": "ddda2b47af879bb7dd54d1def3c914efb14f90df"
       },
       "collection-hooks": {
         "git": "https://github.com/matb33/meteor-collection-hooks.git",
