@@ -11,13 +11,13 @@
       Merge
     </div>
     <div class="merge_companies_input">
-      <input class="form-control typeahead" type="text" autocomplete="off" spellcheck="off" data-source="company_typeahead" id="company_a" placeholder="Company A"/>
+      <input class="form-control typeahead" id="company_merge_from" type="text" autocomplete="off" spellcheck="off" data-source="company_typeahead" data-autocompleted="on_merge_from" data-selected="on_merge_from" placeholder="Company A" data-limit="5"/>
     </div>
     <div class="merge_companies_text">
       Into
     </div>
     <div class="merge_companies_input">
-      <input class="form-control typeahead" type="text" autocomplete="off" spellcheck="off" data-source="company_typeahead" id="company_b" placeholder="Company B"/>
+      <input class="form-control typeahead" id="company_merge_into" type="text" autocomplete="off" spellcheck="off" data-source="company_typeahead" data-autocompleted="on_merge_into" data-selected="on_merge_into" placeholder="Company B" data-limit="5"/>
     </div>
     <div class="merge_companies_input">
       <button type="button" id="submit_merge_companies" class="btn btn-primary">Submit</button>
