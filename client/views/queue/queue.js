@@ -2,7 +2,7 @@
 Template.queue_helper.events({
   'click .claim_episode': function(e, tmpl) {
     var user = Meteor.user();
-    var episode= Episodes.findOne({_id:this._id});
+    var episode = Episodes.findOne({_id:this._id});
     Meteor.call(
       'claim_episode', episode._id, user._id,
       function(error, result) {
@@ -40,6 +40,11 @@ Template.queue_helper.helpers({
         show_id: show_id,
         trial: true,
         editor_id: Meteor.userId()
+      }, {
+        fields:{
+          editor_id:true, trial:true, route:true, show_route:true,
+          length_in_seconds:true, "feed.published":true, title:true,
+        }
       })
     } else {
       var episodes = Episodes.find({
@@ -47,6 +52,11 @@ Template.queue_helper.helpers({
         trial: false,
         published: false,
         hidden: false
+      }, {
+        fields:{
+          editor_id:true, trial:true, route:true, show_route:true,
+          length_in_seconds:true, "feed.published":true, title:true,
+        }
       });
     }
     return episodes.map(function(episode) {

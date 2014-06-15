@@ -237,6 +237,11 @@ Meteor.publish('unpublished_episodes', function() {
     hidden: false,
     trial: false
   }, {
+    fields: {
+      published:true, show_id:true, hidden:true,
+      editor_id:true, trial:true, route:true, show_route:true,
+      length_in_seconds:true, "feed.published":true, title:true
+    },
     sort: {"feed.published": -1}
   });
 });
