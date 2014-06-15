@@ -17,6 +17,7 @@
 // signed_editor_legal: boolean
 // received_trial_email: boolean
 
+
 userCountrySchema = new SimpleSchema({
     name: {
         type: String
@@ -75,7 +76,18 @@ userSchema = new SimpleSchema({
   username:{
     type: String,
     regEx: /^[a-z0-9A-Z_]{3,15}$/,
-    optional: true
+    optional: true,
+    unique: true
+    // custom: function () {
+    //   if (Meteor.isClient && this.isSet) {
+    //     console.log("testing");
+    //     Meteor.call('accountsIsUsernameAvailable', this.value, function (error, result) {
+    //       if (!result) {
+    //         Meteor.users.simpleSchema().namedContext('createUserForm').addInvalidKeys([{name: 'username', type: 'notUnique'}]);
+    //       }
+    //     });
+    //   }
+    // }
   },
   emails: {
     type: [Object],
@@ -148,6 +160,7 @@ userSchema = new SimpleSchema({
     optional: true
   }
 });
+
 
 Meteor.users.attachSchema(userSchema);
 
