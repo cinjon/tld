@@ -1,5 +1,26 @@
+<template name="merge_people">
+  <div>
+    <div class="merge_text">
+      Merge
+    </div>
+    <div class="merge_input">
+      <input class="form-control typeahead" id="people_merge_from" type="text" autocomplete="off" spellcheck="off" data-source="people_typeahead" data-autocompleted="on_merge_from" data-selected="on_merge_from" placeholder="People A" data-limit="5"/>
+    </div>
+    <div class="merge_text">
+      Into
+    </div>
+    <div class="merge_input">
+      <input class="form-control typeahead" id="people_merge_into" type="text" autocomplete="off" spellcheck="off" data-source="people_typeahead" data-autocompleted="on_merge_into" data-selected="on_merge_into" placeholder="People B" data-limit="5"/>
+    </div>
+    <div class="merge_input">
+      <button type="button" id="submit_merge_people" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</template>
+
 <template name="people_list">
   <div class="container container-full-height container-light">
     {{> reactiveTable collection=people settings=settings}}
+    {{> merge_people}}
   </div>
 </template>
