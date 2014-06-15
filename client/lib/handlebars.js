@@ -88,11 +88,7 @@ UI.registerHelper("text_limit_url", function(text, length) {
 
 UI.registerHelper("title_case", function(text) {
   //capitalize every word. later, be smarter with stuff like j.r. --> J.R.
-  if (text) {
-    return text.split(' ').map(function(part) {
-      return capitalize(part);
-    }).join(' ');
-  }
+  return title_case(text);
 });
 
 var episode_is_postedited = function(episode_id) {
@@ -120,4 +116,12 @@ var safe_split = function(text, str, num) {
     return parts[num];
   }
   return text;
+}
+
+title_case = function(text) {
+  if (text) {
+    return text.split(' ').map(function(part) {
+      return capitalize(part);
+    }).join(' ');
+  }
 }
