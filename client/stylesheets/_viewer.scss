@@ -81,6 +81,14 @@
         float: left;
         display: inline-block;
       }
+      .chapter_box {
+        .chapter_inner {
+          cursor:pointer;
+        }
+        .chapter_cue {
+          border: 2px solid #FFF1A9;
+        }
+      }
       .highlight-wrap {
         .row_text_time {
           .chapter_divider {

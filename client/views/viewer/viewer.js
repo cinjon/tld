@@ -67,6 +67,11 @@ Template.viewer.helpers({
 });
 
 Template.viewer_chapter.events({
+  'click .chapter_inner': function(e, tmpl) {
+    if ($(e.target).attr('class').indexOf('fa-share-square') == -1) {
+      start_playing(this.start_time);
+    }
+  },
   'mouseleave .chapter_box': function(e, tmpl) {
     tmpl.$('.chapter_inner .fa').css('visibility', 'hidden');
   },
@@ -76,6 +81,11 @@ Template.viewer_chapter.events({
 });
 
 Template.viewer_chapter.helpers({
+  chapter_cue: function() {
+    if (Session.get('current_chapter_cue') == this._id) {
+      return "chapter_cue";
+    }
+  },
   highlights: function() {
     return Highlights.find({_id:{$in:this.highlights}}, {
       reactive:false, sort:{start_time:1}
@@ -89,6 +99,9 @@ Template.viewer_chapter.helpers({
 });
 
 Template.viewer_highlight.events({
+  'click .highlight_text': function(e, tmpl) {
+    start_playing(this.start_time);
+  },
   'click .set-bookmark': function() {
     Meteor.call('set_bookmark', Meteor.userId(), this._id);
   },
@@ -128,6 +141,11 @@ Template.viewer_highlight.helpers({
   },
   has_link: function() {
     return this.type == 'link';
+  },
+  highlight_cue: function() {
+    if (Session.get('current_highlight_cue') == this._id) {
+      return "lemon";
+    }
   },
   link: function() {
     return {type:'link'}

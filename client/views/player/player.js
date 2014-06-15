@@ -46,13 +46,15 @@ var _add_cuepoint = function(namespace, start, end, onStart, onEnd, params) {
 
 var add_highlight_cuepoint = function(highlight) {
   _add_cuepoint(
-    "highlight", highlight.start_time, highlight.start_time + 5,
+    "highlight", highlight.start_time, highlight.start_time + 30,
     function(params) {
       Session.set('current_chapter_cue', params.chapter_id);
       Session.set('current_highlight_cue', params.id)
     },
     function(params) {
-      Session.set('current_highlight_cue', null);
+      if (Session.get('current_highlight_cue') == params.id) {
+        Session.set('current_highlight_cue', null);
+      }
     },
     {chapter_id:highlight.chapter_id, id:highlight._id}
   )
@@ -212,4 +214,9 @@ set_player_current_time = function(seconds) {
   if (seconds) {
     player.currentTime(seconds);
   }
+}
+
+start_playing = function(seconds) {
+  set_player_current_time(seconds);
+  player.play();
 }
