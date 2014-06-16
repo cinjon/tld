@@ -2,9 +2,7 @@
   "packages": {
     "iron-router": {},
     "roles": {},
-    "typeahead": {
-      "git": "https://github.com/cinjon/meteor-typeahead"
-    },
+    "typeahead": {},
     "font-awesome": {},
     "autoform": {},
     "bootstrap3-sass": {},
