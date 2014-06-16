@@ -148,6 +148,16 @@ Episodes = new Meteor.Collection('episodes', {
       denyInsert: true,
       optional: true
     },
+    payment_id: {
+      type: String,
+      autoValue: function() {
+        if (this.isSet) {
+          return this.value;
+        } else if (this.isInsert || this.isUpdate) {
+          return "";
+        }
+      }
+    },
     postedited_at: {
       type: Date,
       label: 'Last postedited time',

@@ -22,7 +22,7 @@ Template.users_list.helpers({
                     key: 'emails',
                     label: 'Email',
                     fn: function (value, object) {
-                      return object.emails[0].address;
+                      return object.emails[0].address || "";
                     }
                   },
                   {
