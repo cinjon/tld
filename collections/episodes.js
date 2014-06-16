@@ -156,7 +156,8 @@ Episodes = new Meteor.Collection('episodes', {
         } else if (this.isInsert || this.isUpdate) {
           return "";
         }
-      }
+      },
+      optional: true
     },
     postedited_at: {
       type: Date,
