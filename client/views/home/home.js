@@ -63,9 +63,6 @@ Template.home_chapter.helpers({
 })
 
 Template.home_episode.events({
-  'click .play_episode': function(e, tmpl) {
-    //Play this episode;
-  },
   'click .show_chapters': function(e, tmpl) {
     if (home_reactivity.equals('show_chapters', this._id)) {
       home_reactivity.set('show_chapters', null);
@@ -77,8 +74,13 @@ Template.home_episode.events({
 
 Template.home_episode.helpers({
   chapters: function() {
-    var index = 1;
-    return Chapters.find({_id:{$in:this.chapters}}, {sort:{start_time:1}})
+    var episode_route = this.route;
+    var show_route = this.show_route;
+    return Chapters.find({_id:{$in:this.chapters}}, {sort:{start_time:1}}).map(function(chapter) {
+      chapter.show_route = show_route;
+      chapter.episode_route = episode_route;
+      return chapter;
+    });
   },
   episode_title: function() {
     var title = this.title;

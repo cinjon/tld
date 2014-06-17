@@ -52,7 +52,8 @@ Template.viewer.helpers({
       type: this.episode.type,
       url: this.episode.feed.url,
       summary: this.episode.summary,
-      seconds: 0,
+      seconds: this.seconds,
+      play_on_load: this.play_on_load,
       highlights: Highlights.find({_id:{$in:this.episode.highlights}}, {
         fields:{start_time:true, chapter_id:true},
         reactive:false
