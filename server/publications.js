@@ -129,6 +129,10 @@ Meteor.publish('highlights_from_episode_route', function(episode_route) {
   });
 });
 
+Meteor.publish('payments_oustanding', function () {
+  return Payments.find({issued: false});
+});
+
 Meteor.publish('people_list', function () {
   return People.find();
 });

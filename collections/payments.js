@@ -7,10 +7,10 @@
 //   episodes: array of episodes included on this invoice
 //   minutes: number      // sum of minutes of all episodes on payment
 //   amount: number        // payment amount (cents)
+//   issued: boolean
 //   created_at: date,
 //   updated_at: date,
 // }
-
 
 Payments = new Meteor.Collection('payments', {
   schema: new SimpleSchema({
@@ -37,6 +37,17 @@ Payments = new Meteor.Collection('payments', {
     },
     episodes: {
       type: [String]
+    },
+    issued: {
+      type: Boolean,
+      autoValue: function() {
+        var published_field = this.field('published');
+        if (this.isSet) {
+          return this.value;
+        } else if (!published_field.isSet && (this.isInsert || this.isUpdate)) {
+          return false;
+        }
+      }
     },
     method: {
       type: String

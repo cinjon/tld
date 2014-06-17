@@ -8,6 +8,9 @@ Meteor.methods({
     var serialized = Accounts._getAccountData(this.connection.id, 'srpChallenge');
     return serialized && serialized.M === options.M;
   },
+  generate_payments: function () {
+    return;
+  },
   make_trial_episodes: function(user_id) {
     if (Meteor.settings && Meteor.settings.public && Meteor.settings.public.prod_mode == true) {
       trial_storage_keys = [

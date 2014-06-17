@@ -239,6 +239,7 @@ def put_episode_in_mongo(entry, filename, show, episodes, chapters)
     :summary => nil,
     :trial => false,
     :hidden => false,
+    :payment_id => "",
     :feed => {}
   }
   entry.each do |key, value|
