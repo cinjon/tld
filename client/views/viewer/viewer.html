@@ -42,6 +42,7 @@
 </template>
 
 <template name="viewer_chapter">
+  <div class="chapter_and_highlights">
   <div class="chapter_box">
     <div class="chapter_inner {{chapter_cue}}">
       {{#if ../preview}}
@@ -66,10 +67,11 @@
     </div>
   </div>
 
-  <div class="highlights">
+  <div class="{{get_highlights_base_class preview}}">
     {{#each highlights}}
     {{> viewer_highlight}}
     {{/each}}
+  </div>
   </div>
 </template>
 

@@ -89,6 +89,12 @@
           border: 2px solid #FFF1A9;
         }
       }
+      .chapter_and_highlights:hover .highlights-none {
+        display:block;
+      }
+      .highlights-none {
+        display:none;
+      }
       .highlight-wrap {
         .row_text_time {
           .chapter_divider {

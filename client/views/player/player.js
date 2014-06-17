@@ -10,6 +10,10 @@ var default_marker_setting = {
   }
 };
 
+Template.player.created = function() {
+  Session.set('player_ready', false);
+}
+
 Template.player.rendered = function() {
   if (this.data) {
     load_video(this.data.seconds, this.data.highlights, this.data.chapters, this.data.play_on_load);
@@ -46,17 +50,20 @@ var _add_cuepoint = function(namespace, start, end, onStart, onEnd, params) {
 
 var add_highlight_cuepoint = function(highlight) {
   _add_cuepoint(
-    "highlight", highlight.start_time, highlight.start_time + 30,
+    "highlight", highlight.start_time, null,
     function(params) {
       Session.set('current_chapter_cue', params.chapter_id);
-      Session.set('current_highlight_cue', params.id)
+      Session.set('current_chapter_time', params.chapter_start_time);
+      Session.set('current_highlight_cue', params.highlight_id)
     },
     function(params) {
-      if (Session.get('current_highlight_cue') == params.id) {
+      if (Session.equals('current_highlight_cue', params.highlight_id)) {
         Session.set('current_highlight_cue', null);
       }
     },
-    {chapter_id:highlight.chapter_id, id:highlight._id}
+    {chapter_id:highlight.chapter_id,
+     highlight_id:highlight._id,
+     chapter_start_time:highlight.chapter_start_time}
   )
 }
 
@@ -114,6 +121,7 @@ var load_video = function(seconds, highlights, chapters, play_on_load) {
     player.on('loadedmetadata', function() {
       if (player.duration) {
         player.currentTime(seconds);
+        Session.set('player_ready', true);
       }
       if (play_on_load) {
         player.play();
@@ -153,7 +161,6 @@ var load_video = function(seconds, highlights, chapters, play_on_load) {
       })
     });
     player.controlBar.addChild(forward);
-
   });
 };
 
@@ -222,6 +229,8 @@ set_player_current_time = function(seconds) {
 }
 
 start_playing = function(seconds) {
-  set_player_current_time(seconds);
-  player.play();
+  if (Session.equals('player_ready', true)) {
+    set_player_current_time(seconds);
+    player.play();
+  }
 }

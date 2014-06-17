@@ -1,5 +1,11 @@
 var viewer_reactivity = new ReactiveDict;
 
+Template.viewer.created = function() {
+  Session.set('current_chapter_cue', null);
+  Session.set('current_chapter_time', null);
+  Session.set('current_highlight_cue', null);
+}
+
 Template.viewer.helpers({
   chapters: function() {
     var episode = this.episode;
@@ -57,7 +63,11 @@ Template.viewer.helpers({
       highlights: Highlights.find({_id:{$in:this.episode.highlights}}, {
         fields:{start_time:true, chapter_id:true},
         reactive:false
-      }).fetch(),
+      }).map(function(highlight) {
+        var chapter = Chapters.findOne({_id:highlight.chapter_id});
+        highlight.chapter_start_time = chapter.start_time;
+        return highlight;
+      }),
       chapters: Chapters.find({_id:{$in:this.episode.chapters}}, {
         fields:{start_time:true, title:true},
         reactive:false
@@ -71,6 +81,9 @@ Template.viewer_chapter.events({
   'click .chapter_inner': function(e, tmpl) {
     if ($(e.target).attr('class').indexOf('fa-share-square') == -1) {
       start_playing(this.start_time);
+      // Session.set('current_chapter_cue', this._id);
+      // Session.set('current_chapter_time', this.start_time);
+      // Session.set('current_highlight_cue', this._id);
     }
   },
   'mouseleave .chapter_box': function(e, tmpl) {
@@ -83,13 +96,24 @@ Template.viewer_chapter.events({
 
 Template.viewer_chapter.helpers({
   chapter_cue: function() {
-    if (Session.get('current_chapter_cue') == this._id) {
+    if (Session.equals('current_chapter_cue', this._id)) {
       return "chapter_cue";
     }
   },
+  get_highlights_base_class: function(preview) {
+    var current_chapter_time = Session.get('current_chapter_time');
+    if (preview || !current_chapter_time || this.start_time >= current_chapter_time) {
+      return "highlights-show";
+    }
+    return "highlights-none";
+  },
   highlights: function() {
+    var chapter_start_time = this.start_time;
     return Highlights.find({_id:{$in:this.highlights}}, {
       reactive:false, sort:{start_time:1}
+    }).map(function(highlight) {
+      highlight.chapter_start_time = chapter_start_time;
+      return highlight;
     });
   },
   margin_top: function() {
@@ -101,7 +125,9 @@ Template.viewer_chapter.helpers({
 
 Template.viewer_highlight.events({
   'click .highlight_text': function(e, tmpl) {
-    start_playing(this.start_time);
+    if (Session.equals('player_ready', true)) {
+      start_playing(Math.max(this.start_time - 1, 0)); //just before start_time so cuepoints takes effect.
+    }
   },
   'click .set-bookmark': function() {
     Meteor.call('set_bookmark', Meteor.userId(), this._id);
