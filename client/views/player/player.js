@@ -12,7 +12,7 @@ var default_marker_setting = {
 
 Template.player.rendered = function() {
   if (this.data) {
-    load_video(this.data.seconds, this.data.highlights, this.data.chapters);
+    load_video(this.data.seconds, this.data.highlights, this.data.chapters, this.data.play_on_load);
   }
 
   Meteor.Keybindings.add({
@@ -66,7 +66,7 @@ var dispose_video = function() {
   Session.set('player_time', null);
 };
 
-var load_video = function(seconds, highlights, chapters) {
+var load_video = function(seconds, highlights, chapters, play_on_load) {
   videojs(
     "#player",
     {
@@ -75,14 +75,12 @@ var load_video = function(seconds, highlights, chapters) {
     function() {
       $('.vjs-big-play-button').css("margin-top", "-1.33em"); //to fix the play button, may not actually be consistent
       $('.vjs-fullscreen-control').css("visibility", "hidden");
-      if (seconds) {
-        this.currentTime(seconds);
-      }
     }
   ).ready(function() {
     player = this;
     player.play();
     player.pause();
+
     window.setTimeout(function() {
       player.trigger("timeupdate"); // get actual duration to show
     }, 500);
@@ -101,8 +99,6 @@ var load_video = function(seconds, highlights, chapters) {
       set_markers(chapters);
     }
 
-    Session.set('player_loaded', true);
-
     player.on("pause", function(e){
       var parent = $(e.target).closest(".video-wrap");
       parent.addClass("vjs-paused");
@@ -113,6 +109,15 @@ var load_video = function(seconds, highlights, chapters) {
       var parent = $(e.target).closest(".video-wrap");
       parent.removeClass("vjs-paused");
       parent.addClass("vjs-playing");
+    });
+
+    player.on('loadedmetadata', function() {
+      if (player.duration) {
+        player.currentTime(seconds);
+      }
+      if (play_on_load) {
+        player.play();
+      }
     });
 
     // add forward/back
