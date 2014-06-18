@@ -110,7 +110,7 @@ Meteor.publish('episodes_postedited_pending_publication', function() {
 });
 
 Meteor.publish('episodes_postedited', function () {
-  return Episodes.find({postedited:true, trial:false});
+  return Episodes.find({postedited:true, trial:false, published: false});
 });
 
 Meteor.publish('highlights_from_episode', function(episode_id) {
