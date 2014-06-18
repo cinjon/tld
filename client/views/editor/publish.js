@@ -42,7 +42,7 @@ Template.editor_mode_publish.events({
               to: 'Timelined Support <support@timelined.com>',
               from: user.emails[0].address,
               reply_to: user.emails[0].address,
-              subject: trial_flag + 'Episode submission from ' + user.emails[0].address,
+              subject: trial_flag + 'Submitted by: ' + user.username + ' Episode: ' + episode.route,
               text: "",
               html: publish_results(episode_id, Meteor.userId())
             });
