@@ -9,7 +9,27 @@ Meteor.methods({
     return serialized && serialized.M === options.M;
   },
   generate_payments: function () {
-    return;
+    var episodes = Episodes.find({published: true, payment_id: ""});
+    var episodes_by_editor = {};
+    episodes.forEach(function (episode) {
+      // get an unpaid payment for the editor of this episode
+      var pending_payment = Payments.findOne({editor_id: episode.editor_id, issued: false});
+      // or make one if there isn't one
+      if (!pending_payment) {
+        pending_payment = Payments.insert({editor_id: episode.editor_id});
+      }
+      // update payment with episode_id and add length of episode to payment
+      if (pending_payment) {
+        Payments.update({_id: pending_payment._id},
+          {
+            $addToSet: {episodes: episode._id},
+            seconds: pending_payment.seconds + episode.length_in_seconds
+          }
+        );
+        // update episode with payment_id
+        Episodes.update({_id: episode._id}, {payment_id: pending_payment._id});
+      }
+    });
   },
   make_trial_episodes: function(user_id) {
     if (Meteor.settings && Meteor.settings.public && Meteor.settings.public.prod_mode == true) {

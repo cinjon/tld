@@ -129,7 +129,7 @@ Meteor.publish('highlights_from_episode_route', function(episode_route) {
   });
 });
 
-Meteor.publish('payments_oustanding', function () {
+Meteor.publish('payments_outstanding', function () {
   return Payments.find({issued: false});
 });
 

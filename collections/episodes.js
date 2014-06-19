@@ -15,6 +15,7 @@
 //   highlights: array of highlights,
 //   postedited: boolean,
 //   postedited_at: date, //when it was last postedited
+//   payment_id: string, id of payment this episode is on
 //   editor_id: string,
 //   claimed_previously_by: string //for keeping track of timing
 //   claimed_at: date, //when it was claimed by current editor

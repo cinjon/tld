@@ -5,6 +5,9 @@ Template.payments_outstanding.events({
 });
 
 Template.payments_outstanding.helpers({
+  payments: function () {
+    return Payments.find({issued: false});
+  },
   settings: function () {
     return {
       rowsPerPage: 20,
@@ -18,22 +21,11 @@ Template.payments_outstanding.helpers({
         },
         {
           key: 'editor_id',
-          label: "Editor",
-          fn: function (value, object) {
-            var editor = Meteor.users.find(value);
-            if (editor) {
-              return editor.username + " - " + editor.emails[0].address;
-            } else {
-              return "";
-            }
-          }
+          label: "Editor"
         },
         {
-          key: 'amount',
-          label: "$",
-          fn: function (value, object) {
-            return "$" + amount/100;
-          }
+          key: 'seconds',
+          label: "Total Time"
         }
       ]
     };

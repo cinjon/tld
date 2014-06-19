@@ -16,7 +16,8 @@ Payments = new Meteor.Collection('payments', {
   schema: new SimpleSchema({
     amount: {
       type: Number,
-      label: 'Payment Amount'
+      label: 'Payment Amount',
+      optional: true
     },
     created_at: {
       type: Date,
@@ -36,25 +37,34 @@ Payments = new Meteor.Collection('payments', {
       label: "Editor ID"
     },
     episodes: {
-      type: [String]
+      type: [String],
+      optional: true
     },
     issued: {
       type: Boolean,
       autoValue: function() {
-        var published_field = this.field('published');
         if (this.isSet) {
           return this.value;
-        } else if (!published_field.isSet && (this.isInsert || this.isUpdate)) {
+        } else if (this.isInsert || this.isUpdate) {
           return false;
         }
       }
     },
     method: {
-      type: String
+      type: String,
+      optional: true
     },
-    minutes: {
+    seconds: {
       type: Number,
-      label: 'Total Minutes'
+      label: 'Total Seconds',
+      optional: true,
+      autoValue: function() {
+        if (this.isSet) {
+          return this.value;
+        } else if (this.isInsert || this.isUpdate) {
+          return 0;
+        }
+      }
     },
     updated_at: {
       type: Date,
