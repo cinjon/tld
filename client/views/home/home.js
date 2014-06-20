@@ -14,7 +14,13 @@ Template.home.rendered = function() {
 
 Template.home.helpers({
   episodes: function() {
-    return Episodes.find({published:true});
+    if (home_reactivity.equals('home_display', 'recent')) {
+      return Episodes.find({published:true}, {sort:{"feed.published":-1}});
+    } else if (home_reactivity.equals('home_display', 'popular')) {
+      return Episodes.find({published:true}, {sort:{show_route:1}});
+    } else {
+      return Episodes.find({published:true});
+    }
   },
   has_subscriptions: function() {
     //TODO: implement subscriptions for user.
