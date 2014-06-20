@@ -42,7 +42,7 @@ UI.registerHelper("is_editor_mode", function(key) {
 });
 
 UI.registerHelper("is_regular_user", function() {
-  return Meteor.userId() && !Roles.userIsInRole(Meteor.userId(), ['admin', 'editor']);
+  return Meteor.userId() && !Roles.userIsInRole(Meteor.userId(), ['admin', 'alpha', 'editor']);
 });
 
 UI.registerHelper("layout_title", function() {

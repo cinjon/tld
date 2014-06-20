@@ -1,14 +1,16 @@
 <template name="home">
   <div class="container container-full-height">
-    <div id="home-top-intro">
-      <h1 class="home-title">Welcome to Timelined, the best way to discover and share content.</h1>
-      <div id="home-sub-title">
-        <div class="home-top-message">
-          <p class="home-sub-title-text">There is a world of media full of insights you care about.</p>
-          <p class="home-sub-title-text">We do the hard work watching them all so you don't have to.</p>
-        </div>
-        <div id="home-top-search">
-          {{> home_search}}
+    <div class="row">
+      <div id="home-top-intro">
+        <h1 class="home-title">Welcome to Timelined, the best way to discover and share content.</h1>
+        <div id="home-sub-title">
+          <div class="home-top-message">
+            <p class="home-sub-title-text">There is a world of media full of insights you care about.</p>
+            <p class="home-sub-title-text">We do the hard work watching them so you don't have to.</p>
+          </div>
+          <div id="home-top-search">
+            {{> home_search}}
+          </div>
         </div>
       </div>
     </div>
@@ -38,22 +40,24 @@
 <template name="home_chapter">
   <!-- Include the title in an <a>, with the start_time on the right.
        On hover, show a button to play and one to show the highlights -->
-  <div class="home-chapter col-md-10 col-md-offset-1">
-    <div class="row">
-      <div class="episode-title ellipsis">
-        {{title}}
+  <div class="row home-chapter-background">
+    <div class="home-chapter col-md-10 col-md-offset-1">
+      <div class="row">
+        <div class="episode-title ellipsis">
+          {{title}}
+        </div>
+        <a class="fa-stack" href="{{pathFor 'viewer' show_route=show_route episode_route=episode_route start_time=start_time}}">
+          <i class="fa fa-circle-thin fa-inverse fa-stack-2x"></i>
+          <i class="fa fa-play fa-inverse fa-stack-1x"></i>
+        </a>
+        <div class="fa-stack show_highlights">
+          <i class="{{show_highlights_class}}"></i>
+          <div class="fa fa-stack-1x">{{num_highlights}}</div>
+        </div>
+        <span class="date-time">
+          {{format_seconds_to_clock start_time}}
+        </span>
       </div>
-      <a class="fa-stack" href="{{pathFor 'viewer' show_route=show_route episode_route=episode_route start_time=start_time}}">
-        <i class="fa fa-circle-thin fa-inverse fa-stack-2x"></i>
-        <i class="fa fa-play fa-inverse fa-stack-1x"></i>
-      </a>
-      <div class="fa-stack show_highlights">
-        <i class="{{show_highlights_class}}"></i>
-        <div class="fa fa-stack-1x">{{num_highlights}}</div>
-      </div>
-      <span class="date-time">
-        {{format_seconds_to_clock start_time}}
-      </span>
     </div>
   </div>
   {{#if show_highlights}}
@@ -65,6 +69,7 @@
 
 <template name="home_episode">
   <div class="home-episode">
+  <div class="row">
     <div class="col-md-1 episode-buttons">
       <a href="{{pathFor 'viewer' show_route=show_route episode_route=route start_time=1}}" class="fa-stack fa-lg show_button">
         <i class="fa fa-circle-thin fa-inverse fa-stack-2x"></i>
@@ -80,7 +85,7 @@
           {{episode_title}}
         </span>
       </div>
-      <div class="episode-summary">
+      <div class="episode-summary"> <!--TODO: Get this to ellipsis with css-->
         <span class="vertical-center-aligned">
           {{summary}}
         </span>
@@ -111,6 +116,7 @@
   {{> home_chapter}}
   {{/each}}
   {{/if}}
+  </div>
 </template>
 
 <template name="home_header_box">
@@ -132,7 +138,7 @@
       </div>
       {{else}}
       <div class="highlight-speaker">
-        {{title_case speaker}}
+        {{title_case speaker}} <!--Replace with speaker picture and person hover-->
       </div>
       <div class="highlight-text">
         {{text}}
@@ -148,6 +154,6 @@
 
 <template name="home_search">
   <span class="search_entity_input_wrap">
-    <input id="home_search_typeahead" class="form-control search_entity_input" type="text" placeholder="Search shows or people">
+    <input id="home_search_typeahead" class="form-control search_entity_input" type="text" placeholder="Search shows or people (not implemented)">
   </span>
 </template>

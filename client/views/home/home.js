@@ -32,25 +32,34 @@ Template.home.helpers({
 });
 
 Template.home_chapter.events({
-  'click .show_highlights': function(e, tmpl) {
-    if (home_reactivity.equals('show_highlights', this._id)) {
-      home_reactivity.set('show_highlights', null);
-    } else {
-      home_reactivity.set('show_highlights', this._id);
-    }
+  // 'click .show_highlights, click .episode-title': function(e, tmpl) {
+  //   if (home_reactivity.equals('show_highlights', this._id)) {
+  //     home_reactivity.set('show_highlights', null);
+  //   } else {
+  //     home_reactivity.set('show_highlights', this._id);
+  //   }
+  // },
+  'click .episode-title, click .date-time': function(e, tmpl) {
+    Router.go('/view/' + this.show_route + '/' + this.episode_route + '/' + this.start_time);
   }
 });
 
 Template.home_chapter.helpers({
   highlights: function() {
     var highlights = this.highlights || [];
-    return Highlights.find({_id:{$in:highlights}}, {sort:{start_time:1}})
+    return Highlights.find({_id:{$in:highlights}}, {sort:{start_time:1}}).map(function(highlight) {
+      highlight.show_route = this.show_route;
+      highlight.episode_route = this.episode_route;
+      return highlight;
+    });
   },
   num_highlights: function() {
     return this.highlights.length;
   },
   show_highlights: function() {
-    return home_reactivity.equals('show_highlights', this._id);
+    return false;
+    //Turning off temporarily
+    // return home_reactivity.equals('show_highlights', this._id);
   },
   show_highlights_class: function() {
     var css_class = "fa fa-comment-o fa-inverse fa-stack-2x";
@@ -63,13 +72,16 @@ Template.home_chapter.helpers({
 })
 
 Template.home_episode.events({
+  'click .episode-info': function(e, tmpl) {
+    Router.go('/view/' + this.show_route + '/' + this.route);
+  },
   'click .show_chapters': function(e, tmpl) {
     if (home_reactivity.equals('show_chapters', this._id)) {
       home_reactivity.set('show_chapters', null);
     } else {
       home_reactivity.set('show_chapters', this._id);
     }
-  }
+  },
 });
 
 Template.home_episode.helpers({
@@ -145,6 +157,13 @@ Template.home_header_box.helpers({
     return home_reactivity.equals('home_display', this.key);
   }
 });
+
+Template.home_highlight.events({
+  'click .highlight-text, click .date-time': function(e, tmpl) {
+    var time = Math.max(0, this.start_time - 1);
+    Router.go('/view/' + this.show_route + '/' + this.episode_route + '/' + time);
+  }
+})
 
 Template.home_highlight.helpers({
   is_link: function() {

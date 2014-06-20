@@ -45,7 +45,6 @@
   .home-display {
     .header {
       z-index: 3; //get arrow in front
-      margin-left: 0px;
       .home-stage {
         font-weight: $font-weight-heavy;
         .btn {
@@ -98,9 +97,6 @@
         }
       }
     }
-    .home-episodes {
-      border-bottom: 2px solid #222;
-    }
     .home-episode {
       color: $off-white;
       background-color: $smoke2;
@@ -112,7 +108,7 @@
       .episode-buttons {
         background-color: #222;
         padding: 10px;
-        height: 90px;
+        height: 93px;
         .show_button {
           position:relative;
           top: 15px;
@@ -130,8 +126,9 @@
       }
       .episode-info {
         padding: 5px 5px 0 5px;
-        height: 90px;
+        height: 93px;
         font-size: 16px;
+        cursor: pointer;
         .episode-titles {
           height: 22px;
           .show-title {
@@ -141,20 +138,20 @@
           }
           .episode-title {
             float: left;
-            color: $ash1;
             font-family: $font-slab;
             width: 75%;
           }
         }
         .episode-summary {
-          height: 40px;
+          height: 43px;
           color: $ash1;
           font-family: $font-slab;
           font-size: 16px;
           display: inline-block;
+          overflow:hidden;
           .vertical-center-aligned {
             display: table-cell;
-            height: 40px;
+            height: 43px;
             vertical-align: middle;
           }
         }
@@ -173,6 +170,15 @@
         }
       }
     }
+    .home-chapter-background {
+      background-color: $smoke2;
+    }
+    .home-chapter {
+      background-color: $smoke2;
+      .episode-title {
+        cursor:pointer;
+      }
+    }
     .home-chapter, .home-highlight {
       .date-time {
         float: right;
@@ -180,6 +186,7 @@
         position: relative;
         top: 4px;
         font-size: 12px;
+        cursor: pointer;
       }
     }
     .home-chapter {
@@ -227,9 +234,11 @@
       .highlight-text {
         float:left;
         font-size: 16px;
+        cursor: pointer;
       }
       .date-time {
         margin-right: 6px;
+        cursor: pointer;
       }
     }
   }
