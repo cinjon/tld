@@ -43,7 +43,6 @@
       function createMarkers(){
          // create the markers
          var duration, m, pos, text;
-         console.log("[videojs-markers] creating markers");
          duration = player.duration();
          $.each(options.marker_breaks, function(key,time){
             pos = (time/duration)*100;
@@ -60,7 +59,6 @@
 
       function displayMarkerTip(){
          var marker_tip;
-         console.log("[videojs-markers] creating marker tip");
          marker_tip = $("<div class='vjs-tip'><div class='vjs-tip-arrow'></div><div class='vjs-tip-inner'></div></div>");
          video_wrapper.find('.vjs-progress-control').append(marker_tip);
 
@@ -80,7 +78,6 @@
 
       function displayBreakOverlay(){
          var break_overlay, ct, overlay_index;
-         console.log("[videojs-markers] creating break overlay");
          break_overlay = $("<div class='vjs-break-overlay'><div class='vjs-break-overlay-text'></div></div>")
             .css(setting.breakOverlay.style);
          video_wrapper.append(break_overlay);
@@ -112,10 +109,7 @@
 
       //load the markers
       this.on("loadedmetadata", function(){
-         console.log("[videojs-markers] Initialize");
          createMarkers();
-         console.log("[videojs-markers] markers");
-         console.log(markers);
          //bind click event to seek to marker time
          video_wrapper.find('.vjs-marker').on('click', function(e){
             player.currentTime(markers[this.id].time);
