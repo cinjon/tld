@@ -22,10 +22,13 @@ UI.registerHelper("format_for_videojs", function (type, format) {
   var combo = "";
   if (type == "audio" && format == "m4a") {
     combo = "audio/mp4";
-  } else {
+  } else if (type == "video" && format == "m4v") {
+    combo = "video/mp4";
+  }
+  else {
     combo = type + "/" + format;
   }
-  return combo
+  return combo;
 });
 
 UI.registerHelper("format_payment_amount", function(seconds) {

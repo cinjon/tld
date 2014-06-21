@@ -112,6 +112,9 @@ def episode_type(filename)
   if extension == ".m4a"
     return "audio"
   end
+  if extension == ".m4v"
+    return "video"
+  end
 end
 
 def format(filename)
@@ -147,7 +150,7 @@ def length_in_seconds(filename, key)
     video = youtube_client.video_by(key)
     return video.duration || 0
   else
-    # this should handle mp3, mp4 and m4a
+    # this should handle mp3, mp4, m4a, m4v
     info = AudioInfo.open(WORKING + filename)
     return info.length || 0
   end
