@@ -10,25 +10,27 @@ Meteor.methods({
   },
   generate_payments: function () {
     var episodes = Episodes.find({published: true, payment_id: ""});
-    var episodes_by_editor = {};
+
     episodes.forEach(function (episode) {
       // get an unpaid payment for the editor of this episode
       var pending_payment = Payments.findOne({editor_id: episode.editor_id, issued: false});
-      // or make one if there isn't one
-      if (!pending_payment) {
-        pending_payment = Payments.insert({editor_id: episode.editor_id});
-      }
-      // update payment with episode_id and add length of episode to payment
       if (pending_payment) {
-        Payments.update({_id: pending_payment._id},
-          {
-            $addToSet: {episodes: episode._id},
+        // we have a pending payment for the editor,
+        // add episode_id to it and add episode.length_in_seconds to payment.seconds
+        Payments.update({_id: pending_payment._id}, {
+            $push: {episodes: episode._id},
             seconds: pending_payment.seconds + episode.length_in_seconds
-          }
-        );
-        // update episode with payment_id
-        Episodes.update({_id: episode._id}, {payment_id: pending_payment._id});
+        });
+      } else {
+        // no pending payment so make one with the episode information
+        // had a weird blocking bug going on here, so put this in as a method call
+        // as opposed to inserting right here, keep an eye on it (working for now)
+        var payment_id = make_payment(episode);
+        pending_payment = Payments.findOne({_id: payment_id});
       }
+
+      // update this episode with payment_id
+      Episodes.update({_id: episode._id}, {payment_id: pending_payment._id});
     });
   },
   make_trial_episodes: function(user_id) {

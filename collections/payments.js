@@ -79,6 +79,15 @@ Payments = new Meteor.Collection('payments', {
   })
 });
 
+make_payment = function (episode) {
+  var payment_id = Payments.insert({
+    editor_id: episode.editor_id,
+    seconds: episode.length_in_seconds,
+    episodes: [episode._id]
+  });
+  return payment_id;
+};
+
 
 Payments.allow({
   insert: function () {

@@ -154,7 +154,7 @@ Episodes = new Meteor.Collection('episodes', {
       autoValue: function() {
         if (this.isSet) {
           return this.value;
-        } else if (this.isInsert || this.isUpdate) {
+        } else if (this.isInsert) {
           return "";
         }
       },
@@ -180,7 +180,7 @@ Episodes = new Meteor.Collection('episodes', {
         var published_field = this.field('published');
         if (this.isSet) {
           return this.value;
-        } else if (!published_field.isSet && (this.isInsert || this.isUpdate)) {
+        } else if (!published_field.isSet && (this.isInsert)) {
           return false;
         }
       }
@@ -191,7 +191,7 @@ Episodes = new Meteor.Collection('episodes', {
       autoValue: function() {
         if (this.isSet) {
           return this.value;
-        } else if (this.isInsert || this.isUpdate) {
+        } else if (this.isInsert) {
           return false;
         }
       }
@@ -206,7 +206,7 @@ Episodes = new Meteor.Collection('episodes', {
       autoValue: function() {
         if (this.isSet) {
           return this.value;
-        } else if (this.isInsert || this.isUpdate) {
+        } else if (this.isInsert) {
           return false;
         }
       }
