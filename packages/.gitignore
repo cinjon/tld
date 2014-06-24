@@ -16,7 +16,6 @@
 /autocomplete
 /jquery-migrate
 /bootstrap3-sass
-/scss
 /bootstrap-3
 /keybindings
 /twit
@@ -28,3 +27,4 @@
 /apm
 /collection-hooks
 /kadira
+/scss
