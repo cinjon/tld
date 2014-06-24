@@ -15,7 +15,10 @@
       "cron-tick": {},
       "reactive-table": {},
       "kadira": {},
-      "collection-hooks": {}
+      "collection-hooks": {},
+      "scss": {
+        "version": "0.9.3"
+      }
     },
     "packages": {
       "iron-router": {
@@ -88,6 +91,11 @@
         "tag": "v0.7.0",
         "commit": "20a6de81f3818f112bccf67b5e1d3db342cf0b18"
       },
+      "scss": {
+        "git": "https://github.com/fourseven/meteor-scss.git",
+        "tag": "v0.9.3",
+        "commit": "185f3b2787fb85e653f7b7bf603d1493ed14943d"
+      },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
         "tag": "v0.2.4",
@@ -107,11 +115,6 @@
         "git": "https://github.com/acreeger/meteor-moment.git",
         "tag": "v2.6.0",
         "commit": "26156df681750fd6e6ed77043eef32b6653ebbdf"
-      },
-      "scss": {
-        "git": "https://github.com/fourseven/meteor-scss.git",
-        "tag": "v0.9.3",
-        "commit": "185f3b2787fb85e653f7b7bf603d1493ed14943d"
       },
       "accounts-t9n": {
         "git": "https://github.com/softwarerero/meteor-accounts-t9n.git",
