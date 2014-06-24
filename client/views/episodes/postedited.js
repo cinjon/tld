@@ -31,10 +31,6 @@ Template.episodes_postedited.helpers({
           label: 'Show'
         },
         {
-          key: 'postedited',
-          label: 'Postedited?'
-        },
-        {
           key: 'published',
           label: 'Published?',
           sort: 'ascending',
