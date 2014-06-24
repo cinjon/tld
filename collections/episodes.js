@@ -180,7 +180,7 @@ Episodes = new Meteor.Collection('episodes', {
         var published_field = this.field('published');
         if (this.isSet) {
           return this.value;
-        } else if (!published_field.isSet && (this.isInsert)) {
+        } else if (!published_field.isSet && (this.isInsert || this.isUpdate)) {
           return false;
         }
       }
