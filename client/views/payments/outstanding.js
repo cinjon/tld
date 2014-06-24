@@ -18,10 +18,18 @@ Template.payments_outstanding.helpers({
         {
           key: '_id',
           label: 'Payment ID',
+          fn: function (value, object) {
+            var edit_url = "/payments/" + object._id + "/edit";
+            return new Spacebars.SafeString("<a href="+edit_url+">"+value+"</a>");
+          }
         },
         {
           key: 'editor_id',
-          label: "Editor"
+          label: "Editor",
+          fn: function (value, object) {
+            var edit_url = "/users/" + object.editor_id + "/edit";
+            return new Spacebars.SafeString("<a href="+edit_url+">"+value+"</a>");
+          }
         },
         {
           key: 'seconds',

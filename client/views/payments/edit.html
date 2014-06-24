@@ -1,0 +1,17 @@
+<template name="payments_edit">
+  <div class="col-md-1">
+  </div>
+
+  <div class="col-md-10 container-light">
+    {{> quickForm collection="Payments" doc=edit_document id="payments_edit" type="update" omitFields="created_at, updated_at"}}
+    <p>
+      <br>
+      <a href="{{pathFor 'payments_outstanding'}}">Back to Payments</a>
+    </p>
+  </div>
+
+  <div class="col-md-1">
+    <br>
+    {{> afDeleteButton collection="Payments" doc=edit_document}}
+  </div>
+</template>

@@ -4,7 +4,8 @@
 //   _id: string,
 //   editor_id: string   // id of the user/editor being issued payment
 //   method: string      // payment method (dwolla, check, or ???)
-//   episodes: array of episodes included on this invoice
+//   method_id: string    // unique identifier for payment method (dwolla transaction id, check #)
+//   episodes: [string]  // array of episodes included on this invoice
 //   minutes: number      // sum of minutes of all episodes on payment
 //   amount: number        // payment amount (cents)
 //   issued: boolean
@@ -45,13 +46,18 @@ Payments = new Meteor.Collection('payments', {
       autoValue: function() {
         if (this.isSet) {
           return this.value;
-        } else if (this.isInsert || this.isUpdate) {
+        } else if (this.isInsert) {
           return false;
         }
       }
     },
     method: {
       type: String,
+      optional: true
+    },
+    method_id: {
+      type: String,
+      label: 'Method ID',
       optional: true
     },
     seconds: {
@@ -61,7 +67,7 @@ Payments = new Meteor.Collection('payments', {
       autoValue: function() {
         if (this.isSet) {
           return this.value;
-        } else if (this.isInsert || this.isUpdate) {
+        } else if (this.isInsert) {
           return 0;
         }
       }

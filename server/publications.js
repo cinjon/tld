@@ -129,6 +129,10 @@ Meteor.publish('highlights_from_episode_route', function(episode_route) {
   });
 });
 
+Meteor.publish('payment_from_id', function (id) {
+  return Payments.find({_id: id});
+})
+
 Meteor.publish('payments_outstanding', function () {
   return Payments.find({issued: false});
 });
