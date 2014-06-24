@@ -313,7 +313,7 @@ puts "Getting shows from Mongo..."
 all_shows.each do |show|
   puts "Working on #{show["name"]}..."
   #TODO: make sure this works properly
-  most_recent = episodes.find("show_id" => show["_id"]).sort("feed.published" => :desc)
+  most_recent = episodes.find("show_id" => show["_id"], "trial" => false).sort("feed.published" => :desc)
   most_recent.each {|e| puts e["title"]}
   puts "Getting feed..."
   success_callback = lambda { |url, feed| process_feed(feed, show, episodes, chapters) }
