@@ -26,7 +26,7 @@
   "appName": "timelined",
 
   //location of app (local directory)
-  "app": "/root/deploy/timelined",
+  "app": "/root/code/timelined",
 
   //configure environmental
   "env": {
