@@ -51,36 +51,6 @@ Meteor.methods({
       make_trial_episode(storage_key, user_id);
     });
   },
-  send_made_trial_email: function(user_id) {
-    var user = Meteor.users.findOne({_id: user_id});
-    if (!user.emails[0].address) {
-      console.log('Make Trial Episode aborting: user does not have an email address.');
-      return;
-    } else {
-      Meteor.users.update({_id:user_id}, {$set:{received_trial_email:true}});
-    }
-
-    Meteor.call("send_email", {
-      to: user.emails[0].address,
-      from: 'Timelined Support <support@timelined.com>',
-      subject: "Timelined has sent you a trial episode, " + user.username,
-      text: '',
-      html: "Greetings Timelined editor-in-waiting, <br> \
-      <p>Thank you for your patience. Before you get started, here are a few things to keep in mind. \
-      A trial episode serves a dual purpose. First, it's a chance to practice using our application and get a feel for the workflow. \
-      Second, it's an interview. We'll review and critique the highlights you create for your trial episode. \
-      Remember, we're looking for editors who can quickly timeline with simple and objective summaries, useful links, \
-      interesting quotes and accurate timestamps. Be sure you've reviewed the <a href='http://timelined.com/guidelines'>Editor Guidelines</a> and watched our \
-      <a href='https://vimeo.com/97655214'>Editor screencast</a>. \
-      Both  were designed to help you hit the ground running.</p> \
-      <p><b><a href='http://timelined.com/queue'>Timelined Trial Episodes</a></b></p> \
-      <p>Choose one of the four available episodes. Remember, this is a trial and you will not be paid for timelining it. If you have minor errors,\
-      we may send feedback or give you the opportunity to timeline a second trial episode. If we like your work, \
-      we'll follow-up with instructions on timelining new episodes. Should you have any questions, please get in touch.</p>\
-      <br><p>Sincerely,<br>The Timelined Team<br>support@timelined.com</p> \
-      <p>PS - Timelined only works with Chrome and Safari browsers</p>"
-    });
-  },
   reset_password: function(user_id) {
     if (Meteor.isServer) {
       Accounts.sendResetPasswordEmail(user_id);
@@ -121,6 +91,57 @@ Meteor.methods({
       html: _html,
       replyTo: _reply_to
      });
+  },
+  send_made_trial_email: function(user_id) {
+    var user = Meteor.users.findOne({_id: user_id});
+    if (!user.emails[0].address) {
+      console.log('Make Trial Episode aborting: user does not have an email address.');
+      return;
+    } else {
+      Meteor.users.update({_id:user_id}, {$set:{received_trial_email:true}});
+    }
+
+    Meteor.call("send_email", {
+      to: user.emails[0].address,
+      from: 'Timelined Support <support@timelined.com>',
+      subject: "Timelined has sent you a trial episode, " + user.username,
+      text: '',
+      html: "Greetings Timelined editor-in-waiting, <br> \
+      <p>Thank you for your patience. Before you get started, here are a few things to keep in mind. \
+      A trial episode serves a dual purpose. First, it's a chance to practice using our application and get a feel for the workflow. \
+      Second, it's an interview. We'll review and critique the highlights you create for your trial episode. \
+      Remember, we're looking for editors who can quickly timeline with simple and objective summaries, useful links, \
+      interesting quotes and accurate timestamps. Be sure you've reviewed the <a href='http://timelined.com/guidelines'>Editor Guidelines</a> and watched our \
+      <a href='https://vimeo.com/97655214'>Editor screencast</a>. \
+      Both  were designed to help you hit the ground running.</p> \
+      <p><b><a href='http://timelined.com/queue'>Timelined Trial Episodes</a></b></p> \
+      <p>Choose one of the four available episodes. Remember, this is a trial and you will not be paid for timelining it. If you have minor errors,\
+      we may send feedback or give you the opportunity to timeline a second trial episode. If we like your work, \
+      we'll follow-up with instructions on timelining new episodes. Should you have any questions, please get in touch.</p>\
+      <br><p>Sincerely,<br>The Timelined Team<br>support@timelined.com</p> \
+      <p>PS - Timelined only works with Chrome and Safari browsers</p>"
+    });
+  },
+  send_payment_receipt_email: function (payment) {
+    var editor = Meteor.users.findOne({_id: payment.editor_id});
+    var episodes = Episodes.find({_id:{$in:payment.episodes}});
+
+    Meteor.call("send_email", {
+      to: editor.emails[0].address,
+      from: 'Timelined Support <support@timelined.com>',
+      subject: "Timelined Payment Issued: " + payment._id,
+      text: '',
+      html: "Greetings " + editor.username + ",<br>"
+        + "<p>Thanks for your hard work, it's payday! Your payment information is below. Please contact us with any questions.</p>"
+        + "<p>----------</p>"
+        + "<p>Payment ID: " + payment._id + "<br>"
+        + "Total Time: " + format_seconds_to_clock(payment.seconds) + "<br>"
+        + "Amount: $" + (payment.amount/100).toFixed(2) + "<br>"
+        + "Method: " + payment.method + " => " + payment.method_id + "</p>"
+        + "<p>----------</p>"
+        + "<br><p>Sincerely,<br>The Timelined Team<br>support@timelined.com</p>"
+
+    });
   },
   send_slack_notification: function(channel, payload) {
     if (!Meteor.settings.public || Meteor.settings.public.prod_mode != true) {
