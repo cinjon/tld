@@ -16,15 +16,15 @@ include Mongo
 
 # OPTIONS
 
-# options = {}
-# OptionParser.new do |opts|
-#   opts.banner = "Usage: collector.rb [options]"
-#
-#   opts.on('--new', 'Get new episodes only') { |v| options[:new] = true}
-#   opts.on('--verbose', 'Verbose output') { |v| options[:verbose] = true }
-#   opts.on('--show', String, 'Get a single show by show route') { |v| options[:show] = v }
-#
-# end.parse!
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: collector.rb [options]"
+
+  # opts.on('--new', 'Get new episodes only') { |v| options[:new] = true}
+  # opts.on('--verbose', 'Verbose output') { |v| options[:verbose] = true }
+  opts.on('-s', '--show SHOW', 'Get a single show by show route') { |v| options[:show] = v }
+
+end.parse!
 
 # GLOBALS
 
@@ -308,13 +308,20 @@ end
 
 # MAIN
 
-all_shows = shows.find("feed_active" => true)
-puts "Getting shows from Mongo..."
-all_shows.each do |show|
-  puts "Working on #{show["name"]}..."
+if options[:show] == nil
+  # get all shows
+  selected_shows = shows.find("feed_active" => true)
+  puts "Getting ALL active shows from Mongo..."
+else
+  selected_shows = shows.find("route" => options[:show])
+  puts "Getting ONLY #{options[:show]} from Mongo..."
+end
+
+selected_shows.each do |show|
+  puts "SHOW: #{show['name']}"
   #TODO: make sure this works properly
   most_recent = episodes.find("show_id" => show["_id"], "trial" => false).sort("feed.published" => :desc)
-  most_recent.each {|e| puts e["title"]}
+  most_recent.each {|e| puts "EPISODE: #{e['title']}"}
   puts "Getting feed..."
   success_callback = lambda { |url, feed| process_feed(feed, show, episodes, chapters) }
   failure_callback = lambda { |curl, err| puts curl, err }
