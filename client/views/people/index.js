@@ -30,12 +30,19 @@ Template.people_list.helpers({
       showNavigation: 'auto',
       fields: [
         {
-          key: 'name',
-          label: 'Name',
-          fn: function (vlaue, object) {
+          key: 'first_name',
+          label: 'First',
+          fn: function (value, object) {
             var edit_url = "/people/" + object._id + "/edit";
-            var name = title_case(object.first_name + " " + object.last_name);
-            return new Spacebars.SafeString("<a href="+edit_url+">"+name+"</a>")
+            return new Spacebars.SafeString("<a href="+edit_url+">"+object.first_name+"</a>")
+          }
+        },
+        {
+          key: 'last_name',
+          label: 'Last',
+          fn: function (value, object) {
+            var edit_url = "/people/" + object._id + "/edit";
+            return new Spacebars.SafeString("<a href="+edit_url+">"+object.last_name+"</a>")
           }
         },
         {
@@ -49,13 +56,6 @@ Template.people_list.helpers({
         {
           key: 'confirmed',
           label: 'Confirmed?'
-        },
-        {
-          key: 'deleteme',
-          label: 'Delete',
-          fn: function(value, object) {
-            return new Spacebars.SafeString("<a href=delete_person>Delete</a>");
-          }
         }
       ]
     };
