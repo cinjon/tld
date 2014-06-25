@@ -78,7 +78,10 @@
 <template name="viewer_header">
   <div class="top-bar">
     <button class="btn btn-block">
-      <span class="title">Viewer</span>
+      <span class="title">Viewer </span>
+      {{#if isInRole 'admin'}}
+        <a href="{{pathFor 'editor' show_route=episode.show_route episode_route=episode.route}}" target="_blank">edit</a>
+      {{/if}}
     </button>
   </div>
 </template>
