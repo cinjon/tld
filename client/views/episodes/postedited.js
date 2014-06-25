@@ -17,13 +17,17 @@ Template.episodes_postedited.helpers({
         {
           key: '_id',
           label: 'ID',
-        },
-        {
-          key: 'title',
-          label: 'Title',
           fn: function (value, object) {
             var edit_url = "/episodes/" + object.route + "/edit";
             return new Spacebars.SafeString("<a href="+edit_url+">"+value+"</a>");
+          }
+        },
+        {
+          key: 'title',
+          label: 'Title and Preview',
+          fn: function (value, object) {
+            var preview_url = "/preview/" + object.show_route + "/" + object.route;
+            return new Spacebars.SafeString("<a href="+preview_url+" target='_blank'>"+value+"</a>");
           }
         },
         {
