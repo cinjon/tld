@@ -101,7 +101,7 @@ $text-time-width: 65px;
             width: 0;
             position: absolute;
             pointer-events: none;
-            border-color: fade_out($color, 1); #SASS Function
+            border-color: fade_out($color, 1);
             border-top-color: $color;
             border-width: 7px 10px;
             margin-left: -10px;
