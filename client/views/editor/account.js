@@ -11,7 +11,7 @@ Template.editor_account.helpers({
   },
   completed_episodes: function() {
     var episodes = Episodes.find({
-      editor_id:Meteor.userId(), trial:false, published:true, postedited:false
+      editor_id:Meteor.userId(), trial:false, published:false, postedited:true
     }).fetch();
     return {
       episodes: episodes,
@@ -28,8 +28,9 @@ Template.editor_account.helpers({
     }
   },
   published_episodes: function() {
-    var episodes = Episodes.find({
-      editor_id:Meteor.userId(), trial:false, published:true, postedited:true
+    var episodes = Episodes.find({editor_id:Meteor.userId(), trial:false, published:true, postedited:true},
+    {
+      sort: {postedited_at: -1}
     }).fetch();
     return {
       episodes: episodes,
