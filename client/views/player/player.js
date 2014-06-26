@@ -77,7 +77,7 @@ var load_video = function(seconds, highlights, chapters, play_on_load) {
   videojs(
     "#player",
     {
-      "controls":true, "preload":"auto", "autoplay":false, "techOrder": ["youtube", "html5", "flash"]
+      "controls":true, "preload":"auto", "autoplay":false, "techOrder": ["youtube", "html5", "flash"], "quality": "240p"
     },
     function() {
       $('.vjs-big-play-button').css("margin-top", "-1.33em"); //to fix the play button, may not actually be consistent
