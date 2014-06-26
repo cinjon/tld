@@ -9,7 +9,7 @@ Meteor.methods({
     return serialized && serialized.M === options.M;
   },
   generate_payments: function () {
-    var episodes = Episodes.find({published: true, payment_id: ""});
+    var episodes = Episodes.find({postedited: true, published: true, trial: false, payment_id: ""});
 
     episodes.forEach(function (episode) {
       // get an unpaid payment for the editor of this episode
