@@ -18,6 +18,15 @@ Template.editor_account.helpers({
       title: "Completed Episodes"
     }
   },
+  payments: function () {
+    var payments = Payments.find({
+      editor_id: Meteor.userId(), issued: true
+    }).fetch();
+    return {
+      payments: payments,
+      title: "Payments Issued"
+    }
+  },
   published_episodes: function() {
     var episodes = Episodes.find({
       editor_id:Meteor.userId(), trial:false, published:true, postedited:true

@@ -2,6 +2,7 @@
   <div class="account-container">
     {{> editor_account_episodes claimed_episodes}}
     {{> editor_account_episodes completed_episodes}}
+    {{> editor_account_payments payments}}
     {{> editor_account_episodes published_episodes}}
   </div>
 </template>
@@ -11,6 +12,15 @@
     <h5>{{title}} - {{count}}</h5>
     {{#each episodes}}
     {{> episode_statistics}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="editor_account_payments">
+  <div class="episodes">
+    <h5>{{title}} - {{this.payments.length}}</h5>
+    {{#each payments}}
+    {{> payment_info}}
     {{/each}}
   </div>
 </template>
@@ -39,4 +49,10 @@
       <li>With {{obj_number_of "guests"}} guests, {{obj_number_of "hosts"}} hosts, and {{obj_number_of "highlights"}} highlights in {{obj_number_of "chapters"}} chapters</li>
     </ul>
   </div>
+</template>
+
+<template name="payment_info">
+  <ul>
+    <li>Payment ID: {{_id}} => ${{amount}} via {{method}} ({{method_id}})</li>
+  </ul>
 </template>
