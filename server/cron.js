@@ -1,4 +1,4 @@
-var CRON_RUNNING = true;
+var CRON_RUNNING = false;
 
 var min_ms = 60000;
 var hour_ms = min_ms * 60;

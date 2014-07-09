@@ -39,7 +39,7 @@ Template.editor_mode_publish.events({
         function(error, result) {
           if (!error && result && result['success']) {
             Meteor.call('send_email', {
-              to: 'Timelined Support <support@timelined.com>',
+              to: 'Support <cinjon.resnick@gmail.com>',
               from: user.emails[0].address,
               reply_to: user.emails[0].address,
               subject: trial_flag + 'Submitted by: ' + user.username + ' Episode: ' + episode.route,

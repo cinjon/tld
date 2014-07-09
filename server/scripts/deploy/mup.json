@@ -2,7 +2,7 @@
   //server authentication info
   "servers": [
     {
-      "host": "23.239.25.56",
+      "host": "107.170.158.238",
       "username": "root",
       //"password": "password"
       //or pem file (ssh based authentication)
@@ -11,10 +11,10 @@
   ],
 
   //install MongoDB in the server, does not destroy local mongo db on future setup
-  "setupMongo": false,
+  "setupMongo": true,
 
   //WARNING: Nodejs is required! Only skip if you already have nodejs installed on server.
-  "setupNode": false,
+  "setupNode": true,
 
   //WARNING: If nodeVersion omitted will setup 0.10.25 by default. Do not use v, only version number.
   "nodeVersion": "0.10.28",
@@ -23,16 +23,16 @@
   "setupPhantom": true,
 
   //application name
-  "appName": "timelined",
+  "appName": "tldemo",
 
   //location of app (local directory)
-  "app": "/root/code/timelined",
+  "app": "/root/code/tld",
 
   //configure environmental
   "env": {
-    "ROOT_URL": "http://timelined.com",
+    "ROOT_URL": "http://canaryhq.com",
+    "MONGO_URL": "mongodb://localhost:27017/tld",
     "PORT": "3000",
-    "MAIL_URL": "smtp://postmaster%40timelined.com:99ouf5m6ccd5@smtp.mailgun.org:587"
   },
 
   //meteor-up checks if the app comes online just after the deployment

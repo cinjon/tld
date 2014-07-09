@@ -5,20 +5,20 @@ Meteor.startup( function() {
   // USERS AND ROLES
   if (Meteor.users.find().count() === 0) {
     var cinjon_id = Accounts.createUser({
-      email:'cinjon@timelined.com',
+      email:'cinjon.resnick@gmail.com'
       password:'sharpsharksshank',
       username:'cinjon'
     });
 
     Roles.addUsersToRoles(cinjon_id, ['admin', 'editor']);
 
-    var matt_id = Accounts.createUser({
-      email:'matt@timelined.com',
-      password:'greenfishpray',
-      username:'matt'
-    });
+    // var matt_id = Accounts.createUser({
+    //   email:'matt@timelined.com',
+    //   password:'greenfishpray',
+    //   username:'matt'
+    // });
 
-    Roles.addUsersToRoles(matt_id, ['admin', 'editor']);
+    // Roles.addUsersToRoles(matt_id, ['admin', 'editor']);
 
   }
 
