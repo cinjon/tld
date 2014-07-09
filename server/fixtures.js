@@ -20,7 +20,7 @@ Meteor.startup( function() {
 
     // Roles.addUsersToRoles(matt_id, ['admin', 'editor']);
 
-  }
+  // }
 
   // SHOWS
   // if (Shows.find().count() === 0) {
