@@ -32,7 +32,7 @@
   "env": {
     "ROOT_URL": "http://canaryhq.com",
     "MONGO_URL": "mongodb://localhost:27017/tld",
-    "PORT": "3000",
+    "PORT": "3000"
   },
 
   //meteor-up checks if the app comes online just after the deployment
