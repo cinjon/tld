@@ -20,7 +20,7 @@
   "nodeVersion": "0.10.28",
 
   //install PhantomJS in the server
-  "setupPhantom": true,
+  "setupPhantom": false,
 
   //application name
   "appName": "tld",
