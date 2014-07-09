@@ -23,7 +23,7 @@
   "setupPhantom": true,
 
   //application name
-  "appName": "tldemo",
+  "appName": "tld",
 
   //location of app (local directory)
   "app": "/root/code/tld",
