@@ -15,11 +15,11 @@ Template.home.rendered = function() {
 Template.home.helpers({
   episodes: function() {
     if (home_reactivity.equals('home_display', 'recent')) {
-      return Episodes.find({published:true}, {sort:{"feed.published":-1}, limit:5});
+      return Episodes.find({published:true}, {sort:{"feed.published":-1}, limit:10});
     } else if (home_reactivity.equals('home_display', 'popular')) {
-      return Episodes.find({published:true}, {sort:{show_route:1}, limit:5});
+      return Episodes.find({published:true}, {sort:{show_route:1}, limit:10});
     } else {
-      return Episodes.find({published:true}, {limit:5});
+      return Episodes.find({published:true}, {limit:10});
     }
   },
   has_subscriptions: function() {

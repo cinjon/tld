@@ -9,18 +9,18 @@ Meteor.startup(function() {
   });
 
   Accounts.config({
-    sendVerificationEmail: true
+    sendVerificationEmail: false
   });
 
-  Accounts.loginServiceConfiguration.remove({
-    service: 'twitter'
-  });
+  // Accounts.loginServiceConfiguration.remove({
+  //   service: 'twitter'
+  // });
 
-  Accounts.loginServiceConfiguration.insert({
-    service: 'twitter',
-    consumerKey: '5652mv0T0hgtDhVy16TxRLKLC',
-    secret: 'WBuy28o6fv3FJfdVwSWN0KBAztdCemFTFoDgm9ghltZ0NmcT2s',
-  });
+  // Accounts.loginServiceConfiguration.insert({
+  //   service: 'twitter',
+  //   consumerKey: '5652mv0T0hgtDhVy16TxRLKLC',
+  //   secret: 'WBuy28o6fv3FJfdVwSWN0KBAztdCemFTFoDgm9ghltZ0NmcT2s',
+  // });
 
   Accounts.onCreateUser(function(options, user) {
     /*
@@ -47,8 +47,8 @@ var is_twitter_create_user = function(user) {
 };
 
 
-Accounts.emailTemplates.siteName = "Timelined";
-Accounts.emailTemplates.from = 'Timelined Support <support@timelined.com>';
+// Accounts.emailTemplates.siteName = "Timelined";
+// Accounts.emailTemplates.from = 'Timelined Support <support@timelined.com>';
 
 // Accounts.emailTemplates.enrollAccount.subject = function (user) {
 //     return "Timelined is going to rock your world, " + user.usernmame;
@@ -58,23 +58,23 @@ Accounts.emailTemplates.from = 'Timelined Support <support@timelined.com>';
 //      + url;
 // };
 
-Accounts.emailTemplates.verifyEmail.subject = function (user) {
-    return "Timelined is confirming your email address, " + user.username;
-};
-Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-   return "Do us a favor? Click the link below to confirm your address:\n\n" +
-     url +
-     "\n\nSincerely,\nThe Timelined Team\nsupport@timelined.com";
-};
+// Accounts.emailTemplates.verifyEmail.subject = function (user) {
+//     return "Timelined is confirming your email address, " + user.username;
+// };
+// Accounts.emailTemplates.verifyEmail.text = function (user, url) {
+//    return "Do us a favor? Click the link below to confirm your address:\n\n" +
+//      url +
+//      "\n\nSincerely,\nThe Timelined Team\nsupport@timelined.com";
+// };
 
-Accounts.emailTemplates.resetPassword.subject = function (user) {
-    return "Timelined has reset your password, " + user.username;
-};
-Accounts.emailTemplates.resetPassword.text = function (user, url) {
-   return "Don't worry, it happens to the best of us. Click the link below to reset your password:\n\n" +
-    url +
-    "\n\nSincerely,\nThe Timelined Team\nsupport@timelined.com";
-};
+// Accounts.emailTemplates.resetPassword.subject = function (user) {
+//     return "Timelined has reset your password, " + user.username;
+// };
+// Accounts.emailTemplates.resetPassword.text = function (user, url) {
+//    return "Don't worry, it happens to the best of us. Click the link below to reset your password:\n\n" +
+//     url +
+//     "\n\nSincerely,\nThe Timelined Team\nsupport@timelined.com";
+// };
 
 
 
