@@ -69,6 +69,7 @@ UI.registerHelper("s3", function(storage_key, format, type, url) {
     return url;
   } else if (storage_key && type && format) {
     if (Meteor.settings && Meteor.settings.public && Meteor.settings.public.stage_mode == true) {
+
       return "http://s3.amazonaws.com/timelined-staging/" + type + "/" + storage_key + "." + format;
     } else {
       return "http://s3.amazonaws.com/timelined/" + type + "/" + storage_key + "." + format;
