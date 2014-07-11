@@ -1,4 +1,9 @@
 var home_reactivity = new ReactiveDict;
+var good_storage_keys = [
+  "acf3bd2e5b20fc6bcb26afc22dd9bbe8", "11ab87020d5f58e2af9127b1ee776da7", "5c12d07b052bf13dec97110f921f78fa",
+  "163571ea7d0ab18eeb034722a811ea7b", "ec5a8fc2cd1e25801ef6aa3c5b77ee9a", "5170db86f7acd0f7c7fdfa0fb9a5af31",
+  "dea3fad2ec4962e1beb6f6e5b9be10c7", "9c34376b68aec52939777fefa6ebb83b"
+]
 
 Template.home.created = function() {
   home_reactivity.set('show_chapters', null);
@@ -14,12 +19,13 @@ Template.home.rendered = function() {
 
 Template.home.helpers({
   episodes: function() {
+    var clauses = {published:true, storage_key:{$in:good_storage_keys}};
     if (home_reactivity.equals('home_display', 'recent')) {
-      return Episodes.find({published:true}, {sort:{"feed.published":-1}, limit:10});
+      return Episodes.find({published:true, storage_key:{$in:good_storage_keys}}, {sort:{"feed.published":-1}, limit:5});
     } else if (home_reactivity.equals('home_display', 'popular')) {
-      return Episodes.find({published:true}, {sort:{show_route:1}, limit:10});
+      return Episodes.find(clauses, {sort:{show_route:1}, limit:5});
     } else {
-      return Episodes.find({published:true}, {limit:10});
+      return Episodes.find(clauses, {limit:5});
     }
   },
   has_subscriptions: function() {

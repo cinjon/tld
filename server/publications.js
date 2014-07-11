@@ -183,7 +183,7 @@ Meteor.publish('published_episodes', function() {
     fields: {
       published:true, hosts:true, guests:true, show_route:true,
       chapters:true, title:true, show_id:true, "feed.published":true,
-      summary:true, length_in_seconds:true, route:true
+      summary:true, length_in_seconds:true, route:true, storage_key:true
     }
   });
 });
