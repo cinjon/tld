@@ -13,9 +13,9 @@
       <div class="account-buttons">
         {{> accountButtons}} <!--TODO: stylize-->
       </div>
-      {{#if isInRole 'editor'}}
+      <!-- {{#if isInRole 'editor'}} -->
       <a class="navbar-brand right" href="{{pathFor 'queue'}}">Editor</a>
-      {{/if}}
+      <!-- {{/if}} -->
       {{#if isInRole 'admin'}}
       <a class="navbar-brand right" href="{{pathFor 'admin'}}">Admin</a>
       {{/if}}
